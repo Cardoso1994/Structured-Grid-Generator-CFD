@@ -1,0 +1,20 @@
+% Archivo inkscape_preambulo.txt----------------------------------------
+\usepackage{amsmath,amssymb,amsfonts,latexsym,stmaryrd}
+\usepackage[latin1]{inputenc}
+\usepackage{pslatex}
+\usepackage{bm}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\gfrac}[2]{\displaystyle{\frac{#1}{#2}}}
+\newcommand{\limite}[2]{\lim_{#1 \rightarrow #2}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\sen}{\mathop{\rm sen}\nolimits}
+\newcommand{\senh}{\mathop{\rm senh}\nolimits}
+\newcommand{\arcsen}{\mathop{\rm arcsen}\nolimits}
+\newcommand{\arcsec}{\mathop{\rm arcsec}\nolimits}
+%-----------------------------------------------------------------------

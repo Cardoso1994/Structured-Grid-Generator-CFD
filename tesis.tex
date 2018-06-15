@@ -1,0 +1,677 @@
+\documentclass[letterpaper, openright, 12pt]{book}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx} % para imagenes
+\usepackage{subfigure} % para subfiguras
+\usepackage{caption}
+
+\usepackage{physics} % para formulas matemáticas
+
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry} % controla márgenes
+\usepackage{cite} % para dar formato a las referencias bibliográficas
+\usepackage{enumerate} % para hacer listas
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+
+
+% Cabiar el titulo por default de los indices
+\addto{\captionsspanish}{\renewcommand*{\listfigurename}{Indice de Figuras}} %cambia el nombre del indice de figuras
+\addto{\captionsspanish}{\renewcommand*{\contentsname}{Indice}} 
+\addto{\captionsspanish}{\renewcommand*{\listtablename}{Indice de Tablas}}
+
+
+\pagestyle{plain} %sin cabeceras en las páginas, numero de pagina centrado abajo
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=3cm]{./Imagenes/ipn-logo}
+				\end{center}	
+			\end{figure}
+		\rule{100mm}{0.3mm}\\
+		\vspace*{8mm}
+		\textbf{INSTITUTO POLITÉCNICO NACIONAL}\\
+		\vspace*{3mm}
+		ESCUELA SUPERIOR DE INGENIERÍA MECÁNICA Y ELÉCTRICA\\
+		UNIDAD PROFESIONAL TICOMÁN\\
+		\vspace{12mm}
+		\textbf{DESARROLLO DE PAQUETERÍA DE SOFTWARE OPEN SOURCE EN LENGUAJE PYTHON PARA LA GENERACIÓN DE MALLAS}\\
+		\vspace*{12mm}
+		TESIS\\
+		Que para obtener el grado de\\
+		\vspace{3mm}
+		INGENIERO EN AERONÁUTICA\\
+		\vspace{12mm}
+		PRESENTA\\
+		\vspace{3mm}
+		MARCO ANTONIO CARDOSO MORENO\\
+		\rule{100mm}{0.3mm}\\
+		\vspace{3mm}
+		DIRECTOR DE TESIS: M. {\scriptsize EN} C. RAFAEL MEDINA NOGUERÓN
+		\end{center}
+	\vspace{6cm}
+	\begin{flushleft}
+		Ciudad de México
+	\end{flushleft}
+	\end{titlepage}
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	%
+	\newpage\
+	\thispagestyle{empty}
+	%se deja hoja en blanco
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	% Dedicatoria
+	\newpage
+	\pagenumbering{Roman}
+	\begin{flushright}
+		\textit{Dedicado a Floresauria Fulgencia, amor de mi vida!}
+	\end{flushright}
+	\ % final página dedicatorias
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	%
+	\chapter*{Agradecimientos}
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	%
+	\chapter*{Resúmen}
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	% indices
+	\tableofcontents
+	
+	\cleardoublepage
+	\phantomsection % corrige error de hipervinculos que manda a la seccion previa
+	\addcontentsline{toc}{chapter}{Indice de Figuras}
+	\listoffigures
+	
+	
+	\cleardoublepage
+	\phantomsection % corrige error de hipervinculos que manda a la seccion previa
+	\addcontentsline{toc}{chapter}{Indice de Tablas}
+	\listoftables
+	\cleardoublepage
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	%
+	\chapter*{Nomenclatura}
+	\addcontentsline{toc}{chapter}{Nomenclatura} % para agregar al índice
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	%
+	\chapter*{Introducción}
+	\addcontentsline{toc}{chapter}{Introducción}
+	\paragraph*{}
+		En general, para analizar y diseñar sistemas en los cuales interviene el flujo de fluidos se cuenta con dos herramientas: la experimentación y el cálculo. La experimentación implica la construcción de modelos que serán probados en túneles de viento u otras instalaciones. En el caso del cálculo, se puede realizar de manera analítica o mediante el uso de métodos númericos, a esta última técnica se le da el nombre de dinamica de fluidos computacional (CFD, por sus siglas en inglés). El uso de la DFC (dinámica de fluidos computacional) se ha popularizado gracias al desarrollo de las capaciades de las computadoras, ya que las simulaciones presentan ciertas ventajas frente al enfoque exprimental en términos de velocidad, seguridad y en la mayoría de casos, de costo. Gracias a esto la DFC es ampliamente usada en la actualidad en sectores de la industria como el aeroespacial, petrolero, entre otros. En el ámbito de la investigación tambien se tiene en la DFC una herramienta importante, pues permite analizar fenomenos complejos que pueden resultar dificiles de reproducir en experimentos.
+	
+	\paragraph*{}
+		Se realiza el presente trabajo con la finalidad tanto de generar en los estudiantes un interés por la dinámica de fluidos computacional (CFD), como de fomentar el desarrollo de este campo mediante la implementación de códigos. Por otro lado, se busca fomentar en el lector el uso y desarrollo de software libre.
+
+	\paragraph*{}
+		En el capítulo 1....\\************añadir descripción breve de los capítulos****************
+
+
+
+
+	\chapter*{Objetivo}
+	\addcontentsline{toc}{chapter}{Objetivo}
+	
+	\paragraph*{}
+	Desarrollar códigos que sean capaces de generar mallas mediante diferentes métodos. Dichos códigos se implementarán en lenguaje Python 3, mediante la IDE (entorno de desarrollo integrado, por sus siglas en inglés) Spyder, la cual fue creada pensando específicamente en la implementación de códigos enfocados a aspectos científicos y numéricos, 	que además presenta una interfaz gráfica similar a la de Matlab u Octave.
+		
+	\paragraph*{}
+		El programa debe ser capaz de generar  mallas mediantes diferentes métodos, en este trabajo se presta principal atención a las mallas generadas por métodos algebráicos, así como por métodos basados en la solución de sistemas de ecuaciones diferenciales parciales, más específico, en EDP elípticas. Se debe generar la malla para cualquier superficie o forma deseada, en este trabajo se hace la generación de mallas alrededor de perfiles alares, por lo que se debe desarrollar un módulo que genere la nube de puntos que describe un perfil NACA de la serie 4, pudiendo ser ajustable la densidad de puntos de la misma. También se da la opción de importar la nube de puntos de cualquier otro perfil, con la restricción de que la densidad de la misma, depende de los datos de entrada que recibe el código.
+	
+	\paragraph*{}
+		Una vez generado el mallado del dominio, se creará un archivo que contenga toda la información de la misma, el cual podrá ser importado a cualquier software \textit{``solver''}, para poder llevar a cabo el análisis de flujo deseado.
+
+
+
+	
+	\chapter*{Motivación}
+	\addcontentsline{toc}{chapter}{Motivación}
+	\paragraph*{}
+		Existe en la actualidad, una vasta cantidad de software enfocado a la dinámica de fluidos computacional, tanto software privativo (o de licencia) como software libre. Para el caso del software privativo, el usuario paga por la licencia de uso del programa con lo cual puede usarlo, pero no tiene forma de saber la forma en la que el programa funciona ni la implementación del mismo. En cuanto al software libre, el usuario tiene la posibilidad de acceder al código fuente con el cual corre el programa, para analizarlo, comprenderlo e incluso de ser necesario, modificarlo ya sea para mejorar una característica ya implementada, o bien, para agregar una nueva característica al programa. Tanto el uso de software privativo, como la poca implementación de códigos y documentación accesible en México, han conducido a un punto en el que la comunidad académica en el país se limite únicamente a usar los programas sin un entendimiento claro de su funcionamiento, excluyéndose a sí misma del desarrollo de software.
+	\paragraph*{}
+		Se desarrolla entonces, este trabajo con la intención de proporcionar información sobre la implementación de códigos de generación de mallas, para que el lector pueda a su vez, continuar contribuyendo al desarrollo de software libre para la dinámica de fluidos computacionala nivel nacional. 
+		
+	\paragraph*{}
+		Los códigos aquí presentados quedan abiertos para que cualquier persona, ya sea alumno, profesor, investigador o  simplemente entusiasta de la dinámica de fluidos computacional, pueda revisarlos, utilizarlos en beneficio propio, modificarlos, e incluso construir software nuevo a partir de éste.
+
+
+
+	%
+	%
+	%
+	%
+	\chapter{Estado del Arte}
+	\pagenumbering{arabic}
+		\section{Historia de la dinámica de fluidos computacional}
+				\paragraph*{}
+					La DFC tiene sus orígenes en el desarrollo de dos métodos númericos que son las herramientas base de esta disciplina, el método de diferencias finitas y el método de elementos finitos. En 1910, Richardson presentó en la ``Royal Society of London'' un artículo con una solución mediante el método de diferencias finitas para un análisis de la distribución de esfuerzos de una presa de mampostería. Por otro lado, el primer trabajo mediante el método de elementos finitos, fue publicado en 1956 en el Aeronautical Science Journal por Turner, Clough, Martin y Topp, el cual trata aplicaciones del método para el análisis de esfuerzos en aeronaves.\cite{tj-chung}
+				
+				\paragraph*{}
+					Durante la segunda guerra mundial, así como los años siguientes a la misma, el profesor John Von Neumann desarrolló un método para determinar la estabilidad numérica para la resolución de problemas dependientes del tiempo. Su trabajo fue publicado por O'brien en 1950. El métodp de Von Neumann es ampliamente aplicado hoy en día para determinar la estabilidad númerica.\cite{pletcher-CFD-HeatTransfer}
+					
+				\paragraph*{}
+					Al inicio de la década de 1970 se da un auge en la DFC gracias al incremento de las capacidades de procesamiento de las computadoras, incluso hoy en día el avance de la DFC va de la mano con el desarrollo de las computadoras.\cite{blazek} Es en ésta década cuando se desarrollan, gracias a un grupo del ``Imperial College'' de Londres, algoritmos para flujos incompresibles de baja velocidad, así como el algoritmo SIMPLE (Semi-Implicit Method for Pressure-Linked Equations), lo cual sirvió como base para el desarrollo de esquemas de solución para las ecuaciones de Navier-Stokes para flujo incompresible.\cite{pletcher-CFD-HeatTransfer}
+					
+				\paragraph*{}
+					Para la década de 1980 se comienza a dar solución a las ecuaciones de Euler tanto en dos dimensiones como en tres dimensiones. Para mediados de esta decada, gracias de nuevo, al incremento en la capcidad de cálculo de los ordenadores, se comienza a hacer análisis de flujos viscosos, los cuales son descritos por las ecuaciones de Navier-Stokes.\cite{blazek}
+			
+		\section{La dinámica de fluidos actualmente}
+				\paragraph*{}
+					La DFC tiene hoy en día, un rol tan importante, que puede considerarse una tercera rama de la dinámica de fluidos, siendo las dos primeras las ramas experimental y la teoría pura.\cite{anderson-yotros}
+					
+				\paragraph*{}
+					Actualmetne, la DFC se aplica en diversos sectores, como el aeroespacial, diseño de turbomaquinaria, carros y navíos. Además de campos como la meteorología, oceanografía, astrofísica e incluso arquitectura. Algunas técnicas desarrolladas para la DFC ahora se usan también en la solución de las ecuaciones de Maxwell, por lo que demuestra la creciente importancia que tiene la DFC como herramienta en ingeniería.\cite{blazek}
+				\paragraph*{}
+					Uno de los ámbitos en los que la DFC ha tenido mayor impacto es en el diseño de aeronaves, gracias al rápido decremento en los costos de computación aunado a un incremento en el costo de experimentos en túneles de viento. Esto ha dado como resultado que el cálculo de las características aerodinámicas de una aeronave resulte más barato mediante DFC que mediante la experimentación en túnel de viento. De modo que en la industria el diseño preliminar de aeronaves se realiza mediante cálculos en computadoras, mientras que los detalles del diseño final se analizan experimentalmente.\cite{anderson-yotros}
+				\paragraph*{}
+					En la actualidad, la DFC es capaz de analizar flujos laminares sin mayor complicación, sin embargo, aún no es capaz de analizar flujos turbulentos, los cuales se presentan en la mayoría de casos prácticos,  por lo que se debe de recurrir a modelos de turbulencia, los cuales dan buenos resultados, pese a que ningún modelo es universal, y se debe prestar atención al modelo que se dea emplear.\cite{cengel}
+			
+		\section{Software disponible para DFC}
+				\paragraph*{OpenFOAM}
+				\paragraph*{}
+					OpenFOAM (Open Source Field Operation and Manipulation) es un entorno de trabajo, para el desarrollo de ejecutables de aplicaciones que usa las funciones contenidas en aproximadamente 100 librerías escritas en C++. Contiene solvers específicos para cada tipo de problema en mecánica de fluidos, así como de mecánica del medio continuo.\cite{openfoam}
+				\paragraph*{}
+					OpenFOAM se distribuye bajo la licencia GPL (General Public License), la cual garantiza a los usuarios finales la libertad de usar, estudiar, compartir y modificar el código fuente del software, lo cual es basicamente, la filosofía del software libre.
+					
+				\paragraph*{XFLR5}
+				\paragraph*{}
+					XFLR5 es una herramienta desarrollada para el análisis de perfiles alares, alas y aviones volando a bajos Números de Reynolds. Fue creado con dos propositos princiales, dar una interfaz amigable al programa ``XFoil'', y pasar el código fuente original de FORTRAN a lenguaje C / C++, es decir que los agoritmos con los que se desarrolló Xfoil son exactamente los mismos en XFLR5.\cite{xflr5} Este programa no ha sido desarrollado con fines profesionales, sino para uso meramente personal y se distribuye bajo la licencias GPL.
+					
+				\paragraph*{XFoil}
+				\paragraph*{}
+					Es un programa interactivo para el diseño y análisis de perfiles operando en regímenes subsónicos. Dadas las coordenadas de la nube de puntos que describen la forma de un perfil, un número de Reynolds y el número de Mach, Xfoil puede calcular la distribución de presión a lo largo del perfil, y con esto, las fuerzas de levantamiento y arrastre.
+					Consiste en una colección de funciones como:
+					\begin{itemize}
+						\item Análisis Viscoso de perfiles alares existentes.
+						\item Diseño y rediseño de perfiles mediante la modificacion de la distribución de velocidad superficial
+						\item Rediseño de perfiles mediante la modificación de sus parámetros geométricos.
+					\end{itemize}
+				\cite{xfoil}
+				\paragraph*{}
+					Xfoil es desarrollado por el MIT (Massachusetts Institute of Technology), escrito en lenguaje FORTRAN y distribuido bajo la licencia GPL.
+				
+				\paragraph*{XFlow}
+				\paragraph*{}
+					Es un software privativo desarrollado por la empresa Dassault Systèmes, el cual ofrece soluciones mediante el método de Lattice-Boltzman basado en partículas. El usuario puede analizar casos de aerodinámica transitoria, flujos multifase complejos, acústica aérea, geometrías en movimiento e interacciones fluido-estructura. Destaca por sus capacidades de renderizado.\cite{xflow}
+				
+				\paragraph*{ANSYS Fluent}
+				\paragraph*{}
+					Ansys Fluent es un software privativo creado por la empresa ANSYS, Inc. dedicado a la simulación de DFC, implementado para dar soluciones mediante el método de volúmenes finitos.
+					
+				\paragraph*{SU2}
+				\paragraph*{}
+					SU2 es una colección de software \textit{``open source"} desarrollado en los lenguajes Python y C++ para el análisis de ecuaciones diferenciales parciales mediante métodos numéricos, del actual estado del arte de la DFC. Enfocado principalmente a su aplicación en la industria aeronáutica, así como la industria automotriz, naval y de energías renovables, entre otras.\cite{SU2}
+				
+	
+				
+	
+	%
+	%
+	%
+	%
+	\chapter{Discretización Espacial} \label{chap:discretizacion-espacial}
+		\paragraph*{}
+			Las soluciones analíticas modeladas mediante ecuaciones diferenciales parciales de las ecuaciones que describen el flujo de fluidos dan resultados ``continuos'' a lo largo del dominio que se está estudiando, por otro lado, las soluciones numéricas  dan resultados en puntos ``discretos'' del dominio, llamados nodos, éstos, unidos mediante líneas, generan la malla del dominio en el que se está trabajando el problema. Para el caso de un análisis en dos dimensiones, la malla se forma por triangulos o cuadriláteros, mientras que en un caso de tridimensional la malla es conformada por tetrahédros o hexaédros. 
+		
+		\paragraph*{}
+			En las aplicaciones de DFC se busca que la distribución de los nodos sea uniforme, dado que esto simplifica los algoritmos de solución a implementar,  y que se traduce en un ahorro de tiempo en la ejecución de los programas, además de un uso considerablemente menor de memoria.
+		
+		\paragraph*{}
+			Existen básicamente dos tipos de mallas:
+			\begin{itemize}
+				\item Estructuradas: los nodos de la malla están alineados entre sí y son identificados mediante ínidices $i, j, k$. Una malla estructurada bidimiensional está formada por cuadriláteros, mientras que una malla tridimensional se forma por hexahédros. Figura \ref{fig:malla-estructurada}.
+				\item No estructuradas: los nodos no tienen un orden particular, por lo que no se pueden identificar mediante índices, por lo que se debe llevar a cabo una forma diferente de identificación. Figura \ref{fig:malla-no-estructurada}
+			\end{itemize}
+		
+		\begin{figure}[htbp!]
+			\centering
+			\subfigure[Malla Estructurada]{\label{fig:malla-estructurada}\includegraphics[width=50mm]{./Imagenes/malla-estructurada}} \hspace{20mm} %marca separación entre subfiguras
+			\subfigure[Malla no Estructurada]{\label{fig:malla-no-estructurada}\includegraphics[width=50mm]{./Imagenes/malla-no-estructurada}}
+			\caption[Mallas estructuradas y no estructuradas]{Mallas estructuradas y no estructuradas. \cite{cengel}}
+			\label{fig:malla-estructurada-noestructurada}
+		\end{figure}
+	
+		\section{Método de Diferencias Finitas}
+			\paragraph*{}
+				El método de diferencias finitas fue de los primero métodos numéricos que se emplearon para la resolución de ecuaciones diferenciales parciales, y ha sido hasta la fecha, uno de los más utilizados en aplicaciones de DFC. Este método está basado en las series de expansión de Taylor.
+				
+			\paragraph*{}
+				``El uso del método de diferencias finitas en la DFC tiene como propósito el reemplazar las derivadas parciales que aparecen en las ecuaciones que gobiernan el flujo, por coeficientes diferenciales que dan como resultado un sistema de ecuaciones algebráicas, el cual se resuelve para obtener las propiedades del campo de flujo en puntos discretos, es decir, en los nodos de la malla.'' \cite{anderson-yotros}
+			
+			\subsection{Desarrollo del método}
+				\paragraph*{}
+					Supongamos que se tiene el valor de una propiedad de flujo de $f_{i,j}$ en un punto $(i,j)$ y se pretende calcular el valor de dicha propiedad en un punto $(i+1,j)$ (Figura \ref{malla-DF1}) es decir, se quiere conocer el valor de $f_{i+1,j}$, dicho valor se puede expresar mediante una serie de expansión de Taylor, quedando:
+					\begin{equation}
+						f_{i+1,j} = f_{i,j} + \left(\pdv{f}{x} \right)_{i,j} \Delta x + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(\Delta x)^2}{2\,!} + \left(\pdv[3]{f}{x} \right)_{i,j} \frac{ (\Delta x)^3 }{3\,!} + ... + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{ (\Delta x)^n }{n\,!}
+						\label{taylor-forward}
+					\end{equation}
+				
+				\paragraph*{}
+					Matemáticamente, esta serie es una solución exacta bajo una de dos condiciones:
+					\begin{itemize}
+						\item La serie está formada por un número infinito de términos, haciendo que la serie converja
+						\item El valor del intervalo entre puntos tiende a cero $(\Delta x \rightarrow 0)$
+					\end{itemize}
+				
+				\paragraph*{}
+					Para un análisis computacional resulta impractico el trabajar con un número infinito de términos, por lo que se trunca la ecuación y se busca refinar la malla, haciendo el intervalo $\Delta x$ lo más pequeño posible, incrementando de esta manera la exactitud de la solución.
+				
+				\begin{figure}[htbp!]
+					\centering
+					\includegraphics[width=95mm]{./Imagenes/malla-DF1}
+					\caption[Discretización por Diferencias Finitas]{Discretización espacial (malla) por el método de diferencias finitas \cite{anderson-yotros}}
+					\label{malla-DF1}
+				\end{figure}
+				
+				\paragraph*{}
+					Todos los términos de la serie truncados se agrupan en un sólo término conocido como error de truncamiento y es representado por la simbología $O()$. Volviendo a la ecuación (\ref{taylor-forward}) y resolviendo para $\left( \pdv{f}{x} \right)_{i,j}$ tenemos:
+					
+					\begin{equation}
+					\left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i+1, j} - f_{i,j}}{\Delta x} - \left( \pdv[2]{f}{x} \right)_{i,j} \frac{\Delta x}{2} - \left( \pdv[3]{f}{x} \right)_{i,j} \frac{(\Delta x)^2}{6} - ...
+					\end{equation}
+					o bien:
+					\begin{equation*}
+						\left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i+1, j} - f_{i,j}}{\Delta x} + O(\Delta x)^2
+					\end{equation*}
+					que para simplificar, queda:\\
+					\begin{equation}
+						\left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i+1, j} - f_{i,j}}{\Delta x}
+						\label{forward-x1}
+					\end{equation}
+				
+				\paragraph*{}
+					El símbolo $O(\Delta x)$ representa el error de truncamiento de la serie de expansión, y para este caso particular se dice que tiene una precisión de primer orden, ya que se están despreciando los términos de orden superior.
+			
+				\paragraph*{}
+					La ecuación \ref{forward-x1} se le conoce como una aproximación tipo ``forward'' de primer orden y representa el valor aproximado del valor de la derivada parcial $\left( \pdv{f}{x}\right)_{i,j}$ calculada mediante la relación lineal del punto $(i,j)$ con el punto $(i+1,j)$. (Figura \ref{fig:grafica-forward})
+					
+				\begin{figure}[htbp!]
+					\centering
+					\subfigure[Aproximación forward]{\label{fig:grafica-forward}\includegraphics[width=65mm]{./Imagenes/grafica-forward}}
+					\subfigure[Aproximación backward]{\label{fig:grafica-backward}\includegraphics[width=65mm]{./Imagenes/grafica-backward}}
+					\subfigure[Aproximación central]{\label{fig:grafica-central} \includegraphics[width=65mm]{./Imagenes/grafica-central}}
+					\caption[Aproximaciones por Diferencias Finitas]{Esquemas de las aproximaciones por el método de diferencias finitas.\cite{chapra}}
+				\end{figure}
+				
+				\paragraph*{}
+				Para obtener una aproximación tipo ``backward'' se debe generar una serie de Taylor para el punto $(i-1, j)$ expandiendo a partir del punto $(i, j)$
+				\begin{equation}
+					f_{i-1, j} = f_{i,j} + \left( \pdv{f}{x}\right)_{i,j} \Delta x + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(-\Delta x)^2 }{2\,!}  + \left( \pdv[3]{f}{x} \right)_{i,j} \frac{(-\Delta x)^3}{3\,!} + ... + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{(-\Delta x)^n}{n\,!}
+					\label{taylor-backward}
+				\end{equation}
+				\paragraph{}
+				Una vez generada la serie, se sigue el mismo procedimiento empleado en la derivación de la aproximación ``forward'' para obtener:
+				\begin{equation}
+				\left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i,j} - f_{i-1,j}}{\Delta x}
+				\label{backward-x1}
+				\end{equation}
+				\\que es la ecuación de una aproximación ``backward''. (Figura \ref{fig:grafica-backward})
+				
+				\paragraph*{}
+				Para diferentes aplicaciones de DFC, no basta con tener aproximaciones con precisión de primer orden, por lo cual se opta por generar una ecuación que tenga una precisión de segundo orden, a esta se le conoce como ``aproximación central de segundo orden''. La deducción de ésta, parte de la resta de la ecuación \ref{taylor-forward} y la ecuación \ref{taylor-backward}, que da como resultado:
+					\begin{equation}
+						f_{i+1,j} - f_{i-1, j} = 2 \left( \pdv{f}{x} \right)_{i,j} \Delta x + 2 \left( \pdv[3]{f}{x} \right)_{i,j} \frac{(\Delta x)^3}{3 \,!} + ... + 2 \left( \pdv[n]{f}{x} \right)_{i,j} \frac{(\Delta x)^n}{n\,!}
+					\end{equation}
+				que se puede simplificar a:\\
+				\begin{equation}
+					\left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i+1,j} - f_{i-1,j}}{2 \Delta x}
+					\label{central-x1}
+				\end{equation}
+				se observa en la ecuación \ref{central-x1} que para obtener un coeficiente en el punto $(i,j)$ se está utilizando información proveniente de los nodos $(i-1, j)$ e $(i+1, j)$, adyacentes a dicho punto. (Figura \ref{fig:grafica-central})
+				
+				\paragraph*{}
+				Para el análisis de flujos viscosos, que es el tipo de flujo que se analiza en este escrito, además de los coeficientes que sustituyen a las derivadas parciales de primer orden se necesitan desarrollar aproximaciones para las derivadas parciales de segundo orden, dado que, en las ecuaciones que describen el flujo de fluidos viscosos, las ecuaciones de Navier-Stokes, los términos de mayor orden son derivadas parciales de segundo orden.
+				
+				\paragraph*{}
+				Si se suman las ecuaciones \ref{taylor-forward} y \ref{taylor-backward}, se obtiene un coeficiente para $\pdv[2]{f}{x}$, como se muestra a continuación:
+					\begin{equation*}
+						f_{i+1,j} + f_{i-1, j} = 2 f_{i,j} + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(\Delta x) ^2}{2\,!} + \left( \pdv[4]{f}{x} \right)_{i,j} \frac{(\Delta x)^4}{4\,!} + ... + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{(\Delta x)^n}{n\,!}
+					\end{equation*}
+				despejando la segunda derivada parcial y despreciando el error de truncamiento:
+					\begin{equation}
+						\left( \pdv[2]{f}{x} \right) = \frac{f_{i+1,j} - 2f_{i,j} + f_{i-1,j}}{(\Delta x)^2}
+						\label{central-x2}
+					\end{equation}
+				a la ecuación \ref{central-x2} se le conoce como aproximación central para la derivada de segundo orden.
+				
+				\paragraph*{}
+				Ahora se desea obtener una aproximación por diferencias finitas para una derivada parcial mixta, llámese $\pdv{f}{x}{y}$, donde $f$ es una función dependiente de la posición de la partícula de fluido a lo largo de dos ejes, $x$ y $y$. Dado que:
+					\begin{equation}
+						\left( \pdv{f}{x}{y} \right) = \pdv{y} \left( \pdv{f}{x} \right)
+					\end{equation}
+				podemos desarrollar una aproximacion por diferencias ``central'' de la derivada parcial de $y$ en función de $x$, es decir:
+					\begin{equation}
+						\left( \pdv{f}{x}{y} \right)_{i,j} = \frac{\left( \pdv{f}{y} \right)_{i+1, j} - \left( \pdv{f}{y} \right)_{i-1,j}}{2 \Delta x}
+					\end{equation}
+				y desarrollando una diferencia central para la derivada parcial de $f$ con respecto a $y$ tenemos:
+					\begin{equation}
+						\left( \pdv{f}{x}{y} \right)_{i,j} = \frac{1}{2 \Delta x} \left[ \frac{f_{i+1, j+1} - f_{i+1, j-1}}{2 \Delta y} - \frac{f_{i-1, j+1} - f_{i-1, j-1}}{2 \Delta y} \right]
+					\end{equation}
+					\begin{equation}
+						\left( \pdv{f}{x}{y} \right)_{i,j} = \frac{1}{4 \Delta x \Delta y} \left( f_{i+1, j+1} + f_{i-1, j-1} - f_{i+1, j-1} - f_{i-1, j+1} \right)
+					\end{equation}
+					
+				\paragraph*{}
+				La misma metodología se aplica para obtener las aproximacinoes por el método de diferencia finitas de una función respecto a un eje cualquiera, llámese eje $y$, $\xi$ o $\eta$.
+				
+				\paragraph*{}
+					La mayor ventaja que presenta el método de diferencias finitas es su simplicidad de implementación, aunque presenta una limitante, el método únicamente es aplicable a mallas estructuradas, además de tampoco poderse aplicar a cuerpos de geometría curvilíneas, por lo que es necesario hcer una transformación de la malla, de un dominio físico a un dominio lógico, como se analiza en el capítulo ????????????
+				%%%%%
+				%%%%%
+				%%%%%
+				%%%%%	HACER REFERENCIA A CAPITULO SOBRE DOMINIO FISICO Y COMPUTACIONAL
+				%%%%%
+				%%%%%
+				%%%%%
+	%
+	%
+	%
+	%
+	%
+					
+	% 
+	%
+	% 
+	%
+	%
+	\chapter{Mallas}
+	\paragraph*{}
+		Como ya se mencionó en el capítulo	\ref{chap:discretizacion-espacial}, existen dos tipos principales de mallas: estructuradas y no estructuradas. (Figura \ref{fig:malla-estructurada-noestructurada}) Para este análisis se considerará el desarrollo  de  mallas estructuradas, que en principio tendrán una forma curvilinea ajustada a la forma del perfil alar con el que se esté trabajando como frontera interna del dominio.
+	
+	\paragraph*{}
+		El método de diferencias finitas se suele usar como método de solucion durante los análisis de lacDFC. La utilización del mismo es directa si el problema se puede expresar en un sistema de coordenadas cartesianas, aunque el mismo puede aplicarse a sistemas de coordenadas polares, cilindricas o esféricas, dando como resultado una malla rectangular estructurada, con espaciamiento uniforme entre los nodos en la dirección de los ejes del sistema. La mayoría de casos prácticos de interés en la DFC, tratan con geometrías complejas, lo que hace que sea muy dificil, si no imposible, generar una malla en alguno de los sitemas de cordenadas antes mencionados, que ajuste en su frontera interna de manera exacta a la forma de la geometría a analizar. Esto presenta una limitante que se debe atender, se debe llevar a cabo una transofrmación de sistemas de coordenadas, llevando el dominio físico del problema a un dominio computacional. (Figura \ref{fig:dominios})
+	
+	\paragraph*{}
+		Los métodos expuestos en este capítulo, tienen como objetivo obtener transofrmaciones entre los dominios físico y lógico, que no presenten dicha limitación.
+	
+	\begin{figure}[htbp!]
+		\centering
+		\includegraphics[width=170mm]{./Imagenes/dominios}
+		\caption[Dominios lógico y físico]{Dominios lógico (izquierda) y físico (derecha). \cite{numerical-grid}}
+		\label{fig:dominios}
+	\end{figure}
+	
+	\section{Tipos de Mallas}
+		\paragraph*{}
+		Existen tres tipos base de mallas conocidos como mallas C, H u O respectivamente. El nombre que dichos tipos de mallado reciben se debe a que su estructura asemeja a dichas letras (en mayúsculas) desde una vista de planta.
+		
+		\begin{figure}[htbp!]
+			\centering
+			\includegraphics[width=170mm]{./Imagenes/tipos-de-malla}
+			\captionsetup{justification=centering, margin=2cm}
+			\caption[Tipología de mallas]{Tipología de malla y sus respectivos espacios computacionales. H(izquierda), O(centro), C(derecha).\cite{vladimir-grid}}
+			\label{fig:tipos-de-malla}
+		\end{figure}
+		
+		\subsection{Mallas tipo C}
+			\paragraph*{}
+				Las mallas tipos C están compuestas por una sección semicircular y otra rectangular en la frontera exterior, mientras que la frontera interior es de la misma forma del objeto que se analiza.
+			\paragraph*{}
+				Suelen utilizarse para el análisis de fluijos alrededor de perfiles alares alares, pues ofrecen como principal ventaja un buen análisis del flujo en la zona de deflexión de la estela, en especial si se compara contra las mallas tipo O.\cite{best-practices-grid-generation}
+			\paragraph{}
+				La transformación de esta malla de un espacio físico a un espacio computacional da como resultado una malla conformada por rectangulos. Durante la transformación se debe identificar un segmento, tambien conocido como corte, ya que este proceso implica conceptualemte, una separación en dicho corte, para posteriormente deformar el espacio físico llevándolo así a convertirse en una malla estructurada uniforme. En la figura \ref{fig:malla-c} se observa que en el dominio físico, el segmento $(ab)$ representa la sección del mallado donde se realiza el corte y que tambien se le llama $(a'b')$, y que en el dominio computacional este segmento representa dos segmentos diferentes.
+				\begin{figure}[htbp!]
+					\centering
+					\includegraphics[width=155mm]{./Imagenes/malla-c}
+					\captionsetup{justification=centering, margin=2cm}
+					\caption[Malla tipo C]{Malla tipo C y su transformación del espacio físico (izquierda) al espacio lógico (derecha). \cite{blazek}}
+					\label{fig:malla-c}
+				\end{figure}
+		\subsection{Mallas tipo O}
+			\paragraph*{}
+				Este tipo de mallas son principalmente de sección circular, de ahí su nombre. Suelen ser utilizadas para el análisis del flujo alrededor de algunos componentes de aeronaves, como puede ser el fuselaje o las góndolas, entre otros.\cite{vladimir-grid} Tambien pueden llegar a utilizarse en el análisis de perfiles alares, pero presentan la dificultad de ofrecer una baja calidad de mallado en el borde de salida.\cite{blazek}\cite{best-practices-grid-generation}
+			\paragraph*{}
+				En este caso, al igual que sucede con las mallas tipo C, el resultado en el dominio lógico es un cuadraddo.El proceso de transformación de este tipo de malla se puede conceptualizar como el desdoble del espacio físico a partir d un corte, en la figura \ref{fig:malla-o} se representa como $(ac)$ o como $(a'c')$, para después deformarlo hasta alcanzar la forma cuadrada esperada. De esta 
+			\begin{figure}[htbp!]
+				\centering
+				\includegraphics[width=170mm]{./Imagenes/malla-o}
+				\captionsetup{justification=centering, margin=2cm}
+				\caption[Malla tipo O]{Malla tipo O y su transformación del espacio físico (izquierda) al espacio lógico (derecha). \cite{blazek}}
+				\label{fig:malla-o}
+			\end{figure}
+		\subsection{Mallas tipo H}
+			\paragraph*{}
+				Este tipo de mallas son utilizadas principalmente en los análisis de tubomaquinaria, específicamente en la zona de los alabes.\cite{blazek}\cite{best-practices-grid-generation} Tambien suelen utilizarse en el análisis de alas de aeronaves. \cite{vladimir-grid}
+			\paragraph*{}
+				La transformación en este tipo de malla, tambien da como resultado un dominio computacional cuadrado, que puede tener o no un corte al interior el cual corresponde a la frontera interior del dominio físico. (Figura \ref*{fig:tipos-de-malla} Malla H) La frontera externa del dominio computacional corresponde a la frontera externa del dominio físico.
+			
+			\paragraph*{} 
+			La figura \ref{fig:malla-h} muestra el uso de una malla tipo H para el análisis del flujo a través de los álabes de una turbina, y su transformación del dominio físico al computacional. En este caso no existe un cuerpo en el centro del mallado, por lo que no hay corte alguno en el dominio lógico.
+			\begin{figure}[htbp!]
+				\centering
+				\includegraphics[width=170mm]{./Imagenes/malla-h}
+				\captionsetup{justification=centering, margin=2cm}
+				\caption[Malla tipo O]{Malla tipo H y su transformación del espacio físico (izquierda) al espacio lógico (derecha). \cite{blazek}}
+				\label{fig:malla-h}
+			\end{figure}
+			
+	\section{Técnicas de generación del mallado}
+		\paragraph*{}
+			La generación de mallas \textit{per se}, es un proceso libre durante su desarrollo, es decir, no se lleva a cabo mediante alguna fórmula o procedimiento estricto, por lo tanto, cualquier desarrollo se puede considerar apto para este propósito siempre y cuando dé como resultado una mallado adecuado para el análisis que se pretende realizar. Sin embargo, si hay ciertas consideraciones a tomar en cuenta, tales como la capacidad de manejar problemas con múltiples variables, las cuales podrían variar en varios órdenes de magnitud. Del mismo modo, se debe considerar la posibilidad de presentar factores de compresión en ciertas áreas de la malla, en contraste con una malla uniforme.
+			
+		\paragraph*{}
+			Podemos señalar principalmente dos tipos de técnicas para la generación de mallado, de entre el amplio número de técnicas existentes al día de hoy, las cuales son:
+			\begin{itemize}
+				\item Métodos algebráicos: es de todos, el método más sencillo de implementar, una de sus ventajas es la rapidez con la que se genera la malla. Se utiliza un método de interpolación para determinar los nodos del mallado, partiendo de las coordenadas de la frontera externa e interna. Y se realiza la transformación del dominio físico al lógico mediante una ecuación algebráica.
+				\item Metódos mediante  ecuaciones diferenciales parciales (EDP): se resuelve una EDP para obtener la distribución de los nodos, la resolución de las mismas se lleva a cabo mediante aproximaciones por el método de diferencias finitas.  La distribución de la malla puede ser uniforme o concentrada dependiendo del tipo de ecuación que se resuelva.
+			\end{itemize}
+		
+		\paragraph*{}
+			Para este trabajo, se hace énfasis en el desarrollo de una malla mediante métodos basados en la solución de ecuaciones diferenciales parciales.
+		
+	\section{Generación de mallas mediante métodos algebráicos}
+		\paragraph*{}
+			La idea fundamental sobre la cual se desarrollan todos los métodos algebráicos es el uso de funciones de interpolación matemática para interpolar entre algunos puntos conocidos o previamente asignados (fronteras) para así obtener la distribución de puntos que se ubican entre los ya mencionados. El método de interpolación puede variar dependiendo del método algebráico que se esté empleando, pero la idea base permanece. \cite{siladic-grid-generation}
+		
+		\paragraph*{}
+			Los métodos algebráicos basados en interpolación son de gran utilidad en la industria, ya que como se ha mencionado antes, su implementación es sencilla, además de la capacidad de control sobre la densidad de la malla respecto a un nodo dentro del dominio. Un aspecto en contra de la generación de mallas mediante estos métodos es que no tienen la capacidad de suavizar las curvas, si no que tienden a mantener la forma de las fronteras, por lo que si se llegara a presentar algún tipo de discontinuidad en la frontera interna (superficie de análisis), esta seguiría presente los nodos internos de la malla. Es por esto que estos métodos son utilizados de manera general, como una primera aproximación, la cual sirve como condición inicial en la generación de mallas mediante la solución de sistemas de ecuaciones diferenciales parciales.\cite{farrashkhalvat}
+			
+		\subsection{Interpolación Polinomial}
+			\paragraph*{}
+				En este método se ocupa el polinomio de Lagrange como ecuación de interpolación para generar la malla.
+				\begin{align}
+					L_{i}(x) = \frac{ (x - x_{0} )(x - x_{1}) . . . (x - x_{i-1}) (x - x_{i+1}) . . . (x - x_{n}) }{(x_{i} - x_{0} )(x_{i} - x_{1}) . . . (x_{i} - x_{i-1}) (x_{i} - x_{i+1}) . . . (x_{i} - x_{n}) } && i = 0, 1, ... , n
+				\end{align}
+				\\El polinomio resultante será de grado $n$, donde el numerador omite el término $(x - x_{i})$
+			
+			\paragraph*{}
+				El caso más sencillo con el que se puede trabajar el polinomio de Lagrange es generando un polinomio de grado 1, que resulta ser una línea recta que pasa a través de dos puntos $(x_{0} , y_{0})$ y $(x_{1}, y_{1})$, los cuales pertenecen a la frontera interna y externa respectivamente. Para este caso, se tienen los siguientes términos:
+				\begin{align*}
+					L_{0} = \frac{ ( x - x_{1} ) }{ (x_{0} - x_{1} ) } && L_{1} = \frac{ ( x - x_{0} ) }{ (x_{1} - x_{0} ) }
+				\end{align*}
+				dando como resultado la ecuación que describe a una recta
+				\begin{equation}
+					y = y_{0} \frac{ ( x - x_{1} ) }{ ( x_{0} - x_{1} ) }  + y_{1} \frac{ (x - x_{0})  }{( x_{1} - x_{0} )} = y_{0} (1 - \xi) + y_{1}\xi
+				\end{equation}
+				de donde se sabe que
+				\begin{equation}
+					\xi = \frac{x - x_{0}}{x_{1} - x_{0}}
+				\end{equation}
+				y se observa que $\xi = 0, 1$ cuando $x = x_{0}, x_{1}$ respectivamente.
+				
+			\paragraph*{}
+				Se puede hacer uso de la generación de un polinomio de mayor grado, para lo cual se deben proporcionar más puntos previamente definidos por los cuales tiene que pasar la curva descrita del polinomio. Para generar una ecuación de grado $n$ se deben proporcionar como datos de inicio, al menos $n+1$, es decir, si se quisiera hacer la interpolación mediante un polinomio de grado 2, se debe proporcionar la información de al menos 3 puntos. Siempre cabe la posibilidad de que los puntos pertenezcan a una linea recta, en cuyo caso los términos de mayor orden se verán eliminados.
+				
+				\begin{figure}[htbp!]
+					\centering
+					\includegraphics[width=120mm]{./Imagenes/M-inter_pol}
+					\captionsetup{justification=centering, margin=2cm}
+					\caption[Malla Interpolación Polinomial]{Malla tipo O generada mediante el método de interpolación polinomial alrededor de un perfil NACA 2412. Densidad de malla $49$X$15$}
+					\label{fig:malla-inter}
+				\end{figure}
+				\begin{figure}[htbp!]
+					\centering
+					\includegraphics[width=120mm]{./Imagenes/M-inter_pol_cerca}
+					\captionsetup{justification=centering, margin=2cm}
+					\caption[Malla Interpolación Polinomial Acercamiento]{Vista de acercamiento a la malla generada de la figura \ref{fig:malla-inter} }
+					\label{fig:malla-inter-cerca}
+				\end{figure}
+			
+	
+	\section{Generación de mallas mediante EDP}
+			\paragraph*{}
+				La generación de mallas mediante estos métodos se ha esparcido gracias a a la versatilidad que poseen y la relativa facilidad con la que pueden ser aplicados. La idea sobre la cual se desarrolla el método, es la de obtener la solución númerica de una ecuación diferencial parcial, esta solución representa las coordenadas de la malla, la cual debe coincidir en su frontera interna, con la forma geométrica del cuerpo que se pretende analizar.\cite{siladic-grid-generation}
+				
+			\subsection{Generación de mallas mediante EDP elípticas}
+				\paragraph*{}
+					Para la solución de un sistema de EDP elípticas se necesita cumplir la condición de tener definidas las condiciones de frontera a lo largo de todos los puntos pertenecientes a la misma, es decir, que se tengan condiciones de frontera de Dirichlet.
+					La solución se obtiene mediante diferentes métodos numéricos iterativos, entre los que destacan el método de Jacobi, el método de Gauss-Seidel y métodos de sobre relajación.
+					
+				\paragraph*{}
+					La idea es que se calculen las coordenadas $(\xi, \eta)$ y que la solución del sistema de ecuaciones genere las correspondientes coordenadas $(x, y)$ del dominio físico, con un mapeo uno a uno, es decir, que exista una relación adecuada entre el dominio computacional y el lógico.
+					
+				\paragraph*{}
+					Considerando la ecuación de Laplace:
+					\begin{subequations}
+						\begin{equation}
+							\xi_{xx} + \xi_{yy} = 0
+						\end{equation}
+						\begin{equation}
+							\eta_{xx} + \eta_{yy} = 0
+						\end{equation}
+						\label{ec-laplace}
+					\end{subequations}\\
+					donde como ya se ha mencionado, $\xi$ y $\eta$ representan las coordenadas del dominio computacional y además, son variables dependientes de $x$ y de $y$. Si se quiere trabajar con la forma inversa, es decir, que ahora $x$ y $y$ sean variables dependientes de $\xi$ y $\eta$, la ecuación  de Laplace se expresa como:
+					\begin{subequations}
+						\begin{equation}
+							\alpha x_{\xi \xi} - 2\beta x_{\xi \eta} + \gamma x_{\eta \eta} = 0
+						\end{equation}
+						\begin{equation}
+							\alpha y_{\xi \xi} - 2\beta y_{\xi \eta} + \gamma y_{\eta \eta} = 0
+						\end{equation}
+						\label{ec-laplace-invertida}
+					\end{subequations}\\
+					
+					donde:
+					
+					\begin{equation*}
+						\alpha = x_{\eta} ^ 2 + y_{\eta}^2
+					\end{equation*}
+					\begin{equation*}
+						\beta = x_{\xi} x_{\eta} + y_{\xi} y_{\eta}
+					\end{equation*}
+					\begin{equation*}
+						\gamma = x_{\xi} ^ 2 + y_{\xi} ^ 2
+					\end{equation*}
+			
+				\paragraph*{}
+					La distribución de los nodos, obtenidos mediante la solución de la ecuación de Laplace (ecuación \ref{ec-laplace}),  tiende ser uniforme debido al efecto suavizante de dicha ecuación. Para poder manipular esta distribución, es necesario agregar funciones de forzado a la ecuación \ref{ec-laplace}, dando como resultado la ecuación de Poisson:
+					\begin{subequations}
+						\begin{equation}
+							\xi_{xx} + \xi_{yy} = P(\xi, \eta)
+						\end{equation}
+						\begin{equation}
+							\eta_{xx} + \eta_{yy} = Q(\xi, \eta)
+						\end{equation}
+						\label{ec-poisson}
+					\end{subequations}
+				
+			 		y transformando la ecuación, haciendo $x$ y $y$  las variables dependientes:
+			 		\begin{subequations}
+			 			\begin{equation}
+			 				\alpha x_{\xi \xi} + \beta x_{\xi \eta} + \gamma x_{\eta \eta} = -I^2 [P(\xi, \eta) x_{\xi} + Q(\xi, \eta) x_{\eta}]
+			 			\end{equation}
+			 			\begin{equation}
+			 			\alpha y_{\xi \xi} + \beta y_{\xi \eta} + \gamma y_{\eta \eta} = -I^2 [P(\xi, \eta) y_{\xi} + Q(\xi, \eta) y_{\eta}]
+			 			\end{equation}
+			 			\label{ec-poisson-invertida}
+			 		\end{subequations}
+		 	
+		 		\paragraph*{}
+		 			Las funciones $P$ y $Q$ se seleccionan dependiendo de la necesidad específica del problema que se analiza. Dichas necesidades pueden ser, por ejemplo, el agrupamiento de nodos alrededor de un punto especifico, o quizás sea la búsqueda de un sistema ortogonal en la superficie.
+			 
+			 
+				
+			
+		 
+		
+		
+		
+		
+	%
+	%
+	%
+	%
+	%
+	
+	%
+	%
+	%
+	%
+	% Referencias Bibliográicas %
+	\cleardoublepage
+	\phantomsection % corrige error de hipervinculos que manda a la seccion previa
+	\addcontentsline{toc}{chapter}{Referencias}
+	\bibliography{referencias.bib}
+	\bibliographystyle{unsrt}
+	
+	
+	
+	
+
+\end{document}
