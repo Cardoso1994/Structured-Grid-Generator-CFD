@@ -15,7 +15,7 @@ import numpy as np
 filename = 'whitcomb-il.txt'
 
 # densidad de puntos perfil NACA - Debe ser Impar
-points = 109
+points = 15
 # se ajusta por cuestiones de calculo a la mitad de puntos, se calculan por separado parte inferior y superior
 points = (points + 1) // 2
 
