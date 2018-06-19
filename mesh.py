@@ -46,90 +46,41 @@ class mesh(object):
         Xn = np.copy(self.X)
         Yn = np.copy(self.Y)
         
-        #m = self.M
+        m = self.M
         n = self.N
         
         xi = np.linspace(0, 1, n)
+        eta = np.linspace(0, 1, m)
+        
         for j in range(1, n-1):
             Xn[:, j] = Xn[:, 0] * (1 - xi[j]) + Xn[:, -1] * xi[j]
             Yn[:, j] = Yn[:, 0] * (1 - xi[j]) + Yn[:, -1] * xi[j]
         self.X = Xn
         self.Y = Yn
-        return
+        return (Xn, Yn)
     
     # genera malla por interpolación de Hermite
     # sec 4.2.2 M Farrashkhalvat Grid generation
     def gen_inter_Hermite(self):
         Xn = np.copy(self.X)
         Yn = np.copy(self.Y)
-        m = self.M
+        #m = self.M
         n = self.N
         
         xi = np.linspace(0, 1, n)
         
-        Xp = np.zeros((np.size(Xn, 0), 2))
-        Yp = np.zeros((np.size(Xn, 0), 2))
         
-        # se calculan las derivadas mediante diferencias finitas.
-        # Para los primero puntos (y últimos), mediante diferencia "forward"
-        '''Xp[0, 0] = (Xn[1, 0] - Xn[0, 0]) / (Yn[1, 0] - Yn[0, 0])
-        Xp[0, 1] = (Xn[1, 1] - Xn[0, 1]) / (Yn[1, 1] - Yn[0, 1])
-        Yp[0, 0] = (Yn[1, 0] - Yn[0, 0]) / (Xn[1, 0] - Xn[0, 0])
-        Yp[0, 1] = (Yn[1, 1] - Yn[0, 1]) / (Xn[1, 1] - Xn[0, 1])
-        Xp[-1, 0] = (Xn[1, 0] - Xn[0, 0]) / (Yn[1, 0] - Yn[0, 0])
-        Xp[-1, 1] = (Xn[1, 1] - Xn[0, 1]) / (Yn[1, 1] - Yn[0, 1])
-        Yp[-1, 0] = (Yn[1, 0] - Yn[0, 0]) / (Xn[1, 0] - Xn[0, 0])
-        Yp[-1, 1] = (Yn[1, 1] - Yn[0, 1]) / (Xn[1, 1] - Xn[0, 1])'''
-        Xp[0, 0] = 0
-        Xp[0, 1] = 0
-        Yp[0, 0] = 0
-        Yp[0, 1] = 0
-        Xp[-1, 0] = Xp[0 ,0]
-        Xp[-1, 1] = Xp[0, 1]
-        Yp[-1, 0] = Yp[0, 0]
-        Yp[-1, 1] = Yp[0, 1]
-        
-        Xp[1, 0] = 0
-        Xp[1, 1] = 0
-        Yp[1, 0] = 0
-        Yp[1, 1] = 0
-        Xp[-2, 0] = Xp[1 ,0]
-        Xp[-2, 1] = Xp[1, 1]
-        Yp[-2, 0] = Yp[1, 0]
-        Yp[-2, 1] = -Yp[1, 1]
-        
-        # Para la parte superior de la malla, mediante diferencias centradas
-        for i in range(2, m // 2):
-            Xp[i, 0] = (Xn[i+1, 0] - Xn[i-1, 0]) / (Yn[i+1, 0] - Yn[i-1, 0])
-            Xp[i, 1] = (Xn[i+1, 1] - Xn[i-1, 1]) / (Yn[i+1, 1] - Yn[i-1, 1])
-            Yp[i, 0] = (Yn[i+1, 0] - Yn[i-1, 0]) / (Xn[i+1, 0] - Xn[i-1, 0])
-            Yp[i, 1] = (Yn[i+1, 1] - Yn[i-1, 1]) / (Xn[i+1, 1] - Xn[i-1, 1])
-            
-        # Para el borde de ataque (n//2), diferencia "forward"
-        i = m // 2
-        '''Xp[i, 0] = (Xn[i+1, 0] - Xn[i, 0]) / (Yn[i+1, 0] - Yn[i, 0])
-        Xp[i, 1] = (Xn[i+1, 1] - Xn[i, 1]) / (Yn[i+1, 1] - Yn[i, 1])
-        Yp[i, 0] = (Yn[i+1, 0] - Yn[i, 0]) / (Xn[i+1, 0] - Xn[i, 0])
-        Yp[i, 1] = (Yn[i+1, 1] - Yn[i, 1]) / (Xn[i+1, 1] - Xn[i, 1])'''
-        Xp[i, 0] = 0
-        Xp[i, 1] = 0
-        Yp[i, 0] = 0
-        Yp[i, 1] = 0
-        
-        # Para la parte inferior de la malla, mediante diferencias centradas
-        for i in range(m // 2 + 1, m - 2):
-            Xp[i, 0] = (Xn[i+1, 0] - Xn[i-1, 0]) / (Yn[i+1, 0] - Yn[i-1, 0])
-            Xp[i, 1] = (Xn[i+1, 1] - Xn[i-1, 1]) / (Yn[i+1, 1] - Yn[i-1, 1])
-            Yp[i, 0] = (Yn[i+1, 0] - Yn[i-1, 0]) / (Xn[i+1, 0] - Xn[i-1, 0])
-            Yp[i, 1] = (Yn[i+1, 1] - Yn[i-1, 1]) / (Xn[i+1, 1] - Xn[i-1, 1])
-                
-        
+        # valores del polinomio de Lagrange
         for j in range(1, n-1):
-            # Interpolación de hermite
+            Xn[:, j] = Xn[:, 0] * (1 - xi[j]) + Xn[:, -1] * xi[j]
+            Yn[:, j] = Yn[:, 0] * (1 - xi[j]) + Yn[:, -1] * xi[j]
+        
+        # Interpolación de hermite
+        for j in range(1, n-1):
             Xn[:, j] = Xn[:, 0] * (2 * xi[j]**3 - 3 * xi[j]**2 + 1) + Xn[:, -1] * (3 * xi[j]**2 - 2 * xi[j]**3) \
-                       + Xp[:, 0] * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + Xp[:, 1] *(xi[j]**3 - xi[j]**2)
+                       + (Xn[:, -1] - Xn[:, 0]) * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + (Xn[:, -1] - Xn[:, 0]) *(xi[j]**3 - xi[j]**2)
             Yn[:, j] = Yn[:, 0] * (2 * xi[j]**3 - 3 * xi[j]**2 + 1) + Yn[:, -1] * (3 * xi[j]**2 - 2 * xi[j]**3) \
-                       + Yp[:, 0] * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + Yp[:, 1] *(xi[j]**3 - xi[j]**2)
+                       + (Yn[:, -1] - Yn[:, 0]) * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + (Yn[:, -1] - Yn[:, 0]) *(xi[j]**3 - xi[j]**2)
             
         
         self.X = Xn
