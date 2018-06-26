@@ -398,7 +398,7 @@
 	\section{Interpolación unidireccional}
 		\paragraph*{}
 			La interpolación unidireccional se lleva a cabo interpolando una línea a la vez, en una dirección del espacio computacional, ya sea $\xi$ o $\eta$. Es decir, para interpolar en la dirrección $\xi$ (desarrollo que se presenta en este trabajo), se deben seleccionar puntos en las frontera tanto interna como externa, que correspondan a la misma línea $\eta = constante$ y a lo largo de la cual se hará la interpolación, haciendo la variación en la coordenada $\xi$, interpolando así, línea por línea hasta terminarse de generar la malla. El mismo procedimiento se puede llevar a cabo interpolando en la dirección de $\eta$.
-		\subsection{Interpolación Polinomial}
+		\subsection{Interpolación Polinomial}\label{Lagrange}
 			\paragraph*{}
 				En este método se ocupa el polinomio de Lagrange como ecuación de interpolación para generar la malla.
 				\begin{align}
@@ -485,6 +485,62 @@
 				El método de TFI es un método de interpolación multivariable. Cuando se aplica el TFI para la generación de mallas, se restringe la malla para que coincida con la fronteras especificadas. Este método consiste en la suma de las interpolaciones de una sola variable para cada una de las coordenadas computacionales. Existen diversos tipos de interpolación a lo largo de una coordena, por lo que existen práctimanete un número ilimitado de variantes de TFI creadas a partir de la combinación de diversas interpolaciones de una sola variable.\cite{thompsonhandbook}
 			\paragraph*{}
 				Una de las principales ventajas del método de interpolación transfinita es que asegura una concordancia en las fronters en ambas direcciones. Su escencia es la de la interpolación en cada una de las coordenadas computacionales, formando así los productos tensores de las interpolaciones, y finalmente, se lleva a cabo una suma ``booleana''. Las interpolaciones unidireccionales son una combinación lineal de datos proporcionados por el usuarios del dominio físico para valores dados de las coordenadas del dominio lógico.
+			\paragraph*{}
+				A partir de la existencia de una transformación $r = r(\xi, \eta)$ ($x = x(\xi, \eta), y = y(\xi, \eta)$ la cual hace un mapeo de un cuadrado de dimensiones $0 < \xi < 1, 0 < \eta < 1$ en el dominio computacional, con la región del dominio físico, delimitada por una frontera externa y una interna, que se pretende analizar. De igual modo, se puede escribir otra transformación $P_{\xi}$, la cual recibe el nombre de proyector, la cual relaciona puntos en el espacio lógico con puntos en el espacio físico, definida como:
+				\begin{equation}
+					P_{\xi}(\xi, \eta) = (1 - \xi)r(0, \eta) + \xi r(1, \eta)
+				\end{equation}
+			\paragraph*{}
+				Como ya se explicó en la sección \ref{Lagrange}, esta tranformación hace una transformación con la cual las fronteras en la dirección de $\xi$ son mapeadas, mientras que las fronteras en dirección de $\eta$ son reemplazadas por lineas rectas. De manera análoga se puede definir el proyector:
+				\begin{equation}
+					P_{\eta}(\xi, \eta) = (1 - \eta)r(\xi, 0) + \eta r(\xi, 1)
+				\end{equation}
+				con el cual se preservan las fronteras en dirección $\eta$ y se reemplazan las fronteras en $\xi$ por líneas rectas.
+			\begin{figure}[htbp!]
+				\centering
+				\includegraphics[width=120mm]{./Imagenes/mapeo_eta}
+				\caption[Transformación de malla por $P_{\eta}$]{Transormación de una malla a través del proyector $P_{\eta}$ \cite{farrashkhalvat}}
+				\label{fig:mapeo_eta}
+			\end{figure}
+			\paragraph*{}
+				La figura \ref{fig:mapeo_eta} representa gráficamente la transformación de la malla del dominio lógico al dominio computacional mediante la aplicación del proyector $P_{\eta}$. Se observa como las fronteras conformadas por los segmentos $AC$ y $BD$ se conservan durante las transformación, mientras que las fronteras $AB$ y $CD$ son reemplazadas por líneas rectas.
+			\paragraph*{}
+				A partir de estas ecuaciones, se uede definir un mapeo compuesto $P_{\xi}P_{\eta}$, de tal manera que:
+				\begin{align}
+					\begin{aligned}
+						P_{\xi}(P_{\eta}(\xi, \eta)) &= P_{\xi} ((1 - \eta)r(\xi, 0) + \eta r(\xi, 1)) \\
+						&= (1 - \xi) \left[ (1 - \eta)r(0, 0) + \eta r(0, 1) \right] + \xi \left[ (1 - \eta)r(1, 0) + \eta r(1,1) \right]\\
+						&= (1 - \xi)(1 - \eta)r(0, 0) + (1-\xi)\eta r(0, 1) + \xi(1 - \eta)r(1, 0) + \xi\eta r(1, 1)
+					\end{aligned}
+				\end{align}
+			\paragraph*{}
+				Con esta transformación compuesta, se logra preservar los 4 vértices en los que se interseccionan las fronteras, sin embargo, las cuatro fronteras son reemplazadas por líneas rectas. Es decir, las líneas $\xi = constante$ y $\eta = constante$ en el dominio computacional son transformadas como líneas rectas en el dominio físico, como se muestra en la figura \ref{fig:mapeo_xieta}.
+			\begin{figure}[htbp!]
+				\centering
+				\includegraphics[width=120mm]{./Imagenes/mapeo_xieta}
+				\caption[Transformación de malla por $P_{\xi}P_{\eta}$]{Transormación de una malla a través del proyector compuesto $P_{\xi}P_{\eta}$ \cite{farrashkhalvat}}
+				\label{fig:mapeo_xieta}
+			\end{figure}
+			
+			\paragraph*{}
+				Si consideramos los diferentes mapeos de un lado, bajo cualquiera de los proyectores previamente desarrollados, por ejemplo el lado $\eta = 0$, bajo el proyector $P_{\xi}$ es mapeado con una línea recta $AC$, si por otro lado se lleva a cabo la transformación medainte el proyector $P_{\eta}$ el mapeo resultante es uno a uno, es decir que la recta $\eta = 0$ se mapea con la curva de la frontera $AC$. Por último, transformando con el proyector compuesto $P_{\xi}P_{\eta}$ tambien se hace un mapeo con la línea recta $AC$.
+			\paragraph*{}
+				Desarrollando la misma lógica y consideraciones a las 4 fronteras de la frontera, se concluye que el mapeo compuesto $(P_{\xi} + P_{\eta} - P_{\xi}P_{\eta})$ lleva a cabo una transformación con un mapeo uno  a uno de las fronteras del cuadrado de longitud uitaria (dominio computacional) con la curvas de frontera del dominio físico. A este mapeo se le conoce como la suma booleana de las transformaciones $P_{\xi}$ y $P_{\eta}$, y se escribe $P_{\xi}\oplus P_{\eta}$, por lo tanto:
+				\begin{equation}
+					P_{\xi}\oplus P_{\eta} = P_{\xi} + P_{\eta} - P_{\xi} P_{\eta}
+				\end{equation}
+				con lo que la fórmula final queda:
+				\begin{align}
+					\begin{aligned}
+						\left( P_{\xi}\oplus P_{\eta} \right)(\xi, \eta) =& P_{\xi}(\xi, \eta) + P_{\eta}(\xi, \eta) - P_{\xi}P_{\eta}(\xi, \eta) \\
+						=& (1 - \xi)r(0, \eta) + \xi r(1, \eta) + (1 - \eta)r(\xi, 0) + \eta r(\xi, 1) \\&- (1-\xi)(1 - \eta)r(0, 0) - (1 - \xi)\eta r(0, 1) - (1- \eta)\xi r(1, 0) \\& - \xi \eta r(1,1)
+					\end{aligned}
+				\end{align}
+			\paragraph*{}
+				Esta ecuación es la base del métro de TFI para dos dimensiones. La malla se genera tomando valores discretos $\xi_{i}, \eta_{j}$ para los ejes $\xi$ y $\eta$.
+				
+
+
 %
 %
 %
