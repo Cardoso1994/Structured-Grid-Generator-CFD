@@ -39,25 +39,36 @@ class mesh(object):
         self.d_eta = 1 / (self.M - 1)
         self.tipo = None
     
+    # función para graficar la malla
+    def plot(self):
+        #plt.figure('Malla O')
+        plt.axis('equal')
+        plt.plot(self.X, self.Y, 'k', linewidth = 0.8)
+        for i in range(self.M):
+            plt.plot(self.X[i, :], self.Y[i, :], 'purple', linewidth = 0.8)
+    
     # genera malla por interpolación polinomial por Lagrange
     # sec 4.2.1 M Farrashkhalvat Grid generation
-    def gen_inter_pol(self):
+    def gen_inter_pol(self, eje = 'xi'):
         # Xn para nivel de iteración "new".
         Xn = np.copy(self.X)
         Yn = np.copy(self.Y)
         
-        m = self.M
-        n = self.N
-        
-        xi = np.linspace(0, 1, n)
-        eta = np.linspace(0, 1, m)
-        
-        for j in range(1, n-1):
-            Xn[:, j] = Xn[:, 0] * (1 - xi[j]) + Xn[:, -1] * xi[j]
-            Yn[:, j] = Yn[:, 0] * (1 - xi[j]) + Yn[:, -1] * xi[j]
-        self.X = Xn
-        self.Y = Yn
-        return (Xn, Yn)
+        if eje == 'xi':
+            n = self.N
+            xi = np.linspace(0, 1, n)
+            for j in range(1, n-1):
+                Xn[:, j] = Xn[:, 0] * (1 - xi[j]) + Xn[:, -1] * xi[j]
+                Yn[:, j] = Yn[:, 0] * (1 - xi[j]) + Yn[:, -1] * xi[j]
+            self.X = Xn
+            self.Y = Yn
+            return (Xn, Yn)
+        elif eje == 'eta':
+            m = self.M
+            eta = np.linspace(0, 1, m)
+            for i in range(1, m-1):
+                Xn[i, :] = Xn[0, :] * (1 - eta[i]) + Xn[-1, :] * eta[i]
+                Yn[i, :] = Yn[0, :] * (1 - eta[i]) + Yn[-1, :] * eta[i]
     
     # genera malla por interpolación de Hermite
     # sec 4.2.2 M Farrashkhalvat Grid generation
@@ -66,21 +77,18 @@ class mesh(object):
         Yn = np.copy(self.Y)
         #m = self.M
         n = self.N
-        
         xi = np.linspace(0, 1, n)
         
-        
-        # valores del polinomio de Lagrange
-        for j in range(1, n-1):
-            Xn[:, j] = Xn[:, 0] * (1 - xi[j]) + Xn[:, -1] * xi[j]
-            Yn[:, j] = Yn[:, 0] * (1 - xi[j]) + Yn[:, -1] * xi[j]
-        
+        derX = (Xn[:, -1] - Xn[:, 0]) / 1.9
+        derY = (Yn[:, -1] - Yn[:, 0]) / 25
+        derX = np.transpose(derX)
+        derY = np.transpose(derY)
         # Interpolación de hermite
         for j in range(1, n-1):
             Xn[:, j] = Xn[:, 0] * (2 * xi[j]**3 - 3 * xi[j]**2 + 1) + Xn[:, -1] * (3 * xi[j]**2 - 2 * xi[j]**3) \
-                       + (Xn[:, -1] - Xn[:, 0]) * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + (Xn[:, -1] - Xn[:, 0]) *(xi[j]**3 - xi[j]**2)
+                       + derX * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + derX *(xi[j]**3 - xi[j]**2)
             Yn[:, j] = Yn[:, 0] * (2 * xi[j]**3 - 3 * xi[j]**2 + 1) + Yn[:, -1] * (3 * xi[j]**2 - 2 * xi[j]**3) \
-                       + (Yn[:, -1] - Yn[:, 0]) * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + (Yn[:, -1] - Yn[:, 0]) *(xi[j]**3 - xi[j]**2)
+                       + derY * (xi[j] ** 3 - 2 * xi[j]**2 + xi[j]) + derY *(xi[j]**3 - xi[j]**2)
             
         
         self.X = Xn
@@ -178,17 +186,19 @@ class mesh(object):
                 else:
                     pass
                 
-                Xn[-1, j] = (alpha / (d_xi**2) * (X[1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
-                           - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
-                           + I**2 / 2 *(P *(X[1, j] - X[i-1,j]) / d_xi) + Q * (X[i, j+1] - X[i, j-1]) / d_eta)\
-                           / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
-                Yn[-1, j] = (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
-                           - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Yo[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
-                           + I**2 / 2 *(P *(Y[1, j] - Y[i-1,j]) / d_xi) + Q * (Y[i, j+1] - Y[i, j-1]) / d_eta)\
-                           / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
+                if self.tipo == 'O':
+                    Xn[-1, j] = (alpha / (d_xi**2) * (X[1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
+                               - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
+                               + I**2 / 2 *(P *(X[1, j] - X[i-1,j]) / d_xi) + Q * (X[i, j+1] - X[i, j-1]) / d_eta)\
+                               / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
+                    Yn[-1, j] = (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
+                               - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Yo[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
+                               + I**2 / 2 *(P *(Y[1, j] - Y[i-1,j]) / d_xi) + Q * (Y[i, j+1] - Y[i, j-1]) / d_eta)\
+                               / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
             
-            Xn[0, :] = Xn[-1, :]
-            Yn[0, :] = Yn[-1, :]
+            if self.tipo == 'O':
+                Xn[0, :] = Xn[-1, :]
+                Yn[0, :] = Yn[-1, :]
             
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -206,15 +216,6 @@ class mesh(object):
         self.Y = Yn
         return
     
-    
-    
-    # función para graficar la malla
-    def plot(self):
-        #plt.figure('Malla O')
-        plt.axis('equal')
-        plt.plot(self.X, self.Y, 'k', linewidth = 0.8)
-        for i in range(self.M):
-            plt.plot(self.X[i, :], self.Y[i, :], 'purple', linewidth = 0.8)
     
 
 #
@@ -255,17 +256,6 @@ class mesh_O(mesh):
         y = R * np.sin(theta)
         
         
-        '''#frontera externa con espaciado uniforme en x, en vez de en theta
-        
-        # frontera externa
-        xu = np.linspace(R, -R, points)
-        xd = xu[: -1]
-        xd = np.flip(xd, 0)
-        yu = (R ** 2 - xu ** 2) ** 0.5
-        yd = - (R ** 2 - xd ** 2) ** 0.5
-        x = np.concatenate((xu, xd))
-        y = np.concatenate((yu, yd))'''
-        
         x = np.flip(x, 0)
         y = np.flip(y,0)
         
@@ -293,4 +283,105 @@ class mesh_C(mesh):
         '''
         Genera la frontera externa de la malla así como la interna
         '''
+        R = self.R
+        M = self.M
+        N = self.N
+        
+        # cargar datos del perfil
+        perfil = np.loadtxt(self.archivo)
+        perfil_x = perfil[:, 0]
+        
+        perfil_y = perfil[:, 1]
+        points = np.shape(perfil_x)[0]
+        points1 = (points + 1) // 2
+        # frontera externa
+        theta = np.linspace(np.pi / 2, np.pi, points1)
+        theta2 = np.linspace(np.pi, 3 * np.pi / 2, points1)
+        theta = np.concatenate((theta, theta2[1:]))
+        del(theta2, points1)
+        # parte circular de FE
+        x = R * np.cos(theta)
+        y = R * np.sin(theta)
+        # se termina FE
+        x_line = np.linspace(R * 1.5, 0, (M - points) // 2 + 1)
+        x = np.concatenate((x_line, x[1:]))
+        x_line = np.flip(x_line, 0)
+        x = np.concatenate((x, x_line[1:]))
+        y_line = np.copy(x_line)
+        y_line[:] = R
+        y = np.concatenate((y_line, y[1:]))
+        y = np.concatenate((y, -y_line[1:]))
+        
+        # frontera interna
+        x_line = np.linspace(R * 1.5, perfil_x[0], (M - points) // 2 + 1)
+        perfil_x = np.concatenate((x_line, perfil_x[1:]))
+        x_line = np.flip(x_line, 0)
+        perfil_x = np.concatenate((perfil_x, x_line[1:]))
+        y_line[:] = 0
+        perfil_y = np.concatenate((y_line, perfil_y[1:]))
+        perfil_y = np.concatenate((perfil_y, y_line[1:]))
+        
+        
+        
+        
+        # primera columna FE, ultima columna FInterna
+        self.X[:, 0] = x
+        self.Y[:, 0] = y
+        self.X[:, -1] = perfil_x
+        self.Y[:, -1] = perfil_y
         pass
+
+class mesh_H(mesh):
+    def __init__(self, R, M, N, archivo):
+        '''
+        R = radio de la frontera externa, ya está en función de la cuerda del perfil
+            se asigna ese valor desde el sript main.py
+        archivo = archivo con la nube de puntos de la frontera interna'''
+        
+        mesh.__init__(self, R, M, N, archivo)
+        self.tipo = 'H'
+        # probando para quitar función "fronteras"
+        self.fronteras()
+    
+    def fronteras(self):
+        '''
+        Genera la frontera externa de la malla así como la interna
+        '''
+        R = self.R
+        x = np.linspace(-R, R, 3)
+        return
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
