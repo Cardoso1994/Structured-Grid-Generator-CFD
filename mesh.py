@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 #
 #
 
-it_max = 8000
+it_max = 80
 err_max = 1e-5
 
 
@@ -121,7 +121,7 @@ class mesh(object):
         
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = 1.5 # en caso de metodo SOR
+        omega = 0.1 # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Se ocupa si se sabe que la solución tiende a diverger
@@ -131,11 +131,11 @@ class mesh(object):
         Q = 0
         P = 0
         I = 0
-        ek = 1
-        Ak = 1
-        Ck = 10
+        ek = 0.9
+        Ak = 0.9
+        Ck = 55.35
         it  = 0
-        linea = 0.09
+        linea = 0.95
         # inicio del método iterativo
         while it < it_max:
             Xo = np.copy(Xn)
