@@ -190,7 +190,6 @@ class NACA4(airfoil):
         # distribución de los puntos en x a lo largo de la cuerda
         beta = np.linspace(0, np.pi, points)
         xc = (1 - np.cos(beta)) / 2
-        #xc = np.linspace(0, 1, points)
         yt = np.zeros((points, ))
         yc = np.zeros((points, ))
         xu = np.zeros((points, ))
@@ -257,9 +256,9 @@ class NACA4(airfoil):
         xp = np.concatenate((xuf, xlf))
         yp = np.concatenate((yuf, ylf))
         
-        '''# se invierten para que comience el perfil por el intrados, pasando al extrados SENTIDO HORARIO
+        # se invierten para que comience el perfil por el intrados, pasando al extrados SENTIDO HORARIO
         xp = np.flip(xp, 0)
-        yp = np.flip(yp, 0)'''
+        yp = np.flip(yp, 0)
         perfil = np.zeros((np.shape(xp)[0], 2))
         
         perfil[:, 0] = xp
