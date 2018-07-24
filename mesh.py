@@ -45,7 +45,7 @@ class mesh(object):
         plt.axis('equal')
         plt.plot(self.X, self.Y, 'k', linewidth = 0.8)
         for i in range(self.M):
-            plt.plot(self.X[i, :], self.Y[i, :], 'purple', linewidth = 0.8)
+            plt.plot(self.X[i, :], self.Y[i, :], 'purple', linewidth = 0.4)
         plt.show()
 
     # genera malla por interpolación polinomial por Lagrange
@@ -165,10 +165,13 @@ class mesh(object):
         Q = 0
         P = 0
         I = 0
-        Ak = 340 # aa en pdf
-        Ck = 11.5 ## cc en pdf
+        a = 0.57
+        c = 2
+        aa = 387.5 # aa en pdf
+        cc = 9.87 ## cc en pdf
         it  = 0
-        linea = 0
+        linea_xi = 0
+        linea_eta = 0.5
         
         
         # inicio del método iterativo
@@ -196,11 +199,16 @@ class mesh(object):
                     gamma = x_xi ** 2 + y_xi ** 2
                     
                     if ec == 'P':
-                        if np.abs(j / (n-1) - linea) == 0:
+                        if np.abs(i / (m-1) - linea_eta) == 0:
+                            P = 0
+                        else:
+                            P = -a * (i / (m-1) - linea_eta) / np.abs(i / (m-1) - linea_eta) * np.exp(-c * np.abs(i / (m-1) - linea_eta))
+                        
+                        if np.abs(j / (n-1) - linea_xi) == 0:
                             Q = 0
                         else:
-                            Q = -Ak * (j / (n-1) - linea) / np.abs(j / (n-1) - linea) * np.exp(-Ck * np.abs(j / (n-1) - linea))
-                        P = 0
+                            Q = -aa * (j / (n-1) - linea_xi) / np.abs(j / (n-1) - linea_xi) * np.exp(-cc * np.abs(j / (n-1) - linea_xi))
+                        #P = 0
                         I = x_xi * y_eta - x_eta * y_xi
                     else:
                         Q = 0
@@ -215,25 +223,26 @@ class mesh(object):
                              + I**2 * (P * y_xi + Q * y_eta))
 
                 i = m-1
-                alpha = 0.25 * ((X[i, j+1] - X[i, j-1]) ** 2 + (Y[i, j+1] - Y[i, j-1]) ** 2)
-                beta = 0.25 * ( (X[1, j] - X[i-1, j]) * (X[i, j+1] - X[i, j-1]) )\
-                       + 0.25 * ( (Y[1, j] - Y[i-1, j]) * (Y[i, j+1] - Y[i, j-1]) )
-                gamma = 0.25 * (X[1, j] - X[i-1, j]) ** 2 + 0.25 * (Y[1, j] - Y[i-1, j]) ** 2
-                if ec == 'P' and self.tipo == 'O':
-                    I = (X[1, j] - X[i-1, j]) * (Y[i, j+1] - Y[i, j-1]) / 4 / d_xi / d_eta + (Y[1, j] - Y[i-1, j]) * (X[i, j+1] - X[i, j-1]) / 4 / d_xi / d_eta
-                else:
-                    pass
-
                 if self.tipo == 'O':
+                    alpha = 0.25 * ((X[i, j+1] - X[i, j-1]) ** 2 + (Y[i, j+1] - Y[i, j-1]) ** 2)
+                    beta = 0.25 * ( (X[1, j] - X[i-1, j]) * (X[i, j+1] - X[i, j-1]) )\
+                           + 0.25 * ( (Y[1, j] - Y[i-1, j]) * (Y[i, j+1] - Y[i, j-1]) )
+                    gamma = 0.25 * (X[1, j] - X[i-1, j]) ** 2 + 0.25 * (Y[1, j] - Y[i-1, j]) ** 2
+                    if ec == 'P': #and self.tipo == 'O':
+                        I = (X[1, j] - X[i-1, j]) * (Y[i, j+1] - Y[i, j-1]) / 4 / d_xi / d_eta + (Y[1, j] - Y[i-1, j]) * (X[i, j+1] - X[i, j-1]) / 4 / d_xi / d_eta
+                    #else:
+                        #pass
+    
+                    #if self.tipo == 'O':
                     Xn[-1, j] = (alpha / (d_xi**2) * (X[1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
-                               - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
-                               + I**2 / 2 *(P *(X[1, j] - X[i-1,j]) / d_xi) + Q * (X[i, j+1] - X[i, j-1]) / d_eta)\
-                               / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
+                                   - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
+                                   + I**2 / 2 *(P *(X[1, j] - X[i-1,j]) / d_xi) + Q * (X[i, j+1] - X[i, j-1]) / d_eta)\
+                                   / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
                     Yn[-1, j] = (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
-                               - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Yo[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
-                               + I**2 / 2 *(P *(Y[1, j] - Y[i-1,j]) / d_xi) + Q * (Y[i, j+1] - Y[i, j-1]) / d_eta)\
-                               / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
-
+                                   - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Yo[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
+                                   + I**2 / 2 *(P *(Y[1, j] - Y[i-1,j]) / d_xi) + Q * (Y[i, j+1] - Y[i, j-1]) / d_eta)\
+                                   / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
+                                   
             if self.tipo == 'O':
                 Xn[0, :] = Xn[-1, :]
                 Yn[0, :] = Yn[-1, :]
