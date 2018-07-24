@@ -167,7 +167,7 @@ class mesh(object):
         I = 0
         a = 0.57
         c = 2
-        aa = 387.5 # aa en pdf
+        aa = 38.5 # aa en pdf
         cc = 9.87 ## cc en pdf
         it  = 0
         linea_xi = 0

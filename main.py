@@ -18,7 +18,7 @@ filename = 'whitcomb-il.txt'
 malla = 'C'
 
 # densidad de puntos perfil NACA - Debe ser Impar
-points = 67
+points = 17
 # se ajusta por cuestiones de calculo a la mitad de puntos, se calculan por separado parte inferior y superior
 points = (points + 1) // 2
 
@@ -43,7 +43,7 @@ if malla == 'C':
     M += 3 * M // 4
 elif malla == 'H':
     M *= 2
-N = 45
+N = 11
 
 
 
