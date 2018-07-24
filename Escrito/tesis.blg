@@ -1,0 +1,57 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: tesis.aux
+The style file: unsrt.bst
+Database file #1: referencias.bib.bib
+Warning--entry type for "xflr5" isn't style-file defined
+--line 43 of file referencias.bib.bib
+Warning--entry type for "xfoil" isn't style-file defined
+--line 50 of file referencias.bib.bib
+Warning--entry type for "SU2" isn't style-file defined
+--line 57 of file referencias.bib.bib
+Warning--entry type for "openfoam" isn't style-file defined
+--line 63 of file referencias.bib.bib
+Warning--entry type for "xflow" isn't style-file defined
+--line 70 of file referencias.bib.bib
+You've used 19 entries,
+            1791 wiz_defined-function locations,
+            533 strings with 5608 characters,
+and the built_in function-call counts, 3022 in all, are:
+= -- 242
+> -- 127
+< -- 5
++ -- 52
+- -- 33
+* -- 119
+:= -- 481
+add.period$ -- 51
+call.type$ -- 19
+change.case$ -- 16
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 157
+empty$ -- 353
+format.name$ -- 33
+if$ -- 700
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 22
+newline$ -- 92
+num.names$ -- 19
+pop$ -- 107
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 63
+stack$ -- 0
+substring$ -- 27
+swap$ -- 25
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 22
+width$ -- 21
+write$ -- 192
+(There were 5 warnings)
