@@ -22,7 +22,6 @@ class mesh_O(mesh):
         '''
         mesh.__init__(self, R, M, N, archivo)
         self.tipo = 'O'
-        # probando para quitar función "fronteras"
         self.fronteras()
 
     def fronteras(self):
@@ -79,7 +78,7 @@ class mesh_O(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = 0.3 # en caso de metodo SOR
+        omega = 0.8 # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Se ocupa si se sabe que la solución tiende a diverger
@@ -93,15 +92,15 @@ class mesh_O(mesh):
         I = 0
         a = 0
         c = 0
-        aa = 500 # aa en pdf
-        cc = 25 ## cc en pdf
+        aa = 185 # aa en pdf
+        cc = 7.2 ## cc en pdf
         it  = 0
+        linea_eta = 0
         linea_xi = 0
-        linea_eta = 0.5
         
         
         # inicio del método iterativo
-        while it < it_max:
+        while it < mesh.it_max:
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
 
@@ -125,17 +124,17 @@ class mesh_O(mesh):
                     gamma = x_xi ** 2 + y_xi ** 2
                     
                     if ec == 'P':
-                        if np.abs(i / (m-1) - linea_eta) == 0:
+                        if np.abs(i / (m-1) - linea_xi) == 0:
                             P = 0
                         else:
-                            P = -a * (i / (m-1) - linea_eta) / np.abs(i / (m-1) - linea_eta) * np.exp(-c * np.abs(i / (m-1) - linea_eta))
+                            P = -a * (i / (m-1) - linea_xi) / np.abs(i / (m-1) - linea_eta) * np.exp(-c * np.abs(i / (m-1) - linea_eta))
                         
-                        if np.abs(j / (n-1) - linea_xi) == 0:
+                        if np.abs(j / (n-1) - linea_eta) == 0:
                             Q = 0
                         else:
-                            Q = -aa * (j / (n-1) - linea_xi) / np.abs(j / (n-1) - linea_xi) * np.exp(-cc * np.abs(j / (n-1) - linea_xi))
-                        #P = 0
+                            Q = -aa * (j / (n-1) - linea_eta) / np.abs(j / (n-1) - linea_xi) * np.exp(-cc * np.abs(j / (n-1) - linea_xi))
                         I = x_xi * y_eta - x_eta * y_xi
+                        
                     else:
                         Q = 0
                         P = 0
@@ -149,29 +148,48 @@ class mesh_O(mesh):
                              + I**2 * (P * y_xi + Q * y_eta))
 
                 i = m-1
-                if self.tipo == 'O':
-                    alpha = 0.25 * ((X[i, j+1] - X[i, j-1]) ** 2 + (Y[i, j+1] - Y[i, j-1]) ** 2)
-                    beta = 0.25 * ( (X[1, j] - X[i-1, j]) * (X[i, j+1] - X[i, j-1]) )\
-                           + 0.25 * ( (Y[1, j] - Y[i-1, j]) * (Y[i, j+1] - Y[i, j-1]) )
-                    gamma = 0.25 * (X[1, j] - X[i-1, j]) ** 2 + 0.25 * (Y[1, j] - Y[i-1, j]) ** 2
-                    if ec == 'P': #and self.tipo == 'O':
-                        I = (X[1, j] - X[i-1, j]) * (Y[i, j+1] - Y[i, j-1]) / 4 / d_xi / d_eta + (Y[1, j] - Y[i-1, j]) * (X[i, j+1] - X[i, j-1]) / 4 / d_xi / d_eta
-                    #else:
-                        #pass
-    
-                    #if self.tipo == 'O':
-                    Xn[-1, j] = (alpha / (d_xi**2) * (X[1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
-                                   - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
-                                   + I**2 / 2 *(P *(X[1, j] - X[i-1,j]) / d_xi) + Q * (X[i, j+1] - X[i, j-1]) / d_eta)\
-                                   / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
-                    Yn[-1, j] = (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
-                                   - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Yo[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
-                                   + I**2 / 2 *(P *(Y[1, j] - Y[i-1,j]) / d_xi) + Q * (Y[i, j+1] - Y[i, j-1]) / d_eta)\
-                                   / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))
-                                   
-            if self.tipo == 'O':
-                Xn[0, :] = Xn[-1, :]
-                Yn[0, :] = Yn[-1, :]
+            
+                x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+                y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+                x_xi = (X[1, j] - X[i-1, j]) / 2 / d_xi
+                y_xi = (Y[1, j] - Y[i-1, j]) / 2 / d_xi
+                
+                alpha = x_eta **2 + y_eta ** 2
+                beta = x_xi * x_eta + y_xi * y_eta
+                gamma = x_xi **2 + y_xi ** 2
+                
+                if ec == 'P':
+                    if np.abs(i / (m-1) - linea_xi) == 0:
+                        P = 0
+                    else:
+                        P = -a * (i / (m-1) - linea_xi) / np.abs(i / (m-1) - linea_xi) * np.exp(-c * np.abs(i / (m-1) - linea_xi))
+                    
+                    if np.abs(j / (n-1) - linea_eta) == 0:
+                        Q = 0
+                    else:
+                        Q = -aa * (j / (n-1) - linea_eta) / np.abs(j / (n-1) - linea_eta) * np.exp(-cc * np.abs(j / (n-1) - linea_eta))
+                    I = x_xi * y_eta - x_eta * y_xi
+                else:
+                    Q = 0
+                    P = 0
+                    I = 0
+
+                
+                '''Xn[-1, j] = (alpha / (d_xi**2) * (X[1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
+                               - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
+                               + I**2 / 2 *(P *(X[1, j] - X[i-1,j]) / d_xi) + Q * (X[i, j+1] - X[i, j-1]) / d_eta)\
+                               / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))'''
+                Xn[i, j] = (d_xi * d_eta)**2 / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) * ( alpha / (d_xi**2) * (X[1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
+                             - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
+                             + I**2 * (P * x_xi + Q * x_eta))
+                '''Yn[-1, j] = (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
+                               - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Yo[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
+                               + I**2 / 2 *(P *(Y[1, j] - Y[i-1,j]) / d_xi) + Q * (Y[i, j+1] - Y[i, j-1]) / d_eta)\
+                               / 2 / (alpha / (d_xi**2) + gamma / (d_eta**2))'''
+                                  
+            
+            Xn[0, :] = Xn[-1, :]
+            Yn[0, :] = Yn[-1, :]
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -180,7 +198,7 @@ class mesh_O(mesh):
 
             it += 1
 
-            if abs(Xn - Xo).max() < err_max and abs(Yn - Yo).max() < err_max:
+            if abs(Xn - Xo).max() < mesh.err_max and abs(Yn - Yo).max() < mesh.err_max:
                 print(metodo + ': saliendo...')
                 print('it=',it)
                 break
