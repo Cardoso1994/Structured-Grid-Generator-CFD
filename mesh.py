@@ -21,7 +21,7 @@ class mesh(object):
     
     # variables de clase, controlan el numero de iteraciones máximo
     # así como el error maximo permisible como criterio de convergencia
-    it_max = 8000
+    it_max = 8000 
     err_max = 1e-6
     
     # método de inicialización de instancias de clase
@@ -33,22 +33,25 @@ class mesh(object):
         X = matriz cuadrada que contiene todos las coordenadas 'x' de los puntos de la malla
         Y = matriz cuadrada que contiene todos las coordenadas 'y' de los puntos de la malla
         '''
-        self.R = R
+        self.R = np.longdouble(R)
         self.M = M
         self.N = N
         self.archivo = archivo
-        self.X = np.zeros((M, N ))
+        
+        self.X = np.zeros((M, N ), dtype = np.longdouble)
         self.Y = np.copy(self.X)
-        self.d_xi = 1 #/ (self.M - 1)
-        self.d_eta = 1 #/ (self.N - 1)
+        
+        
+        self.d_xi = np.longdouble(1) # / (self.M - 1))
+        self.d_eta = np.longdouble(1) # / (self.N - 1))
         self.tipo = None
 
     # función para graficar la malla
     def plot(self):
         plt.axis('equal')
-        plt.plot(self.X, self.Y, 'k', linewidth = 0.8)
+        plt.plot(self.X, self.Y, 'k', linewidth = 1.6)
         for i in range(self.M):
-            plt.plot(self.X[i, :], self.Y[i, :], 'purple', linewidth = 0.4)
+            plt.plot(self.X[i, :], self.Y[i, :], 'navy', linewidth = 1.6)
         plt.show()
 
     # genera malla por interpolación polinomial por Lagrange
@@ -100,8 +103,7 @@ class mesh(object):
                            - (1 - xi[i]) * (1 - eta[j]) * Yn[0, 0]  -  (1 - xi[i]) * eta[j] * Yn[0, -1] \
                            - (1- eta[j]) * xi[i] * Yn[-1, 0]  -  xi[i] * eta[j] * Yn[-1, -1]
         
-        Yn[0, 1:-1] *= 0.25
-        Yn[-1, 1:-1] *= 0.25
+                    
         self.X = Xn
         self.Y = Yn
         return
