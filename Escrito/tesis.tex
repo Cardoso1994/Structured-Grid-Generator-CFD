@@ -859,7 +859,7 @@
 			
 			\subsection{Métodos iterativos: Jacobi, Gauss-Seidel, SOR}
 				\paragraph*{}
-					Para resolver una ecuación matricia de la forma $Au = d$ para el vector $u$ de dimensiones $n \times 1$ suelen utilizars emetodos iterativos. Se pueden escribir las ecuaciones para cada término del vector $u$ (asumiendo que ningún elemento de la diagonal principal de la matriz es igual a $0$) de la siguiente manera
+					Para resolver una ecuación matricial de la forma $Au = d$ para el vector $u$ de dimensiones $n \times 1$ suelen utilizarse métodos iterativos. Se pueden escribir las ecuaciones para cada término del vector $u$ (asumiendo que ningún elemento de la diagonal principal de la matriz es igual a $0$) de la siguiente manera
 					\begin{subequations}
 						\begin{equation*}
 							u_{1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2} + a_{13}u_{3} + \dotsb + a_{1n}u_{n} \right) \right]
@@ -875,7 +875,7 @@
 						\end{equation*}
 					\end{subequations}
 				\paragraph*{}
-					A partir de estas ecuaciones se derivan varios esquemas iterativos, dada una solución inicial $u_{i}^{(1)}, i = 1, 2, \dotsc, n$. El primero de ellos es el método de Jacobi, en éste, la variable depndiente se calcula usando los datos previamente obtenidos, quedando sus ecuaciones cómo
+					A partir de estas ecuaciones se derivan varios esquemas iterativos, dada una solución inicial $u_{i}^{(1)}, i = 1, 2, \dotsc, n$. El primero de ellos es el método de Jacobi, en éste, la variable dependiente se calcula usando los datos previamente obtenidos, quedando sus ecuaciones cómo
 					\begin{subequations}
 						\begin{equation*}
 							u_{1}^{k+1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2}^{k} + a_{13}u_{3}^{k} + \dotsb + a_{1n}u_{n}^k \right) \right]
@@ -931,7 +931,186 @@
 					\end{align}
 				
 				\paragraph*{}
-					Cuando $\omega = 1$ el método SOR se convierte en el método de Gauss-Seidel. Si $1 < \omega < 2$ se está trabajndo con sobre-relajación, mientras que al utilizar un valor $0 < \omega < 1$ se lleva a cabo una bajo-relajación.
+					Cuando $\omega = 1$ el método SOR se convierte en el método de Gauss-Seidel. Si $1 < \omega < 2$ se está trabajando con sobre-relajación, mientras que al utilizar un valor $0 < \omega < 1$ se lleva a cabo una bajo-relajación.
+		
+		\section{Generación de mallas mediante EDP hiperbólicas}
+		\paragraph*{}
+			La generación de mallas mediante EDP elípticas puede ser demasiado costosa en términos de tiempo de cómputo, así como en el uso de memoria en el ordenador. Esto se debe a que dicho esquema intenta hacer coincidir un sistema de coordenadas curvilíneo a cuatro curvas de frontera, seis en mallas tridimensionales. De aquí surge un nuevo enfoque, en el cual solo se requiere iniciar la solución con una sola frontera e ir avanzando hacia afuera en el dominio físico usando EDP hiperbólicas. \cite{farrashkhalvat}
+		
+		\paragraph*{}
+			Con este propósito se toma en cuenta el trabajo publicado por Steger y Chausse \cite{Hyperbolic-steger1980generation} para la generación de mallas bidimensionales ortogonales y con control del área de celda. Se inicia el proceso con una frontera única en la que se considera que $\eta = 0$. Se propone tambien un sistema de ecuaciones de primer orden para las coordenadas $x, y$ como funciones de $\xi, \eta$:
+			\begin{subequations}
+				\begin{equation}
+					g_{12} = g_1  \cdot g_2 = x_{\xi} x_{\eta} + y_{\xi} y_{\eta} = 0
+				\end{equation}
+				\begin{equation}
+					\abs{g_1 \times g_2} = x_\xi y_\eta - x_\eta y_\xi = F
+				\end{equation}
+				
+				\label{ec-hyper-base}
+			\end{subequations}
+		
+		\paragraph*{}
+			La primera ecuación dota a la malla de ortogonalidad, mientras que la segunda tiene el término $F$ como una medida del área de la celda (si el producto $\delta\xi\delta\eta$ es el mismo para cada celda). Se puede trabajar utilizando $F$ como una función de $\xi, \eta$, lo que permitiría incrementar la densidad de la malla cerca de la frontera donde $\eta = 0$ haciendo que $F$ tenga un valor pequeño en dicha zona. De las ecuaciones \ref{ec-hyper-base}:
+			\begin{subequations}
+				\begin{equation}
+					x_\eta = - \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
+				\end{equation}
+				\begin{equation}
+					y_\eta = \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
+				\end{equation}
+			\end{subequations}
+		
+		\paragraph*{}
+			Antes de proceder a la solución del sistema de las ecuaciones \ref{ec-hyper-base} se deben tomar en cuenta algunas consideraciones. En primera instancia debe tenerse en cuenta que el sistema es un sistema no lineal por lo que un proceso de linearización debe llevarse a cabo, una segunda consideración es que al ser un sistema de ecuaciones hiperbólicas de debe llevar a cabo el proceso de solución mediante un proceso de marcha, en este trabajo la marcha se realizará en la dirección del eje $\eta$. Tercera, para un sistema de ecuaciones hiperbólicas se debe especificar una condicion inicial así como un condición de frontera y por último, con el objetivo de evitar la presencia de oscilaciones, se puede agregar un término de``damping'' al lado derecho de las ecuaciones.
+			
+		\paragraph*{}
+			Para el proceso de linearización, se utilizará el esquema iterativo de Newton, el cual especifica que un termino no lineal es aproximado mediante
+			\begin{equation}
+				AB = A^{k + 1} B^{k} + B^{k + 1} A^{k} - A^{k} B^{k}
+			\end{equation}
+			donde el superíndice $k$ representa el estado previo conocido. A partir de este punto el superíndice $k + 1$, el cual representa el nivel actual a obtener, será eliminado de las ecuaciones, y se entiende que todos los términos sin superíndice pertenecen al nivel actual $k + 1$. Por lo tanto, el sistema de ecuaciones hiperbólicas es expresado en su forma lineal como:
+			\begin{subequations}
+				\begin{equation}
+					x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} - x_{\xi}^{k} x_{\eta}^{k} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} - y_{\xi}^{k} y_{\eta}^{k} = 0
+				\end{equation}
+				\begin{equation}
+					x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\xi}^{k} y_{\eta}^{k} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} + x_{\eta}^{k} y_{\xi}^{k} = F
+				\end{equation}
+				\label{ec-hyper-linear}
+			\end{subequations}
+		
+		\paragraph*{}
+			Aplicando el concepto de las ecuaciones \ref{ec-hyper-base} a las ecuaciones \ref{ec-hyper-linear} podemos simplificar las últimas, quedando como
+			\begin{subequations}
+				\begin{equation}
+					x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} = 0
+				\end{equation}
+				\begin{equation}
+					x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} = F + F^{k}
+				\end{equation}
+				\label{ec-hyper-reducida}
+			\end{subequations}
+		
+		\paragraph*{}
+			Este sistema de ecuaciones puede escribirse de forma compacta como
+			\begin{equation}
+				\left[A \right] R_{\xi} + \left[ B \right] R_{\eta} = H
+				\label{ec-hyper-compacta}
+			\end{equation}
+			donde:
+			\begin{align*}
+				R = \begin{bmatrix}
+				 x \\ \\
+				 y
+				\end{bmatrix}&&
+				A = \begin{bmatrix}
+					x_{\eta}^{k} & y_{\eta}^{k} \\ \\
+					y_{\eta}^{k} & -x_{\eta}^{k}
+				\end{bmatrix}&&
+				B = \begin{bmatrix}
+					x_{\xi}^{k} & y_{\xi}^{k} \\ \\
+					-y_{\xi}^{k} & x_{\xi}^{k}
+				\end{bmatrix}&&
+				H = \begin{bmatrix}
+					0 \\ \\
+					F + F^{k}
+				\end{bmatrix}
+			\end{align*}
+		
+		\paragraph*{}
+			Por definición, el sistema de ecuaciones descrito por la ecuación \ref{ec-hyper-compacta} es hiperbólico los eigenvalores de $\left[ B \right]^{-1} \left[ A \right]$ son reales. Se observa que\\
+			\begin{equation*}
+				\left[ B \right] = \frac{1}{DN}\begin{bmatrix}
+					x_{\xi}^{k} & -y_{\xi}^{k} \\ \\
+					y_{\xi}^{k} & x_{\xi}^{k}
+				\end{bmatrix}
+			\end{equation*}
+			por lo tanto
+			\begin{equation*}
+				\left[ C \right] = \left[ B \right]^{-1} \left[ A \right] = \begin{bmatrix}
+					x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} &
+					x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} \\ \\
+					x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} &
+					- \left( x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} \right)
+				\end{bmatrix}
+			\end{equation*}
+			donde
+			\begin{equation*}
+				DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2
+			\end{equation*}
+		
+		\paragraph*{}
+			Los eigenvalores de $\left[ C \right]$ son
+			\begin{equation*}
+				\lambda_{1, 2} = \pm \left[ \frac{\left(x_{\eta}^{k} \right)^2 + \left( y_{\eta}^{k} \right)^2} {DN} \right]
+			\end{equation*}
+			los cuales cumplen con la condición de ser siempre reales (para un sistema hiperbólico) siempre que
+			\begin{equation*}
+			DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2 \neq 0
+			\end{equation*}
+		 \paragraph*{}
+			 Para obtener un sistema de ecuaciones algebráico, debemos aplicar el método de diferencias finitas. Para la sustitución de las derivadas parciales respecto al eje $\xi$ se utiliza una aproximación central de segundo order y para el caso de las derivadas parciales respecto al eje $\eta$ se hará uso de aproximaciones de primer orden tipo ``forward'', resultando la ecuación en
+			 \begin{equation}
+				 \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j}}{2 \Delta \xi} + \left[ B \right] \frac{R_{i, j} - R_{i, j - 1}}{\Delta \eta} = \left[ H \right]_{i, j}
+			 \end{equation}
+			 que al ser multiplicada por la matriz $\left[ B \right]^{-1}$ y reacomodada queda cómo
+			 \begin{equation}
+				 \frac{R_{i, j} - R_{i, j-1} }{\Delta \eta} + \left[ B \right]^{-1} \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j} }{2 \Delta \xi} = \left[ B \right]^{-1} H_{i, j}
+			 \end{equation}
+			 en donde las matrices $A$ y $B$ son evaluadas en la línea $(j - 1)$. Esta ecuación se reacomoda y se le asignan nuevos términos, con el propósito de compactar a la misma, dando como resultado
+			 \begin{equation}
+				 \left[ AA \right] R_{i - 1, j} + \left[ BB \right] R_{i, j} + \left[ CC \right] R_{i + 1, j} = \left[ DD \right]_{i, j}
+				 \label{ec-hyper-final}
+			 \end{equation}
+			 donde
+			 \begin{subequations}
+			 	\begin{equation*}
+				 	\left[ AA \right] = - \frac{1}{2} \left[ C \right]_{i, j - 1}
+			 	\end{equation*}
+				\begin{equation*}
+					\left[ BB \right] = \left[ I \right]
+				\end{equation*}
+				\begin{equation*}
+					\left[ CC \right] = \frac{1}{2} \left[ C \right]_{i, j - 1}
+				\end{equation*} 
+			 \end{subequations}
+		 una vez que se ha desarrollado la ecuación \ref{ec-hyper-final} para todas las instancias existentes a lo largo de $i$ para un mismo nivel $j$, se obtiene un sistema de bloque tridiagonal
+		 \begin{equation}
+			 \begin{bmatrix}
+				 \left[ BB \right]_2 & \left[ CC \right]_2 & & & & \\
+				 \left[AA\right]_3 & \left[BB\right]_3 & \left[CC\right]_3 & & & \\
+				 & \ddots & \ddots &  \ddots & & \\
+				 & & \ddots & \ddots & \ddots & & \\
+				 & & & \left[AA\right]_{m-2} & \left[BB\right]_{m-2} & \left[CC\right]_{m-2}\\
+				 & & & & \left[AA\right]_{m-1} & \left[BB\right]_{m-1}
+			 \end{bmatrix}
+			 \begin{bmatrix}
+				 R_{2}\\
+				 R_{3}\\
+				 \vdots\\
+				 \vdots\\
+				 R_{m-2}\\
+				 R_{m-1}
+			 \end{bmatrix}
+			 = \begin{bmatrix}
+				 \left[DD\right]_2\\
+				 \left[DD\right]_3\\
+				 \vdots\\
+				 \vdots\\
+				 \left[DD\right]_{m-2}\\
+				 \left[DD\right]_{m-1}
+			 \end{bmatrix}
+		 \end{equation}
+		 los términos $\left[DD\right]_2$ y $\left[DD\right]_{m - 1}$ son afectados por las condiciones de frontera de la siguiente manera
+		 \begin{subequations}
+		 	\begin{equation*}
+			 	\left[DD\right]_2 = \left[DD\right]_2 - \left[AA\right]_2 R_1
+		 	\end{equation*}
+		 	\begin{equation*}
+			 	\left[DD\right]_{m - 1} = \left[DD\right]_{m - 1} - \left[CC\right]_{m - 1} R_{m}
+		 	\end{equation*}
+		 \end{subequations}
 			
 			
 				
@@ -939,8 +1118,23 @@
 	%
 	%
 	%
-	%\subfigure[Aproximación forward]{\label{fig:grafica-forward}\includegraphics[width=65mm]{./Imagenes/grafica-forward}}
+	%
 	
+	%
+	%
+	%
+	%
+	%
+\chapter{Desarrollo Práctico}
+	\paragraph*{}
+		Los códigos de este trabajo fueron implementados en lenguaje Python 3, utilizando el paradigma de programación orientada a objetos, en éste los datos son trabajados como objetos con atributos y métodos pertenecientes a una clase, y que pueden ser heredados y aplicados a objetos o instancias de alguna subclase. Un objeto  es la representación en un programa de un concepto y contiene toda la información necesaria para abstraerlo, como son los datos que describen sus atributos y operaciones que pueden realizarse dobre los mismos.  En otras palabras un objetos es la relación que existe entre un conjunto de variables y métodos.
+	
+	\paragraph*{}
+		Se dice que todos las instancias (objetos) de un mismo tipo, son pertenecientes a una misma clase. Una de las características más importantes de la programación orientada a objetos es la herencia, la cual permite la definición de nuevas clases a partir de una ``superclase'' ya existente, las cuales se conocen como ``subclases''. Una subclase hereda todo el comportamiento de su superclase, pero se puede introducir además características propias.
+		
+	\paragraph*{}
+		En el presente trabajo se implementaron dos superclases: ``airfoil'' y ``mesh'', cada una con sus respectivas subclases.
+		La clase airfoil se desarrolló para la creación de perfiles alares a partir de una archivo de texto que contenga la nube de puntos del perfil deseado, como dato de entrada se requiere el nombre del archivo texto y la dimensión en metros de la cuerda. Esta clase tiene una subclase ``NACA4'' la cual genera perfiles de la serie de 4 dígitos de perfiles aerodinámicos de la NACA. La creación del perfil se hace a partir de la ecuación constitutiva de la serie. Como datos de entrada se requieren los valores de m (combudara máxima), p (posición de la combadura máxima), t (espesor máximo) y c (cuerda). La subclase NACA4 tiene dos métodos para la creación del perfil, el primero de ellos, el método ``create\textunderscore linear'' crea la nube de puntos con una distribución equidistante de los puntos en dirección del eje $x$. El segundo método, llamado ``create\textunderscore sin''genera a partir de una función senoidal una nube de punto que permite que haya mayor densidad de nodos tanto en el borde de ataque como en el borde de salida del perfil.
 			 
 			 
 				

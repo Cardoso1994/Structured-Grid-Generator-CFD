@@ -95,4 +95,11 @@ Joe~F Thompson, Frank~C Thames, and C~Wayne Mastin.
   system for field containing any number of arbitrary two-dimensional bodies.
 \newblock {\em Journal of computational physics}, 15(3):299--319, 1974.
 
+\bibitem{Hyperbolic-steger1980generation}
+Joseph~L Steger and Denny~S Chaussee.
+\newblock Generation of body-fitted coordinates using hyperbolic partial
+  differential equations.
+\newblock {\em SIAM Journal on Scientific and Statistical Computing},
+  1(4):431--437, 1980.
+
 \end{thebibliography}
