@@ -13,45 +13,45 @@ Warning--entry type for "openfoam" isn't style-file defined
 --line 63 of file referencias.bib.bib
 Warning--entry type for "xflow" isn't style-file defined
 --line 70 of file referencias.bib.bib
-You've used 20 entries,
+You've used 21 entries,
             1791 wiz_defined-function locations,
-            542 strings with 5862 characters,
-and the built_in function-call counts, 3262 in all, are:
-= -- 266
-> -- 135
+            547 strings with 6012 characters,
+and the built_in function-call counts, 3409 in all, are:
+= -- 278
+> -- 143
 < -- 5
-+ -- 55
-- -- 35
-* -- 138
-:= -- 518
-add.period$ -- 54
-call.type$ -- 20
-change.case$ -- 17
++ -- 58
+- -- 37
+* -- 143
+:= -- 545
+add.period$ -- 57
+call.type$ -- 21
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 166
-empty$ -- 377
-format.name$ -- 35
-if$ -- 752
+cite$ -- 21
+duplicate$ -- 174
+empty$ -- 391
+format.name$ -- 37
+if$ -- 784
 int.to.chr$ -- 0
-int.to.str$ -- 20
-missing$ -- 23
-newline$ -- 97
-num.names$ -- 20
-pop$ -- 108
+int.to.str$ -- 21
+missing$ -- 24
+newline$ -- 102
+num.names$ -- 21
+pop$ -- 111
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 67
+skip$ -- 71
 stack$ -- 0
 substring$ -- 52
-swap$ -- 26
+swap$ -- 27
 text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 25
-width$ -- 22
-write$ -- 203
+while$ -- 26
+width$ -- 23
+write$ -- 213
 (There were 5 warnings)

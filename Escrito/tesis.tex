@@ -1111,7 +1111,153 @@
 			 	\left[DD\right]_{m - 1} = \left[DD\right]_{m - 1} - \left[CC\right]_{m - 1} R_{m}
 		 	\end{equation*}
 		 \end{subequations}
-			
+		
+	\paragraph*{}
+		Este sistema de ecuaciones se resuelve avanzando en dirección del eje $\eta$, siempre y cuando la distribución de punto en la superficie y en las fronteras sea proporcionada.
+		
+	\paragraph*{}
+		Los puntos en las fronteras deben ser libres de flotar, es decir, deben calcularse al final de cada iteración. Esto se logra aplicando la condición de ortogonalidad a las fronteras $i = 1$ e $i = m$ para actualizar dichos puntos.
+	
+	\subsection{Algoritmo de solución}
+	\paragraph*{}
+		En el presente proyecto se lleva a cabo la solución del sistema obtenido en la sección anterior mediante el método propuesto por Hoffman\cite{hoffmann2000computational}.
+	
+	\paragraph*{}
+		Un sistema de ecuaciones diferenciales parciales es aproximado mediante un sistema de bloque tridiagonal cuando en dicho sistema se involucran tres puntos de la malla en cada nivel. El sistema resultante puede expresarse en su forma general como:
+		\begin{equation}
+			S \Delta Q = R
+			\label{hyper-sol-1}
+		\end{equation}
+		donde $\Delta Q$ y $R$ con vectores con $m$ componentes, y a su vez, $S$ representa el bloque tridiagonal
+		\begin{equation*}
+			S = \begin{bmatrix}
+			B_2 & C_2\\
+			A_3 & B_2 & C_3\\
+			& A_4 & B_4 & C_4\\
+			& & \ddots & \ddots & \ddots\\
+			& & & A_{m-2} & B_{m-2} & C_{m-2}\\
+			& & & & A_{m-1} & B_{m-1}
+			\end{bmatrix}
+		\end{equation*}
+		donde $A_i, B_i$ y $C_i$ son matrices de orden $m$.
+		
+	\paragraph*{}
+		Para poder continuar con la obtención de un esquema de solución, habrá que considerar la siguiente factorización
+		\begin{equation}
+			S = LU = \begin{bmatrix}
+				\alpha_2\\
+				A_3 & \alpha_3 \\
+				& A_4 & \alpha_4\\
+				& & \ddots & \ddots\\
+				& & & A_{m-2} & \alpha_{m-2}\\
+				& & & & A_{m-1} & \alpha_{m-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				I & \beta_2\\
+				& I & \beta_3\\
+				& & I & \beta_4\\
+				& & & \ddots & \ddots\\
+				& & & & I & \beta_{m-2}\\
+				& & & & & I\\
+			\end{bmatrix}
+		\end{equation}
+		donde $I$ es la matriz identidad de orden $m$ y las matrices cuadradas $\alpha_i$ y $\beta_i$ se determinan mediante
+		\begin{align}
+			\alpha_2 = B_2 && y && \beta_2 = B_{2}^{-1} C_2
+		\end{align}
+		\begin{align}
+			\alpha_i = B_i - A_i \beta_{i-1} &&&& i = 3, 4, \dots, m-1
+		\end{align}
+		y
+		\begin{align}
+			\beta_i = \alpha_{i}^{-1} C_i &&&& i = 3, 4, \dots, m-2
+		\end{align}
+		
+	\paragraph*{}
+		Ahora, el sistema dado por la ecuación \ref{hyper-sol-1} es equivalente a
+		\begin{equation}
+			LY = R
+			\label{hyper-sol-2}
+		\end{equation}
+		donde
+		\begin{equation}
+			Y = U \Delta Q
+			\label{hyper-sol-3}
+		\end{equation}
+	
+	\paragraph*{}
+		La ecuación \ref{hyper-sol-2} al desarrollarse queda de la siguiente manera
+		\begin{equation}
+			\begin{bmatrix}
+				\alpha_2\\
+				A_3 & \alpha_3\\
+				& A_4 & \alpha_4\\
+				& & \ddots & \ddots\\
+				& & & A_{m-1} & \alpha_{m-1}
+			\end{bmatrix}
+			\begin{bmatrix}
+				Y_2\\
+				Y_3\\
+				Y_4\\
+				\vdots\\
+				Y_{m-1}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				R_2\\
+				R_3\\
+				R_4\\
+				\vdots\\
+				R_{m-1}
+			\end{bmatrix}
+		\end{equation}
+		donde
+		\begin{equation}
+			Y_2 = \alpha_{2}^{-1} R_2
+		\end{equation}
+		y
+		\begin{align}
+			Y_i = \alpha_{i}^{-1} \left( R_i - A_i Y_{i-1} \right) &&&& i = 3, 4, \dots, m-1
+		\end{align}
+		
+	\paragraph*{}
+		La ecuación \ref{hyper-sol-3} se desarrolla como
+		\begin{equation}
+			\begin{bmatrix}
+				I & \beta_2\\
+				& I & \beta_3\\
+				& & I & \beta_4\\
+				& & & \ddots & \ddots\\
+				& & & & I & \beta_{m-2}\\
+				& & & & & I
+			\end{bmatrix}
+			\begin{bmatrix}
+				\Delta Q_2\\
+				\Delta Q_3\\
+				\Delta Q_4\\
+				\vdots\\
+				\Delta Q_{m-2}\\
+				\Delta Q_{m-1}
+			\end{bmatrix}
+			=
+			\begin{bmatrix}
+				Y_2\\
+				Y_3\\
+				Y_4\\
+				\vdots\\
+				Y_{m-2}\\
+				Y_{m-1}
+			\end{bmatrix}
+		\end{equation}
+		en donde
+		\begin{equation}
+			\Delta Q_{m-1} = Y_{m-1}
+		\end{equation}
+		y
+		\begin{align}
+			\Delta Q_i = Y_i - \beta_i \Delta Q_{i+1} &&&& i = m-1, m-2, \dots, 3, 2
+		\end{align}
+		
 			
 				
 	%
