@@ -1021,7 +1021,7 @@
 		\paragraph*{}
 			Por definición, el sistema de ecuaciones descrito por la ecuación \ref{ec-hyper-compacta} es hiperbólico los eigenvalores de $\left[ B \right]^{-1} \left[ A \right]$ son reales. Se observa que\\
 			\begin{equation*}
-				\left[ B \right] = \frac{1}{DN}\begin{bmatrix}
+				\left[ B \right]^{-1} = \frac{1}{DN}\begin{bmatrix}
 					x_{\xi}^{k} & -y_{\xi}^{k} \\ \\
 					y_{\xi}^{k} & x_{\xi}^{k}
 				\end{bmatrix}
@@ -1050,7 +1050,7 @@
 			DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2 \neq 0
 			\end{equation*}
 		 \paragraph*{}
-			 Para obtener un sistema de ecuaciones algebráico, debemos aplicar el método de diferencias finitas. Para la sustitución de las derivadas parciales respecto al eje $\xi$ se utiliza una aproximación central de segundo order y para el caso de las derivadas parciales respecto al eje $\eta$ se hará uso de aproximaciones de primer orden tipo ``forward'', resultando la ecuación en
+			 Para obtener un sistema de ecuaciones algebráico, debemos aplicar el método de diferencias finitas. Para la sustitución de las derivadas parciales respecto al eje $\xi$ se utiliza una aproximación central de segundo order y para el caso de las derivadas parciales respecto al eje $\eta$ se hará uso de aproximaciones de primer orden tipo ``backwards'', resultando la ecuación en
 			 \begin{equation}
 				 \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j}}{2 \Delta \xi} + \left[ B \right] \frac{R_{i, j} - R_{i, j - 1}}{\Delta \eta} = \left[ H \right]_{i, j}
 			 \end{equation}
@@ -1066,14 +1066,17 @@
 			 donde
 			 \begin{subequations}
 			 	\begin{equation*}
-				 	\left[ AA \right] = - \frac{1}{2} \left[ C \right]_{i, j - 1}
+				 	\left[ AA \right] = - \frac{1}{2 \Delta \xi} \left[ C \right]_{i, j - 1}
 			 	\end{equation*}
 				\begin{equation*}
-					\left[ BB \right] = \left[ I \right]
+					\left[ BB \right] = \frac{\left[ I \right]}{\Delta \eta}
 				\end{equation*}
 				\begin{equation*}
-					\left[ CC \right] = \frac{1}{2} \left[ C \right]_{i, j - 1}
-				\end{equation*} 
+					\left[ CC \right] = \frac{1}{2 \Delta \xi} \left[ C \right]_{i, j - 1}
+				\end{equation*}
+				\begin{equation*}
+				\left[ DD \right] = \left[ B \right]_{i, j}^{-1} H_{i, j} + \frac{R_{i, j-1}}{\Delta \eta}
+				\end{equation*}
 			 \end{subequations}
 		 una vez que se ha desarrollado la ecuación \ref{ec-hyper-final} para todas las instancias existentes a lo largo de $i$ para un mismo nivel $j$, se obtiene un sistema de bloque tridiagonal
 		 \begin{equation}
