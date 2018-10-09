@@ -141,7 +141,7 @@ class NACA4(airfoil):
             xu *= c
             yu *= c
             xl *= c
-            yl *= c
+            yl *= cm
             xc *= c
             yc *= c
             yt *= c
@@ -263,6 +263,8 @@ class NACA4(airfoil):
         
         perfil[:, 0] = xp
         perfil[:, 1] = yp
+        perfil[0, 1] = 0
+        perfil[-1, 1] = 0
         np.savetxt('perfil_final.txt', perfil) # guarda la nube de puntos del perfil
         self.x = perfil[:, 0]
         self.y = perfil[:, 1]
