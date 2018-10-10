@@ -7,12 +7,11 @@ Created on Wed Aug 1 13:53:21 2018
 @author: cardoso
 
 Define subclase mesh_C.
-Se definen diversos métodos de generación para este tipo de mallas
+Se definen diversos métodos de generación para mallas tipo C
 """
 
 from mesh import mesh
 import numpy as np
-
 
 class mesh_C(mesh):
     def __init__(self, R, M, N, archivo):
@@ -93,7 +92,7 @@ class mesh_C(mesh):
         Yn = self.Y
         m = self.M
         n = self.N
-
+        
         d_eta = self.d_eta
         d_xi = self.d_xi
         omega = np.longdouble(1.4) # en caso de metodo SOR
@@ -221,8 +220,8 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(10.7)
-        cc = np.longdouble(3.1)
+        aa = np.longdouble(0.28) #8.2
+        cc = np.longdouble(3.4)
         linea_xi = 0
         linea_eta = 0.5
 
@@ -232,7 +231,7 @@ class mesh_C(mesh):
         while it < mesh.it_max:
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
-            
+            print(it)
             # si el método iterativo es Jacobi
             if metodo == 'J':
                 X = Xo
@@ -344,4 +343,95 @@ class mesh_C(mesh):
 
         self.X = Xn
         self.Y = Yn
+        return
+
+
+# función para la generación de mallas mediante EDP hiperbólicas
+    def gen_hyperbolic(self):
+        # se inician las variables características de la malla
+        m = self.M
+        n = self.N
+        X = self.X
+        Y = self.Y
+        d_xi = self.d_xi
+        d_eta = self.d_eta
+        d_s1 = 0.01
+        S = np.zeros((m - 2, m - 2), dtype=object)
+        L = np.zeros((m - 2, m - 2), dtype=object)
+        U = np.zeros((m - 2, m - 2), dtype=object)
+        R = np.zeros((m - 2, 1), dtype=object)
+        Z = np.zeros((m - 2, 1), dtype=object)
+        DD = np.zeros((m - 2, 1), dtype=object)
+        Fprev = 0.02
+        C = np.zeros((2, 2))
+        
+        self.gen_TFI()
+        for j in range(1, n):
+            # se llena la matriz S y el vector DD
+            for i in range(1, m-1):
+                F = 0.5 * ( ((X[i, j - 1] - X[i - 1, j - 1]) ** 2 + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5\
+                            + ((X[i + 1, j - 1] - X[i, j - 1]) ** 2 + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5)
+                F = F * d_s1 * (1 + 0.1) ** (j - 1)
+                x_xi_k = (X[i + 1, j - 1] - X[i - 1, j - 1]) / 2 / d_xi
+                y_xi_k = (Y[i + 1, j - 1] - Y[i - 1, j - 1]) / 2 / d_xi
+                x_eta_k = - y_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
+                y_eta_k =  x_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
+                B_1 = np.array([[x_xi_k, -y_xi_k], [y_xi_k, x_xi_k]]) / (x_xi_k ** 2 + y_xi_k ** 2)
+                A = np.array([[x_eta_k, y_eta_k], [y_eta_k, -x_eta_k]])
+                C = B_1 @ A
+                AA = - 1 / 2 / d_xi * C
+                BB = np.identity(2) / d_eta
+                CC = -AA
+                dd = B_1 @ np.array([[0], [F + Fprev]]) + np.array([[X[i, j - 1]], [Y[i, j - 1]]]) / d_eta
+                if i == 1:
+                    dd -= (AA @ np.array([[X[0, j]], [Y[0, j]]]))
+                    S[0, 0] = BB
+                    S[0, 1] = CC
+                elif i == m - 2:
+                    dd -= (CC @ np.array([[X[m - 1, j]], [Y[m - 1, j]]]))
+                    S[m - 3, m - 4] = AA
+                    S[m - 3, m - 3] = BB
+                else:
+                    S[i - 1, i - 2] = AA
+                    S[i - 1, i - 1] = BB
+                    S[i - 1, i] = CC
+                DD[i - 1, 0] = dd
+            # se llenan las matrices L y U
+            for i in range(m - 2):
+                if i == 0:
+                    L[0, 0] = S[0, 0]
+                    U[0, 0] = np.identity(2)
+                    U[0, 1] = np.linalg.inv(S[0, 0]) @ S[0, 1]
+                elif i == m - 3:
+                    L[m - 3, m - 4] = S[m - 3, m - 4]
+                    L[m - 3, m - 3] = S[m - 3, m - 3] - S[m - 3, m - 4] @ U[m -4, m - 3]
+                    U[m - 3, m - 3] = np.identity(2)
+                else:
+                    L[i, i - 1] = S[i, i - 1]
+                    L[i, i] = S[i, i] - S[i, i - 1] @ U[i - 1, i]
+                    U[i, i] = np.identity(2)
+                    U[i, i + 1] = np.linalg.inv(L[i, i]) @ S[i, i + 1]
+            # se obtienen los valores del vector Z
+            i = 0
+            Z[0, 0] = np.linalg.inv(L[0, 0]) @ DD[0, 0]
+            for i in range(1, m - 2):
+                Z[i, 0] = np.linalg.inv(L[i, i]) @ (DD[i, 0] - L[i, i - 1] @ Z[i - 1, 0])
+            # se obtienen los valores del vector R
+            i = m - 3
+            R[i, 0] = Z[i, 0]
+            for i in range(m - 4, -1, -1):
+                R[i, 0] = Z[i, 0] - U[i, i + 1] @ Z[i + 1, 0]
+            # se asignan las coordenadas X y Y
+            for i in range(1, m - 1):
+                X[i, j] = R[i - 1, 0][0]
+                Y[i, j] = R[i - 1, 0][1]
+            '''i = 0
+            mag = ((X[i + 1, j] - X[i + 1, j - 1]) ** 2 + (Y[i + 1, j] - Y[i + 1, j - 1]) ** 2) ** 0.5
+            mag *= 0.35
+            X[i, j] = X[i, j- 1] + mag
+            Y[i, j] = 0
+            X[-1, j] = X[i, j]
+            Y[-1, j] = 0
+            Fprev = F'''
+            
         return
