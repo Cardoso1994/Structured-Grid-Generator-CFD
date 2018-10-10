@@ -10,13 +10,9 @@ On the other hand, I've created a method for generating NACA airfoils of the 4th
   
   
 About the grid generation, there are 3 main files:  
-  mesh.py  
-  mesh_o.py  
-  mesh_c.py  
-  Markup : * Bullet list
-              * Nested bullet
-                  * Sub-nested bullet etc
-          * Bullet list item 2
+* mesh.py  
+* mesh_o.py  
+* mesh_c.py
 
 ## Contact Me
 If you found a bug, or have any suggestions on how the performance of the generator might be improved, please contact me at:  
