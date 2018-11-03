@@ -286,14 +286,14 @@ class mesh_O(mesh):
         Y = self.Y
         d_xi = self.d_xi
         d_eta = self.d_eta
-        d_s1 = 0.02
+        d_s1 = 0.01
         S = np.zeros((m - 2, m - 2), dtype=object)
         L = np.zeros((m - 2, m - 2), dtype=object)
         U = np.zeros((m - 2, m - 2), dtype=object)
         R = np.zeros((m - 2, 1), dtype=object)
         Z = np.zeros((m - 2, 1), dtype=object)
         DD = np.zeros((m - 2, 1), dtype=object)
-        Fprev = 0.04
+        Fprev = 0.05
         C = np.zeros((2, 2))
         
         self.gen_TFI()
@@ -302,7 +302,7 @@ class mesh_O(mesh):
             for i in range(1, m-1):
                 F = 0.5 * ( ((X[i, j - 1] - X[i - 1, j - 1]) ** 2 + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5\
                             + ((X[i + 1, j - 1] - X[i, j - 1]) ** 2 + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5)
-                F = F * d_s1 * (1 + 0.01) ** (j - 1)
+                F = F * d_s1 * (1 + 0.05) ** (j - 1)
                 x_xi_k = (X[i + 1, j - 1] - X[i - 1, j - 1]) / 2 / d_xi
                 y_xi_k = (Y[i + 1, j - 1] - Y[i - 1, j - 1]) / 2 / d_xi
                 x_eta_k = - y_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
@@ -358,12 +358,13 @@ class mesh_O(mesh):
                 Y[i, j] = R[i - 1, 0][1]
             '''i = 0
             mag = ((X[i + 1, j] - X[i + 1, j - 1]) ** 2 + (Y[i + 1, j] - Y[i + 1, j - 1]) ** 2) ** 0.5
-            mag *= 0.35
+            mag = (X[i + 1, j] ** 2 + Y[i + 1, j] ** 2) ** 0.5 \
+                  - (X[i + 1, j - 1] ** 2 + Y[i + 1, j - 1] ** 2) ** 0.5
             X[i, j] = X[i, j- 1] + mag
             Y[i, j] = 0
             X[-1, j] = X[i, j]
-            Y[-1, j] = 0
-            Fprev = F'''
+            Y[-1, j] = 0'''
+            Fprev = F
             
         return
 

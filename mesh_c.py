@@ -146,8 +146,6 @@ class mesh_C(mesh):
                 gamma = x_xi ** 2 + y_xi ** 2
                     
                     
-                '''Xn[i, j] = (d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (X[i+2, j] - 2 * X[i+1, j])\
-                          - beta / d_xi / d_eta * (X[i+1, j+1] - X[i+1, j-1] - X[i, j+1] + X[i, j-1]) + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]) )'''
                 Yn[i, j] =(d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])\
                           - beta / d_xi / d_eta * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1]) + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
 
@@ -294,8 +292,6 @@ class mesh_C(mesh):
                 I = x_xi * y_eta - x_eta * y_xi
                     
                     
-                '''Xn[i, j] = (d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (X[i+2, j] - 2 * X[i+1, j])\
-                          - beta / d_xi / d_eta * (X[i+1, j+1] - X[i+1, j-1] - X[i, j+1] + X[i, j-1]) + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]) )'''
                 Yn[i, j] =(d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])\
                           - beta / d_xi / d_eta * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1]) + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])\
                           + I**2 * (P * y_xi + Q * y_eta))
@@ -362,7 +358,7 @@ class mesh_C(mesh):
         R = np.zeros((m - 2, 1), dtype=object)
         Z = np.zeros((m - 2, 1), dtype=object)
         DD = np.zeros((m - 2, 1), dtype=object)
-        Fprev = 0.02
+        Fprev = 0.001
         C = np.zeros((2, 2))
         
         self.gen_TFI()
@@ -371,7 +367,7 @@ class mesh_C(mesh):
             for i in range(1, m-1):
                 F = 0.5 * ( ((X[i, j - 1] - X[i - 1, j - 1]) ** 2 + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5\
                             + ((X[i + 1, j - 1] - X[i, j - 1]) ** 2 + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5)
-                F = F * d_s1 * (1 + 0.1) ** (j - 1)
+                F = F * d_s1 * (1 + 0.04) ** (j - 1)
                 x_xi_k = (X[i + 1, j - 1] - X[i - 1, j - 1]) / 2 / d_xi
                 y_xi_k = (Y[i + 1, j - 1] - Y[i - 1, j - 1]) / 2 / d_xi
                 x_eta_k = - y_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
@@ -425,13 +421,14 @@ class mesh_C(mesh):
             for i in range(1, m - 1):
                 X[i, j] = R[i - 1, 0][0]
                 Y[i, j] = R[i - 1, 0][1]
-            '''i = 0
-            mag = ((X[i + 1, j] - X[i + 1, j - 1]) ** 2 + (Y[i + 1, j] - Y[i + 1, j - 1]) ** 2) ** 0.5
-            mag *= 0.35
-            X[i, j] = X[i, j- 1] + mag
-            Y[i, j] = 0
+            i = 0
+            '''mag = ((X[i + 1, j] - X[i + 1, j - 1]) ** 2 + (Y[i + 1, j] - Y[i + 1, j - 1]) ** 2) ** 0.5
+            mag = (X[i + 1, j] ** 2 + Y[i + 1, j] ** 2) ** 0.5 \
+                  - (X[i + 1, j - 1] ** 2 + Y[i + 1, j - 1] ** 2) ** 0.5'''
+            X[i, j] = 1.5 * self.R
+            Y[i, j] = Y[i + 1, j]
             X[-1, j] = X[i, j]
-            Y[-1, j] = 0
-            Fprev = F'''
+            Y[-1, j] = Y[-2, j]
+            Fprev = F
             
         return
