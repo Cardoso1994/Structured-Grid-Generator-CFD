@@ -480,7 +480,7 @@
 		La malla debe de generarse bajos ciertas restricciones las cuales suelen ser difíciles de satisfacer por completo. En la actualidad el tiempo que toma generar una malla llega a ser mayor en órdenes de magnitud que el tiempo requerido para la construcción y análisis de la solución del flujo sobre la malla. En especial ahora que hay mayor disponibilidad de software para la solución de flujos.\cite{thompsonhandbook}
 	
 	
-	\section{Tipos de Mallas}
+	\section{Tipos de Mallas Estructuradas}
 		\paragraph*{}
 		Existen tres tipos base de mallas conocidos como mallas C, H u O respectivamente. El nombre que dichos tipos de mallado reciben se debe a que su estructura asemeja a dichas letras (en mayúsculas) desde una vista de planta.
 		
@@ -537,6 +537,10 @@
 			\paragraph*{}
 			En el caso de que se quiera ocupar una malla H con un cuerpo a analizar en el interior del dominio, como el caso representado en la figura \ref*{fig:tipos-de-malla}(H) se puede realizar un mallado uniforme, quizás mediante un método de interpolación algeráica, sobre el dominio físico quedando así coincidente con el dominio computacional. Los puntos 5 y 6 requieren de un trato especial al momento de llevar a cabo la solución, un ejemplo de esto puede ser que todos los puntos del mallado que caen dentro del objeto de análisis no sean utilizados durante la solución.
 			
+	\section{Mallas Adaptativas}
+		\paragraph*{}
+			A pesar de que existen varios modelos algebráicos y diferenciales para la generación de mallas, aún hay problemas para los cuales estos métodos no generen una malla adecuada, ya sea que la malla se aleje mucho de la ortogonalidad en ciertos puntos, que esté coprimida, e incluso no se llegue a la convergencia. Desde la década de 1960, época en la que la generación de mallas comienza a ser estudiada con mayor seriedad, se han analizado enfoques variables para solucionar los problemas presentados en los enfoques diferenciales.
+
 	\section{Consideraciones preliminares para la generación de mallas}	
 		\paragraph*{}
 			La densidad de la malla es el primer aspecto que se debe considerar, se debe generar una malla solo sufcientemente densa para que la aproximación numérica sea precisa, sin embargo, se debe tener cuidado en no hacer la malla demasiado densa, tanto que resulte impractico llevar a cabo un análisis y llegar a una eventual solución.

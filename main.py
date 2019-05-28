@@ -10,6 +10,7 @@ import airfoil
 import mesh
 import mesh_c
 import mesh_o
+import numpy as np
 
 
 import matplotlib.pyplot as plt
@@ -20,13 +21,21 @@ filename = 'whitcomb-il.txt'
 # tipo de malla (C, O)
 malla = 'C'
 
-# densidad de puntos para la malla
-# eje "xi"
-points = 19 # para 201 son 115 puntos
-# se ajusta por cuestiones de calculo a la mitad de puntos, se calculan por separado parte inferior y superior
-points = (points + 1) // 2
+'''
+densidad de puntos para la malla
+eje "XI"
+en el caso de malla tipo O, coincide con el número de puntos del perfil
+'''
+M = 81
+N = 17
+# se ajusta por cuestiones de calculo a la mitad de puntos
+# se calculan por separado parte inferior y superior del perfil
+# points = (M + 1) // 2
 
-
+if malla == 'C':
+    points = M // 3 * 2
+elif malla == 'O':
+    points = M
 # datos de perfil NACA
 m = 2 # combadura
 p = 4 # posicion de la combadura
@@ -37,17 +46,12 @@ R = 5 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-del(perfil)
-
 # se ajusta la densidad de la malla dependiendo el tipo de malla a generar
 # densidad del mallado normal si es tipo 'O'
-M = (points * 2) - 1
-if malla == 'C':
-    M += 3 * M // 4
-elif malla == 'H':
-    M *= 2
-N = 17
-print(M, N)
+#M = (points * 2) - 1
+#if malla == 'C':
+    #M += 3 * M // 4
+#N = 17
 
 
 
@@ -63,8 +67,8 @@ elif malla == 'C':
 '''mallaNACA.gen_inter_Hermite()
 plt.figure('NACA')
 plt.title('Interpolación Hermite')
-mallaNACA.plot()'''
-
+mallaNACA.plot()
+'''
 
 '''
 mallaNACA.gen_inter_pol()
@@ -78,6 +82,7 @@ mallaNACA.gen_Poisson(metodo='SOR')
 plt.figure('_NACA_')
 plt.title('Ec de Poisson')
 mallaNACA.plot()
+
 
 '''
 mallaNACA.gen_Laplace(metodo = 'SOR')

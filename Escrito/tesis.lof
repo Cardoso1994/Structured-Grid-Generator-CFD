@@ -1,4 +1,4 @@
-\select@language {spanish}
+\babel@toc {spanish}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Discretizaci\IeC {\'o}n por Diferencias Finitas}}{6}{figure.caption.57}
@@ -16,15 +16,15 @@
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Malla tipo O}}{14}{figure.caption.86}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Malla tipo O}}{15}{figure.caption.90}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Malla Interpolaci\IeC {\'o}n Polinomial}}{19}{figure.caption.105}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Malla Interpolaci\IeC {\'o}n Polinomial Acercamiento}}{19}{figure.caption.106}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Transformaci\IeC {\'o}n de malla por $P_{\eta }$}}{21}{figure.caption.115}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Transformaci\IeC {\'o}n de malla por $P_{\xi }P_{\eta }$}}{22}{figure.caption.119}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Malla Interpolaci\IeC {\'o}n Polinomial}}{19}{figure.caption.106}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Malla Interpolaci\IeC {\'o}n Polinomial Acercamiento}}{19}{figure.caption.107}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Transformaci\IeC {\'o}n de malla por $P_{\eta }$}}{21}{figure.caption.116}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Transformaci\IeC {\'o}n de malla por $P_{\xi }P_{\eta }$}}{22}{figure.caption.120}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Efecto de atracci\IeC {\'o}n por funci\IeC {\'o}n $P(\xi ,\eta )$}}{25}{figure.caption.134}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Efecto de atracci\IeC {\'o}n a la l\IeC {\'\i }nea $\xi = \xi _{m}$}}}{25}{figure.caption.134}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Efecto de atracci\IeC {\'o}n al punto $(\xi _{n}, \eta _{n})$}}}{25}{figure.caption.134}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Efecto de atracci\IeC {\'o}n por funci\IeC {\'o}n $Q(\xi ,\eta )$}}{26}{figure.caption.135}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Efecto de atracci\IeC {\'o}n a la l\IeC {\'\i }nea $\eta = \eta _{m}$}}}{26}{figure.caption.135}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Efecto de atracci\IeC {\'o}n al punto $(\xi _{n}, \eta _{n})$}}}{26}{figure.caption.135}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Efecto de atracci\IeC {\'o}n por funci\IeC {\'o}n $P(\xi ,\eta )$}}{25}{figure.caption.135}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Efecto de atracci\IeC {\'o}n a la l\IeC {\'\i }nea $\xi = \xi _{m}$}}}{25}{figure.caption.135}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Efecto de atracci\IeC {\'o}n al punto $(\xi _{n}, \eta _{n})$}}}{25}{figure.caption.135}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Efecto de atracci\IeC {\'o}n por funci\IeC {\'o}n $Q(\xi ,\eta )$}}{26}{figure.caption.136}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Efecto de atracci\IeC {\'o}n a la l\IeC {\'\i }nea $\eta = \eta _{m}$}}}{26}{figure.caption.136}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Efecto de atracci\IeC {\'o}n al punto $(\xi _{n}, \eta _{n})$}}}{26}{figure.caption.136}
 \addvspace {10\p@ }

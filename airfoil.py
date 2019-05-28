@@ -141,7 +141,7 @@ class NACA4(airfoil):
             xu *= c
             yu *= c
             xl *= c
-            yl *= cm
+            yl *= c
             xc *= c
             yc *= c
             yt *= c
@@ -182,6 +182,7 @@ class NACA4(airfoil):
         
         points = número de puntos para el perfil
         '''
+        points = (points + 1) // 2
         m = self.m
         p = self.p
         t = self.t
