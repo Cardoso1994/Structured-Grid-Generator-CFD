@@ -48,6 +48,8 @@ class mesh_C(mesh):
         x = R * np.cos(theta)
         y = R * np.sin(theta)
         # se termina FE
+        
+        # cambiar variable x_line para que no sea distribución lineal
         x_line = np.linspace(R * 2.5, 0, ((M - points) // 2 + 1))
         #dx = (x_line[-2] - x_line[-1]) / 3.5
         #x_line[1:-1] -= dx
@@ -60,6 +62,7 @@ class mesh_C(mesh):
         y = np.concatenate((y, -y_line[1:]))
 
         # frontera interna
+        # cambiar variable x_line para que no sea distribución lineal
         x_line = np.linspace(R * 2.5, perfil_x[0], (M - points ) // 2 + 1)
         dx = (x_line[-2] - x_line[-1]) * 253 / 254
         x_line[1:-1] -= dx
