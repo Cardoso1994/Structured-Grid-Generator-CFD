@@ -12,6 +12,8 @@
 *.cb2
 .*.lb
 
+*.txt
+
 ## Intermediate documents:
 *.dvi
 *.xdv
@@ -244,4 +246,3 @@ TSWLatexianTemp*
 # ignore __pycache__ directory
 __pycache__
 titulo
-*.txt
