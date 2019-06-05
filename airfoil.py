@@ -141,7 +141,7 @@ class NACA4(airfoil):
             xu *= c
             yu *= c
             xl *= c
-            yl *= cm
+            yl *= c
             xc *= c
             yc *= c
             yt *= c
