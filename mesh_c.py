@@ -48,7 +48,7 @@ class mesh_C(mesh):
         x = R * np.cos(theta)
         y = R * np.sin(theta)
         # se termina FE
-        x_line = np.linspace(R * 1.5, 0, ((M - points) // 2 + 1))
+        x_line = np.linspace(R * 2.5, 0, ((M - points) // 2 + 1))
         #dx = (x_line[-2] - x_line[-1]) / 3.5
         #x_line[1:-1] -= dx
         x = np.concatenate((x_line, x[1:]))
@@ -60,7 +60,7 @@ class mesh_C(mesh):
         y = np.concatenate((y, -y_line[1:]))
 
         # frontera interna
-        x_line = np.linspace(R * 1.5, perfil_x[0], (M - points ) // 2 + 1)
+        x_line = np.linspace(R * 2.5, perfil_x[0], (M - points ) // 2 + 1)
         dx = (x_line[-2] - x_line[-1]) * 253 / 254
         x_line[1:-1] -= dx
         perfil_x = np.concatenate((x_line, perfil_x[1:]))
@@ -220,8 +220,8 @@ class mesh_C(mesh):
         Q = 0
         P = 0
         I = 0
-        a = np.longdouble(0.02)
-        c = np.longdouble(2)
+        a = 0 #np.longdouble(0.02)
+        c = 0 #np.longdouble(2)
         aa = np.longdouble(0.4)
         cc = np.longdouble(3.3)
         linea_xi = 0.7

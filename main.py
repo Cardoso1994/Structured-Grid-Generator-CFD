@@ -70,19 +70,19 @@ plt.title('Interpolación Hermite')
 mallaNACA.plot()
 '''
 
-'''
+
 mallaNACA.gen_inter_pol()
 plt.figure('NACA_')
 plt.title('Interpolación Polinomial')
 mallaNACA.plot()
+
+
 '''
-
-
 mallaNACA.gen_Poisson(metodo='SOR')
 plt.figure('_NACA_')
 plt.title('Ec de Poisson')
 mallaNACA.plot()
-
+'''
 
 '''
 mallaNACA.gen_Laplace(metodo = 'SOR')
