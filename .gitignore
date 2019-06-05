@@ -263,4 +263,5 @@ TSWLatexianTemp*
 # standalone packages
 *.sta
 
+garbage
 __pycache__
