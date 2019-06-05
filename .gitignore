@@ -13,6 +13,7 @@
 .*.lb
 
 *.txt
+perfil_final.txt
 
 ## Intermediate documents:
 *.dvi
