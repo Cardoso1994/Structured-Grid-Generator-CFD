@@ -266,3 +266,4 @@ TSWLatexianTemp*
 garbage
 __pycache__
 *.txt
+.~lock.*
