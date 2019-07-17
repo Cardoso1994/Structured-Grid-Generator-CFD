@@ -735,340 +735,348 @@
 %
 %
 \chapter{Generación de mallas mediante EDP}
-		\paragraph*{}
-		La generación de mallas mediante estos métodos se ha esparcido gracias a a la versatilidad que poseen y la relativa facilidad con la que pueden ser aplicados. La idea sobre la cual se desarrolla el método, es la de obtener la solución númerica de una ecuación diferencial parcial, esta solución representa las coordenadas de la malla, la cual debe coincidir en su frontera interna, con la forma geométrica del cuerpo que se pretende analizar.\cite{siladic-grid-generation}
+	\paragraph*{}
+	La generación de mallas mediante estos métodos se ha esparcido gracias a a la versatilidad que poseen y la relativa facilidad con la que pueden ser aplicados. La idea sobre la cual se desarrolla el método, es la de obtener la solución númerica de una ecuación diferencial parcial, esta solución representa las coordenadas de la malla, la cual debe coincidir en su frontera interna, con la forma geométrica del cuerpo que se pretende analizar.\cite{siladic-grid-generation}
 		
-		\section{Generación de mallas mediante EDP elípticas}
-			\paragraph*{}
-				Para la solución de un sistema de EDP elípticas se necesita cumplir la condición de tener definidas las condiciones de frontera a lo largo de todos los puntos pertenecientes a la misma, es decir, que se tengan condiciones de frontera de Dirichlet.
-				La solución se obtiene mediante diferentes métodos numéricos iterativos, entre los que destacan el método de Jacobi, el método de Gauss-Seidel y métodos de sobre relajación.
-				
-			\paragraph*{}
-				La idea es que se calculen las coordenadas $(\xi, \eta)$ y que la solución del sistema de ecuaciones genere las correspondientes coordenadas $(x, y)$ del dominio físico, con un mapeo uno a uno, es decir, que exista una relación adecuada entre el dominio computacional y el lógico.
-				
-			\paragraph*{}
-				Considerando la ecuación de Laplace:
-				\begin{subequations}
-					\begin{equation}
-						\xi_{xx} + \xi_{yy} = 0
-					\end{equation}
-					\begin{equation}
-						\eta_{xx} + \eta_{yy} = 0
-					\end{equation}
-					\label{ec-laplace}
-				\end{subequations}\\
-				donde como ya se ha mencionado, $\xi$ y $\eta$ representan las coordenadas del dominio computacional y además, son variables dependientes de $x$ y de $y$. Si se quiere trabajar con la forma inversa, es decir, que ahora $x$ y $y$ sean variables dependientes de $\xi$ y $\eta$, la ecuación  de Laplace se expresa como:
-				\begin{subequations}
-					\begin{equation}
-						\alpha x_{\xi \xi} - 2\beta x_{\xi \eta} + \gamma x_{\eta \eta} = 0
-					\end{equation}
-					\begin{equation}
-						\alpha y_{\xi \xi} - 2\beta y_{\xi \eta} + \gamma y_{\eta \eta} = 0
-					\end{equation}
-					\label{ec-laplace-invertida}
-				\end{subequations}\\
-				
-				donde:
-				
-				\begin{equation*}
-					\alpha = x_{\eta} ^ 2 + y_{\eta}^2
-				\end{equation*}
-				\begin{equation*}
-					\beta = x_{\xi} x_{\eta} + y_{\xi} y_{\eta}
-				\end{equation*}
-				\begin{equation*}
-					\gamma = x_{\xi} ^ 2 + y_{\xi} ^ 2
-				\end{equation*}
+	\paragraph*{}
+	Existen tres esquemas predominantes de generación de mallas mediante la solución de sistemas de ecuaciones diferenciales parciales:
+	\begin{itemize}
+		\item Ecuaciones Elípticas
+		\item Ecuaciones Hiperbólicas
+		\item Ecuaciones Parabólicas
+	\end{itemize}
+		
+	\section{Generación de mallas mediante EDP elípticas}
+		\paragraph*{}
+			Para la solución de un sistema de EDP elípticas se necesita cumplir la condición de tener definidas las condiciones de frontera a lo largo de todos los puntos pertenecientes a la misma, es decir, que se tengan condiciones de frontera de Dirichlet.
+			La solución se obtiene mediante diferentes métodos numéricos iterativos, entre los que destacan el método de Jacobi, el método de Gauss-Seidel y métodos de sobre relajación.
 			
-			\paragraph*{}
-				La distribución de los nodos, obtenidos mediante la solución de la ecuación de Laplace (ecuación \ref{ec-laplace}),  tiende ser uniforme debido al efecto suavizante de dicha ecuación. Para poder manipular esta distribución, es necesario agregar funciones de forzado a la ecuación \ref{ec-laplace}, dando como resultado la ecuación de Poisson:
+		\paragraph*{}
+			La idea es que se calculen las coordenadas $(\xi, \eta)$ y que la solución del sistema de ecuaciones genere las correspondientes coordenadas $(x, y)$ del dominio físico, con un mapeo uno a uno, es decir, que exista una relación adecuada entre el dominio computacional y el lógico.
+			
+		\paragraph*{}
+			Considerando la ecuación de Laplace:
+			\begin{subequations}
+				\begin{equation}
+					\xi_{xx} + \xi_{yy} = 0
+				\end{equation}
+				\begin{equation}
+					\eta_{xx} + \eta_{yy} = 0
+				\end{equation}
+				\label{ec-laplace}
+			\end{subequations}\\
+			donde como ya se ha mencionado, $\xi$ y $\eta$ representan las coordenadas del dominio computacional y además, son variables dependientes de $x$ y de $y$. Si se quiere trabajar con la forma inversa, es decir, que ahora $x$ y $y$ sean variables dependientes de $\xi$ y $\eta$, la ecuación  de Laplace se expresa como:
+			\begin{subequations}
+				\begin{equation}
+					\alpha x_{\xi \xi} - 2\beta x_{\xi \eta} + \gamma x_{\eta \eta} = 0
+				\end{equation}
+				\begin{equation}
+					\alpha y_{\xi \xi} - 2\beta y_{\xi \eta} + \gamma y_{\eta \eta} = 0
+				\end{equation}
+				\label{ec-laplace-invertida}
+			\end{subequations}\\
+			
+			donde:
+				
+			\begin{equation*}
+				\alpha = x_{\eta} ^ 2 + y_{\eta}^2
+			\end{equation*}
+			\begin{equation*}
+				\beta = x_{\xi} x_{\eta} + y_{\xi} y_{\eta}
+			\end{equation*}
+			\begin{equation*}
+				\gamma = x_{\xi} ^ 2 + y_{\xi} ^ 2
+			\end{equation*}
+		
+		\paragraph*{}
+			La distribución de los nodos, obtenidos mediante la solución de la ecuación de Laplace (ecuación \ref{ec-laplace}),  tiende ser uniforme debido al efecto suavizante de dicha ecuación. Para poder manipular esta distribución, es necesario agregar funciones de forzado a la ecuación \ref{ec-laplace}, dando como resultado la ecuación de Poisson:
+			\begin{subequations}
+				\begin{equation}
+					\xi_{xx} + \xi_{yy} = P(\xi, \eta)
+				\end{equation}
+				\begin{equation}
+					\eta_{xx} + \eta_{yy} = Q(\xi, \eta)
+				\end{equation}
+				\label{ec-poisson}
+			\end{subequations}
+		
+				y transformando la ecuación, haciendo $x$ y $y$  las variables dependientes:
 				\begin{subequations}
 					\begin{equation}
-						\xi_{xx} + \xi_{yy} = P(\xi, \eta)
+						\alpha x_{\xi \xi} + \beta x_{\xi \eta} + \gamma x_{\eta \eta} = -I^2 [P(\xi, \eta) x_{\xi} + Q(\xi, \eta) x_{\eta}]
 					\end{equation}
 					\begin{equation}
-						\eta_{xx} + \eta_{yy} = Q(\xi, \eta)
+					\alpha y_{\xi \xi} + \beta y_{\xi \eta} + \gamma y_{\eta \eta} = -I^2 [P(\xi, \eta) y_{\xi} + Q(\xi, \eta) y_{\eta}]
 					\end{equation}
-					\label{ec-poisson}
+					\label{ec-poisson-invertida}
 				\end{subequations}
 			
-					y transformando la ecuación, haciendo $x$ y $y$  las variables dependientes:
-					\begin{subequations}
-						\begin{equation}
-							\alpha x_{\xi \xi} + \beta x_{\xi \eta} + \gamma x_{\eta \eta} = -I^2 [P(\xi, \eta) x_{\xi} + Q(\xi, \eta) x_{\eta}]
-						\end{equation}
-						\begin{equation}
-						\alpha y_{\xi \xi} + \beta y_{\xi \eta} + \gamma y_{\eta \eta} = -I^2 [P(\xi, \eta) y_{\xi} + Q(\xi, \eta) y_{\eta}]
-						\end{equation}
-						\label{ec-poisson-invertida}
-					\end{subequations}
+		\paragraph*{}
+			Las funciones $P$ y $Q$ se seleccionan dependiendo de la necesidad específica del problema que se analiza. Dichas necesidades pueden ser, por ejemplo, el agrupamiento de nodos alrededor de un punto especifico, o quizás sea la búsqueda de un sistema ortogonal en la superficie.
+		
+		\paragraph*{}
+			El uso de las funciones $P$ y $Q$ para manipular la densidad de puntos alrededor de ciertas zonas se logra atrayendo las líneas vecinas a una línea seleccionada. La misma funciona para los nodos, haciendo la atracción de los nodos colindantes hacie el nodo seleccionado. O bien, se puede llevar a cabo una combinación de ambos efectos.
+		
+		\paragraph*{}
+			Las ecuaciones para $P$ y $Q$ que llevan a cabo este proceso son:
 			
-			\paragraph*{}
-				Las funciones $P$ y $Q$ se seleccionan dependiendo de la necesidad específica del problema que se analiza. Dichas necesidades pueden ser, por ejemplo, el agrupamiento de nodos alrededor de un punto especifico, o quizás sea la búsqueda de un sistema ortogonal en la superficie.
-			
-			\paragraph*{}
-				El uso de las funciones $P$ y $Q$ para manipular la densidad de puntos alrededor de ciertas zonas se logra atrayendo las líneas vecinas a una línea seleccionada. La misma funciona para los nodos, haciendo la atracción de los nodos colindantes hacie el nodo seleccionado. O bien, se puede llevar a cabo una combinación de ambos efectos.
-			
-			\paragraph*{}
-				Las ecuaciones para $P$ y $Q$ que llevan a cabo este proceso son:
+			\begin{align}
+				\begin{aligned}
+					P(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m} \frac{\xi - \xi_{m}}{|\xi - \xi_{m}|} \exp(-c_{m}|\xi - \xi_{m}|) \\&
+					- \sum_{n=1}^{N} b_{n} \frac{\xi - \xi_{n}}{| \xi - \xi_{n} |} \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2 + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
+				\end{aligned}
+				\label{ec-P}
+			\end{align}
 				
-				\begin{align}
-					\begin{aligned}
-						P(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m} \frac{\xi - \xi_{m}}{|\xi - \xi_{m}|} \exp(-c_{m}|\xi - \xi_{m}|) \\&
-						- \sum_{n=1}^{N} b_{n} \frac{\xi - \xi_{n}}{| \xi - \xi_{n} |} \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2 + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
-					\end{aligned}
-					\label{ec-P}
-				\end{align}
-				
-				\begin{align}
-					\begin{aligned}
-						Q(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m} \frac{\eta - \eta_{m}}{|\eta - \eta_{m}|} \exp(-c_{m}|\eta - \eta_{m}|) \\&
-						- \sum_{n=1}^{N} b_{n} \frac{\eta - \eta_{n}}{| \eta - \eta_{n} |} \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2 + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
-					\end{aligned}
-					\label{ec-Q}
-				\end{align}
-				estas ecuaciones fueron propuestas en 1974 por Thompson, Thames y Mastin\cite{thompson1974automatic}, y son ampliamente referidas en diversos textos tanto de dinámica de fluidos computacional como de generación numérica de mallas.
-				
+			\begin{align}
+				\begin{aligned}
+					Q(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m} \frac{\eta - \eta_{m}}{|\eta - \eta_{m}|} \exp(-c_{m}|\eta - \eta_{m}|) \\&
+					- \sum_{n=1}^{N} b_{n} \frac{\eta - \eta_{n}}{| \eta - \eta_{n} |} \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2 + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
+				\end{aligned}
+				\label{ec-Q}
+			\end{align}
+			estas ecuaciones fueron propuestas en 1974 por Thompson, Thames y Mastin\cite{thompson1974automatic}, y son ampliamente referidas en diversos textos tanto de dinámica de fluidos computacional como de generación numérica de mallas.
+			
+		\paragraph*{}
+			En las ecuaciones \ref{ec-P} y \ref{ec-Q} el valor de $M$ es el número de líneas existentes en la malla, tanto líneas coordenadas $\xi = \xi_{m}$ como líneas $\eta = \eta_{m}$ y $N$ representa el número de nodos ($\xi = \xi_{n}, \eta = \eta_{n}, 0 \leq \xi_{n}, \eta_{n} \leq 1$) a los que la malla se verá atraída. Los factores $a_{m}$ y $b_{n}$ son factores de amplificación, mientras que los factores $c_{m}$ y $d_{n}$ son factores de decaimiento,estos cuatro parámetros son datos de entrada para el código, asignados por el usuario, y los cuatro deben ser valores positivos.
+			
+		\paragraph*{}
+			El primer término en la ecuación para $P(\xi, \eta)$ tiene como efecto la atracción de las líneas $\xi$ (líneas a lo largo de las cuales la coordenada en $\xi$ permanece constante) hacia la línea $\xi = \xi_{m}$ en el dominio físico con una amplitud $a_{m}$, mientras que le segundo término atrae las líneas $\xi$ hacia un punto determinado con una amplitud $b_{n}$. Estos parámetros tienen el mismo efecto en la ecuación de $Q(\xi, \eta)$, pero la atracción se ve reflejada en las líneas donde se mantiene constante la coordenada $\eta$.
+		\paragraph*{}
+			Las funciones $(\xi - \xi_{m}) / |\xi - \xi_{m}|$ y $(\eta - \eta_{m}) / |\eta - \eta_{m}|$ son funciones que solo pueden dar como resultado valores $\pm 1$ y su propósito dentro de la fórmula es el garantizar que la atracción se dé, en caso de las lineas $\xi$ y $\eta$ por ambos lados de las mismas, y en todos los nodos vecinos para el caso de la atracción hacia un punto $(\xi_{n}, \eta_{n})$. Asignar un valor negativo a los factores de amplitud da como resultado un efecto contrario, es decir, se crea un efecto de repulsión.
+			\begin{figure}[htbp!]
+				\centering
+				\subfigure[Efecto de atracción a la línea $\xi = \xi_{m}$]{\label{fig:densidad-xi-linea}\includegraphics[width=80mm]{./Imagenes/densidad-xi-linea}}
+				\hspace{1cm}
+				\subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-xi-punto}\includegraphics[width=80mm]{./Imagenes/densidad-xi-punto}}
+				\caption[Efecto de atracción por función $P(\xi,\eta)$]{Efecto de atracción en el eje $\xi$ por la función $P(\xi, \eta)$}
+				\label{fig:densidad-xi}
+			\end{figure}
+			
+			\begin{figure}[htbp!]
+				\centering
+				\subfigure[Efecto de atracción a la línea $\eta = \eta_{m}$]{\label{fig:densidad-eta-linea}\includegraphics[width=80mm]{./Imagenes/densidad-eta-linea}}
+				\hspace{1cm}
+				\subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-eta-punto}\includegraphics[width=80mm]{./Imagenes/densidad-eta-punto}}
+				\caption[Efecto de atracción por función $Q(\xi,\eta)$]{Efecto de atracción en el eje $\eta$ por la función $Q(\xi, \eta)$}
+				\label{fig:densidad-eta}
+			\end{figure}
+			
+		\subsection{Algoritmos de solución}
 			\paragraph*{}
-				En las ecuaciones \ref{ec-P} y \ref{ec-Q} el valor de $M$ es el número de líneas existentes en la malla, tanto líneas coordenadas $\xi = \xi_{m}$ como líneas $\eta = \eta_{m}$ y $N$ representa el número de nodos ($\xi = \xi_{n}, \eta = \eta_{n}, 0 \leq \xi_{n}, \eta_{n} \leq 1$) a los que la malla se verá atraída. Los factores $a_{m}$ y $b_{n}$ son factores de amplificación, mientras que los factores $c_{m}$ y $d_{n}$ son factores de decaimiento,estos cuatro parámetros son datos de entrada para el código, asignados por el usuario, y los cuatro deben ser valores positivos.
+				Existen en general, dos métodos de solción de sistemas de ecuaciones algebráicas lineales simultáneas: métodos directos y métodos iterativos.
 			
 			\paragraph*{}
-				El primer término en la ecuación para $P(\xi, \eta)$ tiene como efecto la atracción de las líneas $\xi$ (líneas a lo largo de las cuales la coordenada en $\xi$ permanece constante) hacia la línea $\xi = \xi_{m}$ en el dominio físico con una amplitud $a_{m}$, mientras que le segundo término atrae las líneas $\xi$ hacia un punto determinado con una amplitud $b_{n}$. Estos parámetros tienen el mismo efecto en la ecuación de $Q(\xi, \eta)$, pero la atracción se ve reflejada en las líneas donde se mantiene constante la coordenada $\eta$.
+				Dentro de los métodos directos podemos encontrar los métodos de Cramer y de Gauss. La principal desventaja que presentan estos metodos es el gran número de opraciones aritméticas necesarias para obtener una solución del sistema. Desde el punto de vista computacional otras desventajas que presentan son el uso de memoria y cierta dificultad para ser programados. Los métodos iterativos son simples y fáciles de programar, por lo que se presentan como una mejor herramienta para llevar a cabo la solcuión del sistema. La idea de estos métodos, tal y como su nombre lo indica, es obtener la solución mediante un proceso iterativo, por lo general se asume una primera solución y con dichos valores propuestos se calculan nuevos valores de las incógnitas, con base en lo nuevos valores calculados se obtienen nuevos valores. Este proceso se repite hasta satisfacer el criterio de convergencia establecido.
+		
+		\subsection{Métodos iterativos: Jacobi, Gauss-Seidel, SOR}
 			\paragraph*{}
-				Las funciones $(\xi - \xi_{m}) / |\xi - \xi_{m}|$ y $(\eta - \eta_{m}) / |\eta - \eta_{m}|$ son funciones que solo pueden dar como resultado valores $\pm 1$ y su propósito dentro de la fórmula es el garantizar que la atracción se dé, en caso de las lineas $\xi$ y $\eta$ por ambos lados de las mismas, y en todos los nodos vecinos para el caso de la atracción hacia un punto $(\xi_{n}, \eta_{n})$. Asignar un valor negativo a los factores de amplitud da como resultado un efecto contrario, es decir, se crea un efecto de repulsión.
-				\begin{figure}[htbp!]
-					\centering
-					\subfigure[Efecto de atracción a la línea $\xi = \xi_{m}$]{\label{fig:densidad-xi-linea}\includegraphics[width=80mm]{./Imagenes/densidad-xi-linea}}
-					\hspace{1cm}
-					\subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-xi-punto}\includegraphics[width=80mm]{./Imagenes/densidad-xi-punto}}
-					\caption[Efecto de atracción por función $P(\xi,\eta)$]{Efecto de atracción en el eje $\xi$ por la función $P(\xi, \eta)$}
-					\label{fig:densidad-xi}
-				\end{figure}
-			
-				\begin{figure}[htbp!]
-					\centering
-					\subfigure[Efecto de atracción a la línea $\eta = \eta_{m}$]{\label{fig:densidad-eta-linea}\includegraphics[width=80mm]{./Imagenes/densidad-eta-linea}}
-					\hspace{1cm}
-					\subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-eta-punto}\includegraphics[width=80mm]{./Imagenes/densidad-eta-punto}}
-					\caption[Efecto de atracción por función $Q(\xi,\eta)$]{Efecto de atracción en el eje $\eta$ por la función $Q(\xi, \eta)$}
-					\label{fig:densidad-eta}
-				\end{figure}
-			
-			\subsection{Algoritmos de solución}
-				\paragraph*{}
-					Existen en general, dos métodos de solción de sistemas de ecuaciones algebráicas lineales simultáneas: métodos directos y métodos iterativos.
-				
-				\paragraph*{}
-					Dentro de los métodos directos podemos encontrar los métodos de Cramer y de Gauss. La principal desventaja que presentan estos metodos es el gran número de opraciones aritméticas necesarias para obtener una solución del sistema. Desde el punto de vista computacional otras desventajas que presentan son el uso de memoria y cierta dificultad para ser programados. Los métodos iterativos son simples y fáciles de programar, por lo que se presentan como una mejor herramienta para llevar a cabo la solcuión del sistema. La idea de estos métodos, tal y como su nombre lo indica, es obtener la solución mediante un proceso iterativo, por lo general se asume una primera solución y con dichos valores propuestos se calculan nuevos valores de las incógnitas, con base en lo nuevos valores calculados se obtienen nuevos valores. Este proceso se repite hasta satisfacer el criterio de convergencia establecido.
-			
-			\subsection{Métodos iterativos: Jacobi, Gauss-Seidel, SOR}
-				\paragraph*{}
-					Para resolver una ecuación matricial de la forma $Au = d$ para el vector $u$ de dimensiones $n \times 1$ suelen utilizarse métodos iterativos. Se pueden escribir las ecuaciones para cada término del vector $u$ (asumiendo que ningún elemento de la diagonal principal de la matriz es igual a $0$) de la siguiente manera
-					\begin{subequations}
-						\begin{equation*}
-							u_{1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2} + a_{13}u_{3} + \dotsb + a_{1n}u_{n} \right) \right]
-						\end{equation*}
-						\begin{equation*}
-							u_{2} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1} + a_{23}u_{3} + \dotsb + a_{2n}u_{n} \right) \right]
-						\end{equation*}
-						\begin{equation*}
-							\dotsb
-						\end{equation*}
-						\begin{equation*}
-							u_{n} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1} + a_{n2}u_{2} + \dotsb + a_{n\left( n-1 \right)}u_{n-1} \right) \right]
-						\end{equation*}
-					\end{subequations}
-				\paragraph*{}
-					A partir de estas ecuaciones se derivan varios esquemas iterativos, dada una solución inicial $u_{i}^{(1)}, i = 1, 2, \dotsc, n$. El primero de ellos es el método de Jacobi, en éste, la variable dependiente se calcula usando los datos previamente obtenidos, quedando sus ecuaciones cómo
-					\begin{subequations}
-						\begin{equation*}
-							u_{1}^{k+1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2}^{k} + a_{13}u_{3}^{k} + \dotsb + a_{1n}u_{n}^k \right) \right]
-						\end{equation*}
-						\begin{equation*}
-						u_{2}^{k+1} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1}^{k} + a_{23}u_{3}^{k} + \dotsb + a_{2n}u_{n}^{k} \right) \right]
-						\end{equation*}
-						\begin{equation*}
+				Para resolver una ecuación matricial de la forma $Au = d$ para el vector $u$ de dimensiones $n \times 1$ suelen utilizarse métodos iterativos. Se pueden escribir las ecuaciones para cada término del vector $u$ (asumiendo que ningún elemento de la diagonal principal de la matriz es igual a $0$) de la siguiente manera
+				\begin{subequations}
+					\begin{equation*}
+						u_{1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2} + a_{13}u_{3} + \dotsb + a_{1n}u_{n} \right) \right]
+					\end{equation*}
+					\begin{equation*}
+						u_{2} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1} + a_{23}u_{3} + \dotsb + a_{2n}u_{n} \right) \right]
+					\end{equation*}
+					\begin{equation*}
 						\dotsb
-						\end{equation*}
-					\end{subequations}
-					\begin{equation}
-						u_{n}^{k+1} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1}^{k} + a_{n2}u_{2}^{k} + \dotsb + a_{n\left( n-1 \right)}u_{n-1}^{k} \right) \right]
-						\label{ec-jacobi}
-					\end{equation}
-					
-				\paragraph*{}
-					La ecuación \ref{ec-jacobi} es la ecuación constitutiva del método iterativo de Jacobi, en ella $k$ representa los valores previamente calculados, es decir, obtenidos de la iteración anterior o de la solución inicial, según sea el caso. El superíndice $k+1$ indica el valor obtenido en la iteración actual.
-				
-				\paragraph*{}
-					El siguiente método que puede desarrollarse es el método de Gauss-Seidel, el cual utiliza los valores calculados en la iteración actual para calcular los siguientes valores de la variable dependiente. Sus ecuaciones se escriben como
-					\begin{subequations}
-						\begin{equation*}
+					\end{equation*}
+					\begin{equation*}
+						u_{n} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1} + a_{n2}u_{2} + \dotsb + a_{n\left( n-1 \right)}u_{n-1} \right) \right]
+					\end{equation*}
+				\end{subequations}
+			\paragraph*{}
+				A partir de estas ecuaciones se derivan varios esquemas iterativos, dada una solución inicial $u_{i}^{(1)}, i = 1, 2, \dotsc, n$. El primero de ellos es el método de Jacobi, en éste, la variable dependiente se calcula usando los datos previamente obtenidos, quedando sus ecuaciones cómo
+				\begin{subequations}
+					\begin{equation*}
 						u_{1}^{k+1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2}^{k} + a_{13}u_{3}^{k} + \dotsb + a_{1n}u_{n}^k \right) \right]
-						\end{equation*}
-						\begin{equation*}
-						u_{2}^{k+1} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1}^{k+1} + a_{23}u_{3}^{k} + \dotsb + a_{2n}u_{n}^{k} \right) \right]
-						\end{equation*}
-						\begin{equation*}
-						\dotsb
-						\end{equation*}
-					\end{subequations}
-					\begin{equation}
-						u_{n}^{k+1} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1}^{k+1} + a_{n2}u_{2}^{k+1} + \dotsb + a_{n\left( n-1 \right)}u_{n-1}^{k+1} \right) \right]
-						\label{ec-GS}
-					\end{equation}
-					en este método se calcula un nuevo valor $u_{1}^{k+1}$ con los valores de la iteración anterior, dicho valor luego es ocupado para el cálculo de $u_{2}^{k+1}$, ambos términos son utilizados para obtener $u_{3}^{k+1}$ y el proceso continúa de la misma manera hasta llegar a la última ecuación. Es decir, el método de Gauss-Seidel implica el uso inmediato de los valores $u_{i}^{k+1}$ tan pronto como están disponibles lo que da como resultado un uso menor de memoria en el ordenador, además de satisfacer el criterio de convergencia en menos iteraciones comparado con el método de Jacobi. La ecuación \ref{ec-GS} puede escribirse de la siguiente manera
-					\begin{align}
-						&\begin{aligned}
-							u_{i}^{k+1} =& \frac{1}{a_{ii}} \left[ d_{i} - \sum_{j=1}^{i-1} a_{ij}u_{j}^{k+1}  - \sum_{j = i + 1}^{n} a_{ij}u_{j}^{k} \right], &i = 1, 2, \dotsc, n
-						\end{aligned}
-						\label{ec-GS-2}
-					\end{align}
-				
-				\paragraph*{}
-					Si durante el proceso de solución se percibe una tendencia en los valores calculados se puede utilizar la dirección de cambio para extrapolar para la siguiente iteración y por lo tanto, acelerar el proceso de solución. A este procedimiento se le conoce como método SOR (Succesive Over-Relaxation o  Sobre-relajación sucesiva). Este método introduce un parámetro extra $\omega$ conocido como parámetro de aceleración, el cual puede acelerar la convergencia. Dicho método está representado por
-					\begin{align}
-						&\begin{aligned}
-							u_{i}^{k+1} =& u_{i}^{k} + \frac{\omega}{a_{ii}} \left[ d_{i} - \sum_{j = 1}^{i - 1}a_{ij}u_{j}^{k+1} - a_{ii}u_{i}^{k} - \sum_{j = i+1}^{n} a_{ij}u_{j}^{k} \right]
-							\\ \\
-							=& \frac{\omega}{a_{ii}} \left[ d_{i} - \sum_{j = 1}^{i - 1} a_{ij}u_{j}^{k+1} - \sum_{j = i+1}^{n} a_{ij}u_j ^{k}\right] + \left( 1 - \omega \right) u_{i}^{k}, &i = 1, 2, \dotsc, n
-						\end{aligned}
-					\end{align}
-				
-				\paragraph*{}
-					Cuando $\omega = 1$ el método SOR se convierte en el método de Gauss-Seidel. Si $1 < \omega < 2$ se está trabajando con sobre-relajación, mientras que al utilizar un valor $0 < \omega < 1$ se lleva a cabo una bajo-relajación.
-		
-		\section{Generación de mallas mediante EDP hiperbólicas}
-		\paragraph*{}
-			La generación de mallas mediante EDP elípticas puede ser demasiado costosa en términos de tiempo de cómputo, así como en el uso de memoria en el ordenador. Esto se debe a que dicho esquema intenta hacer coincidir un sistema de coordenadas curvilíneo a cuatro curvas de frontera, seis en mallas tridimensionales. De aquí surge un nuevo enfoque, en el cual solo se requiere iniciar la solución con una sola frontera e ir avanzando hacia afuera en el dominio físico usando EDP hiperbólicas. \cite{farrashkhalvat}
-		
-		\paragraph*{}
-			Con este propósito se toma en cuenta el trabajo publicado por Steger y Chausse \cite{Hyperbolic-steger1980generation} para la generación de mallas bidimensionales ortogonales y con control del área de celda. Se inicia el proceso con una frontera única en la que se considera que $\eta = 0$. Se propone tambien un sistema de ecuaciones de primer orden para las coordenadas $x, y$ como funciones de $\xi, \eta$:
-			\begin{subequations}
+					\end{equation*}
+					\begin{equation*}
+					u_{2}^{k+1} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1}^{k} + a_{23}u_{3}^{k} + \dotsb + a_{2n}u_{n}^{k} \right) \right]
+					\end{equation*}
+					\begin{equation*}
+					\dotsb
+					\end{equation*}
+				\end{subequations}
 				\begin{equation}
-					g_{12} = g_1  \cdot g_2 = x_{\xi} x_{\eta} + y_{\xi} y_{\eta} = 0
-				\end{equation}
-				\begin{equation}
-					\abs{g_1 \times g_2} = x_\xi y_\eta - x_\eta y_\xi = F
+					u_{n}^{k+1} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1}^{k} + a_{n2}u_{2}^{k} + \dotsb + a_{n\left( n-1 \right)}u_{n-1}^{k} \right) \right]
+					\label{ec-jacobi}
 				\end{equation}
 				
-				\label{ec-hyper-base}
-			\end{subequations}
-		
-		\paragraph*{}
-			La primera ecuación dota a la malla de ortogonalidad, mientras que la segunda tiene el término $F$ como una medida del área de la celda (si el producto $\delta\xi\delta\eta$ es el mismo para cada celda). Se puede trabajar utilizando $F$ como una función de $\xi, \eta$, lo que permitiría incrementar la densidad de la malla cerca de la frontera donde $\eta = 0$ haciendo que $F$ tenga un valor pequeño en dicha zona. De las ecuaciones \ref{ec-hyper-base}:
-			\begin{subequations}
-				\begin{equation}
-					x_\eta = - \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
-				\end{equation}
-				\begin{equation}
-					y_\eta = \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
-				\end{equation}
-			\end{subequations}
-		
-		\paragraph*{}
-			Antes de proceder a la solución del sistema de las ecuaciones \ref{ec-hyper-base} se deben tomar en cuenta algunas consideraciones. En primera instancia debe tenerse en cuenta que el sistema es un sistema no lineal por lo que un proceso de linearización debe llevarse a cabo, una segunda consideración es que al ser un sistema de ecuaciones hiperbólicas se debe llevar a cabo el proceso de solución mediante un proceso de marcha, en este trabajo la marcha se realizará en la dirección del eje $\eta$. Tercera, para un sistema de ecuaciones hiperbólicas se debe especificar una condicion inicial así como un condición de frontera y por último, con el objetivo de evitar la presencia de oscilaciones, se puede agregar un término de``damping'' al lado derecho de las ecuaciones.
+			\paragraph*{}
+				La ecuación \ref{ec-jacobi} es la ecuación constitutiva del método iterativo de Jacobi, en ella $k$ representa los valores previamente calculados, es decir, obtenidos de la iteración anterior o de la solución inicial, según sea el caso. El superíndice $k+1$ indica el valor obtenido en la iteración actual.
 			
-		\paragraph*{}
-			Para el proceso de linearización, se utilizará el esquema iterativo de Newton, el cual especifica que un termino no lineal es aproximado mediante
+			\paragraph*{}
+				El siguiente método que puede desarrollarse es el método de Gauss-Seidel, el cual utiliza los valores calculados en la iteración actual para calcular los siguientes valores de la variable dependiente. Sus ecuaciones se escriben como
+				\begin{subequations}
+					\begin{equation*}
+					u_{1}^{k+1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2}^{k} + a_{13}u_{3}^{k} + \dotsb + a_{1n}u_{n}^k \right) \right]
+					\end{equation*}
+					\begin{equation*}
+					u_{2}^{k+1} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1}^{k+1} + a_{23}u_{3}^{k} + \dotsb + a_{2n}u_{n}^{k} \right) \right]
+					\end{equation*}
+					\begin{equation*}
+					\dotsb
+					\end{equation*}
+				\end{subequations}
+				\begin{equation}
+					u_{n}^{k+1} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1}^{k+1} + a_{n2}u_{2}^{k+1} + \dotsb + a_{n\left( n-1 \right)}u_{n-1}^{k+1} \right) \right]
+					\label{ec-GS}
+				\end{equation}
+				en este método se calcula un nuevo valor $u_{1}^{k+1}$ con los valores de la iteración anterior, dicho valor luego es ocupado para el cálculo de $u_{2}^{k+1}$, ambos términos son utilizados para obtener $u_{3}^{k+1}$ y el proceso continúa de la misma manera hasta llegar a la última ecuación. Es decir, el método de Gauss-Seidel implica el uso inmediato de los valores $u_{i}^{k+1}$ tan pronto como están disponibles lo que da como resultado un uso menor de memoria en el ordenador, además de satisfacer el criterio de convergencia en menos iteraciones comparado con el método de Jacobi. La ecuación \ref{ec-GS} puede escribirse de la siguiente manera
+				\begin{align}
+					&\begin{aligned}
+						u_{i}^{k+1} =& \frac{1}{a_{ii}} \left[ d_{i} - \sum_{j=1}^{i-1} a_{ij}u_{j}^{k+1}  - \sum_{j = i + 1}^{n} a_{ij}u_{j}^{k} \right], &i = 1, 2, \dotsc, n
+					\end{aligned}
+					\label{ec-GS-2}
+				\end{align}
+				
+			\paragraph*{}
+				Si durante el proceso de solución se percibe una tendencia en los valores calculados se puede utilizar la dirección de cambio para extrapolar para la siguiente iteración y por lo tanto, acelerar el proceso de solución. A este procedimiento se le conoce como método SOR (Succesive Over-Relaxation o  Sobre-relajación sucesiva). Este método introduce un parámetro extra $\omega$ conocido como parámetro de aceleración, el cual puede acelerar la convergencia. Dicho método está representado por
+				\begin{align}
+					&\begin{aligned}
+						u_{i}^{k+1} =& u_{i}^{k} + \frac{\omega}{a_{ii}} \left[ d_{i} - \sum_{j = 1}^{i - 1}a_{ij}u_{j}^{k+1} - a_{ii}u_{i}^{k} - \sum_{j = i+1}^{n} a_{ij}u_{j}^{k} \right]
+						\\ \\
+						=& \frac{\omega}{a_{ii}} \left[ d_{i} - \sum_{j = 1}^{i - 1} a_{ij}u_{j}^{k+1} - \sum_{j = i+1}^{n} a_{ij}u_j ^{k}\right] + \left( 1 - \omega \right) u_{i}^{k}, &i = 1, 2, \dotsc, n
+					\end{aligned}
+				\end{align}
+			
+			\paragraph*{}
+				Cuando $\omega = 1$ el método SOR se convierte en el método de Gauss-Seidel. Si $1 < \omega < 2$ se está trabajando con sobre-relajación, mientras que al utilizar un valor $0 < \omega < 1$ se lleva a cabo una bajo-relajación.
+	
+	\section{Generación de mallas mediante EDP hiperbólicas}
+	\paragraph*{}
+		La generación de mallas mediante EDP elípticas puede ser demasiado costosa en términos de tiempo de cómputo, así como en el uso de memoria en el ordenador. Esto se debe a que dicho esquema intenta hacer coincidir un sistema de coordenadas curvilíneo a cuatro curvas de frontera, seis en mallas tridimensionales. De aquí surge un nuevo enfoque, en el cual solo se requiere iniciar la solución con una sola frontera e ir avanzando hacia afuera en el dominio físico usando EDP hiperbólicas. \cite{farrashkhalvat}
+	
+	\paragraph*{}
+		Con este propósito se toma en cuenta el trabajo publicado por Steger y Chausse \cite{Hyperbolic-steger1980generation} para la generación de mallas bidimensionales ortogonales y con control del área de celda. Se inicia el proceso con una frontera única en la que se considera que $\eta = 0$. Se propone tambien un sistema de ecuaciones de primer orden para las coordenadas $x, y$ como funciones de $\xi, \eta$:
+		\begin{subequations}
 			\begin{equation}
-				AB = A^{k + 1} B^{k} + B^{k + 1} A^{k} - A^{k} B^{k}
+				g_{12} = g_1  \cdot g_2 = x_{\xi} x_{\eta} + y_{\xi} y_{\eta} = 0
 			\end{equation}
-			donde el superíndice $k$ representa el estado previo conocido. A partir de este punto el superíndice $k + 1$, el cual representa el nivel actual a obtener, será eliminado de las ecuaciones, y se entiende que todos los términos sin superíndice pertenecen al nivel actual $k + 1$. Por lo tanto, el sistema de ecuaciones hiperbólicas es expresado en su forma lineal como:
-			\begin{subequations}
-				\begin{equation}
-					x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} - x_{\xi}^{k} x_{\eta}^{k} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} - y_{\xi}^{k} y_{\eta}^{k} = 0
-				\end{equation}
-				\begin{equation}
-					x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\xi}^{k} y_{\eta}^{k} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} + x_{\eta}^{k} y_{\xi}^{k} = F
-				\end{equation}
-				\label{ec-hyper-linear}
-			\end{subequations}
-		
-		\paragraph*{}
-			Aplicando el concepto de las ecuaciones \ref{ec-hyper-base} a las ecuaciones \ref{ec-hyper-linear} podemos simplificar las últimas, quedando como
-			\begin{subequations}
-				\begin{equation}
-					x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} = 0
-				\end{equation}
-				\begin{equation}
-					x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} = F + F^{k}
-				\end{equation}
-				\label{ec-hyper-reducida}
-			\end{subequations}
-		
-		\paragraph*{}
-			Este sistema de ecuaciones puede escribirse de forma compacta como
 			\begin{equation}
-				\left[A \right] R_{\xi} + \left[ B \right] R_{\eta} = H
-				\label{ec-hyper-compacta}
+				\abs{g_1 \times g_2} = x_\xi y_\eta - x_\eta y_\xi = F
 			\end{equation}
-			donde:
-			\begin{align*}
-				R = \begin{bmatrix}
-				 x \\ \\
-				 y
-				\end{bmatrix}&&
-				A = \begin{bmatrix}
-					x_{\eta}^{k} & y_{\eta}^{k} \\ \\
-					y_{\eta}^{k} & -x_{\eta}^{k}
-				\end{bmatrix}&&
-				B = \begin{bmatrix}
-					x_{\xi}^{k} & y_{\xi}^{k} \\ \\
-					-y_{\xi}^{k} & x_{\xi}^{k}
-				\end{bmatrix}&&
-				H = \begin{bmatrix}
-					0 \\ \\
-					F + F^{k}
-				\end{bmatrix}
-			\end{align*}
+			
+			\label{ec-hyper-base}
+		\end{subequations}
+	
+	\paragraph*{}
+		La primera ecuación dota a la malla de ortogonalidad, mientras que la segunda tiene el término $F$ como una medida del área de la celda (si el producto $\delta\xi\delta\eta$ es el mismo para cada celda). Se puede trabajar utilizando $F$ como una función de $\xi, \eta$, lo que permitiría incrementar la densidad de la malla cerca de la frontera donde $\eta = 0$ haciendo que $F$ tenga un valor pequeño en dicha zona. De las ecuaciones \ref{ec-hyper-base}:
+		\begin{subequations}
+			\begin{equation}
+				x_\eta = - \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
+			\end{equation}
+			\begin{equation}
+				y_\eta = \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
+			\end{equation}
+		\end{subequations}
 		
-		\paragraph*{}
-			Por definición, el sistema de ecuaciones descrito por la ecuación \ref{ec-hyper-compacta} es hiperbólico los eigenvalores de $\left[ B \right]^{-1} \left[ A \right]$ son reales. Se observa que\\
-			\begin{equation*}
-				\left[ B \right]^{-1} = \frac{1}{DN}\begin{bmatrix}
-					x_{\xi}^{k} & -y_{\xi}^{k} \\ \\
-					y_{\xi}^{k} & x_{\xi}^{k}
-				\end{bmatrix}
-			\end{equation*}
-			por lo tanto
-			\begin{equation*}
-				\left[ C \right] = \left[ B \right]^{-1} \left[ A \right] = \begin{bmatrix}
-					x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} &
-					x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} \\ \\
-					x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} &
-					- \left( x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} \right)
-				\end{bmatrix}
-			\end{equation*}
-			donde
-			\begin{equation*}
-				DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2
-			\end{equation*}
+	\paragraph*{}
+		Antes de proceder a la solución del sistema de las ecuaciones \ref{ec-hyper-base} se deben tomar en cuenta algunas consideraciones. En primera instancia debe tenerse en cuenta que el sistema es un sistema no lineal por lo que un proceso de linearización debe llevarse a cabo, una segunda consideración es que al ser un sistema de ecuaciones hiperbólicas se debe llevar a cabo el proceso de solución mediante un proceso de marcha, en este trabajo la marcha se realizará en la dirección del eje $\eta$. Tercera, para un sistema de ecuaciones hiperbólicas se debe especificar una condicion inicial así como un condición de frontera y por último, con el objetivo de evitar la presencia de oscilaciones, se puede agregar un término de``damping'' al lado derecho de las ecuaciones.
 		
-		\paragraph*{}
-			Los eigenvalores de $\left[ C \right]$ son
-			\begin{equation*}
-				\lambda_{1, 2} = \pm \left[ \frac{\left(x_{\eta}^{k} \right)^2 + \left( y_{\eta}^{k} \right)^2} {DN} \right]
-			\end{equation*}
-			los cuales cumplen con la condición de ser siempre reales (para un sistema hiperbólico) siempre que
-			\begin{equation*}
-			DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2 \neq 0
-			\end{equation*}
-		 \paragraph*{}
-			 Para obtener un sistema de ecuaciones algebráico, debemos aplicar el método de diferencias finitas. Para la sustitución de las derivadas parciales respecto al eje $\xi$ se utiliza una aproximación central de segundo orden y para el caso de las derivadas parciales respecto al eje $\eta$ se hará uso de aproximaciones de primer orden tipo ``backwards'', resultando la ecuación en
-			 \begin{equation}
-				 \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j}}{2 \Delta \xi} + \left[ B \right] \frac{R_{i, j} - R_{i, j - 1}}{\Delta \eta} = \left[ H \right]_{i, j}
-			 \end{equation}
-			 que al ser multiplicada por la matriz $\left[ B \right]^{-1}$ y reacomodada queda cómo
-			 \begin{equation}
-				 \frac{R_{i, j} - R_{i, j-1} }{\Delta \eta} + \left[ B \right]^{-1} \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j} }{2 \Delta \xi} = \left[ B \right]^{-1} H_{i, j}
-			 \end{equation}
-			 en donde las matrices $A$ y $B$ son evaluadas en la línea $(j - 1)$. Esta ecuación se reacomoda y se le asignan nuevos términos, con el propósito de compactar a la misma, dando como resultado
-			 \begin{equation}
-				 \left[ AA \right] R_{i - 1, j} + \left[ BB \right] R_{i, j} + \left[ CC \right] R_{i + 1, j} = \left[ DD \right]_{i, j}
-				 \label{ec-hyper-final}
-			 \end{equation}
-			 donde
-			 \begin{subequations}
+	\paragraph*{}
+		Para el proceso de linearización, se utilizará el esquema iterativo de Newton, el cual especifica que un termino no lineal es aproximado mediante
+		\begin{equation}
+			AB = A^{k + 1} B^{k} + B^{k + 1} A^{k} - A^{k} B^{k}
+		\end{equation}
+		donde el superíndice $k$ representa el estado previo conocido. A partir de este punto el superíndice $k + 1$, el cual representa el nivel actual a obtener, será eliminado de las ecuaciones, y se entiende que todos los términos sin superíndice pertenecen al nivel actual $k + 1$. Por lo tanto, el sistema de ecuaciones hiperbólicas es expresado en su forma lineal como:
+		\begin{subequations}
+			\begin{equation}
+				x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} - x_{\xi}^{k} x_{\eta}^{k} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} - y_{\xi}^{k} y_{\eta}^{k} = 0
+			\end{equation}
+			\begin{equation}
+				x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\xi}^{k} y_{\eta}^{k} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} + x_{\eta}^{k} y_{\xi}^{k} = F
+			\end{equation}
+			\label{ec-hyper-linear}
+		\end{subequations}
+		
+	\paragraph*{}
+		Aplicando el concepto de las ecuaciones \ref{ec-hyper-base} a las ecuaciones \ref{ec-hyper-linear} podemos simplificar las últimas, quedando como
+		\begin{subequations}
+			\begin{equation}
+				x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} = 0
+			\end{equation}
+			\begin{equation}
+				x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} = F + F^{k}
+			\end{equation}
+			\label{ec-hyper-reducida}
+		\end{subequations}
+	
+	\paragraph*{}
+		Este sistema de ecuaciones puede escribirse de forma compacta como
+		\begin{equation}
+			\left[A \right] R_{\xi} + \left[ B \right] R_{\eta} = H
+			\label{ec-hyper-compacta}
+		\end{equation}
+		donde:
+		\begin{align*}
+			R = \begin{bmatrix}
+		 x \\ \\
+		 y
+			\end{bmatrix}&&
+			A = \begin{bmatrix}
+				x_{\eta}^{k} & y_{\eta}^{k} \\ \\
+				y_{\eta}^{k} & -x_{\eta}^{k}
+			\end{bmatrix}&&
+			B = \begin{bmatrix}
+				x_{\xi}^{k} & y_{\xi}^{k} \\ \\
+				-y_{\xi}^{k} & x_{\xi}^{k}
+			\end{bmatrix}&&
+			H = \begin{bmatrix}
+				0 \\ \\
+				F + F^{k}
+			\end{bmatrix}
+		\end{align*}
+		
+	\paragraph*{}
+		Por definición, el sistema de ecuaciones descrito por la ecuación \ref{ec-hyper-compacta} es hiperbólico los eigenvalores de $\left[ B \right]^{-1} \left[ A \right]$ son reales. Se observa que\\
+		\begin{equation*}
+			\left[ B \right]^{-1} = \frac{1}{DN}\begin{bmatrix}
+				x_{\xi}^{k} & -y_{\xi}^{k} \\ \\
+				y_{\xi}^{k} & x_{\xi}^{k}
+			\end{bmatrix}
+		\end{equation*}
+		por lo tanto
+		\begin{equation*}
+			\left[ C \right] = \left[ B \right]^{-1} \left[ A \right] = \begin{bmatrix}
+				x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} &
+				x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} \\ \\
+				x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} &
+				- \left( x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} \right)
+			\end{bmatrix}
+		\end{equation*}
+		donde
+		\begin{equation*}
+			DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2
+		\end{equation*}
+	
+	\paragraph*{}
+		Los eigenvalores de $\left[ C \right]$ son
+		\begin{equation*}
+			\lambda_{1, 2} = \pm \left[ \frac{\left(x_{\eta}^{k} \right)^2 + \left( y_{\eta}^{k} \right)^2} {DN} \right]
+		\end{equation*}
+		los cuales cumplen con la condición de ser siempre reales (para un sistema hiperbólico) siempre que
+		\begin{equation*}
+		DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2 \neq 0
+		\end{equation*}
+	 \paragraph*{}
+		 Para obtener un sistema de ecuaciones algebráico, debemos aplicar el método de diferencias finitas. Para la sustitución de las derivadas parciales respecto al eje $\xi$ se utiliza una aproximación central de segundo orden y para el caso de las derivadas parciales respecto al eje $\eta$ se hará uso de aproximaciones de primer orden tipo ``backwards'', resultando la ecuación en
+		 \begin{equation}
+			 \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j}}{2 \Delta \xi} + \left[ B \right] \frac{R_{i, j} - R_{i, j - 1}}{\Delta \eta} = \left[ H \right]_{i, j}
+		 \end{equation}
+		 que al ser multiplicada por la matriz $\left[ B \right]^{-1}$ y reacomodada queda cómo
+		 \begin{equation}
+			 \frac{R_{i, j} - R_{i, j-1} }{\Delta \eta} + \left[ B \right]^{-1} \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j} }{2 \Delta \xi} = \left[ B \right]^{-1} H_{i, j}
+		 \end{equation}
+		 en donde las matrices $A$ y $B$ son evaluadas en la línea $(j - 1)$. Esta ecuación se reacomoda y se le asignan nuevos términos, con el propósito de compactar a la misma, dando como resultado
+		 \begin{equation}
+			 \left[ AA \right] R_{i - 1, j} + \left[ BB \right] R_{i, j} + \left[ CC \right] R_{i + 1, j} = \left[ DD \right]_{i, j}
+			 \label{ec-hyper-final}
+		 \end{equation}
+		 donde
+		 \begin{subequations}
 			 	\begin{equation*}
 				 	\left[ AA \right] = - \frac{1}{2 \Delta \xi} \left[ C \right]_{i, j - 1}
 			 	\end{equation*}
@@ -1265,8 +1273,29 @@
 			\Delta Q_i = Y_i - \beta_i \Delta Q_{i+1} &&&& i = m-1, m-2, \dots, 3, 2
 		\end{align}
 		
-			
-				
+		
+	\section{Generación de mallas mediante EDP parabólicas}
+		\paragraph*{}
+			A pesar de que el esquema elíptico (ecuaciones \ref{ec-laplace-invertida}), desarrollado por Thompson, et. al. \cite{thompson1974automatic} ha sido el esquema de mayor utilización en la dinámica de fluidos computacional, se han desarrollado nuevos métodos, con la intención de obtener esquemas más rápidos y menos costosos en términos de capacidad de cómputo. La intención de generar mallas mediante la solución de ecuaciones hiperbólicas, desarrollado por Steger y Chausse \cite{Hyperbolic-steger1980generation} representa un intento de alcanzar dicho objetivo, entre sus ventajas podemos encontrar el hecho de que la solución se logra gracias a un procedimiento de marcha a comparación del esquema por ecuaciones de tipo elípticas en el cual la solución se obtiene a través de un proceso iterativo, por lo que el tiempo de ejecución en el esquema hiperbólico es del mismo orden que el de una iteración en el esquema elíptico. Sin embargo, el generar mallas mediante ecuaciones hiperbólicas trae consigo ciertas desventajas entre ellas está la propagación de eventuales discontinuidades que pueda haber en la frontera interna conforme la solución marcha de dentro hacia afuera, además en la mayoría de casos es necesario agrerar términos de viscosidad artificial ya que las soluciones tienden a ser inestables y por último, y debido a las características matemáticas de las ecuaciones diferenciales parciales hiperbólicas, no se es posible definir una frontera externa.
+		
+		\paragraph*{}
+			En este trabajo se presenta el esquema desarrollado por Nakamura \cite{nakamuraParabolic}, el cual también fue retomado por Siladic \cite{siladicParabolic} y que propone un método de generación de mallas mediante la solución de ecuaciones diferenciales parciales parabólicas. Las mayores ventajas de uso de ecuaciones parabólicas son: la solución de éstas es a través de problemas con condiciones iniciales, por lo que al igual que las ecuaciones hiperbólicas presentan un algoritmo de solución de marcha, lo que significa un bajo tiempo de cómputo, una ventaja adicional es que las ecuaciones parabólicas presentan mucho del comportamiento matemático de las ecuaciones elípticas, particularmente el hecho de poseer un efecto de difusión lo cual resulta en que cualquier discontinuidad que se presentase en la frontera interna será suavizada conforme el algoritmo de solución marcha y por último, hay la capacidad de satisfacer las condiciones de frontera para la frontera externa.
+		
+		\paragraph*{}
+			Además de lo explicado arriba, la importancia de desarrollar un algoritmo con el uso de ecuaciones parabólicas radica en dos principales aspectos, primero, el tiempo de ejecución computacional requerido para lograr una solución es una pequeña fracción del tiempo demandado por un algoritmo de ecuaciones elípticas y segundo, el uso de memoria que se necesita también es sustancialmente menor que aquel requerido por un esquema de generación elíptico.
+		
+		\paragraph*{}
+			Las ecuacuones utilizadas son las siguientes
+			\begin{subequations}
+				\begin{equation}
+					a(\xi, \eta) x_\eta = b(\xi, \eta)x_{\xi\xi} + c(\xi, \eta)V_x(\xi, \eta) + d(\xi, \eta)
+				\end{equation}
+				\begin{equation}
+					a(\xi, \eta) y_\eta = b(\xi, \eta)y_{\xi\xi} + c(\xi, \eta)V_y(\xi, \eta) + d(\xi, \eta)
+				\end{equation}
+				\label{parabolic0}
+			\end{subequations}
+			donde $a, b$ y $c$ pueden ser constantes o alguna función de $(\xi,\eta)$, $(x, y)$ representan las coordenadas en el dominio físico mientras que $(\xi, \eta)$ representan las coordenadas en el plano computacional, por último $V_x$ y $V_y$ son términos fuente. En este caso, la frontera interna representa una condición inicial, mientras que la frontera externa representa una restricción sobre el comportamiento de la solución en la dirección $j$. Las ecuaciones \ref{parabolic0} son discretizadas utilizando diferencias finitas, particularmente aproximaciones tipo ``backwards'' en la coordenada $\eta$ y aproximaciones de tipo central en la coordenada $\xi$. Dadas unas condiciones inciales en $x$ y $y$ para $\eta = 0$, en este caso la distribución de la nube de puntos que definen la frontera interna, se obtiene un sistema tridiagonal, el cual debe ser resuelto para cada incremento contemplado en $\eta$.
 	%
 	%
 	%
