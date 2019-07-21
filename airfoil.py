@@ -5,7 +5,8 @@ Created on Apr 17 13:35:19 2018
 
 @author: cardoso
 
-Define clase airfoil. Se generan diferentes subclases para la generación de diferentes familias de perfiles
+Define clase airfoil. Genera perfiles a partir de una nube de puntos
+Subclase NACA4 para creación de perfiles NACA serie 4
 """
 
 import numpy as np
@@ -37,7 +38,7 @@ class airfoil(object):
         y = perf[:, 1]
         del (perf)
 
-        # se ajusta para que el origen del sistema de coordenadas coincida con c/4
+        # origen del sistema de coordenadas coincide con c/4
         x -= 0.25
         x *= c
         y *= c
@@ -45,7 +46,7 @@ class airfoil(object):
         perfil = np.zeros((np.shape(x)[0], 2))
         perfil[:, 0] = x
         perfil[:, 1] = y
-        #titulo = filename[: -4]
+        # titulo = filename[: -4]
         np.savetxt('perfil_final.txt', perfil)
         self.x = perfil[:, 0]
         self.y = perfil[:, 1]
@@ -62,12 +63,24 @@ class airfoil(object):
         plt.figure('perfil')
         plt.axis('equal')
         plt.plot(self.x, self.y, 'b')
+        plt.show()
+
+    # rotación del perfil
+    def rotate(self, degrees):
+        size = self.size()
+        rads = degrees * np.pi / 180 * -1
+
+        for i in range(size):
+            x = np.cos(rads) * self.x[i] - np.sin(rads) * self.y[i]
+            y = np.sin(rads) * self.x[i] + np.cos(rads) * self.y[i]
+            self.x[i] = x
+            self.y[i] = y
+        self.y -= self.y[0]
 
 
 #
 #
-#
-# subclase de perfiles, NACA4 genera perfiles de la serie 4 mediante su ecuación constitutiva
+# subclase de perfiles, NACA4 genera perfiles de la serie de 4 dígitos
 class NACA4(airfoil):
     def __init__(self, m, p, t, c):
         '''
@@ -81,10 +94,9 @@ class NACA4(airfoil):
         self.t = t / 100
         airfoil.__init__(self, c)
 
-    # crea un perfil con una distribución lineal de puntos a lo largo de la cuerda
     def create_linear(self, points):
         '''
-        Crea un perfil NACA4 con una distribución linea y con el número de puntos dado
+        Crea un perfil NACA4 con una distribución lineal
 
         points = número de puntos para el perfil
         '''
@@ -110,7 +122,8 @@ class NACA4(airfoil):
         a4 = -0.1036
 
         # calculo de la distribución de espesor
-        yt = 5 * t * (a0 * xc ** 0.5 +  a1 * xc + a2 * xc ** 2 + a3 * xc ** 3 + a4 * xc ** 4)
+        yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
+                      + a4 * xc ** 4)
 
         # si es perfil simétrico
         if m == 0 and p == 0:
@@ -128,7 +141,8 @@ class NACA4(airfoil):
                     yc[i] = (m / p**2) * (2 * p * xc[i] - xc[i]**2)
                     dydx[i] = 2 * m / p**2 * (p - xc[i])
                 else:
-                    yc[i] = m / (1 - p)**2 * ( (1 - 2*p) + 2 * p * xc[i] - xc[i]**2 )
+                    yc[i] = m / (1 - p)**2 * ((1 - 2*p) + 2 * p * xc[i]
+                                              - xc[i] ** 2)
                     dydx[i] = 2 * m / (1 - p)**2 * (p - xc[i])
 
             theta = np.arctan(dydx)
@@ -158,11 +172,11 @@ class NACA4(airfoil):
         yuf = np.flip(yuf, 0)
         xlf = np.copy(xl[1:])
         ylf = np.copy(yl[1:])
-        #xlf = np.flip(xlf, 0)
         xp = np.concatenate((xuf, xlf))
         yp = np.concatenate((yuf, ylf))
 
-        # se invierten para que comience el perfil por el intrados, pasando al extrados  SENTIDO HORARIO
+        # se invierten para que comience el perfil por el intrados
+        # pasando al extrados  SENTIDO HORARIO
         xp = np.flip(xp, 0)
         yp = np.flip(yp, 0)
         perfil = np.zeros((np.shape(xp)[0], 2))
@@ -175,10 +189,11 @@ class NACA4(airfoil):
 
         return
 
-    # crea un perfil con una distribución senoidal de puntos a lo alrgo de la cuerda
     def create_sin(self, points):
         '''
-        Crea un perfil NACA4 con una distribución linea y con el número de puntos dado
+        Crea un perfil NACA4 con una distribución no lineal mediante una
+        función senoidal.
+        Mayor densidad de puntos en bordes de ataque y de salida
 
         points = número de puntos para el perfil
         '''
@@ -206,7 +221,8 @@ class NACA4(airfoil):
         a4 = -0.1036
 
         # calculo de la distribución de espesor
-        yt = 5 * t * (a0 * xc ** 0.5 +  a1 * xc + a2 * xc ** 2 + a3 * xc ** 3 + a4 * xc ** 4)
+        yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
+                      + a4 * xc ** 4)
 
         # si es perfil simétrico
         if m == 0 and p == 0:
@@ -224,7 +240,8 @@ class NACA4(airfoil):
                     yc[i] = (m / p**2) * (2 * p * xc[i] - xc[i]**2)
                     dydx[i] = 2 * m / p**2 * (p - xc[i])
                 else:
-                    yc[i] = m / (1 - p)**2 * ( (1 - 2*p) + 2 * p * xc[i] - xc[i]**2 )
+                    yc[i] = m / (1 - p)**2 * ((1 - 2*p) + 2 * p * xc[i]
+                                              - xc[i] ** 2)
                     dydx[i] = 2 * m / (1 - p)**2 * (p - xc[i])
 
             theta = np.arctan(dydx)
@@ -253,11 +270,11 @@ class NACA4(airfoil):
         yuf = np.flip(yuf, 0)
         xlf = np.copy(xl[1:])
         ylf = np.copy(yl[1:])
-        #xlf = np.flip(xlf, 0)
         xp = np.concatenate((xuf, xlf))
         yp = np.concatenate((yuf, ylf))
 
-        # se invierten para que comience el perfil por el intrados, pasando al extrados SENTIDO HORARIO
+        # se invierten para que comience el perfil por el intrados
+        # pasando al extrados  SENTIDO HORARIO
         xp = np.flip(xp, 0)
         yp = np.flip(yp, 0)
         perfil = np.zeros((np.shape(xp)[0], 2))
@@ -266,7 +283,7 @@ class NACA4(airfoil):
         perfil[:, 1] = yp
         perfil[0, 1] = 0
         perfil[-1, 1] = 0
-        np.savetxt('perfil_final.txt', perfil) # guarda la nube de puntos del perfil
+        np.savetxt('perfil_final.txt', perfil)
         self.x = perfil[:, 0]
         self.y = perfil[:, 1]
 
