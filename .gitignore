@@ -1,3 +1,8 @@
+# ignore garbage directory that is used for tests
+garbage
+test.py
+
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -12,12 +17,9 @@
 *.cb2
 .*.lb
 
-<<<<<<< HEAD
 *.txt
 perfil_final.txt
 
-=======
->>>>>>> malla_C
 ## Intermediate documents:
 *.dvi
 *.xdv
@@ -46,13 +48,10 @@ perfil_final.txt
 *.synctex.gz(busy)
 *.pdfsync
 
-<<<<<<< HEAD
-=======
 ## Build tool directories for auxiliary files
 # latexrun
 latex.out/
 
->>>>>>> malla_C
 ## Auxiliary and intermediate files from other packages:
 # algorithms
 *.alg
@@ -73,12 +72,9 @@ acs-*.bib
 # changes
 *.soc
 
-<<<<<<< HEAD
-=======
 # comment
 *.cut
 
->>>>>>> malla_C
 # cprotect
 *.cpt
 
@@ -122,12 +118,9 @@ acs-*.bib
 *.gls
 *.glsdefs
 
-<<<<<<< HEAD
-=======
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
 # *.ist
 
->>>>>>> malla_C
 # gnuplottex
 *-gnuplottex-*
 
@@ -155,20 +148,13 @@ acs-*.bib
 # listings
 *.lol
 
-<<<<<<< HEAD
-=======
 # luatexja-ruby
 *.ltjruby
 
->>>>>>> malla_C
 # makeidx
 *.idx
 *.ilg
 *.ind
-<<<<<<< HEAD
-*.ist
-=======
->>>>>>> malla_C
 
 # minitoc
 *.maf
@@ -218,12 +204,9 @@ sympy-plots-for-*.tex/
 *.pytxcode
 pythontex-files-*/
 
-<<<<<<< HEAD
-=======
 # tcolorbox
 *.listing
 
->>>>>>> malla_C
 # thmtools
 *.loe
 
