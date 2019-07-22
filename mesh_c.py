@@ -7,16 +7,17 @@ Created on Wed Aug 1 13:53:21 2018
 @author: cardoso
 
 Define subclase mesh_C.
-Se definen diversos métodos de generación para mallas tipo C
+Diversos métodos de generación para mallas tipo C
 """
 
 from mesh import mesh
 import numpy as np
 
+
 class mesh_C(mesh):
     def __init__(self, R, M, N, archivo):
         '''
-        R = radio de la frontera externa, ya está en función de la cuerda del perfil
+        R = radio de la frontera externa, en función de la cuerda del perfil
             se asigna ese valor desde el sript main.py
         archivo = archivo con la nube de puntos de la frontera interna
         '''
@@ -30,7 +31,7 @@ class mesh_C(mesh):
         '''
         R = self.R
         M = self.M
-        #N = self.N
+        # N = self.N
 
         # cargar datos del perfil
         perfil = np.loadtxt(self.archivo)
@@ -38,7 +39,7 @@ class mesh_C(mesh):
 
         perfil_y = perfil[:, 1]
         points = np.shape(perfil_x)[0]
-        points1 = (points + 1) // 2 #(points + 1) // 2
+        points1 = (points + 1) // 2
         # frontera externa
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)
         theta2 = np.linspace(np.pi, np.pi / 2, points1)
@@ -61,7 +62,7 @@ class mesh_C(mesh):
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
-        #x_line[0] = perfil_x[0]
+        # x_line[0] = perfil_x[0]
         x_line[-1] = 2.5 * R
         dd = x_line[0]
         for i in range(0, npoints - 1):
@@ -71,8 +72,8 @@ class mesh_C(mesh):
         '''
             Termina prueba
         '''
-        #dx = (x_line[-2] - x_line[-1]) / 3.5
-        #x_line[1:-1] -= dx
+        # dx = (x_line[-2] - x_line[-1]) / 3.5
+        # x_line[1:-1] -= dx
         x = np.concatenate((x_line, x[1:]))
         x_line = np.flip(x_line, 0)
         x = np.concatenate((x, x_line[1:]))
@@ -83,14 +84,14 @@ class mesh_C(mesh):
 
         # frontera interna
         # cambiar variable x_line para que no sea distribución lineal
-        x_line = np.linspace(R * 2.5, perfil_x[0], (M - points ) // 2 + 1)
+        x_line = np.linspace(R * 2.5, perfil_x[0], (M - points) // 2 + 1)
         '''
         ***
         *** Prueba para quitar distribucion lineal de puntos
         ***
         '''
         npoints = (M - points) // 2 + 1
-        #weight = 1.2
+        # weight = 1.2
         delta_limit = 2.5 * R - perfil_x[0]
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** (npoints - 1))
@@ -104,15 +105,14 @@ class mesh_C(mesh):
         '''
             Termina prueba
         '''
-        #dx = (x_line[-2] - x_line[-1]) * 253 / 254
-        #x_line[1:-1] -= dx
+        # dx = (x_line[-2] - x_line[-1]) * 253 / 254
+        # x_line[1:-1] -= dx
         perfil_x = np.concatenate((x_line, perfil_x[1:]))
         x_line = np.flip(x_line, 0)
         perfil_x = np.concatenate((perfil_x, x_line[1:]))
         y_line[:] = 0
         perfil_y = np.concatenate((y_line, perfil_y[1:]))
         perfil_y = np.concatenate((perfil_y, y_line[1:]))
-
 
         # primera columna FI (perfil), ultima columna FE
         self.X[:, -1] = x
@@ -121,13 +121,10 @@ class mesh_C(mesh):
         self.Y[:, 0] = perfil_y
         return
 
-
-
-
-    # funcion para generar mallas mediante  ecuación de Laplace. Ecuaciones diferenciales parciales (EDP)
-    def gen_Laplace(self, metodo = 'SOR'):
+    def gen_Laplace(self, metodo='SOR'):
         '''
-        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion) [métodos iterativos para la solución del sistema de ecs]
+        Genera malla resolviendo ecuación de Laplace
+        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
         '''
 
         # se genera malla antes por algún método algebráico
@@ -141,18 +138,18 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.4) # en caso de metodo SOR
+        omega = np.longdouble(1.4)  # en caso de metodo SOR
         '''
         para métodos de relajación:
-            0 < omega < 1 ---> bajo-relajación. Se ocupa si se sabe que la solución tiende a diverger
-            omega = 1     ---> no hay nada que altere, por lo tanto se vuelve el método Gauss-Seidel
-            1 < omega < 2 ---> sobre-relajación. -acelera la convergencia. Se ocupa si de antemano se sabe que la solución converge.
+            0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
+            omega = 1     ---> método Gauss-Seidel
+            1 < omega < 2 ---> sobre-relajación. acelera la convergencia.
         '''
 
-        it  = 0
+        it = 0
         # inicio del método iterativo
         while it < mesh.it_max:
-            print(it)
+            print(it, end='\r')
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
 
@@ -172,16 +169,26 @@ class mesh_C(mesh):
                     y_xi = (Y[i+1, j] - Y[i-1, j]) / 2 / d_xi
 
                     alpha = x_eta ** 2 + y_eta ** 2
-                    beta = x_xi * x_eta +  y_xi * y_eta
+                    beta = x_xi * x_eta + y_xi * y_eta
                     gamma = x_xi ** 2 + y_xi ** 2
 
-                    Xn[i, j] = (d_xi * d_eta)**2 / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) * ( alpha / (d_xi**2) * (X[i+1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
-                             - beta / (2 * d_xi * d_eta) * (X[i+1, j+1] - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1]))
-                    Yn[i, j] = (d_xi * d_eta)**2 / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) * ( alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
-                             - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1] - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1]))
+                    Xn[i, j] = (d_xi * d_eta)**2\
+                        / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                        * (alpha / (d_xi**2) * (X[i+1, j] + X[i-1, j])
+                            + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
+                            - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
+                                    - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1]))
+                    Yn[i, j] = (d_xi * d_eta)**2\
+                        / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                        * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
+                            + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
+                            - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
+                                    - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1]))
 
-                # se calculan los puntos en la sección de salida de la malla, parte inferior a partir del corte
-                # se ocupan diferencias finitas "forward" para derivadas respecto a "XI"
+                # se calculan los puntos en la sección de salida de la malla
+                # parte inferior a partir del corte
+                # se ocupan diferencias finitas "forward" para derivadas
+                # respecto a "XI"
                 i = 0
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -189,16 +196,20 @@ class mesh_C(mesh):
                 y_xi = (Y[i+1, j] - Y[i, j]) / d_xi
 
                 alpha = x_eta ** 2 + y_eta ** 2
-                beta = x_xi * x_eta +  y_xi * y_eta
+                beta = x_xi * x_eta + y_xi * y_eta
                 gamma = x_xi ** 2 + y_xi ** 2
 
+                Yn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                    * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+                        - beta / d_xi / d_eta
+                        * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+                        + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
 
-                Yn[i, j] =(d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])\
-                          - beta / d_xi / d_eta * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1]) + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
-
-
-                # se calculan los puntos en la sección de salida de la malla, parte superior a partir del corte
-                # se ocupan diferencias finitas "backward" para derivadas respecto a "XI"
+                # se calculan los puntos en la sección de salida de la malla
+                # parte superior a partir del corte
+                # se ocupan diferencias finitas "backward" para derivadas
+                # respecto a "XI"
                 i = m-1
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -206,14 +217,15 @@ class mesh_C(mesh):
                 y_xi = (Y[i, j] - Y[i-1, j]) / d_xi
 
                 alpha = x_eta ** 2 + y_eta ** 2
-                beta = x_xi * x_eta +  y_xi * y_eta
+                beta = x_xi * x_eta + y_xi * y_eta
                 gamma = x_xi ** 2 + y_xi ** 2
 
-
-
-                Yn[i, j] = (d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])\
-                          - beta / d_xi / d_eta * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1]) + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
-
+                Yn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                    * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+                        - beta / d_xi / d_eta
+                        * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+                        + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -222,23 +234,20 @@ class mesh_C(mesh):
 
             it += 1
 
-            if abs(Xn - Xo).max() < mesh.err_max and abs(Yn - Yo).max() < mesh.err_max:
+            if abs(Xn - Xo).max() < mesh.err_max\
+                    and abs(Yn - Yo).max() < mesh.err_max:
                 print('Laplace: ' + metodo + ': saliendo...')
-                print('it=',it)
+                print('it =', it)
                 break
 
         self.X = Xn
         self.Y = Yn
         return
 
-
-
-
-# funcion para generar mallas mediante  ecuación de Poisson. Ecuaciones diferenciales parciales (EDP)
-    def gen_Poisson(self, metodo = 'SOR'):
+    def gen_Poisson(self, metodo='SOR'):
         '''
-        métodos iterativos para la solución del sistema de ecs
-            metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
+        Genera malla resolviendo ecuación de Poisson
+        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
         '''
 
         # se genera malla antes por algún método algebráico
@@ -255,9 +264,10 @@ class mesh_C(mesh):
         omega = np.longdouble(1.2)  # en caso de metodo SOR
         '''
         para métodos de relajación:
-            0 < omega < 1 ---> bajo-relajación. Se ocupa si se sabe que la solución tiende a diverger
-            omega = 1     ---> no hay nada que altere, por lo tanto se vuelve el método Gauss-Seidel
-            1 < omega < 2 ---> sobre-relajación. -acelera la convergencia. Se ocupa si de antemano se sabe que la solución converge.
+            0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
+            omega = 1     ---> método Gauss-Seidel
+            1 < omega < 2 ---> sobre-relajación. acelera la convergencia.
+                        se sabe que la solución converge.
         '''
 
         # parámetros de ecuación de Poisson
@@ -275,7 +285,7 @@ class mesh_C(mesh):
 
         # inicio del método iterativo
         while it < mesh.it_max:
-            print(it)
+            print(it, end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
             # si el método iterativo es Jacobi
@@ -294,30 +304,48 @@ class mesh_C(mesh):
                     y_xi = (Y[i+1, j] - Y[i-1, j]) / 2 / d_xi
 
                     alpha = x_eta ** 2 + y_eta ** 2
-                    beta = x_xi * x_eta +  y_xi * y_eta
-                    gamma =  x_xi ** 2 + y_xi ** 2
+                    beta = x_xi * x_eta + y_xi * y_eta
+                    gamma = x_xi ** 2 + y_xi ** 2
 
-                    if np.abs( i / (m-1) - linea_xi) == 0:
+                    if np.abs(i / (m-1) - linea_xi) == 0:
                         P = np.longdouble(0)
                     else:
-                        P = -a * ( np.longdouble(i / (m-1) - linea_xi) ) / np.abs( np.longdouble(i / (m-1) - linea_xi) ) * np.exp(-c * np.abs( np.longdouble(i / (m-1) - linea_xi)))
+                        P = -a * (np.longdouble(i / (m-1) - linea_xi))\
+                                / np.abs(np.longdouble(i / (m-1) - linea_xi))\
+                                * np.exp(-c * np.abs(np.longdouble(i /
+                                                         (m-1) - linea_xi)))
 
                     if np.abs(j / (n-1) - linea_eta) == 0:
                         Q = np.longdouble(0)
                     else:
-                        Q = -aa * ( np.longdouble( j / (n-1) - linea_eta) ) / np.abs( np.longdouble(j / (n-1) - linea_eta) ) * np.exp(-cc * np.abs( np.longdouble(j / (n-1) - linea_eta)) )
+                        Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                                / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                                * np.exp(-cc * np.abs(np.longdouble(j /
+                                                        (n-1) - linea_eta)))
 
                     I = x_xi * y_eta - x_eta * y_xi
 
-                    Xn[i, j] = (d_xi * d_eta)**2 / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) * ( alpha / (d_xi**2) * (X[i+1, j] + X[i-1, j]) + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])\
-                             - beta / (2 * d_xi * d_eta) * (X[i+1, j+1] - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])\
-                             + I**2 * (P * x_xi + Q * x_eta))
-                    Yn[i, j] = (d_xi * d_eta)**2 / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) * ( alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j]) + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])\
-                             - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1] - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])\
-                             + I**2 * (P * y_xi + Q * y_eta))
+                    Xn[i, j] = (d_xi * d_eta)**2\
+                        / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) \
+                        * (alpha / (d_xi**2) * (X[i+1, j] + X[i-1, j])
+                            + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
+                            - beta / (2 * d_xi * d_eta)
+                            * (X[i+1, j+1] - X[i+1, j-1]
+                                + X[i-1, j-1] - X[i-1, j+1])
+                            + I**2 * (P * x_xi + Q * x_eta))
+                    Yn[i, j] = (d_xi * d_eta)**2\
+                        / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                        * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
+                            + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
+                            - beta / (2 * d_xi * d_eta)
+                            * (Y[i+1, j+1] - Y[i+1, j-1]
+                                + Y[i-1, j-1] - Y[i-1, j+1])
+                            + I**2 * (P * y_xi + Q * y_eta))
 
-                # se calculan los puntos en la sección de salida de la malla, parte inferior a partir del corte
-                # se ocupan diferencias finitas "forward" para derivadas respecto a "XI"
+                # se calculan los puntos en la sección de salida de la malla
+                # parte inferior a partir del corte
+                # se ocupan diferencias finitas "forward" para derivadas
+                # respecto a "XI"
                 i = 0
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -325,28 +353,38 @@ class mesh_C(mesh):
                 y_xi = (Y[i+1, j] - Y[i, j]) / d_xi
 
                 alpha = x_eta ** 2 + y_eta ** 2
-                beta = x_xi * x_eta +  y_xi * y_eta
+                beta = x_xi * x_eta + y_xi * y_eta
                 gamma = x_xi ** 2 + y_xi ** 2
 
                 if np.abs(i / (m-1) - linea_xi) == 0:
                     P = np.longdouble(0)
                 else:
-                    P = -a * ( np.longdouble(i / (m-1) - linea_xi) ) / np.abs( np.longdouble(i / (m-1) - linea_xi) ) * np.exp(-c * np.abs( np.longdouble(i / (m-1) - linea_xi) ))
+                    P = -a * (np.longdouble(i / (m-1) - linea_xi))\
+                            / np.abs(np.longdouble(i / (m-1) - linea_xi))\
+                            * np.exp(-c
+                                * np.abs(np.longdouble(i / (m-1) - linea_xi)))
 
                 if np.abs(j / (n-1) - linea_eta) == 0:
                     Q = np.longdouble(0)
                 else:
-                    Q = -aa * ( np.longdouble(j / (n-1) - linea_eta) ) / np.abs( np.longdouble(j / (n-1) - linea_eta) ) * np.exp(-cc * np.abs( np.longdouble(j / (n-1) - linea_eta) ))
+                    Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                            * np.exp(-cc
+                                * np.abs(np.longdouble(j / (n-1) - linea_eta)))
                 I = x_xi * y_eta - x_eta * y_xi
 
+                Yn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                    * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+                        - beta / d_xi / d_eta
+                        * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+                        + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                        + I**2 * (P * y_xi + Q * y_eta))
 
-                Yn[i, j] =(d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])\
-                          - beta / d_xi / d_eta * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1]) + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])\
-                          + I**2 * (P * y_xi + Q * y_eta))
-
-
-                # se calculan los puntos en la sección de salida de la malla, parte superior a partir del corte
-                # se ocupan diferencias finitas "backward" para derivadas respecto a "XI"
+                # se calculan los puntos en la sección de salida de la malla
+                # parte superior a partir del corte
+                # se ocupan diferencias finitas "backward" para derivadas
+                # respecto a "XI"
                 i = m-1
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -354,24 +392,33 @@ class mesh_C(mesh):
                 y_xi = (Y[i, j] - Y[i-1, j]) / d_xi
 
                 alpha = x_eta ** 2 + y_eta ** 2
-                beta = x_xi * x_eta +  y_xi * y_eta
+                beta = x_xi * x_eta + y_xi * y_eta
                 gamma = x_xi ** 2 + y_xi ** 2
 
                 if np.abs(i / (m-1) - linea_xi) == 0:
                     P = np.longdouble(0)
                 else:
-                    P = -a * ( np.longdouble(i / (m-1) - linea_xi) ) / np.abs( np.longdouble(i / (m-1) - linea_xi) ) * np.exp(-c * np.abs( np.longdouble(i / (m-1) - linea_xi) ))
+                    P = -a * (np.longdouble(i / (m-1) - linea_xi))\
+                            / np.abs(np.longdouble(i / (m-1) - linea_xi))\
+                            * np.exp(-c * np.abs(np.longdouble(i / (m-1)
+                                                               - linea_xi)))
 
                 if np.abs(j / (n-1) - linea_eta) == 0:
                     Q = np.longdouble(0)
                 else:
-                    Q = -aa * ( np.longdouble(j / (n-1) - linea_eta) ) / np.abs( np.longdouble(j / (n-1) - linea_eta) ) * np.exp(-cc * np.abs( np.longdouble(j / (n-1) - linea_eta) ))
+                    Q = - aa * (np.longdouble(j / (n-1) - linea_eta))\
+                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                            * np.exp(-cc * np.abs(np.longdouble(j / (n-1)
+                                                                - linea_eta)))
                 I = x_xi * y_eta - x_eta * y_xi
 
-                Yn[i, j] = (d_xi * d_eta) ** 2 / (2 * gamma * d_xi ** 2 - alpha * d_eta **2) * ( alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])\
-                          - beta / d_xi / d_eta * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1]) + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])\
-                          + I**2 * (P * y_xi + Q * y_eta))
-
+                Yn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
+                    * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+                        - beta / d_xi / d_eta
+                        * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+                        + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                        + I**2 * (P * y_xi + Q * y_eta))
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -380,9 +427,10 @@ class mesh_C(mesh):
 
             it += 1
 
-            if abs(Xn - Xo).max() < mesh.err_max and abs(Yn - Yo).max() < mesh.err_max:
+            if abs(Xn - Xo).max() < mesh.err_max\
+                    and abs(Yn - Yo).max() < mesh.err_max:
                 print('Poisson: ' + metodo + ': saliendo...')
-                print('it=',it)
+                print('it=', it)
                 break
 
         self.X = Xn
@@ -412,20 +460,24 @@ class mesh_C(mesh):
         for j in range(1, n):
             # se llena la matriz S y el vector DD
             for i in range(1, m-1):
-                F = 0.5 * ( ((X[i, j - 1] - X[i - 1, j - 1]) ** 2 + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5\
-                            + ((X[i + 1, j - 1] - X[i, j - 1]) ** 2 + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5)
+                F = 0.5 * (((X[i, j - 1] - X[i - 1, j - 1]) ** 2
+                            + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5
+                           + ((X[i + 1, j - 1] - X[i, j - 1]) ** 2
+                              + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5)
                 F = F * d_s1 * (1 + 0.025) ** (j - 1)
                 x_xi_k = (X[i + 1, j - 1] - X[i - 1, j - 1]) / 2 / d_xi
                 y_xi_k = (Y[i + 1, j - 1] - Y[i - 1, j - 1]) / 2 / d_xi
                 x_eta_k = - y_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
-                y_eta_k =  x_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
-                B_1 = np.array([[x_xi_k, -y_xi_k], [y_xi_k, x_xi_k]]) / (x_xi_k ** 2 + y_xi_k ** 2)
+                y_eta_k = x_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
+                B_1 = np.array([[x_xi_k, -y_xi_k], [y_xi_k, x_xi_k]])\
+                    / (x_xi_k ** 2 + y_xi_k ** 2)
                 A = np.array([[x_eta_k, y_eta_k], [y_eta_k, -x_eta_k]])
                 C = B_1 @ A
                 AA = - 1 / 2 / d_xi * C
                 BB = np.identity(2) / d_eta
                 CC = -AA
-                dd = B_1 @ np.array([[0], [F + Fprev]]) + np.array([[X[i, j - 1]], [Y[i, j - 1]]]) / d_eta
+                dd = B_1 @ np.array([[0], [F + Fprev]])\
+                    + np.array([[X[i, j - 1]], [Y[i, j - 1]]]) / d_eta
                 if i == 1:
                     dd -= (AA @ np.array([[X[0, j]], [Y[0, j]]]))
                     S[0, 0] = BB
@@ -447,7 +499,8 @@ class mesh_C(mesh):
                     U[0, 1] = np.linalg.inv(S[0, 0]) @ S[0, 1]
                 elif i == m - 3:
                     L[m - 3, m - 4] = S[m - 3, m - 4]
-                    L[m - 3, m - 3] = S[m - 3, m - 3] - S[m - 3, m - 4] @ U[m -4, m - 3]
+                    L[m - 3, m - 3] = S[m - 3, m - 3]\
+                        - S[m - 3, m - 4] @ U[m - 4, m - 3]
                     U[m - 3, m - 3] = np.identity(2)
                 else:
                     L[i, i - 1] = S[i, i - 1]
@@ -458,7 +511,8 @@ class mesh_C(mesh):
             i = 0
             Z[0, 0] = np.linalg.inv(L[0, 0]) @ DD[0, 0]
             for i in range(1, m - 2):
-                Z[i, 0] = np.linalg.inv(L[i, i]) @ (DD[i, 0] - L[i, i - 1] @ Z[i - 1, 0])
+                Z[i, 0] = np.linalg.inv(L[i, i])\
+                        @ (DD[i, 0] - L[i, i - 1] @ Z[i - 1, 0])
             # se obtienen los valores del vector R
             i = m - 3
             R[i, 0] = Z[i, 0]
