@@ -572,7 +572,7 @@
 	\paragraph*{}
 		Como ya se mencionó previamente, los métodos más eficientes para la generación de mallas son los métodos algebráicos. Éstos métodos basados en interpolación son de gran utilidad en la industria, debido a su sencilla implementación, además de la capacidad de control sobre la densidad de la malla respecto a un nodo dentro del dominio. Un aspecto en contra de la generación de mallas mediante estos métodos es que no tienen la capacidad de suavizar las curvas, si no que tienden a mantener la forma de las fronteras, por lo que si se llegara a presentar algún tipo de discontinuidad en la frontera interna (superficie de análisis), esta seguiría presente los nodos internos de la malla. Es por esto que estos métodos son utilizados de manera general, como una primera aproximación, la cual sirve como condición inicial en la generación de mallas mediante la solución de sistemas de ecuaciones diferenciales parciales.\cite{farrashkhalvat}
 	\paragraph*{}
-		La idea fundamental sobre la cual se desarrollan todos los métodos algebráicos es el uso de funciones de interpolación matemática para interpolar entre algunos puntos conocidos o previamente asignados (fronteras) para así obtener la distribución de puntos que se ubican entre los ya mencionados. El método de interpolación puede variar dependiendo del método algebráico que se esté empleando, pero la idea base permanece. \cite{siladic-grid-generation}
+		La idea fundamental sobre la cual se desarrollan todos los métodos algebráicos es el uso de funciones de interpolación matemática para interpolar entre algunos puntos conocidos o previamente asignados (fronteras) para así obtener la distribución de puntos que se ubican entre los ya mencionados. El método de interpolación puede variar dependiendo del método algebráico que se esté empleando, pero la idea base permanece. \cite{siladicParabolic}
 	\paragraph*{}
 		Los métodos algebráicos relacionan un dominio computacional, descrito por un cuadrado en 2D y un cubo en 3D, con un dominio físico de geometría arbitraria.
 		
@@ -736,7 +736,7 @@
 %
 \chapter{Generación de mallas mediante EDP}
 	\paragraph*{}
-	La generación de mallas mediante estos métodos se ha esparcido gracias a a la versatilidad que poseen y la relativa facilidad con la que pueden ser aplicados. La idea sobre la cual se desarrolla el método, es la de obtener la solución númerica de una ecuación diferencial parcial, esta solución representa las coordenadas de la malla, la cual debe coincidir en su frontera interna, con la forma geométrica del cuerpo que se pretende analizar.\cite{siladic-grid-generation}
+	La generación de mallas mediante estos métodos se ha esparcido gracias a a la versatilidad que poseen y la relativa facilidad con la que pueden ser aplicados. La idea sobre la cual se desarrolla el método, es la de obtener la solución númerica de una ecuación diferencial parcial, esta solución representa las coordenadas de la malla, la cual debe coincidir en su frontera interna, con la forma geométrica del cuerpo que se pretende analizar.\cite{siladicParabolic}
 		
 	\paragraph*{}
 	Existen tres esquemas predominantes de generación de mallas mediante la solución de sistemas de ecuaciones diferenciales parciales:
@@ -1009,7 +1009,7 @@
 		\begin{equation}
 			\left[A \right] R_{\xi} + \left[ B \right] R_{\eta} = H
 			\label{ec-hyper-compacta}
-		\end{equation}
+		\end{equation}\\ 
 		donde:
 		\begin{align*}
 			R = \begin{bmatrix}
@@ -1037,7 +1037,7 @@
 				x_{\xi}^{k} & -y_{\xi}^{k} \\ \\
 				y_{\xi}^{k} & x_{\xi}^{k}
 			\end{bmatrix}
-		\end{equation*}
+		\end{equation*}\\
 		por lo tanto
 		\begin{equation*}
 			\left[ C \right] = \left[ B \right]^{-1} \left[ A \right] = \begin{bmatrix}
@@ -1046,7 +1046,7 @@
 				x_{\xi}^{k} y_{\eta}^{k} + x_{\eta}^{k} y_{\xi}^{k} &
 				- \left( x_{\xi}^{k} x_{\eta}^{k} - y_{\xi}^{k} y_{\eta}^{k} \right)
 			\end{bmatrix}
-		\end{equation*}
+		\end{equation*}\\
 		donde
 		\begin{equation*}
 			DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2
@@ -1056,7 +1056,7 @@
 		Los eigenvalores de $\left[ C \right]$ son
 		\begin{equation*}
 			\lambda_{1, 2} = \pm \left[ \frac{\left(x_{\eta}^{k} \right)^2 + \left( y_{\eta}^{k} \right)^2} {DN} \right]
-		\end{equation*}
+		\end{equation*}\\
 		los cuales cumplen con la condición de ser siempre reales (para un sistema hiperbólico) siempre que
 		\begin{equation*}
 		DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2 \neq 0
@@ -1065,16 +1065,16 @@
 		 Para obtener un sistema de ecuaciones algebráico, debemos aplicar el método de diferencias finitas. Para la sustitución de las derivadas parciales respecto al eje $\xi$ se utiliza una aproximación central de segundo orden y para el caso de las derivadas parciales respecto al eje $\eta$ se hará uso de aproximaciones de primer orden tipo ``backwards'', resultando la ecuación en
 		 \begin{equation}
 			 \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j}}{2 \Delta \xi} + \left[ B \right] \frac{R_{i, j} - R_{i, j - 1}}{\Delta \eta} = \left[ H \right]_{i, j}
-		 \end{equation}
+		 \end{equation}\\
 		 que al ser multiplicada por la matriz $\left[ B \right]^{-1}$ y reacomodada queda cómo
 		 \begin{equation}
 			 \frac{R_{i, j} - R_{i, j-1} }{\Delta \eta} + \left[ B \right]^{-1} \left[ A \right] \frac{R_{i + 1, j} - R_{i - 1, j} }{2 \Delta \xi} = \left[ B \right]^{-1} H_{i, j}
-		 \end{equation}
+		 \end{equation}\\
 		 en donde las matrices $A$ y $B$ son evaluadas en la línea $(j - 1)$. Esta ecuación se reacomoda y se le asignan nuevos términos, con el propósito de compactar a la misma, dando como resultado
 		 \begin{equation}
 			 \left[ AA \right] R_{i - 1, j} + \left[ BB \right] R_{i, j} + \left[ CC \right] R_{i + 1, j} = \left[ DD \right]_{i, j}
 			 \label{ec-hyper-final}
-		 \end{equation}
+		 \end{equation}\\
 		 donde
 		 \begin{subequations}
 			 	\begin{equation*}
@@ -1089,7 +1089,7 @@
 				\begin{equation*}
 				\left[ DD \right] = \left[ B \right]_{i, j - 1}^{-1} H_{i, j} + \frac{R_{i, j-1}}{\Delta \eta}
 				\end{equation*}
-			 \end{subequations}
+			 \end{subequations}\\
 		 una vez que se ha desarrollado la ecuación \ref{ec-hyper-final} para todas las instancias existentes a lo largo de $i$ para un mismo nivel $j$, se obtiene un sistema de bloque tridiagonal
 		 \begin{equation}
 			 \begin{bmatrix}
@@ -1142,7 +1142,7 @@
 		\begin{equation}
 			S \Delta Q = R
 			\label{hyper-sol-1}
-		\end{equation}
+		\end{equation}\\
 		donde $\Delta Q$ y $R$ con vectores con $m$ componentes, y a su vez, $S$ representa el bloque tridiagonal
 		\begin{equation*}
 			S = \begin{bmatrix}
@@ -1153,7 +1153,7 @@
 			& & & A_{m-2} & B_{m-2} & C_{m-2}\\
 			& & & & A_{m-1} & B_{m-1}
 			\end{bmatrix}
-		\end{equation*}
+		\end{equation*}\\
 		donde $A_i, B_i$ y $C_i$ son matrices de orden $m$.
 		
 	\paragraph*{}
@@ -1175,25 +1175,25 @@
 				& & & & I & \beta_{m-2}\\
 				& & & & & I\\
 			\end{bmatrix}
-		\end{equation}
+		\end{equation}\\
 		donde $I$ es la matriz identidad de orden $m$ y las matrices cuadradas $\alpha_i$ y $\beta_i$ se determinan mediante
 		\begin{align}
 			\alpha_2 = B_2 && y && \beta_2 = B_{2}^{-1} C_2
 		\end{align}
 		\begin{align}
 			\alpha_i = B_i - A_i \beta_{i-1} &&&& i = 3, 4, \dots, m-1
-		\end{align}
+		\end{align}\\
 		y
 		\begin{align}
 			\beta_i = \alpha_{i}^{-1} C_i &&&& i = 3, 4, \dots, m-2
-		\end{align}
+		\end{align}\\
 		
 	\paragraph*{}
 		Ahora, el sistema dado por la ecuación \ref{hyper-sol-1} es equivalente a
 		\begin{equation}
 			LY = R
 			\label{hyper-sol-2}
-		\end{equation}
+		\end{equation}\\
 		donde
 		\begin{equation}
 			Y = U \Delta Q
@@ -1225,15 +1225,15 @@
 				\vdots\\
 				R_{m-1}
 			\end{bmatrix}
-		\end{equation}
+		\end{equation}\\
 		donde
 		\begin{equation}
 			Y_2 = \alpha_{2}^{-1} R_2
-		\end{equation}
+		\end{equation}\\
 		y
 		\begin{align}
 			Y_i = \alpha_{i}^{-1} \left( R_i - A_i Y_{i-1} \right) &&&& i = 3, 4, \dots, m-1
-		\end{align}
+		\end{align} 
 		
 	\paragraph*{}
 		La ecuación \ref{hyper-sol-3} se desarrolla como
@@ -1271,21 +1271,21 @@
 		y
 		\begin{align}
 			\Delta Q_i = Y_i - \beta_i \Delta Q_{i+1} &&&& i = m-1, m-2, \dots, 3, 2
-		\end{align}
+		\end{align}\\
 		
 		
 	\section{Generación de mallas mediante EDP parabólicas}
 		\paragraph*{}
-			A pesar de que el esquema elíptico (ecuaciones \ref{ec-laplace-invertida}), desarrollado por Thompson, et. al. \cite{thompson1974automatic} ha sido el esquema de mayor utilización en la dinámica de fluidos computacional, se han desarrollado nuevos métodos, con la intención de obtener esquemas más rápidos y menos costosos en términos de capacidad de cómputo. La intención de generar mallas mediante la solución de ecuaciones hiperbólicas, desarrollado por Steger y Chausse \cite{Hyperbolic-steger1980generation} representa un intento de alcanzar dicho objetivo, entre sus ventajas podemos encontrar el hecho de que la solución se logra gracias a un procedimiento de marcha a comparación del esquema por ecuaciones de tipo elípticas en el cual la solución se obtiene a través de un proceso iterativo, por lo que el tiempo de ejecución en el esquema hiperbólico es del mismo orden que el de una iteración en el esquema elíptico. Sin embargo, el generar mallas mediante ecuaciones hiperbólicas trae consigo ciertas desventajas entre ellas está la propagación de eventuales discontinuidades que pueda haber en la frontera interna conforme la solución marcha de dentro hacia afuera, además en la mayoría de casos es necesario agrerar términos de viscosidad artificial ya que las soluciones tienden a ser inestables y por último, y debido a las características matemáticas de las ecuaciones diferenciales parciales hiperbólicas, no se es posible definir una frontera externa.
+			El esquema elíptico desarrollado por Thompson et. al. \cite{thompson1974automatic} ha sido de los más utilizados en la generación de mallas estructuradas, sin embargo presenta ciertas desventajas que han hecho que se desarrollen otros enfoques y esquemas que sean más rápidos para obtener una solución y que consuman menos recursos computacionales. De este razonamiento surge el método propuesto por Steger y Chausse \cite{Hyperbolic-steger1980generation} el cual utiliza ecuaciones hiperbólicas para este propósito, entre las ventajas que dicho método presenta con respecto al esquema elíptico destaca el uso de un procedimiento de marcha lo que se traduce en un menor tiempo de ejecución del código dado que el esquema elíptico utiliza métodos iterativos y el tiempo de ejecución de un método de marcha es del orden que toma a un método iterativo llevar a cabo una iteración. Por otro lado, el usar ecuaciones hiperbólicas tiene a su vez desventajas como son la propagación de discontinuidades que puedan presentarse en la frontera interna conforme la solución marcha de dentro hacia afuera, otro punto importante de desventaja es que a menudo se necesita introducir términos que representen una ``viscosidad artificial'' en la solución ya que las soluciones de este tipo de ecuaciones tienden a ser inestables dadas sus caracterísitcas matemáticas. Por último, no es posible definir una frontera externa.
+			
+		\paragraph*{}
+			En este trabajo se presenta el esquema desarrollado por Nakamura \cite{nakamuraParabolic} y que fue retomado por Siladic \cite{siladicParabolic}, el cual propone un método de generación de mallas a través de la solución de ecuaciones diferenciales parciales parabólicas. El uso de ecuaciones parabólicas presenta ciertas ventajas, entre ellas destaca el uso de métodos de solución de marcha, similares a los utilizados en la solución de ecuaciones hiperbólicas, dado que es una solución de problemas con condiciones iniciales, esto se traduce de igual manera en un tiempo de cómputo bajo. Por otro lado, las ecuaciones parabólicas comparten mucho del comportamiento matemático que está presente en las ecuaciones elípticas, que para el caso particular de la generación de mallas se traduce en el hecho de poseer un efecto difusivo que permite suavizar cualquier discontinuidad presente en la frontera interna conforme el procedimiento marcha de dentro hacia afuera. Por último, se posee la capacidad de definir las condiciones de frontera impuestas en la frontera externa.
 		
 		\paragraph*{}
-			En este trabajo se presenta el esquema desarrollado por Nakamura \cite{nakamuraParabolic}, el cual también fue retomado por Siladic \cite{siladicParabolic} y que propone un método de generación de mallas mediante la solución de ecuaciones diferenciales parciales parabólicas. Las mayores ventajas de uso de ecuaciones parabólicas son: la solución de éstas es a través de problemas con condiciones iniciales, por lo que al igual que las ecuaciones hiperbólicas presentan un algoritmo de solución de marcha, lo que significa un bajo tiempo de cómputo, una ventaja adicional es que las ecuaciones parabólicas presentan mucho del comportamiento matemático de las ecuaciones elípticas, particularmente el hecho de poseer un efecto de difusión lo cual resulta en que cualquier discontinuidad que se presentase en la frontera interna será suavizada conforme el algoritmo de solución marcha y por último, hay la capacidad de satisfacer las condiciones de frontera para la frontera externa.
+			En resúmen, lo explicado arriba, es decir, el desarrollo de un algoritmo de generación de mallas mediante ecuaciones parabólicas tiene dos puntos de vital importancia, el primero de ellos es el bajo tiempo de ejecución computacional que es requerido para lograr la solución del problema, que representa una pequeña fracción del tiempo demandado por el esquema elíptico. El segundo es la baja demanda de memoria para llevar a cabo los cálculos requerido, y que además tambien es sustancialmente menor que el requerido por un esquema elíptico.
 		
 		\paragraph*{}
-			Además de lo explicado arriba, la importancia de desarrollar un algoritmo con el uso de ecuaciones parabólicas radica en dos principales aspectos, primero, el tiempo de ejecución computacional requerido para lograr una solución es una pequeña fracción del tiempo demandado por un algoritmo de ecuaciones elípticas y segundo, el uso de memoria que se necesita también es sustancialmente menor que aquel requerido por un esquema de generación elíptico.
-		
-		\paragraph*{}
-			Las ecuacuones utilizadas son las siguientes
+			Se propone el siguiente conjunto de ecuaciones
 			\begin{subequations}
 				\begin{equation}
 					a(\xi, \eta) x_\eta = b(\xi, \eta)x_{\xi\xi} + c(\xi, \eta)V_x(\xi, \eta) + d(\xi, \eta)
@@ -1294,8 +1294,183 @@
 					a(\xi, \eta) y_\eta = b(\xi, \eta)y_{\xi\xi} + c(\xi, \eta)V_y(\xi, \eta) + d(\xi, \eta)
 				\end{equation}
 				\label{parabolic0}
-			\end{subequations}
-			donde $a, b$ y $c$ pueden ser constantes o alguna función de $(\xi,\eta)$, $(x, y)$ representan las coordenadas en el dominio físico mientras que $(\xi, \eta)$ representan las coordenadas en el plano computacional, por último $V_x$ y $V_y$ son términos fuente. En este caso, la frontera interna representa una condición inicial, mientras que la frontera externa representa una restricción sobre el comportamiento de la solución en la dirección $j$. Las ecuaciones \ref{parabolic0} son discretizadas utilizando diferencias finitas, particularmente aproximaciones tipo ``backwards'' en la coordenada $\eta$ y aproximaciones de tipo central en la coordenada $\xi$. Dadas unas condiciones inciales en $x$ y $y$ para $\eta = 0$, en este caso la distribución de la nube de puntos que definen la frontera interna, se obtiene un sistema tridiagonal, el cual debe ser resuelto para cada incremento contemplado en $\eta$.
+			\end{subequations}\\
+			donde $a, b$ y $c$ pueden ser constantes o alguna función de $(\xi,\eta)$, los valores $(x, y)$ representan las coordenadas en el dominio físico mientras quelos valores $(\xi, \eta)$ representan las coordenadas en el plano computacional, por último $V_x$ y $V_y$ son considerados términos fuente. En este esquema, la frontera externa se impone como una restricción sobre el comportamiento de la solución en la direccion $j$ mientras que la frontera interna funge como condición inicial del problema. Las ecuaciones \ref{parabolic0} son discretizadas mediante el método de diferencias finitas, las derivadas parciales con respecto al eje $\eta$ son sustituidas por aproximaciones tipo ``backwards'' mientras que las derivadas respecto al eje $\xi$ son reemplazadas por aproximanciones centrales. Dadas las condiciones inciales para $x$  y $y$ en $\eta = 0$, es decir, una vez proporcionada la nuve de puntos que definen la frontera interna, se obtiene un sistema de bloque tridiagonal, el cual debe ser resuelto para cada valor de $\eta$ contemplado.
+		
+	\paragraph*{}
+		Los valores iniciales son especificados como:
+		\begin{subequations}
+			\begin{equation}
+				x(\eta, 0) = x_0(\xi)
+			\end{equation}
+			\begin{equation}
+				y(\eta, 0) = y_0(\xi)
+			\end{equation}
+		\end{subequations}\\
+		donde $x_0(\xi)$ y $y_0(\xi)$ las coordenadas de la superficie de la frontera, es decir, del perfil aerodinámico a analizar. Para entender el efecto de los términos fuente, se asigna un valor cero a las constantes $b$ y $c$, a su vez $a = c = 1$, expresando las ecuaciones resultantes en términos de incrementos en lugar de términos diferenciales:
+		\begin{subequations}
+			\begin{equation}
+				\Delta x = V_x(\xi, \eta) \Delta \eta
+			\end{equation}
+			\begin{equation}
+				\Delta y = V_y(\xi, \eta) \Delta \eta
+			\end{equation}
+			\label{source-effect}
+		\end{subequations}\\
+		en las ecuaciones \ref{source-effect} se observa que conforme $\eta$ aumenta, el cambio tanto en $x$ como en $y$ está determinado por $V_x$ y $V_y$ respectivamente, lo que implica que ambos términos fuente deben especificarse de tal modo que $x$ y $y$ aumenten en la dirección y magnitud deseados. Por otro lado, las segundas derivadas parciales $x_{\xi\xi}$ y $y_{\xi\xi}$ en las ecuaciones \ref{parabolic0} tienen un efecto disipador para los intervalos en dirección $\xi$. Los valores de los términos fuente $V_x$ y $V_y$ pueden ser determinados mediante interpolación, ya sea polinomial o lineal, entre las fronteras interna y externa. Si se desea tener un control sobre la ortogonalidad del mallado, es posible la introducción de una frontera falsa para la frontera externa que permita lograr dicha característica, sumado a esto, es posible variar la distancia entre nodos en ambas direcciones $\xi$ y $\eta$ al discretizar las ecuaciones \ref{parabolic0} sobre una malla no uniforme en el plano computacional.
+	
+	\paragraph*{}
+		En la mayoría de casos, y en general en la literatura encontrada en la generación de mallas, se asume una malla uniforme y en algunos casos se sugiere que el espacio entre nodos sea igual a la unidad, esto último con el objetivo de simplificar las ecuaciones. Sin embargo, estas consideraciones no son estrictamente necesarias sino que representan simplificaciones del problema, por lo que la generación de una malla cuasi uniforme en el plano computaciones, y que despues se utilice en el anáñlisis de flujos como si de una malla uniforme se tratase, es tambien un enfoque válido.
+			\begin{figure}[htbp!]
+			\centering
+			\includegraphics[width=100mm]{./Imagenes/parabolic_non_uniform.png}
+			\caption[Generación de malla cuasi uniforme por ecuaciones parabólicas]{Generación de malla estructurada cuasi uniforme desarrollada mediante ecuaciones parabólicas \cite{siladicParabolic}}
+			\label{fig:parabolic_non_uniform}
+			\end{figure}
+		
+		\paragraph*{}
+		En la figura \ref{fig:parabolic_non_uniform} se muestra un ejemplo de malla no uniforme, donde $\Delta L$ y $\Delta R$ representan incrementos en la dirección $i$, a su vez $\Delta U$ y $\Delta D$ representan incrementos en términos de $j$ para un punto $(i, j)$ dado. Retomando lo expuesto en el capítulo \ref{chap:discretizacion-espacial}, se pueden usar series de Taylor para aproximar los términos que incluyen derivadas en las ecuaciones gobernantes en el esquema parabólico, quedando de la siguiente manera:
+		\begin{align*}
+		f_x = \frac{f_{i+1, j} - f_{i,j}}{\Delta R} && y && f_x = \frac{f_{i, j} - f_{i-1, j}}{\Delta L}\\
+		f_y = \frac{f_{i, j+1} - f_{i,j}}{\Delta U} && y && f_y = \frac{f_{i, j} - f_{i, j-1}}{\Delta D}
+		\end{align*}
+		\begin{align*}
+		f_{xx} = \frac{2}{\Delta R + \Delta L} \left( \frac{f_{i+1, j} - f_{i,j}}{\Delta R} - \frac{f_{i, j} - f_{i-1, j}}{\Delta L} \right)\\
+		f_{yy} = \frac{2}{\Delta D + \Delta U} \left( \frac{f_{i, j+1} - f_{i,j}}{\Delta U} - \frac{f_{i, j} - f_{i, j-1}}{\Delta D} \right)\\
+		f_{xy} = \frac{f_{i+1,j+1} - f_{i+1, j-1} - f_{i-1, j+1} + f_{i-1, j-1}}{\left( \Delta R + \Delta L \right) \left( \Delta D + \Delta U \right)}
+		\end{align*}\\
+		con esto, las ecuaciones gobernantes \ref{parabolic0} se discretizan de la siguiente manera
+		\begin{subequations}
+			\begin{equation}
+			\frac{a \left( x_{i,j} - x_{i, j-1} \right)}{\Delta D} = \frac{2b}{\Delta L + \Delta R} \left[ \frac{x_{i+1, j} - x_{i, j}}{\Delta R}  - \frac{x_{i, j} - x_{i-1, j}}{\Delta L} \right] + c \frac{XB_{i, Jmax} - x_{i, j}}{\Delta O} + d
+			\end{equation}
+			\begin{equation}
+			\frac{a \left( y_{i,j} - y_{i, j-1} \right)}{\Delta D} = \frac{2b}{\Delta L + \Delta R} \left[ \frac{y_{i+1, j} - y_{i, j}}{\Delta R}  - \frac{y_{i, j} - y_{i-1, j}}{\Delta L} \right] + c \frac{YB_{i, Jmax} - y_{i, j}}{\Delta O} + d
+			\end{equation}
+			\label{parabolic1}
+		\end{subequations}
+	
+	\paragraph*{}
+		Para poder determinar los valores de los coeficientes $a$, $b$ y $c$ y para entender el método presente para el control de la densidad de mallado, se deben relacionar las ecuaciones gobernantes con un conjunto de ecuaciones conocidas en el plano computacional. Con este propósito es que se seleccionan las ecuaciones de Laplace en el modelo de generación de mallas mediante ecuaciones elípticas (ecuaciones \ref{ec-laplace-invertida}), intentando obtener un método equivalente al obtenido en el esquema elíptico, en el que cualquier línea $m$ en la dirección $\eta$ sea forzada a moverse hacia una línea $m - 1$. En la figura \ref{fig:eliptic_non_uniform} se muestra un representación de lo descrito, siendo para un punto $(i, j)$, $F_{i-1}$ y $F_i$ incrementos en la dirección $\xi$ y a su vez $g_{j-1}$ y $g_j$ incrementos en la dirección $\eta$.\\
+		\begin{figure}[htbp!]
+			\centering
+			\includegraphics[width=110mm]{./Imagenes/eliptic_non_uniform.png}
+			\caption[Generación de malla por ecuaciones elípticas]{Generación de malla estructurada no uniforme desarrollada mediante ecuaciones elípticas \cite{siladicParabolic}}
+			\label{fig:eliptic_non_uniform}
+		\end{figure}
+	\paragraph*{}
+		Las ecuaciones del modelo de generación de mallas elíptico (ecuaciones \ref{ec-laplace-invertida}), bajo este nuevo esquema basado en la generación de una malla cuasi uniforme se discretizan en $(\xi, \eta)$ dando como resultado
+		\begin{align}
+		&\begin{aligned}
+			&&\frac{2\alpha}{F_i + F_{i - 1}} \left[ \frac{s_{i-1, j} - s_{i, j}}{F_{i - 1}} + \frac{s_{i+1, j}  - s_{i, j}}{F_i} \right] + \beta \left[ \frac{ s_{i+1, j+1} - s_{i+1, j-1} - s_{i-1, j + 1} + s_{i-1, j-1} }{ (F_{i - 1} + F_i) (g_{j - 1} + g_j) } \right]\\&& + \frac{2\gamma}{g_j + g_{j - 1}} \left[ \frac{s_{i, j-1} - s_{i, j}}{g_{j - 1}}  + \frac{s_{i, j+1} - s_{i, j}}{g_j}\right] = 0
+		&\end{aligned}
+		\label{eliptic_non_uniform}
+		\end{align}
+	
+	\paragraph*{}
+		A partir de la ecuación \ref{eliptic_non_uniform} se propone un procedimiento de marcha, reemplazando en dicha ecuación los valores $x_{i, j + 1}$ y $y_{i, j+1}$ por valores conocidos $XO_{i, j + 1}$ y $YO_{i, j + 1}$ los cuales son obtenidos mediante interpolación lineal entre los valores de la frontera interna (perfil aerodinámico) y la frontera externa (tipología de la malla). La distancia $g_j$ puede cambiarse gradualmente a lo largo de la malla para una mayor versatilidad en la generación de la ésta.
+		
+	\paragraph*{}
+		En el caso más sencillo, aquel en el que no interesa forzar la ortogonalidad en las fronteras, a las variables $XO$ y $YO$ se les asignan los valores $(XB_{i, Jmax} YB_{i, Jmax})$ en la frontera externa. Reordenando los términos, y donde $s$ representa cualquier coordenada $x$ o $y$\\
+		\begin{align}
+			\begin{aligned}
+			\frac{2\alpha}{F_i + F_{i - 1}} \left[ \frac{s_{i-1, j} - s_{i, j}}{F_{i - 1}} + \frac{s_{i+1, j} - s_{i, j}}{F_i} \right] + \frac{2\gamma}{g_{j - 1} + G_j} \left[ \frac{-s_{i, j}}{g_{j - 1}} - \frac{s_{i, j}}{G_j} \right]\\
+			= -\beta \left[ \frac{ SO_{i+1, j+1} - SO_{i-1, j-1} - s_{i+1, j-1} + s_{i-1, j-1} }{ (F_{i - 1} + F_i) (g_{j - 1} + G_j) } \right] - \frac{2\gamma}{g_{j-1} + G_j} \left[ \frac{s_{i, j - 1}}{g_{j - 1}} + \frac{SO_{i, j + 1}}{G_j} \right]
+			\end{aligned}
+			\label{eliptic_non_uniform1}
+		\end{align}\\
+		donde
+		\begin{align*}
+			&\begin{aligned}
+			G_j = g_j + g_{j + 1} + ... + g_{Jmax - 1} = \eta_{max} - \eta_j
+			\end{aligned}\\
+			&\begin{aligned}
+			g_{j - 1} = \eta_j - \eta_{j - 1};&& F_i = \xi_{i + 1} - \xi_i; && F_{i - 1} = \xi_i - \xi_{i - 1}&&
+			\end{aligned}
+		\end{align*}\\
+		$G_j$ representa la distancia entre las líneas $(i, j)$ e $(i, JO)$ en el plano computacional, por lo tanto $SO_{i, j} = XO_{i, j}$ o $YO_{i, j}$. Si comparamos ambos modelos discutidos en esta sección, es decir el modelo parabólico (ecuaciones \ref{parabolic1}) y el modelo elíptico (ecuaciones \ref{eliptic_non_uniform1}) se puede establecer una clara relación, al colocar de un lado las incógnitas de cada ecuación, y del otro todos los valores conocidos, es decir
+		\begin{align}
+			\begin{aligned}
+			-\left( \frac{b}{\Delta L} + \frac{b}{\Delta R} \right) \frac{2 s_{i, j}}{\Delta L + \Delta R} &- \left( \frac{a}{\Delta D} + \frac{c}{\Delta O}\right) s_{i, j} + \frac{b}{\Delta R} \frac{2 s_{i-1, j}}{\Delta R + \Delta L} + \frac{b}{\Delta R} \frac{2 s_{i+1, j}}{\Delta R + \Delta L}\\
+			&= - c \frac{SB_{i, Jmax}}{\Delta O} - a \frac{s_{i, j-1}}{\Delta D} - d
+			\end{aligned}
+		\end{align}
+		\begin{align}
+			\begin{aligned}
+			-\left( \frac{\alpha}{F_{i - 1}} + \frac{\alpha}{F_i} \right) \frac{2s_{i, j}}{F_i + F_{i - 1}} - \left( \frac{\gamma}{g_{j - 1}} + \frac{\gamma}{G_j} \right) \frac{2s_{i, j}}{G_j + g_{j-1}} + \frac{\alpha}{F_{i - 1}} \frac{2 s_{i-1, j}}{F_i + F_{i - 1}} + \frac{\alpha}{F_i} \frac{2 s_{i, j}}{F_i + F_{i - 1}}\\
+			= - \frac{2\gamma}{g_{j - 1} + G_j} \left[ \frac{SO_{i, j+1}}{G_j} + \frac{s_{i, j-1}}{g_{j -1}} \right] - \beta \left[ \frac{SO_{i+1, j+1} - SO_{i-1, j+1} - s_{i+1, j-1} + s_{i-1, j-1} }{ \left( F_i + F_{i - 1} \right) \left( g_{j - 1} + G_j \right) } \right]
+			\end{aligned}
+		\end{align}\\
+		de este reacomodo se puede observar que ambas ecuaciones tienen la misma forma, por lo que es posible establecer una relación entre sus coeficientes\\
+		\begin{subequations}
+			\begin{equation*}
+			b = \alpha
+			\end{equation*}\\
+			\begin{equation*}
+			a = c = \frac{2\gamma}{G_j + g_{j - 1}}
+			\end{equation*}\\
+			\begin{equation*}
+			d = \beta \left[ \frac{SO_{i+1, j+1} - SO_{i-1, j+1} - s_{i+1, j-1} + s_{i-1, j-1} }{ (F_i + F_{i-1}) (G_j + g_{j-1}) } \right]
+			\end{equation*}
+		\end{subequations}\\
+		donde $\alpha$, $\beta$ y $\gamma$ son los coeficientes de las ecuaciones \ref{ec-laplace-invertida}. El sistema representado por la ecuación \ref{eliptic_non_uniform1} representa un sistema tridiagonal de matrices $2$x$2$ el cual se desarrolla del siguiente modo\\
+		\begin{align*}
+			&\begin{aligned}
+			&&&&&&&&&&&&&&&&&&A = \frac{2\alpha}{F_{i - 1} (F_i + F_{i - 1}) } &&& ; &&& C =& \frac{2\alpha}{F_i (F_i + F_{i - 1}) }
+			\end{aligned}\\ \\
+			&\begin{aligned}
+				&&&&&&&&&&&&&&&B = \frac{-2 \alpha}{F_i + F_{i - 1}} \left( \frac{1}{F_i} + \frac{1}{F_{i - 1}} \right) - \frac{2\gamma}{G_j + G_{j - 1}} \left( \frac{1}{G_j}  + \frac{1}{g_{j - 1}} \right)
+			\end{aligned}\\ \\
+			&\begin{aligned}
+				D_x = -\beta \frac{ XO_{i+1, j+1} - XO_{i-1, j+1} - x_{i+1, j-1} + x_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) } - \frac{2 \gamma}{G_j + g_{j - 1}} \left[ \frac{x_{i, j - 1}}{g_{j-1}} + \frac{XO_{i, j + 1}}{G_j} \right]
+			\end{aligned} \\ \\
+			&\begin{aligned}
+			D_y = -\beta \frac{ YO_{i+1, j+1} - YO_{i-1, j+1} - y_{i+1, j-1} + y_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) } - \frac{2 \gamma}{G_j + g_{j - 1}} \left[ \frac{y_{i, j - 1}}{g_{j-1}} + \frac{YO_{i, j + 1}}{G_j} \right]
+			\end{aligned}
+		\end{align*}\\
+		finalmente, las ecuaciones gobernantes del sistema parabólico pueden expresarse como:\\
+		\begin{subequations}
+			\begin{equation}
+			Ax_{i-1, j} + B x_{i, j} + Cx_{i+1, j} = D_x
+			\end{equation}
+			\begin{equation}
+			Ay_{i-1, j} + B y_{i, j} + Cy_{i+1, j} = D_y
+			\end{equation}
+			\label{parabolic_final}
+		\end{subequations}
+	
+	\paragraph*{}
+		Las ecuaciones \ref{parabolic_final} se resuelven simultaneamente para todos los puntos de la malla para el mismo nivel $\eta$ (línea $j$) resolviendo el sistema tridiagonal para cada $x_{i, j}$ y $y_{i, j}$. La solución comienza en $j = 1$ (justo después de la frontera interna) y finaliza en $j = Jmax - 2$ (un nivel antes de la frontera externa). Los coeficientes $\alpha$, $\beta$ y $\gamma$ se calculan usando las coordenadas de puntos adyacentes que ya se han generado, dichos valores son sustituidos en las aproximaciones por diferencias finitas utilizadas para reemplazar las primeras derivadas parciales, las cuales para este sistema quedan expresadas como\\
+		\begin{subequations}
+			\begin{equation}
+				x_\xi = \frac{x_{i+1, j-1} - x_{i-1, j-1}}{F_i + F_{i-1}}
+			\end{equation}
+			\begin{equation}
+				y_\xi = \frac{y_{i+1, j-1} - y_{i-1, j-1}}{F_i + F_{i-1}}
+			\end{equation}
+			\begin{equation}
+				x_\eta = \frac{XO_{i, j+1} - x_{i, j-1}}{g_{j-1} - G_j}
+			\end{equation}
+			\begin{equation}
+				y_\eta = \frac{YO_{i, j+1} - y_{i, j-1}}{g_{j-1} - G_j}
+			\end{equation}
+		\end{subequations}
+	
+	\paragraph*{}
+		Los términos no uniformes en la separación de la malla descritos arriba tienen un efecto similar al control de la densidad de mallado mediante funciones exponenciales presentado por Thompson, Thames y Mastin \cite{thompson1974automatic} para la generación de mallas mediante el esquema elíptico.
+	
+	\subsection{Ortogonalidad de la malla}
+	\paragraph*{}
+		``Al analizar y resolver flujos viscosos o capas límite, la ortogonalidad de las líneas de la malla en las cercanías a las superficies de cuerpos es deseable para representar todas las derivadas normales de manera simple y  precisa''\cite{siladicParabolic}. Si se desea lograr esto, se debe tener la capacidad de controlar la orientación de las líneas, lo cual puede lograrse introduciendo una frontera externa modificada lo que permite determinar los valores de los términos fuente. Es decir, si la frontera externa modificada se posiciona de manera que sus puntos se localizen perpendicularmente a sus correspondientes sobre la superficie del cuerpo, las líneas se alejarán del cuerpo de manera ortogonal. Esto es mejor ilustrado en la figura \ref{fig:parabolic_modified}.
+		\begin{figure}[htbp!]
+			\centering
+			\includegraphics[width=110mm]{./Imagenes/parabolic_modified_boundary.png}
+			\caption[Control de ortogonalidad]{Control de ortogonalidad en la generación de mallas por ecuaciones parabólicas \cite{siladicParabolic}}
+			\label{fig:parabolic_modified}
+		\end{figure}
+	
+	\paragraph*{}
+		Si nos ubicamos en un punto $(i, j)$ con sus correspondientes coordenadas $(XO_{i, j + 1}, YO_{i, j+1})$, se observa de la figura \ref{fig:parabolic_modified} una recta $AA$ que es perperndicular a la superficie de la frontera interna la cual nace del punto $(i, 0)$, punto que corresponde a la misma línea $\xi = cte$ del punto en el que nos ubicamos. También podemos observar en la figura un arco de circunferencia $CC$, dicho arco tiene su centro en el punto $(i, 0)$ y pasa por las coordenadas $(XB_{i, Jmax}, YB_{i, Jmax})$ de la frontera externa no modificada. La intersección de la línea $AA$ y del arco $CC$ representa los valores dados para las coordenadas $(XO_{i, j + 1}, YO_{i, j+1})$ con el uso de una frontera modificada. 
 	%
 	%
 	%
