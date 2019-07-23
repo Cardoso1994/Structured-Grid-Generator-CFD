@@ -23,7 +23,7 @@ class mesh(object):
     # variables de clase, controlan el numero de iteraciones máximo
     # así como el error maximo permisible como criterio de convergencia
     it_max = 8000
-    err_max = 1e-6  #1e-6
+    err_max = 1e-6
 
     # método de inicialización de instancias de clase
     def __init__(self, R, M, N, archivo):
@@ -139,9 +139,3 @@ class mesh(object):
         # self.X = Xn
         # self.Y = Yn
         return (Xn, Yn)
-
-
-
-
-
-

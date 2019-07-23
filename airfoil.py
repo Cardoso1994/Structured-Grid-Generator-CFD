@@ -76,6 +76,11 @@ class airfoil(object):
             self.x[i] = x
             self.y[i] = y
         self.y -= self.y[0]
+        perfil = np.zeros((np.shape(self.x)[0], 2))
+        perfil[:, 0] = self.x
+        perfil[:, 1] = self.y
+        # titulo = filename[: -4]
+        np.savetxt('perfil_final.txt', perfil)
 
 
 #

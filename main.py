@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 filename = 'whitcomb-il.txt'
 
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
@@ -47,16 +47,19 @@ R = 5 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
+perfil.rotate(15)
 # se ajusta la densidad de la malla dependiendo el tipo de malla a generar
 # densidad del mallado normal si es tipo 'O'
-#M = (points * 2) - 1
-#if malla == 'C':
-    #M += 3 * M // 4
-#N = 17
+'''
+M = (points * 2) - 1
+if malla == 'C':
+   #M += 3 * M // 4
+N = 17
+'''
 
 
-
-# nombre de archivo con perfil redimensionado y con c/4 en el origen del sistema de coordenadas
+# nombre de archivo con perfil redimensionado y con c/4 en el origen del
+# sistema de coordenadas
 archivo_perfil = 'perfil_final.txt'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, M, N, archivo_perfil)
@@ -64,8 +67,8 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, M, N, archivo_perfil)
 
 
-
-'''mallaNACA.gen_inter_Hermite()
+'''
+mallaNACA.gen_inter_Hermite()
 plt.figure('NACA')
 plt.title('Interpolación Hermite')
 mallaNACA.plot()
@@ -90,11 +93,10 @@ plt.title('Ec de Laplace')
 mallaNACA.plot()
 
 
-'''
 mallaNACA.gen_TFI()
 plt.figure('___NACA_')
 plt.title('Interpolación TFI')
 mallaNACA.plot()
-'''
+
 
 print(M, N)
