@@ -1419,7 +1419,7 @@
 			&&&&&&&&&&&&&&&&&&A = \frac{2\alpha}{F_{i - 1} (F_i + F_{i - 1}) } &&& ; &&& C =& \frac{2\alpha}{F_i (F_i + F_{i - 1}) }
 			\end{aligned}\\ \\
 			&\begin{aligned}
-				&&&&&&&&&&&&&&&B = \frac{-2 \alpha}{F_i + F_{i - 1}} \left( \frac{1}{F_i} + \frac{1}{F_{i - 1}} \right) - \frac{2\gamma}{G_j + G_{j - 1}} \left( \frac{1}{G_j}  + \frac{1}{g_{j - 1}} \right)
+				&&&&&&&&&&&&&&&B = \frac{-2 \alpha}{F_i + F_{i - 1}} \left( \frac{1}{F_i} + \frac{1}{F_{i - 1}} \right) - \frac{2\gamma}{G_j + g_{j - 1}} \left( \frac{1}{G_j}  + \frac{1}{g_{j - 1}} \right)
 			\end{aligned}\\ \\
 			&\begin{aligned}
 				D_x = -\beta \frac{ XO_{i+1, j+1} - XO_{i-1, j+1} - x_{i+1, j-1} + x_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) } - \frac{2 \gamma}{G_j + g_{j - 1}} \left[ \frac{x_{i, j - 1}}{g_{j-1}} + \frac{XO_{i, j + 1}}{G_j} \right]
@@ -1449,10 +1449,10 @@
 				y_\xi = \frac{y_{i+1, j-1} - y_{i-1, j-1}}{F_i + F_{i-1}}
 			\end{equation}
 			\begin{equation}
-				x_\eta = \frac{XO_{i, j+1} - x_{i, j-1}}{g_{j-1} - G_j}
+				x_\eta = \frac{XO_{i, j+1} - x_{i, j-1}}{g_{j-1} + G_j}
 			\end{equation}
 			\begin{equation}
-				y_\eta = \frac{YO_{i, j+1} - y_{i, j-1}}{g_{j-1} - G_j}
+				y_\eta = \frac{YO_{i, j+1} - y_{i, j-1}}{g_{j-1} + G_j}
 			\end{equation}
 		\end{subequations}
 	
