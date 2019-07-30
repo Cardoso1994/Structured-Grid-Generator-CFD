@@ -105,6 +105,7 @@ class NACA4(airfoil):
 
         points = número de puntos para el perfil
         '''
+        points = (points + 1) // 2
         m = self.m
         p = self.p
         t = self.t
