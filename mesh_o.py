@@ -12,6 +12,7 @@ Se definen diversos métodos de generación para este tipo de mallas
 
 from mesh import mesh
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class mesh_O(mesh):
@@ -158,7 +159,7 @@ class mesh_O(mesh):
 
     def gen_Poisson(self, metodo='SOR'):
         '''
-        Genera malla resolviendo ecuación de Laplace
+        Genera malla resolviendo ecuación de Poisson
         metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
         '''
 
@@ -173,7 +174,7 @@ class mesh_O(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.5)  # en caso de metodo SOR
+        omega = np.longdouble(1.3)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -185,12 +186,12 @@ class mesh_O(mesh):
         Q = 0
         P = 0
         I = 0
-        a = np.longdouble(0)
-        c = np.longdouble(0)
-        aa = np.longdouble(0.7)
-        cc = np.longdouble(6.5)
+        a = np.longdouble(0.0)
+        c = np.longdouble(0.0)
+        aa = np.longdouble(7.6)
+        cc = np.longdouble(7.2)
         linea_eta = 0.0
-        linea_xi = 0.0
+        linea_xi = 0.5
 
         it = 0
         print("Poisson:")
@@ -306,6 +307,7 @@ class mesh_O(mesh):
         '''
         Genera mallas hiperbólicas. Método de Steger
         '''
+
         # se inician las variables características de la malla
         m = self.M
         n = self.N
@@ -396,3 +398,311 @@ class mesh_O(mesh):
             X[-1, j] = X[0, j]
             Fprev = F
         return
+
+    def gen_parabolic(self):
+        '''
+        Genera malla resolviendo un sistema de ecuaciones parabólicas
+        Basado en el reporte técnico de Siladic
+        '''
+
+        m = self.M
+        n = self.N
+        X = self.X
+        Y = self.Y
+
+        weight = 1.9
+        delta_limit = self.R - X[0, 0]
+        x_line = np.zeros(n, dtype='float64')
+        h = delta_limit * (1 - weight) / (1 - weight ** ((n - 1)))
+        x_line[-1] = self.R
+        x_line[0] = X[0, 0]
+        dd = x_line[0]
+        for i in range(0, n - 1):
+            x_line[i] = dd
+            dd += h * weight ** i
+        X[0, :] = x_line
+        X[-1, :] = x_line
+
+        delta_limit = 1
+        G_line = np.zeros(n, dtype='float64')
+        h = delta_limit * (1 - weight) / (1 - weight ** (n - 1))
+        G_line[-1] = 1
+        G_line[0] = 0
+        dd = G_line[0]
+        for i in range(n - 1):
+            G_line[i] = dd
+            dd += h * weight ** i
+
+        # variables del método de solución
+        R_ = np.zeros((m - 2,), dtype=object)
+        Y_ = np.zeros((m - 2,), dtype=object)
+        delta_Q = np.zeros((m - 2,), dtype=object)
+        A_ = np.empty((m-2,), dtype=object)
+        B_ = np.empty((m-2,), dtype=object)
+        C_ = np.empty((m-2,), dtype=object)
+        alpha_ = np.empty((m-2,), dtype=object)
+        beta_ = np.empty((m-2,), dtype=object)
+        XO = np.empty((m,), dtype=object)
+        YO = np.empty((m,), dtype=object)
+
+        # resolver ecuaciones gobernantes
+        # A * x[i - i, j] + B x[i, j] + C x[i + 1, j] = Dx
+        # A * y[i - i, j] + B y[i, j] + C y[i + 1, j] = Dy
+
+        # A = 2 * alpha / (F[i - 1] * (F[i] + F[i - 1]))
+        # C = 2 * alpha / (F[i] * (F[i] + F[i - 1]))
+        # B = -2 * alpha / (F[i] + F[i - 1]) * (1 / F[i] + 1 / F[i - 1])\
+        #       -2 * gamma / (G[j] + g[j - 1]) * (x[i, j - 1] / g[j - 1]\
+        #       + XO[i, j+1] / G[j])
+        # Ds = -beta * (SO[i + 1, j + 1] - SO[i - 1, j + 1] - s[i + 1, j - 1]\
+        #           + s[i - 1, j - 1]) / (F[i] + F[i - 1]) / (G[j] + g[j - 1])\
+        #           - 2 * gamma / (G[j] + g[j - 1]) * (s[i, j - 1] / g[j - 1]\
+        #           SO[i, j + 1] / G[j])
+
+        # alpha = x_eta ** 2 + y_eta ** 2
+        # beta = x_xi * x_eta + y_xi * y_eta
+        # gamma = x_xi ** 2 + y_xi ** 2
+
+        # x_xi = (x[i + 1, j] - x[i - 1, j]) / (F[i] + F[i - 1])
+        # x_eta = (XO[i, j + 1] - x[i, j - 1]) / (g[j - 1] + G[j])
+
+        # F[*] = deltas en direccion xi
+        # G y g = deltas en direccion eta
+        # XO y YO = valores de x[i, j + 1] y y[i, j + 1] interpolados entre
+        #       las fronteras
+        for j in range(1, n - 1):
+            Gj = x_line[-1] - x_line[j]
+            gj_1 = x_line[j] - x_line[j - 1]
+            print("j = " + str(i))
+            print("Gj = " + str(Gj))
+            print("gj_1 = " + str(gj_1))
+            ###############################################################
+            #
+            #   Se calculan valores XO y YO imponiendo ortogonalidad
+            #
+            ###############################################################
+            dist = (X[0, -1] - X[0, 0]) ** 2 + (Y[0, -1] - Y[0, 0]) ** 2
+            dist **= 0.5
+            # se calcula pendiente del cuerpo para obtener la recta normal
+            if abs(Y[1, 0] - Y[-2, 0]) >= 0.01\
+                    and abs(X[1, 0] - X[-2, 0]) >= 0.01:
+                pendiente = (Y[1, 0] - Y[-2, 0])\
+                    / (X[1, 0] - X[-2, 0])
+                pendiente = - 1 / pendiente
+                a_ = 1 + 1 / pendiente ** 2
+                b_ = - 2 * Y[0, 0] / pendiente ** 2 - 2 * Y[0, 0]
+                c_ = (1 + 1 / pendiente ** 2) * Y[0, 0] ** 2 - dist ** 2
+                y_pos = (-b_ + (b_ ** 2 - 4 * a_ * c_) ** 0.5) / 2 / a_
+                y_neg = (-b_ - (b_ ** 2 - 4 * a_ * c_) ** 0.5) / 2 / a_
+                b_recta = Y[0, 0] - pendiente * X[0, 0]
+                x_pos = (y_pos - b_recta) / pendiente
+                x_neg = (y_neg - b_recta) / pendiente
+                x_neg = (y_neg - b_recta) / pendiente
+                XO[0] = x_pos
+                YO[0] = y_pos
+            elif abs(Y[1, 0] - Y[-2, 0]) < 0.01:
+                XO[0] = X[0, 0]
+                YO[0] = Y[0, 0] + dist
+            elif abs(X[1, 0] - X[-2, 0]) < 0.01:
+                YO[0] = Y[0, 0]
+                XO[0] = X[0, 0] + dist
+            XO[-1] = XO[0]
+            YO[-1] = YO[0]
+
+            for i in range(1, m - 1):
+                # se calcula radio desde [i, 0] hasta [i, -1]
+                dist = (X[i, -1] - X[i, 0]) ** 2 + (Y[i, -1] - Y[i, 0]) ** 2
+                dist **= 0.5
+                # se calcula pendiente del cuerpo para obtener la recta normal
+                # si no son aprox 0 se calcula pendiente, si no se dan los
+                # valores directo, según sea el caso
+                if abs(Y[i + 1, 0] - Y[i - 1, 0]) >= 0.01\
+                        and abs(X[i + 1, 0] - X[i - 1, 0]) >= 0.01:
+                    pendiente = (Y[i + 1, 0] - Y[i - 1, 0])\
+                        / (X[i + 1, 0] - X[i - 1, 0])
+                    pendiente = - 1 / pendiente
+                    a_ = 1 + 1 / pendiente ** 2
+                    b_ = - 2 * Y[i, 0] / pendiente ** 2 - 2 * Y[i, 0]
+                    c_ = (1 + 1 / pendiente ** 2) * Y[i, 0] ** 2 - dist ** 2
+                    y_pos = (-b_ + (b_ ** 2 - 4 * a_ * c_) ** 0.5) / 2 / a_
+                    y_neg = (-b_ - (b_ ** 2 - 4 * a_ * c_) ** 0.5) / 2 / a_
+                    b_recta = Y[i, 0] - pendiente * X[i, 0]
+                    x_pos = (y_pos - b_recta) / pendiente
+                    x_neg = (y_neg - b_recta) / pendiente
+                    if i <= m // 2:
+                        YO[i] = y_neg
+                        XO[i] = x_neg
+                    else:
+                        YO[i] = y_pos
+                        XO[i] = x_pos
+                elif abs(Y[i + 1, 0] - Y[i - 1, 0]) < 0.01:
+                    XO[i] = X[i, 0]
+                    if i <= m // 2:
+                        YO[i] = Y[i, 0] - dist
+                    else:
+                        YO[i] = Y[i, 0] + dist
+                elif abs(X[i + 1, 0] - X[i - 1, 0]) < 0.01:
+                    YO[i] = Y[i, 0]
+                    if i <= m // 2:
+                        XO[i] = X[i, 0] - dist
+                    else:
+                        XO[i] = X[i, 0] + dist
+            ###############################################################
+            #
+            #   Termina calculo de valores XO y YO
+            #
+            ###############################################################
+
+            for i in range(1, m - 1):
+                ###############################################################
+                #
+                #   Se calculan las funciones F como:
+                #       F = sqrt(deltaX ** 2 + deltaY ** 2)
+                #   Siladic página 44 del texto
+                #
+                ###############################################################
+                Fi = ((X[i + 1, j - 1] - X[i, j - 1]) ** 2
+                      + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5
+                Fi_1 = ((X[i, j - 1] - X[i - 1, j - 1]) ** 2
+                        + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5
+
+                x_xi = (X[i + 1, j - 1] - X[i - 1, j - 1]) / (Fi + Fi_1)
+                y_xi = (Y[i + 1, j - 1] - Y[i - 1, j - 1]) / (Fi + Fi_1)
+                x_eta = (XO[i] - X[i, j - 1]) / (gj_1 + Gj)
+                y_eta = (YO[i] - Y[i, j - 1]) / (gj_1 + Gj)
+
+                alpha = x_eta ** 2 + y_eta ** 2
+                beta = -2 * (x_xi * x_eta + y_xi * y_eta)
+                gamma = x_xi ** 2 + y_xi ** 2
+
+                A = 2 * alpha / Fi_1 / (Fi + Fi_1)
+                B = -2 * alpha / (Fi + Fi_1) * (1 / Fi + 1 / Fi_1)\
+                    - 2 * gamma / (Gj + gj_1) * (1 / Gj + 1 / gj_1)
+                C = 2 * alpha / Fi / (Fi + Fi_1)
+                Dx = - beta * (XO[i + 1] - XO[i - 1]
+                               - X[i + 1, j - 1] + X[i - 1, j - 1])\
+                    / (Fi + Fi_1) / (Gj + gj_1) - 2 * gamma / (Gj + gj_1)\
+                    * (X[i, j - 1] / gj_1 + XO[i] / Gj)
+                Dy = - beta * (YO[i + 1] - YO[i - 1]
+                               - Y[i + 1, j - 1] + Y[i - 1, j - 1])\
+                    / (Fi + Fi_1) / (Gj + gj_1) - 2 * gamma / (Gj + gj_1)\
+                    * (Y[i, j - 1] / gj_1 + YO[i] / Gj)
+                # se comienzan a crear las submatrics de la solución
+                # S_ * delta_Q = R
+                #   S = matriz tridiagonal formada por submatrices A, B y C
+                #       para  cada nivel
+                # S = LU
+                #   L = matriz A * alpha_
+                #   U = I * beta_
+                # R == [Dx, Dy]
+                A_[i - 1] = np.array(([[A, 0], [0, A]]))
+                B_[i - 1] = np.array(([[B, 0], [0, B]]))
+                C_[i - 1] = np.array(([[C, 0], [0, C]]))
+                ###############################################################
+                #
+                #   Los resultados de A_, B_, C_, D_ parecen tener coherencia
+                #   Para un perfil simétrico el valor 0 y el m-3 son iguales
+                #
+                #   En el caso de R, los valores de Dy son simétricos y de
+                #   sentido opuesto, los de Dx son simétricos
+                ###############################################################
+                if i - 1 == 0:
+                    alpha_[0] = B_[0]
+                    beta_[0] = np.linalg.inv(B_[0]) @ C_[0]
+                    beta_[0] = np.matmul(np.linalg.inv(B_[0]), C_[0])
+                else:
+                    alpha_[i - 1] = B_[i - 1] - A_[i - 1] @ beta_[i - 2]
+                    beta_[i - 1] = np.linalg.inv(alpha_[i - 1]) @ C_[i - 1]
+                R_[i - 1] = np.array([[Dx], [Dy]])
+                ###############################################################
+                #
+                #   Los valores de alpha_ y beta_ parecen tener sentido
+                #
+                ###############################################################
+            ###################################################################
+            #
+            #   A_ = todos son de forma 2x2
+            #   B_ = todos son de forma 2x2
+            #   C_ = todos son de forma 2x2
+            #   alpha_ = todos son de forma 2x2
+            #   beta_ = todos son de forma 2x2
+            #
+            #   R_ = todos son de forma 2x1
+            #
+            ###################################################################
+
+            # se resuelve LY_ = R
+            #   se obtiene vector Y_
+            Y_[0] = np.linalg.inv(alpha_[0]) @ R_[0]
+            for i in range(1, m - 2):
+                Y_[i] = np.linalg.inv(alpha_[i]) @ (R_[i] - A_[i] @ Y_[i - 1])
+            # se resuelve Y_ = U_ * delta_Q
+            # se obtienen valores de delta_Q que son el resultado final
+            delta_Q[m - 3] = Y_[m - 3]
+            for i in range(m - 4, -1, -1):
+                delta_Q[i] = Y_[i] - beta_[i] @ delta_Q[i + 1]
+            for i in range(0, m - 2):
+                X[i + 1, j] = delta_Q[i][0, 0]
+                Y[i + 1, j] = delta_Q[i][1, 0]
+            print(delta_Q)
+        return
+
+    def tensor(self):
+        '''
+            Calcula el tensor métrico de la transformación para ambas
+                transformaciones, directa e indirecta
+            Calcula el Jacobiano de la matriz de transformación
+            Calcula el valor discretizado de las derivadas parciales:
+                x_xi
+                x_eta
+                y_xi
+                y_eta
+        '''
+
+        # se definen vairables de la malla
+        X = self.X
+        Y = self.Y
+        M = self.M
+        N = self.N
+        d_xi = self.d_xi
+        d_eta = self.d_eta
+
+        # se crean matrices
+        x_xi = np.zeros((M, N))
+        x_eta = np.zeros((M, N))
+        y_xi = np.zeros((M, N))
+        y_eta = np.zeros((M, N))
+
+        # cálculo de derivadas parciales
+        # nodos internos
+        for j in range(1, N-1):
+            x_eta[:-1, j] = (X[:-1, j+1] - X[:-1, j-1]) / 2 / d_eta
+            y_eta[:-1, j] = (Y[:-1, j+1] - Y[:-1, j-1]) / 2 / d_eta
+        x_eta[:-1, 0] = (X[:-1, 1] - X[:-1, 0]) / d_eta
+        x_eta[:-1, -1] = (X[:-1, -1] - X[:-1, -2]) / d_eta
+        x_eta[-1, :] = x_eta[0, :]
+        y_eta[:-1, 0] = (Y[:-1, 1] - Y[:-1, 0]) / d_eta
+        y_eta[:-1, -1] = (Y[:-1, -1] - Y[:-1, -2]) / d_eta
+        y_eta[-1, :] = y_eta[0, :]
+
+        for i in range(0, M-1):
+            x_xi[i, :] = (X[i+1, :] - X[i-1, :]) / 2 / d_xi
+            y_xi[i, :] = (Y[i+1, :] - Y[i-1, :]) / 2 / d_xi
+        x_xi[0, :] = (X[1, :] - X[-2, :]) / 2 / d_xi
+        y_xi[0, :] = (Y[1, :] - Y[-2, :]) / 2 / d_xi
+        x_xi[-1, :] = x_xi[0, :]
+        y_xi[-1, :] = y_xi[0, :]
+
+        # obteniendo los tensores de la métrica
+        J = (x_xi * y_eta) - (x_eta * y_xi)
+        g11I = x_xi ** 2 + y_xi ** 2
+        g12I = x_xi * x_eta + y_xi * y_eta
+        g22I = d_eta ** 2 + y_eta ** 2
+        g11 = g22I / J ** 2
+        g12 = -g12I / J ** 2
+        g22 = g11I / J ** 2
+
+        C1 = g11I
+        A = g22I
+        B = g12I
+        return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)

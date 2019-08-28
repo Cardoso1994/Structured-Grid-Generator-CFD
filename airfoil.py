@@ -12,10 +12,6 @@ Subclase NACA4 para creación de perfiles NACA serie 4
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-#
-#
-#
 # clase general de perfiles
 class airfoil(object):
     def __init__(self, c):
@@ -54,19 +50,23 @@ class airfoil(object):
         points = (points + 1) // 2'''
         return
 
-    # regresa la cantidad de puntos que definen al perfil
     def size(self):
         return np.size(self.x)
 
-    # grafica el perfil
     def plot(self):
+        '''
+            grafica el perfil aerodinámico
+        '''
         plt.figure('perfil')
         plt.axis('equal')
         plt.plot(self.x, self.y, 'b')
         plt.show()
 
-    # rotación del perfil
     def rotate(self, degrees):
+        '''
+            rotación del perfil por 'degrees' grados en sentido horario
+                (rotación positiva de perfiles aerodinámicos)
+        '''
         size = self.size()
         rads = degrees * np.pi / 180 * -1
 
@@ -82,22 +82,73 @@ class airfoil(object):
         # titulo = filename[: -4]
         np.savetxt('perfil_final.txt', perfil)
 
+    def join(self, other, dx, dy=0, join_section=4):
+        '''
+            une dos perfiles aerodinámicos. Para el análisis de external
+                airfoil flaps
+            self = perfil aerodinámico [airfoil]
+            other = flap [airfoil]
+            dx y dy = distancias en x e y respectivamente entre borde de
+                salida del perfil y borde de ataque del flap
+            join_section = número de puntos que unen al perfil y al flap
+        '''
+        join_section += 2
+        x_airfoil = self.x
+        y_airfoil = self.y
+        x_flap = other.x
+        y_flap = other.y
+        size_flap = np.shape(x_flap)[0]
 
-#
-#
-# subclase de perfiles, NACA4 genera perfiles de la serie de 4 dígitos
+        #reajustando en Y
+        dy_flap = y_flap[size_flap // 2]
+        dy_total = dy_flap + dy
+        y_airfoil += dy_total
+
+        # reajustando en X
+        dx_air = -x_flap[size_flap // 2] + x_airfoil[0]
+        dx_total = dx_air + dx
+        x_flap += dx_total
+        x_join = np.linspace(x_flap[size_flap // 2], x_airfoil[0],
+                             num=join_section)
+        y_join = np.linspace(y_flap[size_flap // 2], y_airfoil[0],
+                             num=join_section)
+
+        x_total = x_flap[:size_flap // 2 + 1]
+        y_total = y_flap[:size_flap // 2 + 1]
+        x_total = np.concatenate((x_total, x_join[1:-1]))
+        y_total = np.concatenate((y_total, y_join[1:-1]))
+        x_total = np.concatenate((x_total, x_airfoil))
+        y_total = np.concatenate((y_total, y_airfoil))
+        x_total = np.concatenate((x_total, np.flip(x_join)[1:-1]))
+        y_total = np.concatenate((y_total, np.flip(y_join)[1:-1]))
+        x_total = np.concatenate((x_total, x_flap[size_flap // 2:]))
+        y_total = np.concatenate((y_total, y_flap[size_flap // 2:]))
+
+        self.x = x_total
+        self.y = y_total
+        perfil = np.zeros((np.shape(x_total)[0], 2))
+        perfil[:, 0] = self.x
+        perfil[:, 1] = self.y
+        # titulo = filename[: -4]
+        np.savetxt('perfil_final.txt', perfil)
+
+
 class NACA4(airfoil):
+    '''
+        subclase de airfoil.
+        Genera perfiles de la serie NACA de 4 dígitos
+    '''
     def __init__(self, m, p, t, c):
         '''
-        m = combadura máxima, se divide entre 100
-        p = posición de la combadura máxima, se divide entre 10
-        t = espesor máximo del perfil, en porcentaje de la cuerda
-        c = cuerda del perfil [m]
+            m = combadura máxima, se divide entre 100
+            p = posición de la combadura máxima, se divide entre 10
+            t = espesor máximo del perfil, en porcentaje de la cuerda
+            c = cuerda del perfil [m]
         '''
+        airfoil.__init__(self, c)
         self.m = m / 100
         self.p = p / 10
         self.t = t / 100
-        airfoil.__init__(self, c)
 
     def create_linear(self, points):
         '''

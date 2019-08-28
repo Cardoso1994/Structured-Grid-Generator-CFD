@@ -36,24 +36,25 @@ class mesh(object):
         Y = matriz cuadrada que contiene todos las coordenadas 'y' de los
             puntos de la malla
         '''
-        self.R = np.longdouble(R)
+        self.R = R
         self.M = M
         self.N = N
         self.archivo = archivo
 
         self.X = np.zeros((M, N))
-        self.Y = np.copy(self.X)
-        self.d_xi = np.longdouble(1 / (self.M - 1))
-        self.d_eta = np.longdouble(1 / (self.N - 1))
+        self.Y = np.zeros((M, N))
+        self.d_xi = 1  # 1 / (self.M - 1)
+        self.d_eta = 1  # 1 / (self.N - 1)
         self.tipo = None
 
     # función para graficar la malla
     def plot(self):
         plt.axis('equal')
-        plt.plot(self.X, self.Y, 'k', linewidth=1.8)
-        plt.plot(self.X[:, 0], self.Y[:, 0], 'r', linewidth=1.9)
+        plt.plot(self.X, self.Y, 'k', linewidth=1.5)
+        plt.plot(self.X[:, 0], self.Y[:, 0], 'k', linewidth=1.9)
         for i in range(self.M):
-            plt.plot(self.X[i, :], self.Y[i, :], 'b', linewidth=0.8)
+            plt.plot(self.X[i, :], self.Y[i, :], 'b', linewidth=1.5)
+        plt.draw()
         plt.show()
 
     # genera malla por interpolación polinomial por Lagrange

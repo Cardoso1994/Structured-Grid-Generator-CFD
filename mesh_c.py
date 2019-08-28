@@ -12,6 +12,7 @@ Diversos métodos de generación para mallas tipo C
 
 from mesh import mesh
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class mesh_C(mesh):
@@ -36,10 +37,10 @@ class mesh_C(mesh):
         # cargar datos del perfil
         perfil = np.loadtxt(self.archivo)
         perfil_x = perfil[:, 0]
-
         perfil_y = perfil[:, 1]
         points = np.shape(perfil_x)[0]
         points1 = (points + 1) // 2
+
         # frontera externa
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)
         theta2 = np.linspace(np.pi, np.pi / 2, points1)
@@ -148,6 +149,7 @@ class mesh_C(mesh):
 
         it = 0
         # inicio del método iterativo
+        print("Laplace:")
         while it < mesh.it_max:
             print(it, end='\r')
             Xo = np.copy(Xn)
@@ -249,16 +251,13 @@ class mesh_C(mesh):
         Genera malla resolviendo ecuación de Poisson
         metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
         '''
-
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
 
-        # se inician variables
         Xn = self.X
         Yn = self.Y
         m = self.M
         n = self.N
-
         d_eta = self.d_eta
         d_xi = self.d_xi
         omega = np.longdouble(1.2)  # en caso de metodo SOR
@@ -274,16 +273,17 @@ class mesh_C(mesh):
         Q = 0
         P = 0
         I = 0
-        a = np.longdouble(0.02)
-        c = np.longdouble(5)
-        aa = np.longdouble(0.4)
-        cc = np.longdouble(3.3)
-        linea_xi = 0.5
+        a = np.longdouble(0)
+        c = np.longdouble(0)
+        aa = np.longdouble(0.4)  #0.4
+        cc = np.longdouble(3.3)  #3.3
+        linea_xi = 0.0
         linea_eta = 0.0
 
         it = 0
 
         # inicio del método iterativo
+        print("Poisson:")
         while it < mesh.it_max:
             print(it, end="\r")
             Xo = np.copy(Xn)
