@@ -251,6 +251,7 @@ class mesh_C(mesh):
         Genera malla resolviendo ecuación de Poisson
         metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
         '''
+
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
 
@@ -258,6 +259,7 @@ class mesh_C(mesh):
         Yn = self.Y
         m = self.M
         n = self.N
+
         d_eta = self.d_eta
         d_xi = self.d_xi
         omega = np.longdouble(1.2)  # en caso de metodo SOR

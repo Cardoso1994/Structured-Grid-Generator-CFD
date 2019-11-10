@@ -13,7 +13,9 @@ Se definen diversos métodos de generación para este tipo de mallas
 from mesh import mesh
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
+np.set_printoptions(threshold=np.sys.maxsize)
 
 class mesh_O(mesh):
     def __init__(self, R, M, N, archivo):
@@ -48,11 +50,13 @@ class mesh_O(mesh):
 
         x = np.flip(x, 0)
         y = np.flip(y, 0)
+
         # primera columna FI (perfil), ultima columna FE
         self.X[:, -1] = x
         self.Y[:, -1] = y
         self.X[:, 0] = perfil_x
         self.Y[:, 0] = perfil_y
+
         return
 
     # funcion para generar mallas mediante  ecuación de Laplace.
@@ -63,17 +67,23 @@ class mesh_O(mesh):
         '''
 
         # se genera malla antes por algún método algebráico
-        self.gen_TFI()
-
+        # self.gen_TFI()
         # se inician variables
         Xn = self.X
         Yn = self.Y
         m = self.M
         n = self.N
 
+        Xn[:, 0] += 0.25
+
+        for j in range(1, n-1):
+            Xn[:, j] = Xn[:, j-1] + (Xn[:, -1] - Xn[:, 0]) / (n-1)
+            Yn[:, j] = Yn[:, j-1] + (Yn[:, -1] - Yn[:, 0]) / (n-1)
+        return
+
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = 1.4  # en caso de metodo SOR
+        omega = 1.7  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -667,7 +677,6 @@ class mesh_O(mesh):
         d_xi = self.d_xi
         d_eta = self.d_eta
 
-        # se crean matrices
         x_xi = np.zeros((M, N))
         x_eta = np.zeros((M, N))
         y_xi = np.zeros((M, N))
@@ -685,7 +694,7 @@ class mesh_O(mesh):
         y_eta[:-1, -1] = (Y[:-1, -1] - Y[:-1, -2]) / d_eta
         y_eta[-1, :] = y_eta[0, :]
 
-        for i in range(0, M-1):
+        for i in range(1, M-1):
             x_xi[i, :] = (X[i+1, :] - X[i-1, :]) / 2 / d_xi
             y_xi[i, :] = (Y[i+1, :] - Y[i-1, :]) / 2 / d_xi
         x_xi[0, :] = (X[1, :] - X[-2, :]) / 2 / d_xi
@@ -697,7 +706,7 @@ class mesh_O(mesh):
         J = (x_xi * y_eta) - (x_eta * y_xi)
         g11I = x_xi ** 2 + y_xi ** 2
         g12I = x_xi * x_eta + y_xi * y_eta
-        g22I = d_eta ** 2 + y_eta ** 2
+        g22I = x_eta ** 2 + y_eta ** 2
         g11 = g22I / J ** 2
         g12 = -g12I / J ** 2
         g22 = g11I / J ** 2
@@ -705,4 +714,71 @@ class mesh_O(mesh):
         C1 = g11I
         A = g22I
         B = g12I
+
+        #######################################################################
+        #
+        #   x_xi coincide perfectamente expecto en i = 0 e i= -1
+        #   APARENTEMENTE y_xi coincide en todo perfectamente, excepto en las
+        #       primeras "j" en i = 0 e i = -1
+        #   x_eta coincide perfectamente
+        #   y_eta coincide perfectamente
+        #
+        #   J coincide perfectamente
+        #   g11I coincide perfectamente, excepto en i = 0 e i = -1, aunque no
+        #       existe gran diferencia
+        #   g22I coincide perfectamente
+        #
+        #   g12I coincide perfectamente en i = 0 j = -1. Sin embargo en el
+        #       resto de valores en i = 0, los valores de la españoleta son
+        #       aprox el DOBLE de lo que yo obtengo
+        #       LO MISMO PASA EN i = -1
+        #   g12I coincide casi perfectamente en i = 1
+        #   g12I coincide casi perfectamente en i = 19
+        #   g12I coincide casi perfectamente en i = 27
+        #   g12I coincide casi perfectamente en i = 29
+        #   g22I coincide perfectamente
+        #
+        #   g12 coincide perfectamente en i = 0 j = -1. Sin embargo en el
+        #       resto de valores en i = 0, los valores de la españoleta son
+        #       aprox el DOBLE de lo que yo obtengo
+        #       LO MISMO PASA EN i = -1
+        #   g12 coincide casi perfectamente en i = 1
+        #   g12 coincide casi perfectamente en i = 11
+        #   g12 coincide casi perfectamente en i = 21
+        #   g12 coincide casi perfectamente en i = 32
+        #
+        #   g11 coincide en las j cercanas a j = -1. Sin embargo después se
+        #       comienza a alejar el valor
+        #   g11 coincide casi perfectamente en i = 0 e i = -1
+        #   g11 coincide casi perfectamente en i = 2
+        #   g11 coincide casi perfectamente en i = 1
+        #   g11 coincide casi perfectamente en i = 10
+        #   g11 coincide casi perfectamente en i = 21
+        #   g11 coincide casi perfectamente en i = 31
+        #   g11 coincide casi perfectamente en i = 32
+        #
+        #   g22 coincide casi perfectamente. Parece haber inconsistencias en
+        #   j = 0
+        #
+        #######################################################################
+
+        #######################################################################
+        #
+        #   probando contra código de españoleta
+        #   x_xi coincide PERFECTAMENTE
+        #   y_xi coincide PERFECTAMENTE
+        #
+        #   x_eta coincide CASI PERFECTAMENTE. Errores en el orden de e-15
+        #   y_eta coincide CASI PERFECTAMENTE. Errores en el orden de e-15
+        #
+        #   J coincide CASI PERFECTAMENTE. Errores en el orden de e-15
+        #   g11I coincide PERFECTAMENTE
+        #   g12I coincide CASI PERFECTAMENTE. Errores en el orden de e-18
+        #   g22I coincide CASI PERFECTAMENTE. Errores en el orden de e-18
+        #   g11 coincide CASI PERFECTAMENTE
+        #   g12 coincide CASI PERFECTAMENTE
+        #   g22 coincide CASI PERFECTAMENTE
+        #
+        #######################################################################
+
         return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
