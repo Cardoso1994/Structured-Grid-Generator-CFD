@@ -2,6 +2,8 @@
 garbage
 test.py
 
+*.odt
+
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

@@ -77,8 +77,8 @@ class mesh_O(mesh):
         Xn[:, 0] += 0.25
 
         for j in range(1, n-1):
-            Xn[:, j] = Xn[:, j-1] + (Xn[:, -1] - Xn[:, 0]) / (n-1)
-            Yn[:, j] = Yn[:, j-1] + (Yn[:, -1] - Yn[:, 0]) / (n-1)
+            Xn[:, j] = Xn[:, j-1] + (Xn[:, n-1] - Xn[:, 0]) / (n-1)
+            Yn[:, j] = Yn[:, j-1] + (Yn[:, n-1] - Yn[:, 0]) / (n-1)
         return
 
         d_eta = self.d_eta
@@ -715,70 +715,127 @@ class mesh_O(mesh):
         A = g22I
         B = g12I
 
-        #######################################################################
-        #
-        #   x_xi coincide perfectamente expecto en i = 0 e i= -1
-        #   APARENTEMENTE y_xi coincide en todo perfectamente, excepto en las
-        #       primeras "j" en i = 0 e i = -1
-        #   x_eta coincide perfectamente
-        #   y_eta coincide perfectamente
-        #
-        #   J coincide perfectamente
-        #   g11I coincide perfectamente, excepto en i = 0 e i = -1, aunque no
-        #       existe gran diferencia
-        #   g22I coincide perfectamente
-        #
-        #   g12I coincide perfectamente en i = 0 j = -1. Sin embargo en el
-        #       resto de valores en i = 0, los valores de la españoleta son
-        #       aprox el DOBLE de lo que yo obtengo
-        #       LO MISMO PASA EN i = -1
-        #   g12I coincide casi perfectamente en i = 1
-        #   g12I coincide casi perfectamente en i = 19
-        #   g12I coincide casi perfectamente en i = 27
-        #   g12I coincide casi perfectamente en i = 29
-        #   g22I coincide perfectamente
-        #
-        #   g12 coincide perfectamente en i = 0 j = -1. Sin embargo en el
-        #       resto de valores en i = 0, los valores de la españoleta son
-        #       aprox el DOBLE de lo que yo obtengo
-        #       LO MISMO PASA EN i = -1
-        #   g12 coincide casi perfectamente en i = 1
-        #   g12 coincide casi perfectamente en i = 11
-        #   g12 coincide casi perfectamente en i = 21
-        #   g12 coincide casi perfectamente en i = 32
-        #
-        #   g11 coincide en las j cercanas a j = -1. Sin embargo después se
-        #       comienza a alejar el valor
-        #   g11 coincide casi perfectamente en i = 0 e i = -1
-        #   g11 coincide casi perfectamente en i = 2
-        #   g11 coincide casi perfectamente en i = 1
-        #   g11 coincide casi perfectamente en i = 10
-        #   g11 coincide casi perfectamente en i = 21
-        #   g11 coincide casi perfectamente en i = 31
-        #   g11 coincide casi perfectamente en i = 32
-        #
-        #   g22 coincide casi perfectamente. Parece haber inconsistencias en
-        #   j = 0
-        #
-        #######################################################################
+        return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
 
-        #######################################################################
-        #
-        #   probando contra código de españoleta
-        #   x_xi coincide PERFECTAMENTE
-        #   y_xi coincide PERFECTAMENTE
-        #
-        #   x_eta coincide CASI PERFECTAMENTE. Errores en el orden de e-15
-        #   y_eta coincide CASI PERFECTAMENTE. Errores en el orden de e-15
-        #
-        #   J coincide CASI PERFECTAMENTE. Errores en el orden de e-15
-        #   g11I coincide PERFECTAMENTE
-        #   g12I coincide CASI PERFECTAMENTE. Errores en el orden de e-18
-        #   g22I coincide CASI PERFECTAMENTE. Errores en el orden de e-18
-        #   g11 coincide CASI PERFECTAMENTE
-        #   g12 coincide CASI PERFECTAMENTE
-        #   g22 coincide CASI PERFECTAMENTE
-        #
-        #######################################################################
+    def tensor_esp(self):
+        '''
+            Calcula el tensor métrico de la transformación para ambas
+                transformaciones, directa e indirecta
+            Calcula el Jacobiano de la matriz de transformación
+            Calcula el valor discretizado de las derivadas parciales:
+                x_xi
+                x_eta
+                y_xi
+                y_eta
+        '''
 
+        # se definen vairables de la malla
+        X = self.X
+        Y = self.Y
+        M = self.M
+        N = self.N
+        d_xi = self.d_xi
+        d_eta = self.d_eta
+
+
+        # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
+        # X += 0.0000001
+        # Xe += 0.0000001
+
+        # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
+        # Y += 1e-19
+        # Ye += 1e-19
+
+        # index = 34
+        # percent = 1
+        # var = Y
+        # vare = Ye
+        # print('inside potential')
+        # print('comparing X mesh')
+        # print(np.all((np.abs(vare - var) / vare * 100) < percent))
+        # print(Ye[:, index])
+        # print(Y[:, index])
+        # print('after comparing X mesh')
+        # exit()
+
+        '''
+        PARECE HABER INCONSISTENCIAS EN X para j = N-1
+        Y TIENE RESULTADOS CATASTROFICOS
+        '''
+
+
+        x_xi = np.zeros((M, N))
+        x_eta = np.zeros((M, N))
+        y_xi = np.zeros((M, N))
+        y_eta = np.zeros((M, N))
+        # ----------------------------VARIABLES--------------------------------#
+        # J= Jacobiano
+        # g11,g12,g21,g22= Tensor métrico transformación directa
+        # g11I,g12I,g21I,g22I= Tensor métrico transformación indirecta
+        # x_xi= Variación de la coordenada x con respecto a xi
+        # x_eta= Variación de la coordenada x con respecto a eta
+        # y_xi= Variación de la coordenada y con respecto a xi
+        # y_eta= Variación de la coordenada y con respecto a eta
+        # ---------------------------------------------------------------------#
+        #  Para el cálculo de las variaciones de las coordenadas x e y
+        #  se utilizan las discretizaciones de la tabla 4.3.1
+
+        # for i= 1 : N-1
+        for i in range(M-1):
+            if i == 1:
+                # for j = 2 : M-1
+                for j in range(1, N-1):
+                    x_xi[i, j] = (X[i+1, j] - X[M-2, j]) / 2
+                    x_eta[i, j] = (X[i, j+1] - X[i, j-1]) / 2
+                    y_xi[i, j] = (Y[i+1, j] - Y[M-2, j]) / 2
+                    y_eta[i, j] = (Y[i, j+1] - Y[i, j-1]) / 2
+            else:
+                # for j = 2 : M-1
+                for j in range(1, N-1):
+                    x_xi[i, j] = (X[i+1, j] - X[i-1, j]) / 2
+                    x_eta[i, j] = (X[i, j+1] - X[i, j-1]) / 2
+                    y_xi[i, j] = (Y[i+1, j] - Y[i-1, j]) / 2
+                    y_eta[i, j] = (Y[i, j+1] - Y[i, j-1]) / 2
+
+                x_xi[i, N-1] = (X[i+1, N-1] - X[i-1, N-1]) / 2
+                x_eta[i, N-1] = (X[i, N-3] - 4 * X[i, N-2] + 3 * X[i, N-1]) / 2
+                y_xi[i, N-1] = (Y[i+1, N-1] - Y[i-1, N-1]) / 2
+                y_eta[i, N-1] = (Y[i, N-3] - 4 * Y[i, N-2] + 3 * Y[i, N-1]) / 2
+
+                x_xi[i, 0] = (X[i+1, 0] - X[i-1, 0]) / 2
+                x_eta[i, 0] = (-3 * X[i, 0] + 4 * X[i, 1] - X[i, 2]) / 2
+                y_xi[i, 0] = (Y[i+1, 0] - Y[i-1, 0]) / 2
+                y_eta[i, 0] = (-3 * Y[i, 0] + 4 * Y[i, 1] - Y[i, 2]) / 2
+
+        x_xi[0, N-1] = (X[1, N-1] - X[M-2, N-1]) / 2
+        x_eta[0, N-1] = (X[0, N-3] - 4 * X[0, N-2] + 3 * X[0, N-1]) / 2
+        y_xi[0, N-1] = (Y[1, N-1] - Y[M-2, N-1]) / 2
+        y_eta[0, N-1] = (Y[0, N-3] - 4 * Y[0, N-2] + 3 * Y[0, N-1]) / 2
+
+        x_xi[0, 0] = (X[1, 0] - X[M-2, 0]) / 2
+        x_eta[0, 0] = (-X[0, 2] + 4 * X[0, 1] - 3 * X[0, 0]) / 2
+        y_xi[0, 0] = (Y[1, 0] - Y[M-2, 0]) / 2
+        y_eta[0, 0] = (-Y[0, 2] + 4 * Y[0, 1] - 3 * Y[0, 0]) / 2
+
+        y_eta[M-1, :] = y_eta[0, :]
+        y_xi[M-1, :] = y_xi[0, :]
+        x_eta[M-1, :] = x_eta[0, :]
+        x_xi[M-1, :] = x_xi[0, :]
+
+        # Las fórmulas de los tensores métricos para las transformaciones
+        # directas o indirectas se encuentran en (2.21), (2.22) y (2.23).
+        J = x_xi * y_eta - x_eta * y_xi
+        J += 1e-16
+        g11I = x_xi ** 2 + y_xi ** 2
+        g12I = x_xi * x_eta + y_xi * y_eta
+        g22I = x_eta ** 2 + y_eta ** 2
+        g11 = g22I / (J ** 2)
+        g11 = g22I * (J ** -2)
+        g12 = -g12I / (J ** 2)
+        g22 = g11I / (J ** 2)
+        g21 = g12
+
+        C1 = g11I
+        A = g22I
+        B = g12I
         return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)

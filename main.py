@@ -102,8 +102,10 @@ mallaNACA.gen_Laplace(metodo='SOR')
 #  plt.title('Ec de Laplace')
 #  mallaNACA.plot()
 
-mallaNACA.X = np.flip(mallaNACA.X)
-mallaNACA.Y = np.flip(mallaNACA.Y)
+mallaNACA.X = np.copy(np.flip(mallaNACA.X))
+mallaNACA.Y = np.copy(np.flip(mallaNACA.Y))
+X = mallaNACA.X
+Y = mallaNACA.Y
 ###############################################################################
 #
 # Las mallas coinciden perfectamente

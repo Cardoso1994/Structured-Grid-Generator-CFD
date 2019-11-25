@@ -176,7 +176,8 @@ class NACA4(airfoil):
         a1 = -0.126
         a2 = -0.3516
         a3 = 0.2843
-        a4 = -0.1036
+        # a4 = -0.1036
+        a4 = -0.1015
 
         # calculo de la distribución de espesor
         yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
@@ -275,7 +276,8 @@ class NACA4(airfoil):
         a1 = -0.126
         a2 = -0.3516
         a3 = 0.2843
-        a4 = -0.1036
+        # a4 = -0.1036
+        a4 = -0.1015
 
         # calculo de la distribución de espesor
         yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
