@@ -20,6 +20,7 @@ test.py
 .*.lb
 
 *.txt
+*.csv
 perfil_final.txt
 
 ## Intermediate documents:
