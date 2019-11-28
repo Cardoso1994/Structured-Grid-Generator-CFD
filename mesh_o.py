@@ -10,33 +10,35 @@ Define subclase mesh_O.
 Se definen diversos métodos de generación para este tipo de mallas
 """
 
-from mesh import mesh
 import numpy as np
 import matplotlib.pyplot as plt
+
+from mesh import mesh
+import mesh_su2
 import sys
 
 np.set_printoptions(threshold=np.sys.maxsize)
 
 class mesh_O(mesh):
-    def __init__(self, R, M, N, archivo):
+    def __init__(self, R, M, N, airfoil):
         '''
         R = radio de la frontera externa, en función de la cuerda del perfil
             se asigna ese valor desde el sript main.py
-        archivo = archivo con la nube de puntos de la frontera interna
+        airfoil = perfil a analizar
         '''
-        mesh.__init__(self, R, M, N, archivo)
+        mesh.__init__(self, R, M, N, airfoil)
         self.tipo = 'O'
-        self.fronteras()
+        self.fronteras(airfoil)
 
-    def fronteras(self):
+    def fronteras(self, airfoil):
         '''
         Genera la frontera externa de la malla así como la interna
         '''
         R = self.R
         # cargar datos del perfil
-        perfil = np.loadtxt(self.archivo)
-        perfil_x = perfil[:, 0]
-        perfil_y = perfil[:, 1]
+        perfil = airfoil
+        perfil_x = perfil.x
+        perfil_y = perfil.y
         points = np.shape(perfil_x)[0]
         points = (points + 1) // 2
 
@@ -839,3 +841,13 @@ class mesh_O(mesh):
         A = g22I
         B = g12I
         return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
+
+    def to_su2(self, filename):
+        '''
+        convierte malla a SU2
+        '''
+        if self.airfoil_alone == True:
+            mesh_su2.to_su2_mesh_o_airfoil(self, filename)
+        else:
+            print('TO DO')
+

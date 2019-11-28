@@ -27,11 +27,11 @@ class mesh(object):
     err_max = 1e-6
 
     # método de inicialización de instancias de clase
-    def __init__(self, R, M, N, archivo):
+    def __init__(self, R, M, N, airfoil):
         '''
         R = radio de la frontera externa, ya está en función de la cuerda del
         perfil se asigna ese valor desde el sript main.py
-        archivo = archivo con la nube de puntos de la frontera interna
+        airfoil = perfil a analizar
         X = matriz cuadrada que contiene todos las coordenadas 'x' de los
             puntos de la malla
         Y = matriz cuadrada que contiene todos las coordenadas 'y' de los
@@ -40,7 +40,7 @@ class mesh(object):
         self.R = R
         self.M = M
         self.N = N
-        self.archivo = archivo
+        self.airfoil_alone = airfoil.alone
 
         self.X = np.zeros((M, N))
         self.Y = np.zeros((M, N))

@@ -22,6 +22,7 @@ class airfoil(object):
         self.c = c
         self.x = None
         self.y = None
+        self.alone = True
 
     # se crea un perfil a partir de un archivo con la nube de puntos
     def create(self, filename):
@@ -92,11 +93,13 @@ class airfoil(object):
                 salida del perfil y borde de ataque del flap
             join_section = número de puntos que unen al perfil y al flap
         '''
+        self.alone = False
         join_section += 2
         x_airfoil = self.x
         y_airfoil = self.y
         x_flap = other.x
         y_flap = other.y
+        size_airfoil = np.shape(x_airfoil)[0]
         size_flap = np.shape(x_flap)[0]
 
         #reajustando en Y
