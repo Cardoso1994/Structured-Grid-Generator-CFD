@@ -6,11 +6,13 @@ Created on Wed Apr 18 00:33:47 2018
 @author: cardoso
 """
 
+import numpy as np
+
 import airfoil
 import mesh
 import mesh_c
 import mesh_o
-import numpy as np
+import mesh_su2
 from analysis import potential_flow_o, potential_flow_o_esp
 
 import matplotlib.pyplot as plt
@@ -96,11 +98,15 @@ plt.title('Ec de Poisson')
 mallaNACA.plot()
 '''
 
-
 mallaNACA.gen_Laplace(metodo='SOR')
 #  plt.figure('_NACA_Laplace')
 #  plt.title('Ec de Laplace')
 #  mallaNACA.plot()
+
+print('before su2')
+mesh_su2.to_su2_mesh_o_airfoil(mallaNACA, './garbage/mesh.su2')
+print('after su2')
+
 
 mallaNACA.X = np.copy(np.flip(mallaNACA.X))
 mallaNACA.Y = np.copy(np.flip(mallaNACA.Y))
