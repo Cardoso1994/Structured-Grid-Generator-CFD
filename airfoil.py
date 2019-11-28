@@ -12,8 +12,11 @@ Subclase NACA4 para creación de perfiles NACA serie 4
 import numpy as np
 import matplotlib.pyplot as plt
 
-# clase general de perfiles
 class airfoil(object):
+    '''
+    Super clase para perfiles
+    '''
+
     def __init__(self, c):
         '''
         c = cuerda [m]
@@ -27,6 +30,7 @@ class airfoil(object):
     # se crea un perfil a partir de un archivo con la nube de puntos
     def create(self, filename):
         '''
+        se crea un perfil a partir de un archivo con la nube de puntos
         filename = nombre del archivo con los datos del perfil a importar
         '''
         c = self.c
@@ -40,23 +44,19 @@ class airfoil(object):
         x *= c
         y *= c
 
-        perfil = np.zeros((np.shape(x)[0], 2))
-        perfil[:, 0] = x
-        perfil[:, 1] = y
-        # titulo = filename[: -4]
-        np.savetxt('perfil_final.txt', perfil)
-        self.x = perfil[:, 0]
-        self.y = perfil[:, 1]
-        '''points = np.shape(perfil)[0]
-        points = (points + 1) // 2'''
+        self.x = x
+        self.y = y
         return
 
     def size(self):
+        '''
+        regresa el numero de puntos que forman el perfil
+        '''
         return np.size(self.x)
 
     def plot(self):
         '''
-            grafica el perfil aerodinámico
+        grafica el perfil aerodinámico
         '''
         plt.figure('perfil')
         plt.axis('equal')
@@ -71,17 +71,13 @@ class airfoil(object):
         size = self.size()
         rads = degrees * np.pi / 180 * -1
 
-        for i in range(size):
-            x = np.cos(rads) * self.x[i] - np.sin(rads) * self.y[i]
-            y = np.sin(rads) * self.x[i] + np.cos(rads) * self.y[i]
-            self.x[i] = x
-            self.y[i] = y
+        x = np.cos(rads) * self.x - np.sin(rads) * self.y
+        y = np.sin(rads) * self.x + np.cos(rads) * self.y
+        self.x = x
+        self.y = y
         self.y -= self.y[0]
-        perfil = np.zeros((np.shape(self.x)[0], 2))
-        perfil[:, 0] = self.x
-        perfil[:, 1] = self.y
-        # titulo = filename[: -4]
-        np.savetxt('perfil_final.txt', perfil)
+
+        return
 
     def join(self, other, dx, dy=0, join_section=4):
         '''
@@ -129,11 +125,17 @@ class airfoil(object):
 
         self.x = x_total
         self.y = y_total
-        perfil = np.zeros((np.shape(x_total)[0], 2))
-        perfil[:, 0] = self.x
-        perfil[:, 1] = self.y
-        # titulo = filename[: -4]
-        np.savetxt('perfil_final.txt', perfil)
+
+    def to_csv(self, filename):
+        '''
+        Exporta nube de puntos a archivo CSV
+        '''
+        x = self.x
+        y = self.y
+        airfoil = np.zeros((self.size(), 2))
+        airfoil[:, 0] = self.x
+        airfoil[:, 1] = self.y
+        np.savetxt(filename, airfoil, delimiter=',')
 
 
 class NACA4(airfoil):
@@ -153,10 +155,11 @@ class NACA4(airfoil):
         self.p = p / 10
         self.t = t / 100
 
+        return
+
     def create_linear(self, points):
         '''
         Crea un perfil NACA4 con una distribución lineal
-
         points = número de puntos para el perfil
         '''
         points = (points + 1) // 2
@@ -242,18 +245,15 @@ class NACA4(airfoil):
         yp = np.flip(yp, 0)
         perfil = np.zeros((np.shape(xp)[0], 2))
 
-        perfil[:, 0] = xp
-        perfil[:, 1] = yp
-        np.savetxt('perfil_final.txt', perfil)
-        self.x = perfil[:, 0]
-        self.y = perfil[:, 1]
+        self.x = xp
+        self.y = yp
 
         return
 
     def create_sin(self, points):
         '''
-        Crea un perfil NACA4 con una distribución no lineal mediante una
-        función senoidal.
+        Crea un perfil NACA4 con una distribución no lineal mediante
+            una función senoidal.
         Mayor densidad de puntos en bordes de ataque y de salida
 
         points = número de puntos para el perfil
@@ -345,18 +345,29 @@ class NACA4(airfoil):
         perfil[:, 1] = yp
         perfil[0, 1] = 0
         perfil[-1, 1] = 0
-        np.savetxt('perfil_final.txt', perfil)
         self.x = perfil[:, 0]
         self.y = perfil[:, 1]
+        # self.x = xp
+        # self.y = yp
 
         return
 
 
 class cilindro(airfoil):
+    '''
+    clase para generar cilindros
+    '''
+
     def __init__(self, c):
+        '''
+        ocupa metodo __init__ de airfoil
+        '''
         airfoil.__init__(self, c)
 
     def create(self, points):
+        '''
+        genera un cilindro
+        '''
         theta = np.linspace(2 * np.pi, np.pi, points)
         theta2 = np.linspace(np.pi, 0, points)
         theta = np.concatenate((theta, theta2[1:]))
@@ -364,10 +375,7 @@ class cilindro(airfoil):
         x = self.c * np.cos(theta)
         y = self.c * np.sin(theta)
 
-        cilindro = np.zeros((np.shape(x)[0], 2))
-        cilindro[:, 0] = x
-        cilindro[:, 1] = y
-
-        np.savetxt('cilindro.txt', cilindro)
         self.x = x
         self.y = y
+
+        return
