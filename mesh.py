@@ -32,11 +32,20 @@ class mesh(object):
         R = radio de la frontera externa, ya está en función de la cuerda del
         perfil se asigna ese valor desde el sript main.py
         airfoil = perfil a analizar
+        M = numero de nodos en eje xi
+        N = numero de nodos en eje eta
+        airfoil_alone = boolean. Si FI es perfil solo (True) o con flap (False)
+        airfoil_boundary = np.array tomar un calor si el punto es parte de
+            un perfil y 0 (cero) si no es frontera (hay flujo)
         X = matriz cuadrada que contiene todos las coordenadas 'x' de los
             puntos de la malla
         Y = matriz cuadrada que contiene todos las coordenadas 'y' de los
             puntos de la malla
         '''
+
+        self.tipo               = None
+        self.d_eta              = 1  # 1 / (self.N - 1)
+        self.d_xi               = 1  # 1 / (self.M - 1)
         self.R                  = R
         self.M                  = M
         self.N                  = N
@@ -46,9 +55,8 @@ class mesh(object):
 
         self.X                  = np.zeros((M, N))
         self.Y                  = np.zeros((M, N))
-        self.d_xi               = 1  # 1 / (self.M - 1)
-        self.d_eta              = 1  # 1 / (self.N - 1)
-        self.tipo               = None
+
+        return
 
     def plot(self):
         '''
@@ -58,10 +66,52 @@ class mesh(object):
         plt.axis('equal')
         plt.plot(self.X, self.Y, 'k', linewidth=1.5)
         plt.plot(self.X[:, 0], self.Y[:, 0], 'k', linewidth=1.9)
+
         for i in range(self.M):
             plt.plot(self.X[i, :], self.Y[i, :], 'b', linewidth=1.5)
         plt.draw()
         plt.show()
+
+        return
+
+    def to_txt_mesh(self, filename='./garbage/mesh_own.txt_mesh'):
+        '''
+        Exporta mallas a archivo en formato propio.
+        Con el proposito de ser importadas posteriormente y que el porgrama
+            reconozca todas sus características
+        '''
+
+        file = open(filename, 'w+')
+
+        # se escriben atributos de la malla
+        file.write('tipo= ' + str(self.tipo) + ' \n')
+        file.write('d_eta= ' + str(self.d_eta) + ' \n')
+        file.write('d_xi= ' + str(self.d_xi) + ' \n')
+        file.write('R= ' + str(self.R) + ' \n')
+        file.write('M= ' + str(self.M) + ' \n')
+        file.write('N= ' + str(self.N) + ' \n')
+        file.write('airfoil_alone= ' + str(self.airfoil_alone) + ' \n')
+        file.write('airfoil_join= ' + str(self.airfoil_join) + ' \n')
+
+        # se escribe array que indica que puntos son fronter y cuales no
+        file.write('airfoil_boundary=\n')
+        s = ','.join([str(x_) for x_ in self.airfoil_boundary])
+        # file.write(np.array2string(self.airfoil_boundary, separator=','))
+        file.write(s)
+        file.write('\n')
+
+        # se escrriben matriz X y matriz Y
+        file.write('X=\n')
+        for i in range(self.M):
+            s = ','.join([str(x_) for x_ in self.X[i, :]])
+            file.write(s + '\n')
+
+        file.write('Y=\n')
+        for i in range(self.M):
+            s = ','.join([str(y_) for y_ in self.Y[i, :]])
+            file.write(s + '\n')
+
+        return
 
     def gen_inter_pol(self, eje='eta'):
         '''
@@ -91,9 +141,11 @@ class mesh(object):
                 Yn[i, :] = Yn[0, :] * (1 - xi[i]) + Yn[-1, :] * xi[i]
         return
 
-    # genera malla por TFI
-    # sec 4.3.2 M Farrashkhalvat Grid generation
     def gen_TFI(self):
+        '''
+        genera malla por TFI
+        sec 4.3.2 M Farrashkhalvat Grid generation
+        '''
         Xn  = self.X
         Yn  = self.Y
         n   = self.N
@@ -151,3 +203,25 @@ class mesh(object):
         # self.X = Xn
         # self.Y = Yn
         return (Xn, Yn)
+
+
+def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
+    '''
+    importa malla de archivo txt_mesh. formato propio
+    '''
+
+    if filename[-8:] != 'txt.mesh':
+        print('WARNING!')
+        print('La extensión del archivo a importar no coincide con la \
+              extensión utilizada por este programa')
+        print('FINALIZANDO EJECUCIÓN')
+
+        exit()
+
+        return
+
+    with open(filename, 'r') as f:
+        mesh = f.readlines()
+
+    tipo = mesh[0].split()[-1]
+    print(tipo)
