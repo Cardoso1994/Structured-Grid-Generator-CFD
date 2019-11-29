@@ -37,19 +37,24 @@ class mesh(object):
         Y = matriz cuadrada que contiene todos las coordenadas 'y' de los
             puntos de la malla
         '''
-        self.R = R
-        self.M = M
-        self.N = N
-        self.airfoil_alone = airfoil.alone
+        self.R                  = R
+        self.M                  = M
+        self.N                  = N
+        self.airfoil_alone      = airfoil.alone
+        self.airfoil_join       = airfoil.union
+        self.airfoil_boundary   = airfoil.is_boundary
 
-        self.X = np.zeros((M, N))
-        self.Y = np.zeros((M, N))
-        self.d_xi = 1  # 1 / (self.M - 1)
-        self.d_eta = 1  # 1 / (self.N - 1)
-        self.tipo = None
+        self.X                  = np.zeros((M, N))
+        self.Y                  = np.zeros((M, N))
+        self.d_xi               = 1  # 1 / (self.M - 1)
+        self.d_eta              = 1  # 1 / (self.N - 1)
+        self.tipo               = None
 
-    # función para graficar la malla
     def plot(self):
+        '''
+        función para graficar la malla
+        '''
+
         plt.axis('equal')
         plt.plot(self.X, self.Y, 'k', linewidth=1.5)
         plt.plot(self.X[:, 0], self.Y[:, 0], 'k', linewidth=1.9)
@@ -58,24 +63,29 @@ class mesh(object):
         plt.draw()
         plt.show()
 
-    # genera malla por interpolación polinomial por Lagrange
-    # sec 4.2.1 M Farrashkhalvat Grid generation
     def gen_inter_pol(self, eje='eta'):
+        '''
+        genera malla por interpolación polinomial por Lagrange
+        sec 4.2.1 M Farrashkhalvat Grid generation
+        '''
+
         Xn = self.X
         Yn = self.Y
 
         if eje == 'eta':
-            n = self.N
+            n   = self.N
             eta = np.linspace(0, 1, n)
+
             for j in range(1, n-1):
                 Xn[:, j] = Xn[:, 0] * (1 - eta[j]) + Xn[:, -1] * eta[j]
                 Yn[:, j] = Yn[:, 0] * (1 - eta[j]) + Yn[:, -1] * eta[j]
             self.X = Xn
             self.Y = Yn
             return (Xn, Yn)
+
         elif eje == 'xi':
-            m = self.M
-            xi = np.linspace(0, 1, m)
+            m   = self.M
+            xi  = np.linspace(0, 1, m)
             for i in range(1, m-1):
                 Xn[i, :] = Xn[0, :] * (1 - xi[i]) + Xn[-1, :] * xi[i]
                 Yn[i, :] = Yn[0, :] * (1 - xi[i]) + Yn[-1, :] * xi[i]
@@ -84,18 +94,18 @@ class mesh(object):
     # genera malla por TFI
     # sec 4.3.2 M Farrashkhalvat Grid generation
     def gen_TFI(self):
-        Xn = self.X
-        Yn = self.Y
-        n = self.N
+        Xn  = self.X
+        Yn  = self.Y
+        n   = self.N
         eta = np.linspace(0, 1, n)
-        m = self.M
-        xi = np.linspace(0, 1, m)
+        m   = self.M
+        xi  = np.linspace(0, 1, m)
 
         for j in range(1, n-1):
-            Xn[0, j] = Xn[0, 0] * (1 - eta[j]) + Xn[0, -1] * eta[j]
-            Xn[-1, j] = Xn[-1, 0] * (1 - eta[j]) + Xn[-1, -1] * eta[j]
-            Yn[0, j] = Yn[0, 0] * (1 - eta[j]) + Yn[0, -1] * eta[j]
-            Yn[-1, j] = Yn[-1, 0] * (1 - eta[j]) + Yn[-1, -1] * eta[j]
+            Xn[0, j]    = Xn[0, 0] * (1 - eta[j]) + Xn[0, -1] * eta[j]
+            Xn[-1, j]   = Xn[-1, 0] * (1 - eta[j]) + Xn[-1, -1] * eta[j]
+            Yn[0, j]    = Yn[0, 0] * (1 - eta[j]) + Yn[0, -1] * eta[j]
+            Yn[-1, j]   = Yn[-1, 0] * (1 - eta[j]) + Yn[-1, -1] * eta[j]
 
         for j in range(1, n-1):
             for i in range(1, m-1):
@@ -118,15 +128,15 @@ class mesh(object):
     # genera malla por interpolación de Hermite
     # sec 4.2.2 M Farrashkhalvat Grid generation
     def gen_inter_Hermite(self):
-        Xn = self.X
-        Yn = self.Y
-        n = self.N
-        eta = np.linspace(0, 1, n)
+        Xn      = self.X
+        Yn      = self.Y
+        n       = self.N
+        eta     = np.linspace(0, 1, n)
 
-        derX = (Xn[:, -1] - Xn[:, 0]) / 1
-        derY = (Yn[:, -1] - Yn[:, 0]) / 200000000
-        derX = np.transpose(derX)
-        derY = np.transpose(derY)
+        derX    = (Xn[:, -1] - Xn[:, 0]) / 1
+        derY    = (Yn[:, -1] - Yn[:, 0]) / 200000000
+        derX    = np.transpose(derX)
+        derY    = np.transpose(derY)
         # Interpolación de hermite
         for j in range(1, n-1):
             Xn[:, j] = Xn[:, 0] * (2 * eta[j]**3 - 3 * eta[j]**2 + 1) \

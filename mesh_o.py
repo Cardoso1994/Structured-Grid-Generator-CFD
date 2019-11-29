@@ -866,5 +866,5 @@ class mesh_O(mesh):
         if self.airfoil_alone == True:
             mesh_su2.to_su2_mesh_o_airfoil(self, filename)
         else:
-            print('TO DO')
+            mesh_su2.to_su2_mesh_o_airfoil_n_flap(self, filename)
 

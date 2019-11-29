@@ -28,6 +28,7 @@ class airfoil(object):
         self.y              = None
         self.alone          = True
         self.is_boundary    = None
+        self.union          = 0
 
     # se crea un perfil a partir de un archivo con la nube de puntos
     def create(self, filename):
@@ -87,7 +88,7 @@ class airfoil(object):
 
         return
 
-    def join(self, other, dx, dy=0, join_section=4):
+    def join(self, other, dx, dy=0, union=4):
         '''
             une dos perfiles aerodinámicos. Para el análisis de external
                 airfoil flaps
@@ -95,10 +96,11 @@ class airfoil(object):
             other = flap [airfoil]
             dx y dy = distancias en x e y respectivamente entre borde de
                 salida del perfil y borde de ataque del flap
-            join_section = número de puntos que unen al perfil y al flap
+            union = número de puntos que unen al perfil y al flap
         '''
         self.alone      = False
-        join_section    += 2
+        self.union      = union
+        union           += 2
         x_airfoil       = self.x
         y_airfoil       = self.y
         x_flap          = other.x
@@ -116,9 +118,9 @@ class airfoil(object):
         dx_total    = dx_air + dx
         x_flap      += dx_total
         x_join      = np.linspace(x_flap[size_flap // 2], x_airfoil[0],
-                             num=join_section)
+                             num=union)
         y_join      = np.linspace(y_flap[size_flap // 2], y_airfoil[0],
-                             num=join_section)
+                             num=union)
 
         x_total = x_flap[:size_flap // 2 + 1]
         y_total = y_flap[:size_flap // 2 + 1]
@@ -136,12 +138,12 @@ class airfoil(object):
         end                         = size_flap // 2 + 1
         is_boundary[:end]           += other.number
         begin                       = end
-        end                         += join_section - 2
+        end                         += union - 2
         begin                       = end
         end                         += size_airfoil
         is_boundary[begin : end]    = self.number
         begin                       = end
-        end                         += join_section - 2
+        end                         += union - 2
         begin                       = end
         end                         += size_flap // 2 + 1
         is_boundary[begin : end]    = other.number
