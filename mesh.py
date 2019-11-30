@@ -14,6 +14,9 @@ mismas.
 import numpy as np
 import matplotlib.pyplot as plt
 from sys import maxsize
+# import mesh_c
+# import mesh_o
+# import airfoil
 
 np.set_printoptions(threshold=maxsize)
 
@@ -203,25 +206,3 @@ class mesh(object):
         # self.X = Xn
         # self.Y = Yn
         return (Xn, Yn)
-
-
-def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
-    '''
-    importa malla de archivo txt_mesh. formato propio
-    '''
-
-    if filename[-8:] != 'txt.mesh':
-        print('WARNING!')
-        print('La extensión del archivo a importar no coincide con la \
-              extensión utilizada por este programa')
-        print('FINALIZANDO EJECUCIÓN')
-
-        exit()
-
-        return
-
-    with open(filename, 'r') as f:
-        mesh = f.readlines()
-
-    tipo = mesh[0].split()[-1]
-    print(tipo)

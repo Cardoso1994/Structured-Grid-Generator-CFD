@@ -208,14 +208,5 @@ def to_su2_mesh_o_airfoil_n_flap(mesh, filename):
                            + str(i - diff + 1 ) + ' ' + str(i + size_airfoils)
                            + '\n')
 
-    print('i = ', i)
-    print('extrados_flap = ', extrados_flap )
-    print('begin')
-    print(begin)
-    print('end')
-    print(end)
-    print('diff')
-    print(diff)
+    return
 
-    print('TODO')
-    print('inside su2 method')
