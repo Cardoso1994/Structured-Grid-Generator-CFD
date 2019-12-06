@@ -21,6 +21,7 @@ class airfoil(object):
         '''
         c = cuerda [m]
         x e y = coordenadas de la nube de puntos que describe el perfil
+        number = numero de perfil si existen varios
         '''
         self.c              = c
         self.number         = number
@@ -277,6 +278,9 @@ class NACA4(airfoil):
         xp  = np.flip(xp, 0)
         yp  = np.flip(yp, 0)
 
+        xp[-1] = xp[0]
+        yp[-1] = yp[0]
+
         # se especifica que todos los puntos del perfil son frontera
         is_boundary         = np.ones((np.size(xp))) * self.number
 
@@ -378,10 +382,13 @@ class NACA4(airfoil):
         yp      = np.flip(yp, 0)
         perfil  = np.zeros((np.shape(xp)[0], 2))
 
+        xp[-1] = xp[0]
+        yp[-1] = yp[0]
+
         perfil[:, 0]    = xp
         perfil[:, 1]    = yp
-        perfil[0, 1]    = 0
-        perfil[-1, 1]   = 0
+        # perfil[0, 1]    = 0
+        # perfil[-1, 1]   = 0
 
         # se especifica que todos los puntos del perfil son frontera
         is_boundary         = np.ones((np.size(xp))) * self.number

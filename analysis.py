@@ -475,17 +475,29 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         mesh.tensor()
     print('after tensor')
 
-    # importing from ESPAÑOLETA
-    g11e = np.genfromtxt('/home/cardoso/garbage/g11.csv', delimiter=',')
-    g12e = np.genfromtxt('/home/cardoso/garbage/g12.csv', delimiter=',')
-    g22e = np.genfromtxt('/home/cardoso/garbage/g22.csv', delimiter=',')
-    Je = np.genfromtxt('/home/cardoso/garbage/J.csv', delimiter=',')
-    x_xie = np.genfromtxt('/home/cardoso/garbage/x_xi.csv', delimiter=',')
-    x_etae = np.genfromtxt('/home/cardoso/garbage/x_eta.csv', delimiter=',')
-    y_xie = np.genfromtxt('/home/cardoso/garbage/y_xi.csv', delimiter=',')
-    y_etae = np.genfromtxt('/home/cardoso/garbage/y_eta.csv', delimiter=',')
-    Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
-    Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
+    # importing from ESPAÑOLETA para LINUX
+    # g11e = np.genfromtxt('/home/cardoso/garbage/g11.csv', delimiter=',')
+    # g12e = np.genfromtxt('/home/cardoso/garbage/g12.csv', delimiter=',')
+    # g22e = np.genfromtxt('/home/cardoso/garbage/g22.csv', delimiter=',')
+    # Je = np.genfromtxt('/home/cardoso/garbage/J.csv', delimiter=',')
+    # x_xie = np.genfromtxt('/home/cardoso/garbage/x_xi.csv', delimiter=',')
+    # x_etae = np.genfromtxt('/home/cardoso/garbage/x_eta.csv', delimiter=',')
+    # y_xie = np.genfromtxt('/home/cardoso/garbage/y_xi.csv', delimiter=',')
+    # y_etae = np.genfromtxt('/home/cardoso/garbage/y_eta.csv', delimiter=',')
+    # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
+    # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
+
+    # importing from ESPAÑOLETA para MacOS
+    g11e = np.genfromtxt('/Users/cardosom/garbage/g11.csv', delimiter=',')
+    g12e = np.genfromtxt('/Users/cardosom/garbage/g12.csv', delimiter=',')
+    g22e = np.genfromtxt('/Users/cardosom/garbage/g22.csv', delimiter=',')
+    Je = np.genfromtxt('/Users/cardosom/garbage/J.csv', delimiter=',')
+    x_xie = np.genfromtxt('/Users/cardosom/garbage/x_xi.csv', delimiter=',')
+    x_etae = np.genfromtxt('/Users/cardosom/garbage/x_eta.csv', delimiter=',')
+    y_xie = np.genfromtxt('/Users/cardosom/garbage/y_xi.csv', delimiter=',')
+    y_etae = np.genfromtxt('/Users/cardosom/garbage/y_eta.csv', delimiter=',')
+    Xe = np.genfromtxt('/Users/cardosom/garbage/X.csv', delimiter=',')
+    Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
     # g21 = g12
 
     index = 4

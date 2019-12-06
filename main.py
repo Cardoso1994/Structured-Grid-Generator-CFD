@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 filename = 'whitcomb-il.txt'
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla

@@ -10,23 +10,31 @@ Define subclase mesh_C.
 Diversos métodos de generación para mallas tipo C
 """
 
-from mesh import mesh
 import numpy as np
 import matplotlib.pyplot as plt
 
+from mesh import mesh
+import mesh_su2
 
 class mesh_C(mesh):
-    def __init__(self, R, M, N, archivo):
+    #def __init__(self, R, M, N, airfoil, from_file=False):
+    def __init__(self, R, N, airfoil, from_file=False):
         '''
         R = radio de la frontera externa, en función de la cuerda del perfil
             se asigna ese valor desde el sript main.py
         archivo = archivo con la nube de puntos de la frontera interna
         '''
-        mesh.__init__(self, R, M, N, archivo)
-        self.tipo = 'C'
-        self.fronteras()
 
-    def fronteras(self):
+        M = np.shape(airfoil.x)[0] * 3 // 2 - 1
+        mesh.__init__(self, R, M, N, airfoil)
+        self.tipo = 'C'
+
+        if not from_file:
+            self.fronteras(airfoil)
+
+        return
+
+    def fronteras(self, airfoil):
         '''
         Genera la frontera externa de la malla así como la interna
         '''
@@ -35,11 +43,17 @@ class mesh_C(mesh):
         # N = self.N
 
         # cargar datos del perfil
-        perfil = np.loadtxt(self.archivo)
-        perfil_x = perfil[:, 0]
-        perfil_y = perfil[:, 1]
+        perfil = airfoil
+        perfil_x = perfil.x
+        perfil_y = perfil.y
         points = np.shape(perfil_x)[0]
         points1 = (points + 1) // 2
+        print('points')
+        print(points)
+        print('points1')
+        print(points1)
+        print('M')
+        print(M)
 
         # frontera externa
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)
@@ -59,9 +73,13 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        weight = 1.2
+        print('npoints')
+        print(npoints)
+        weight = 1.5
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
+        print(delta_limit * (1 - weight))
+        print(1 - weight ** (npoints))
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
         # x_line[0] = perfil_x[0]
         x_line[-1] = 2.5 * R
@@ -139,7 +157,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.4)  # en caso de metodo SOR
+        omega = np.longdouble(1.45)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -262,7 +280,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.2)  # en caso de metodo SOR
+        omega = np.longdouble(1.1)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
@@ -278,8 +296,8 @@ class mesh_C(mesh):
         a = np.longdouble(0)
         c = np.longdouble(0)
         aa = np.longdouble(0.4)  #0.4
-        cc = np.longdouble(3.3)  #3.3
-        linea_xi = 0.0
+        cc = np.longdouble(4.3)  #3.3
+        linea_xi = 0.5
         linea_eta = 0.0
 
         it = 0
@@ -528,4 +546,16 @@ class mesh_C(mesh):
             Y[0, j] = Y[1, j]
             Y[-1, j] = Y[-2, j]
             Fprev = F
+        return
+
+    def to_su2(self, filename):
+        '''
+        convierte malla a formato SU2
+        '''
+
+        if self.airfoil_alone == True:
+            mesh_su2.to_su2_mesh_c_airfoil(self, filename)
+        else:
+            mesh_su2.to_su2_mesh_c_airfoil_n_flap(self, filename)
+
         return

@@ -20,12 +20,14 @@ import sys
 np.set_printoptions(threshold=np.sys.maxsize)
 
 class mesh_O(mesh):
-    def __init__(self, R, M, N, airfoil):
+    #def __init__(self, R, M, N, airfoil):
+    def __init__(self, R, N, airfoil):
         '''
         R = radio de la frontera externa, en función de la cuerda del perfil
             se asigna ese valor desde el sript main.py
         airfoil = perfil a analizar
         '''
+        M = np.shape(airfoil.x)[0]
         mesh.__init__(self, R, M, N, airfoil)
         self.tipo = 'O'
         self.fronteras(airfoil)
@@ -202,7 +204,7 @@ class mesh_O(mesh):
         I           = 0
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
-        aa          = np.longdouble(7.6)
+        aa          = np.longdouble(7.5)
         cc          = np.longdouble(7.2)
         linea_eta   = 0.0
         linea_xi    = 0.5
@@ -288,7 +290,7 @@ class mesh_O(mesh):
                             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
                             * np.exp(-cc
                                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-                I           = x_xi * y_eta - x_eta * y_xi
+                I = x_xi * y_eta - x_eta * y_xi
 
                 Xn[i, j]    = (d_xi * d_eta) ** 2\
                     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
@@ -861,8 +863,9 @@ class mesh_O(mesh):
 
     def to_su2(self, filename):
         '''
-        convierte malla a SU2
+        convierte malla a formato SU2
         '''
+
         if self.airfoil_alone == True:
             mesh_su2.to_su2_mesh_o_airfoil(self, filename)
         else:

@@ -68,9 +68,11 @@ def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
     perfil.x = X[:, 0]
     perfil.y = Y[:, 0]
     if tipo == 'O':
-        mesh = mesh_o.mesh_O(R, M, N, perfil)
+        # mesh = mesh_o.mesh_O(R, M, N, perfil)
+        mesh = mesh_o.mesh_O(R, N, perfil)
     elif tipo == 'C':
-        mesh = mesh_c.mesh_C(R, M, N, perfil)
+        # mesh = mesh_c.mesh_C(R, M, N, perfil, from_file=True)
+        mesh = mesh_c.mesh_C(R, N, perfil, from_file=True)
 
     # sea asignan atributos a malla
     mesh.d_eta = d_eta
@@ -96,3 +98,40 @@ def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
     # print('airfoil_boundary = ', airfoil_boundary)
     # print('X = ', X)
     # print('Y = ', Y)
+
+
+def get_size_airfoil(airfoil_boundary):
+    '''
+    Calcula el numero de puntos que forman un perfil basado en el array que
+        define que puntos son parte de un perfil, de un flap o parte del
+        dominio
+    '''
+
+    size_airfoil = 0
+
+    for i in range(np.shape(airfoil_boundary)[0]):
+        if airfoil_boundary[i] == 1:
+            size_airfoil += 1
+
+    return (size_airfoil)
+
+
+
+
+
+def get_size_airfoil_n_flap(airfoil_boundary):
+    '''
+    Calcula el numero de puntos que forman un perfil con flap basado en el
+        array que define que puntos son parte de un perfil, de un flap o parte
+        del dominio
+    '''
+    size_airfoil    = 0
+    size_flap       = 0
+
+    for i in range(np.shape(airfoil_boundary)[0]):
+        if airfoil_boundary[i] == 1:
+            size_airfoil += 1
+        elif airfoil_boundary[i] == 2:
+            size_flap += 1
+
+    return (size_airfoil, size_flap)

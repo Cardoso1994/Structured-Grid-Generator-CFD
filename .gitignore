@@ -1,6 +1,6 @@
 # ignore garbage directory that is used for tests
 garbage
-test.py
+test*.py
 
 *.odt
 
