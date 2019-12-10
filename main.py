@@ -7,6 +7,7 @@ Created on Wed Apr 18 00:33:47 2018
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 import airfoil
 import mesh
@@ -14,11 +15,7 @@ import mesh_c
 import mesh_o
 import mesh_su2
 from analysis import potential_flow_o, potential_flow_o_esp
-
-import matplotlib.pyplot as plt
-
-# nombre de archivo perfil externo
-filename = 'whitcomb-il.txt'
+import helpers
 
 # tipo de malla (C, O)
 malla = 'C'
@@ -28,16 +25,17 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-M = 35
-N = 35
-# se ajusta por cuestiones de calculo a la mitad de puntos
-# se calculan por separado parte inferior y superior del perfil
-# points = (M + 1) // 2
+N = 43
+union = 6
+
+# points = 11
+airfoil_points = 55
 
 if malla == 'C':
-    points = M // 3 * 2
+    points = airfoil_points // 3 * 2
 elif malla == 'O':
-    points = M
+    points = airfoil_points
+
 # datos de perfil NACA
 m = 1  # combadura
 p = 2  # posicion de la combadura
@@ -48,90 +46,34 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-# perfil.create_linear(points)
-# flap = airfoil.NACA4(m, p, t, 0.2 * c)
-# flap.create_sin(points)
-# flap.rotate(15)
-# perfil.join(flap, dx=0.055, dy=0.05, join_section=4)
-# perfil.rotate(25)
-M = np.shape(perfil.x)[0]
+flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+flap.create_sin(points)
+flap.rotate(10)
+perfil.join(flap, dx=0.055, dy=0.05, union=union)
+perfil.rotate(30)
+# M = np.shape(perfil.x)[0]
 
-if malla == 'C':
-    M = M // 2 * 3
-    print(M)
-# se ajusta la densidad de la malla dependiendo el tipo de malla a generar
-# densidad del mallado normal si es tipo 'O'
-'''
-M = (points * 2) - 1
-if malla == 'C':
-   #M += 3 * M // 4
-N = 17
-'''
-
-
-# nombre de archivo con perfil redimensionado y con c/4 en el origen del
-# sistema de coordenadas
-archivo_perfil = 'perfil_final.txt'
+archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
-    mallaNACA = mesh_o.mesh_O(R, M, N, archivo_perfil)
+    mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, M, N, archivo_perfil)
+    mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-'''
-mallaNACA.gen_inter_Hermite()
-plt.figure('NACA')
-plt.title('Interpolación Hermite')
-mallaNACA.plot()
-'''
-
-'''
-mallaNACA.gen_inter_pol()
-plt.figure('NACA_')
-plt.title('Interpolación Polinomial')
-mallaNACA.plot()
-'''
-
-'''
+perfil.to_csv(archivo_perfil)
 mallaNACA.gen_Poisson(metodo='SOR')
-plt.figure('_NACA_')
-plt.title('Ec de Poisson')
-mallaNACA.plot()
-'''
+# mallaNACA.gen_Laplace(metodo='SOR')
+# mallaNACA.gen_TFI()
+print('after laplace')
+print('M = ' + str(mallaNACA.M))
+print('N = ' + str(mallaNACA.N))
 
-mallaNACA.gen_Laplace(metodo='SOR')
-#  plt.figure('_NACA_Laplace')
-#  plt.title('Ec de Laplace')
-#  mallaNACA.plot()
+mallaNACA.to_su2('./garbage/mesh.su2')
 
-print('before su2')
-mesh_su2.to_su2_mesh_o_airfoil(mallaNACA, './garbage/mesh.su2')
-print('after su2')
+mallaNACA.to_txt_mesh()
+mallaNACA1 = helpers.from_txt_mesh()
+mallaNACA1.plot()
 
-
-mallaNACA.X = np.copy(np.flip(mallaNACA.X))
-mallaNACA.Y = np.copy(np.flip(mallaNACA.Y))
-X = mallaNACA.X
-Y = mallaNACA.Y
-###############################################################################
-#
-# Las mallas coinciden perfectamente
-#
-###############################################################################
-
-'''
-mallaNACA.gen_TFI()
-plt.figure('___NACA_')
-plt.title('Interpolación TFI')
-mallaNACA.plot()
-'''
-
-'''
-mallaNACA.gen_parabolic()
-#plt.figure('NACA_Parabolic')
-#plt.title('Parabolic gen')
-mallaNACA.plot()
-'''
-print(M, N)
+exit()
 
 
 # variables de flujo
@@ -157,4 +99,3 @@ Re = v_inf * c * d_inf / 17e-6
 print(mach_inf)
 print(Re)
 potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
-
