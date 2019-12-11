@@ -487,32 +487,40 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
     # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
 
+    # importing from ESPAÑOLETA para LINUX work
+    g11e = np.genfromtxt('/home/vivoxie/garbage/g11.csv', delimiter=',')
+    g12e = np.genfromtxt('/home/vivoxie/garbage/g12.csv', delimiter=',')
+    g22e = np.genfromtxt('/home/vivoxie/garbage/g22.csv', delimiter=',')
+    Je = np.genfromtxt('/home/vivoxie/garbage/J.csv', delimiter=',')
+    x_xie = np.genfromtxt('/home/vivoxie/garbage/x_xi.csv', delimiter=',')
+    x_etae = np.genfromtxt('/home/vivoxie/garbage/x_eta.csv', delimiter=',')
+    y_xie = np.genfromtxt('/home/vivoxie/garbage/y_xi.csv', delimiter=',')
+    y_etae = np.genfromtxt('/home/vivoxie/garbage/y_eta.csv', delimiter=',')
+    Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
+    Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
+
     # importing from ESPAÑOLETA para MacOS
-    g11e = np.genfromtxt('/Users/cardosom/garbage/g11.csv', delimiter=',')
-    g12e = np.genfromtxt('/Users/cardosom/garbage/g12.csv', delimiter=',')
-    g22e = np.genfromtxt('/Users/cardosom/garbage/g22.csv', delimiter=',')
-    Je = np.genfromtxt('/Users/cardosom/garbage/J.csv', delimiter=',')
-    x_xie = np.genfromtxt('/Users/cardosom/garbage/x_xi.csv', delimiter=',')
-    x_etae = np.genfromtxt('/Users/cardosom/garbage/x_eta.csv', delimiter=',')
-    y_xie = np.genfromtxt('/Users/cardosom/garbage/y_xi.csv', delimiter=',')
-    y_etae = np.genfromtxt('/Users/cardosom/garbage/y_eta.csv', delimiter=',')
-    Xe = np.genfromtxt('/Users/cardosom/garbage/X.csv', delimiter=',')
-    Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
+    # g11e = np.genfromtxt('/Users/cardosom/garbage/g11.csv', delimiter=',')
+    # g12e = np.genfromtxt('/Users/cardosom/garbage/g12.csv', delimiter=',')
+    # g22e = np.genfromtxt('/Users/cardosom/garbage/g22.csv', delimiter=',')
+    # Je = np.genfromtxt('/Users/cardosom/garbage/J.csv', delimiter=',')
+    # x_xie = np.genfromtxt('/Users/cardosom/garbage/x_xi.csv', delimiter=',')
+    # x_etae = np.genfromtxt('/Users/cardosom/garbage/x_eta.csv', delimiter=',')
+    # y_xie = np.genfromtxt('/Users/cardosom/garbage/y_xi.csv', delimiter=',')
+    # y_etae = np.genfromtxt('/Users/cardosom/garbage/y_eta.csv', delimiter=',')
+    # Xe = np.genfromtxt('/Users/cardosom/garbage/X.csv', delimiter=',')
+    # Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
     # g21 = g12
 
     index = 4
-    percent = 2
-    var = y_xi
-    vare = y_xie
+    percent = 20
+    var = X
+    vare = Xe
     var += 1e-45
     vare += 1e-45
     print('inside potential')
     print(np.all(np.abs(var - vare) / var * 100 <= percent))
     print(np.all(np.abs(vare - var) / vare * 100 <= percent))
-    print('valor ESPAÑOLETA')
-    print(vare[:, index])
-    print('valor CARDOSO')
-    print(var[:, index])
     print('inside POTENTIAL END')
     exit()
     '''

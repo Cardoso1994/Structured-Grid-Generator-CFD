@@ -85,7 +85,7 @@ class mesh_O(mesh):
         for j in range(1, n-1):
             Xn[:, j] = Xn[:, j-1] + (Xn[:, n-1] - Xn[:, 0]) / (n-1)
             Yn[:, j] = Yn[:, j-1] + (Yn[:, n-1] - Yn[:, 0]) / (n-1)
-        #return
+        return
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi

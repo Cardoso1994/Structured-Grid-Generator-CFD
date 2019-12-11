@@ -18,18 +18,18 @@ from analysis import potential_flow_o, potential_flow_o_esp
 import helpers
 
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 49
+N = 35
 union = 6
 
 # points = 11
-airfoil_points = 121
+airfoil_points = 35
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -37,9 +37,9 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 0  # combadura
-p = 0  # posicion de la combadura
-t = 12  # espesor
+m = 1  # combadura
+p = 2  # posicion de la combadura
+t = 10  # espesor
 c = 1  # cuerda [m]
 # radio frontera externa
 R = 20 * c
@@ -60,19 +60,23 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR')
-# mallaNACA.gen_Laplace(metodo='SOR')
+mallaNACA.gen_Laplace(metodo='SOR')
+mallaNACA.X = np.flip(mallaNACA.X)
+mallaNACA.Y = np.flip(mallaNACA.Y)
+plt.figure()
+plt.plot(mallaNACA.X[:5, :5], mallaNACA.Y[:5, :5])
+plt.draw()
+plt.show()
 # mallaNACA.gen_TFI()
 print('after laplace')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
-mallaNACA.to_su2('./garbage/mesh.su2')
+# mallaNACA.to_su2('./garbage/mesh.su2')
 
-mallaNACA.to_txt_mesh()
-mallaNACA1 = helpers.from_txt_mesh()
-mallaNACA1.plot()
-exit()
+# mallaNACA.to_txt_mesh()
+# mallaNACA1 = helpers.from_txt_mesh()
+# mallaNACA1.plot()
 
 
 
