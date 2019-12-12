@@ -472,7 +472,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # d_eta = mesh.d_eta
 
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
-        mesh.tensor()
+        mesh.tensor_esp()
     print('after tensor')
 
     # importing from ESPAÑOLETA para LINUX
@@ -493,7 +493,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     g22e = np.genfromtxt('/home/vivoxie/garbage/g22.csv', delimiter=',')
     Je = np.genfromtxt('/home/vivoxie/garbage/J.csv', delimiter=',')
     x_xie = np.genfromtxt('/home/vivoxie/garbage/x_xi.csv', delimiter=',')
-    x_etae = np.genfromtxt('/home/vivoxie/garbage/x_eta.csv', delimiter=',')
+    y_etae = np.genfromtxt('/home/vivoxie/garbage/x_eta.csv', delimiter=',')
     y_xie = np.genfromtxt('/home/vivoxie/garbage/y_xi.csv', delimiter=',')
     y_etae = np.genfromtxt('/home/vivoxie/garbage/y_eta.csv', delimiter=',')
     Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
@@ -512,12 +512,13 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
     # g21 = g12
 
-    index = 4
-    percent = 20
-    var = X
-    vare = Xe
+    index = -3
+    percent = 10
+    var = Y
+    vare = Ye
     var += 1e-45
     vare += 1e-45
+    print('inside potential')
     print('inside potential')
     print(np.all(np.abs(var - vare) / var * 100 <= percent))
     print(np.all(np.abs(vare - var) / vare * 100 <= percent))

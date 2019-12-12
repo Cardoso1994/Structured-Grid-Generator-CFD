@@ -25,7 +25,7 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 49
+N = 63
 union = 6
 
 # points = 11

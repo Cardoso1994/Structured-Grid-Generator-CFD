@@ -382,8 +382,8 @@ class NACA4(airfoil):
         yp      = np.flip(yp, 0)
         perfil  = np.zeros((np.shape(xp)[0], 2))
 
-        xp[-1] = xp[0]
-        yp[-1] = yp[0]
+        # xp[-1] = xp[0]
+        # yp[-1] = yp[0]
 
         perfil[:, 0]    = xp
         perfil[:, 1]    = yp
