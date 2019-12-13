@@ -472,10 +472,11 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # d_eta = mesh.d_eta
 
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
-        mesh.tensor_esp()
-    print('after tensor')
+        mesh.tensor()
 
     # importing from ESPAÑOLETA para LINUX
+    # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
+    # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
     # g11e = np.genfromtxt('/home/cardoso/garbage/g11.csv', delimiter=',')
     # g12e = np.genfromtxt('/home/cardoso/garbage/g12.csv', delimiter=',')
     # g22e = np.genfromtxt('/home/cardoso/garbage/g22.csv', delimiter=',')
@@ -484,22 +485,22 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # x_etae = np.genfromtxt('/home/cardoso/garbage/x_eta.csv', delimiter=',')
     # y_xie = np.genfromtxt('/home/cardoso/garbage/y_xi.csv', delimiter=',')
     # y_etae = np.genfromtxt('/home/cardoso/garbage/y_eta.csv', delimiter=',')
-    # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
-    # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
 
     # importing from ESPAÑOLETA para LINUX work
-    g11e = np.genfromtxt('/home/vivoxie/garbage/g11.csv', delimiter=',')
-    g12e = np.genfromtxt('/home/vivoxie/garbage/g12.csv', delimiter=',')
-    g22e = np.genfromtxt('/home/vivoxie/garbage/g22.csv', delimiter=',')
-    Je = np.genfromtxt('/home/vivoxie/garbage/J.csv', delimiter=',')
-    x_xie = np.genfromtxt('/home/vivoxie/garbage/x_xi.csv', delimiter=',')
-    y_etae = np.genfromtxt('/home/vivoxie/garbage/x_eta.csv', delimiter=',')
-    y_xie = np.genfromtxt('/home/vivoxie/garbage/y_xi.csv', delimiter=',')
-    y_etae = np.genfromtxt('/home/vivoxie/garbage/y_eta.csv', delimiter=',')
-    Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
-    Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
+    # Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
+    # Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
+    # g11e = np.genfromtxt('/home/vivoxie/garbage/g11.csv', delimiter=',')
+    # g12e = np.genfromtxt('/home/vivoxie/garbage/g12.csv', delimiter=',')
+    # g22e = np.genfromtxt('/home/vivoxie/garbage/g22.csv', delimiter=',')
+    # Je = np.genfromtxt('/home/vivoxie/garbage/J.csv', delimiter=',')
+    # x_xie = np.genfromtxt('/home/vivoxie/garbage/x_xi.csv', delimiter=',')
+    # x_etae = np.genfromtxt('/home/vivoxie/garbage/x_eta.csv', delimiter=',')
+    # y_xie = np.genfromtxt('/home/vivoxie/garbage/y_xi.csv', delimiter=',')
+    # y_etae = np.genfromtxt('/home/vivoxie/garbage/y_eta.csv', delimiter=',')
 
     # importing from ESPAÑOLETA para MacOS
+    # Xe = np.genfromtxt('/Users/cardosom/garbage/X.csv', delimiter=',')
+    # Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
     # g11e = np.genfromtxt('/Users/cardosom/garbage/g11.csv', delimiter=',')
     # g12e = np.genfromtxt('/Users/cardosom/garbage/g12.csv', delimiter=',')
     # g22e = np.genfromtxt('/Users/cardosom/garbage/g22.csv', delimiter=',')
@@ -508,26 +509,15 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # x_etae = np.genfromtxt('/Users/cardosom/garbage/x_eta.csv', delimiter=',')
     # y_xie = np.genfromtxt('/Users/cardosom/garbage/y_xi.csv', delimiter=',')
     # y_etae = np.genfromtxt('/Users/cardosom/garbage/y_eta.csv', delimiter=',')
-    # Xe = np.genfromtxt('/Users/cardosom/garbage/X.csv', delimiter=',')
-    # Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
-    # g21 = g12
 
-    index = -3
-    percent = 10
-    var = Y
-    vare = Ye
-    var += 1e-45
-    vare += 1e-45
-    print('inside potential')
-    print('inside potential')
-    print(np.all(np.abs(var - vare) / var * 100 <= percent))
-    print(np.all(np.abs(vare - var) / vare * 100 <= percent))
-    print('inside POTENTIAL END')
-    exit()
-    '''
-    g12 el error es mayor a 1% pero menor a 2%
-    ERRORES CATASTRÓFICOS EN Y_XI Y Y_ETA
-    '''
+    g21 = g12
+
+    ###########################################################################
+    #
+    #   MALLA Y MATRICES DEL TENSOR COINCIDEN PERFECTAMENTE
+    #       ERRORES MENORES A 2 %
+    #
+    ###########################################################################
 
     x_xiV = np.zeros((M, N))
     x_etaV = np.zeros((M, N))
@@ -561,6 +551,23 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             y_xiV[i, j] = 0.5 * (y_xi[i, j] + y_xi[i, j+1])
             y_etaV[i, j] = 0.5 * (y_eta[i, j] + y_eta[i, j+1])
 
+    # importing from ESPAÑOLETA para LINUX work
+    # g11Ve = np.genfromtxt('/home/vivoxie/garbage/g11V.csv', delimiter=',')
+    # g12Ve = np.genfromtxt('/home/vivoxie/garbage/g12V.csv', delimiter=',')
+    # g22Ve = np.genfromtxt('/home/vivoxie/garbage/g22V.csv', delimiter=',')
+    # JVe = np.genfromtxt('/home/vivoxie/garbage/JV.csv', delimiter=',')
+    # x_xiVe = np.genfromtxt('/home/vivoxie/garbage/x_xiV.csv', delimiter=',')
+    # x_etaVe = np.genfromtxt('/home/vivoxie/garbage/x_etaV.csv', delimiter=',')
+    # y_xiVe = np.genfromtxt('/home/vivoxie/garbage/y_xiV.csv', delimiter=',')
+    # y_etaVe = np.genfromtxt('/home/vivoxie/garbage/y_etaV.csv', delimiter=',')
+
+    ###########################################################################
+    #
+    #   MATRICES VERTICAL COINCIDEN PERFECTAMENTE
+    #       ERRORES MENORES A 2 %
+    #
+    ###########################################################################
+
     # for i=1:M-1
     for i in range(M-1):
         # for j=1:N
@@ -573,6 +580,27 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             x_etaH[i, j] = 0.5 * (x_eta[i, j] + x_eta[i+1, j])
             y_xiH[i, j] = 0.5 * (y_xi[i, j] + y_xi[i+1, j])
             y_etaH[i, j] = 0.5 * (y_eta[i, j] + y_eta[i+1, j])
+
+    # importing from ESPAÑOLETA para LINUX work
+    g11He = np.genfromtxt('/home/vivoxie/garbage/g11H.csv', delimiter=',')
+    g12He = np.genfromtxt('/home/vivoxie/garbage/g12H.csv', delimiter=',')
+    g22He = np.genfromtxt('/home/vivoxie/garbage/g22H.csv', delimiter=',')
+    JHe = np.genfromtxt('/home/vivoxie/garbage/JH.csv', delimiter=',')
+    x_xiHe = np.genfromtxt('/home/vivoxie/garbage/x_xiH.csv', delimiter=',')
+    x_etaHe = np.genfromtxt('/home/vivoxie/garbage/x_etaH.csv', delimiter=',')
+    y_xiHe = np.genfromtxt('/home/vivoxie/garbage/y_xiH.csv', delimiter=',')
+    y_etaHe = np.genfromtxt('/home/vivoxie/garbage/y_etaH.csv', delimiter=',')
+
+    percent = 1
+    var = y_etaH
+    vare = y_etaHe
+    var += 1e-45
+    vare += 1e-45
+    print('comparing H matrices')
+    print(np.all(np.abs(var - vare) / var * 100 <= percent))
+    print(np.all(np.abs(vare - var) / vare * 100 <= percent))
+
+    exit()
 
     g21V = g12V
     g21H = g12H

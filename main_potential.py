@@ -63,17 +63,17 @@ mallaNACA.gen_TFI()
 mallaNACA.X = np.flip(mallaNACA.X)
 mallaNACA.Y = np.flip(mallaNACA.Y)
 
-Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
-Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
+# Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
+# Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
 
-percent = 0.5
-print('testing X')
-var = mallaNACA.Y
-vare = Ye
-var += 1e-5
-vare += 1e-5
-print(np.all(np.abs(var - vare) / var * 100 <= percent))
-print(np.all(np.abs(vare - var) / vare * 100 <= percent))
+# percent = 0.1
+# print('testing X')
+# var = mallaNACA.X
+# vare = Xe
+# var += 1e-5
+# vare += 1e-5
+# print(np.all(np.abs(var - vare) / var * 100 <= percent))
+# print(np.all(np.abs(vare - var) / vare * 100 <= percent))
 
 ###############################################################################
 #   LA MALLA COINCIDE PERFECTAMENTE
