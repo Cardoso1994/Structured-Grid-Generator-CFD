@@ -25,11 +25,11 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 63
+N = 10
 union = 6
 
 # points = 11
-airfoil_points = 121
+airfoil_points = 25
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -59,17 +59,17 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-perfil.to_csv(archivo_perfil)
+# perfil.to_csv(archivo_perfil)
 mallaNACA.gen_Poisson(metodo='SOR')
 # mallaNACA.gen_Laplace(metodo='SOR')
 # mallaNACA.gen_TFI()
-print('after laplace')
+print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 mallaNACA.to_su2('./garbage/mesh.su2')
 
-mallaNACA.to_txt_mesh()
+mallaNACA.to_txt_mesh('./garbage/25_10_002_01.txt_mesh')
 mallaNACA1 = helpers.from_txt_mesh()
 mallaNACA1.plot()
 exit()
