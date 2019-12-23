@@ -9,6 +9,7 @@ Funciones de soporte
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 import airfoil
 import mesh
@@ -87,18 +88,6 @@ def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
     mesh.Y = Y
 
     return mesh
-    # print('tipo = ', tipo)
-    # print('d_eta = ', d_eta)
-    # print('d_xi = ', d_xi)
-    # print('R = ', R)
-    # print('M = ', M)
-    # print('N = ', N)
-    # print('airfoil_alone = ', airfoil_alone)
-    # print('airfoil_join = ', airfoil_join)
-    # print('airfoil_boundary = ', airfoil_boundary)
-    # print('X = ', X)
-    # print('Y = ', Y)
-
 
 def get_size_airfoil(airfoil_boundary):
     '''
@@ -114,10 +103,6 @@ def get_size_airfoil(airfoil_boundary):
             size_airfoil += 1
 
     return (size_airfoil)
-
-
-
-
 
 def get_size_airfoil_n_flap(airfoil_boundary):
     '''
@@ -135,3 +120,57 @@ def get_size_airfoil_n_flap(airfoil_boundary):
             size_flap += 1
 
     return (size_airfoil, size_flap)
+
+def get_aspect_ratio(mesh):
+    '''
+    Calcula el aspect ratio de cada celda. Para cualquier tipo de malla
+    '''
+    X = np.zeros((mesh.M + 1, mesh.N + 1))
+    Y = np.zeros((mesh.M + 1, mesh.N + 1))
+
+    X[0, 0] = mesh.X[0, 0]
+    X[0, -1] = mesh.X[0, -1]
+    X[-1, 0] = mesh.X[-1, 0]
+    X[-1, -1] = mesh.X[-1, -1]
+
+    Y[0, 0] = mesh.Y[0, 0]
+    Y[0, -1] = mesh.Y[0, -1]
+    Y[-1, 0] = mesh.Y[-1, 0]
+    Y[-1, -1] = mesh.Y[-1, -1]
+
+    for j in range(1, mesh.N):
+        X[0, j] = (mesh.X[0, j] + mesh.X[0, j-1]) / 2
+        Y[0, j] = (mesh.Y[0, j] + mesh.Y[0, j-1]) / 2
+    X[-1, 1:-1] = X[0, 1:-1]
+    Y[-1, 1:-1] = Y[0, 1:-1]
+
+    for i in range(1, mesh.M):
+        X[i, 0] = (mesh.X[i, 0] + mesh.X[i-1, 0]) / 2
+        Y[i, 0] = (mesh.Y[i, 0] + mesh.Y[i-1, 0]) / 2
+        X[i, -1] = (mesh.X[i, -1] + mesh.X[i-1, -1]) / 2
+        Y[i, -1] = (mesh.Y[i, -1] + mesh.Y[i-1, -1]) / 2
+
+    for i in range(1, mesh.M):
+        for j in range(1, mesh.N):
+            base_1 = ((mesh.X[i, j-1] - mesh.X[i-1, j-1]) ** 2\
+                     + (mesh.Y[i, j-1] - mesh.Y[i-1, j-1]) ** 2) ** 0.5
+            base_2 = ((mesh.X[i, j] - mesh.X[i-1, j]) ** 2\
+                     + (mesh.Y[i, j] - mesh.Y[i-1, j]) ** 2) ** 0.5
+            height = ()
+
+
+    plt.figure('aspect')
+    plt.axis('equal')
+    plt.plot(mesh.X, mesh.Y, 'k')
+    plt.plot(mesh.X[:, 0], mesh.Y[:, 0], 'k')
+    for i in range(mesh.M):
+        plt.plot(mesh.X[i, :], mesh.Y[i, :], 'b')
+
+    plt.plot(X, Y, '*g')
+    plt.plot(X[:, 0], Y[:, 0], '*c')
+    for i in range(mesh.M):
+        plt.plot(X[i, :], Y[i, :], '*r')
+
+    plt.draw()
+    plt.show()
+
