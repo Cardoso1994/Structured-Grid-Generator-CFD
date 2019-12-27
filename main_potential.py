@@ -37,9 +37,9 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 1  # combadura
-p = 2  # posicion de la combadura
-t = 10  # espesor
+m = 0  # combadura
+p = 0  # posicion de la combadura
+t = 12  # espesor
 c = 1  # cuerda [m]
 # radio frontera externa
 R = 20 * c
@@ -93,11 +93,11 @@ print('N = ' + str(mallaNACA.N))
 
 
 # variables de flujo
-t_inf = 273.15
-p_inf = 101325
-v_inf = 75
+t_inf = 300
+p_inf = 101300
+v_inf = 10
 
-alfa = 1
+alfa = 0
 
 gamma = 1.4
 cp = 1006
@@ -112,4 +112,13 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
-potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
+(phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
+
+print('Re = ' + str(Re))
+X = mallaNACA.X
+Y = mallaNACA.Y
+plt.figure('potential')
+plt.plot(X[:, N-1], Y[:, N-1], 'k')
+plt.contour(X, Y, phi, 300)
+plt.draw()
+plt.show()

@@ -228,10 +228,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         #                        * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
         phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0]
                               * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
-        '''
-        it == 1
-        phi coincide perfectamente
-        '''
 
         # Nodos internos de la malla
         # velocidades U y V en mallas intercaladas V y H (vertical, horizontal)
@@ -685,7 +681,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     tol = 1.e-9
-    omega = 0.1
+    omega = 0.5
+    # it_max = 1250
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -761,9 +758,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     ###########################################################################
     #
-    #   PV COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
-    #   UV COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
-    #   VV COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
+    #   PV COINCIDE PERFECTAMENTE
+    #   UV COINCIDE PERFECTAMENTE
+    #   VV COINCIDE PERFECTAMENTE
     #       ERRORES MENORES A 2%
     #
     ###########################################################################
@@ -780,27 +777,15 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     ###########################################################################
     #
-    #   PH COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
-    #   UH COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
-    #   VH COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
+    #   PH COINCIDE PERFECTAMENTE
+    #   UH COINCIDE PERFECTAMENTE
+    #   VH COINCIDE PERFECTAMENTE
     #       ERRORES MENORES A 2%
     #
     ###########################################################################
 
         # importing from ESPAÑOLETA para LINUX home
         # VHe = np.genfromtxt('/home/cardoso/garbage/VH.csv', delimiter=',')
-
-        # comparing
-        # percent = 1
-        # var = VH
-        # vare = VHe
-        # var += 1e-8
-        # vare += 1e-8
-
-        # print('comparing VH')
-        # print(np.all(np.abs(vare - var) / vare * 100 <= percent))
-        # print(np.all(np.abs(vare - var) / var * 100 <= percent))
-        # exit()
 
         # Calculamos la densidad, ecuación (4.13)
         IMA = 0
@@ -824,6 +809,19 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                 dV[i, j] = d0 * np.abs(DDV[i, j]) ** (1 / (gamma - 1))
                 dH[i, j] = d0 * np.abs(DDH[i, j]) ** (1 / (gamma - 1))
 
+    ###########################################################################
+    #
+    #   DDV COINCIDE PERFECTAMENTE
+    #   DDH COINCIDE PERFECTAMENTE
+    #   dV COINCIDE PERFECTAMENTE
+    #   dH COINCIDE PERFECTAMENTE
+    #       ERRORES MENORES A 1%
+    #
+    ###########################################################################
+
+        # importing from ESPAÑOLETA para LINUX home
+        # dHe = np.genfromtxt('/home/cardoso/garbage/dH.csv', delimiter=',')
+
         # Introducimos las variables anteriores en la ecuación del potencial.
         # Fórmula (4.11)
         # for i=1:M-1
@@ -836,7 +834,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * JH[M-2, j] * (g12H[M-2, j] * PH[M-2, j] \
                             - g11H[M-2, j] * (phi[M-2, j] - C)) + dV[i, j-1] \
                             * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] \
-                            + g22V[i, j-1] * phi[i, j]) - dV[i, j] * JV[i, j] \
+                            # + g22V[i, j-1] * phi[i, j]) - dV[i, j] * JV[i, j] \
+                            + g22V[i, j-1] * phi[i, j+1]) - dV[i, j] * JV[i, j] \
                             * (g21V[i, j] * PV[i, j] - g22V[i, j] \
                             * phi[i, j-1])) / (dH[i, j] * JH[i, j] \
                             * g11H[i, j] + dH[M-2, j] * JH[M-2, j] \
@@ -854,8 +853,15 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * g11H[i, j] + dH[i-1, j] * JH[i-1, j] \
                             * g11H[i-1, j] + dV[i, j] * JV[i, j] * g22V[i, j] \
                             + dV[i, j-1] * JV[i, j-1] * g22V[i,  j-1])
-                # Aplicamos el método SMR de sobrerelajación, ecuación (4.29).
+
+                # Aplicamos el método SOR de sobrerelajación, ecuación (4.29).
                 phi[i, j] = omega * phi[i, j] + (1 - omega) * phi_old[i, j]
+
+    ###########################################################################
+    #
+    #   phi coincide hasta este punto
+    #
+    ###########################################################################
 
         g21 = g12
 
@@ -869,6 +875,12 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         phi[0, N-1] = (1 / 3) * (4 * phi[1, N-2] - phi[1, N-3] - g21[0, N-1] \
                 * (phi[1, N-1] - phi[M-2, N-1] + C) / g22[0, N-1])
 
+    ###########################################################################
+    #
+    #   phi coincide hasta este punto
+    #
+    ###########################################################################
+
         # ------------CMMDICIÓM EM LA DISCMMTIMUIDAD DEL PMTEMCIAL------------#
         # Aplicamos la condición de Kutta, ecuación (4.16)
         # for j=1:N
@@ -876,13 +888,30 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             phi[M-1, j] = phi[0, j] + C
 
         ddd = np.max(np.abs(phi - phi_old))
+
         # ----------------------CÁLCULM DE LA CIRCULACIÓM---------------------#
         # Utilizamos la ecuación (4.18) que impone velocidad nula en el borde
         # de salida
         C = phi[M-2, N-1] - phi[1, N-1] - g12[0, N-1] \
                 * (phi[0, N-3] - 4 * phi[0, N-2] + 3 * phi[0, N-1]) \
                 / g11[0, N-1]
-        print('it = ' + str(it))
+
+        # importing from ESPAÑOLETA para LINUX home
+        # phie = np.genfromtxt('/home/cardoso/garbage/phi.csv', delimiter=',')
+
+        # comparing
+        # percent = 1
+        # var = phi
+        # vare = phie
+        # var += 1e-8
+        # vare += 1e-8
+
+        # print('C = ' + str(C))
+        # print('comparing phi')
+        # print(np.all(np.abs(vare - var) / vare * 100 <= percent))
+        # print(np.all(np.abs(vare - var) / var * 100 <= percent))
+        # exit()
+
         print('it = ' + str(it))
         print('C = ' + str(C))
         print('ddd = ' + str(ddd))
@@ -890,3 +919,4 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     print('C = ' + str(C))
     print('ddd = ' + str(ddd))
     print('IMA = ' + str(IMA))
+    return (phi, C, theta, IMA)

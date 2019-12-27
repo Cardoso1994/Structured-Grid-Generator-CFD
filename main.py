@@ -98,4 +98,8 @@ mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
 print(mach_inf)
 print(Re)
-potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
+(phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
+
+plt.figure('potential')
+plt.plot(X[:, N-1], Y[:, N-1], 'k')
+plt.contour(X, Y, phi)
