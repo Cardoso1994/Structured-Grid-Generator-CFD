@@ -10,6 +10,7 @@ Funciones de soporte
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 import airfoil
 import mesh
@@ -127,50 +128,124 @@ def get_aspect_ratio(mesh):
     '''
     X = np.zeros((mesh.M + 1, mesh.N + 1))
     Y = np.zeros((mesh.M + 1, mesh.N + 1))
+    # aspect_ratio = np.zeros((mesh.M + 1, mesh.N + 1))
+    aspect_ratio_ = np.zeros((mesh.M - 1, mesh.N - 1))
 
-    X[0, 0] = mesh.X[0, 0]
-    X[0, -1] = mesh.X[0, -1]
-    X[-1, 0] = mesh.X[-1, 0]
-    X[-1, -1] = mesh.X[-1, -1]
+    # se hacen coincidir las esquinas de las mallas
+    # X[0, 0] = mesh.X[0, 0]
+    # X[0, -1] = mesh.X[0, -1]
+    # X[-1, 0] = mesh.X[-1, 0]
+    # X[-1, -1] = mesh.X[-1, -1]
 
-    Y[0, 0] = mesh.Y[0, 0]
-    Y[0, -1] = mesh.Y[0, -1]
-    Y[-1, 0] = mesh.Y[-1, 0]
-    Y[-1, -1] = mesh.Y[-1, -1]
+    # Y[0, 0] = mesh.Y[0, 0]
+    # Y[0, -1] = mesh.Y[0, -1]
+    # Y[-1, 0] = mesh.Y[-1, 0]
+    # Y[-1, -1] = mesh.Y[-1, -1]
 
-    for j in range(1, mesh.N):
-        X[0, j] = (mesh.X[0, j] + mesh.X[0, j-1]) / 2
-        Y[0, j] = (mesh.Y[0, j] + mesh.Y[0, j-1]) / 2
-    X[-1, 1:-1] = X[0, 1:-1]
-    Y[-1, 1:-1] = Y[0, 1:-1]
+    # se calculan nodos intermedios en todas las j de la sección del corte
+    # for j in range(1, mesh.N):
+    #     X[0, j] = (mesh.X[0, j] + mesh.X[0, j-1]) / 2
+    #     Y[0, j] = (mesh.Y[0, j] + mesh.Y[0, j-1]) / 2
+    # X[-1, 1:-1] = X[0, 1:-1]
+    # Y[-1, 1:-1] = Y[0, 1:-1]
 
-    for i in range(1, mesh.M):
-        X[i, 0] = (mesh.X[i, 0] + mesh.X[i-1, 0]) / 2
-        Y[i, 0] = (mesh.Y[i, 0] + mesh.Y[i-1, 0]) / 2
-        X[i, -1] = (mesh.X[i, -1] + mesh.X[i-1, -1]) / 2
-        Y[i, -1] = (mesh.Y[i, -1] + mesh.Y[i-1, -1]) / 2
+    # se calculan nodos intermedios en i = 0 e i = -1
+    # for i in range(1, mesh.M):
+    #     X[i, 0] = (mesh.X[i, 0] + mesh.X[i-1, 0]) / 2
+    #     Y[i, 0] = (mesh.Y[i, 0] + mesh.Y[i-1, 0]) / 2
+    #     X[i, -1] = (mesh.X[i, -1] + mesh.X[i-1, -1]) / 2
+    #     Y[i, -1] = (mesh.Y[i, -1] + mesh.Y[i-1, -1]) / 2
 
-    for i in range(1, mesh.M):
-        for j in range(1, mesh.N):
-            base_1 = ((mesh.X[i, j-1] - mesh.X[i-1, j-1]) ** 2\
-                     + (mesh.Y[i, j-1] - mesh.Y[i-1, j-1]) ** 2) ** 0.5
-            base_2 = ((mesh.X[i, j] - mesh.X[i-1, j]) ** 2\
-                     + (mesh.Y[i, j] - mesh.Y[i-1, j]) ** 2) ** 0.5
-            height = ()
+    # for i in range(1, mesh.M):
+    #     for j in range(1, mesh.N):
+    #         centroid1 = ((mesh.X[i-1, j-1] + mesh.X[i, j]) / 2,
+    #                      (mesh.Y[i-1, j-1] + mesh.Y[i, j]) / 2)
+    #         centroid2 = ((mesh.X[i, j-1] + mesh.X[i-1, j]) / 2,
+    #                      (mesh.Y[i, j-1] + mesh.Y[i-1, j]) / 2)
+    #         X[i, j] = (centroid1[0] + centroid2[0]) / 2
+    #         Y[i, j] = (centroid1[1] + centroid2[1]) / 2
+    #         dist = (((mesh.X[i-1, j-1] - mesh.X[i, j-1]) ** 2
+    #                         + (mesh.Y[i-1, j-1] - mesh.Y[i, j-1]) ** 2) ** 0.5,
+    #                 ((mesh.X[i, j-1] - mesh.X[i, j]) ** 2
+    #                         + (mesh.Y[i, j-1] - mesh.Y[i, j]) ** 2) ** 0.5,
+    #                 ((mesh.X[i-1, j] - mesh.X[i, j]) ** 2
+    #                         + (mesh.Y[i-1, j] - mesh.Y[i, j]) ** 2) ** 0.5,
+    #                 ((mesh.X[i-1, j] - mesh.X[i-1, j-1]) ** 2
+    #                         + (mesh.Y[i-1, j] - mesh.Y[i-1, j-1]) ** 2) ** 0.5)
+    #         max_dist = max(dist)
+    #         dist_sum = dist[0] + dist[1] + dist[2] + dist[3]
+    #         l0_l1 = np.abs((mesh.X[i-1, j-1] - mesh.X[i, j-1])
+    #                             *  (mesh.Y[i, j-1] - mesh.Y[i, j])
+    #                         - (mesh.Y[i-1, j-1] - mesh.Y[i, j-1])
+    #                              *  (mesh.X[i, j-1] - mesh.X[i, j]))
+    #         l2_l3 = np.abs((mesh.X[i, j] - mesh.X[i-1, j])
+    #                             * (mesh.Y[i-1, j] - mesh.Y[i-1, j-1])
+    #                         - (mesh.Y[i, j] - mesh.Y[i-1, j])
+    #                             * (mesh.X[i-1, j] - mesh.X[i-1, j-1]))
+    #         area = 0.5 * l0_l1 + 0.5 * l2_l3
+    #         aspect_ratio[i, j] = max_dist * dist_sum / 4 / area
+    # aspect_ratio[:, 0] = aspect_ratio[:, 1]
+    # aspect_ratio[:, -1] = aspect_ratio[:, -2]
+    # aspect_ratio[0, :] = aspect_ratio[1, :]
+    # aspect_ratio[-1, :] = aspect_ratio[-2, :]
 
+    for i in range(0, mesh.M - 1):
+        for j in range(0, mesh.N -1):
+            dist = (((mesh.X[i, j] - mesh.X[i+1, j]) ** 2
+                            + (mesh.Y[i, j] - mesh.Y[i+1, j]) ** 2) ** 0.5,
+                    ((mesh.X[i+1, j] - mesh.X[i+1, j+1]) ** 2
+                            + (mesh.Y[i+1, j] - mesh.Y[i+1, j+1]) ** 2) ** 0.5,
+                    ((mesh.X[i+1, j+1] - mesh.X[i, j+1]) ** 2
+                            + (mesh.Y[i+1, j+1] - mesh.Y[i, j+1]) ** 2) ** 0.5,
+                    ((mesh.X[i, j+1] - mesh.X[i, j]) ** 2
+                            + (mesh.Y[i, j+1] - mesh.Y[i, j]) ** 2) ** 0.5)
+            max_dist = max(dist)
+            dist_sum = dist[0] + dist[1] + dist[2] + dist[3]
+            l0_l1 = np.abs((mesh.X[i, j] - mesh.X[i+1, j])
+                                *  (mesh.Y[i+1, j] - mesh.Y[i+1, j+1])
+                            - (mesh.Y[i, j] - mesh.Y[i+1, j])
+                                 *  (mesh.X[i+1, j] - mesh.X[i+1, j+1]))
+            l2_l3 = np.abs((mesh.X[i+1, j+1] - mesh.X[i, j+1])
+                                * (mesh.Y[i, j+1] - mesh.Y[i, j])
+                            - (mesh.Y[i+1, j+1] - mesh.Y[i, j+1])
+                                * (mesh.X[i, j+1] - mesh.X[i, j]))
+            area = 0.5 * l0_l1 + 0.5 * l2_l3
+            aspect_ratio_[i, j] = max_dist * dist_sum / 4 / area
 
+    aspect_min = np.nanmin(aspect_ratio_)
+    aspect_max = np.nanmax(aspect_ratio_)
+    # cmap_ = cm.get_cmap('jet')
+
+    print('aspect_max')
+    print(aspect_max)
+    print('aspect_min')
+    print(aspect_min)
     plt.figure('aspect')
     plt.axis('equal')
     plt.plot(mesh.X, mesh.Y, 'k')
     plt.plot(mesh.X[:, 0], mesh.Y[:, 0], 'k')
     for i in range(mesh.M):
-        plt.plot(mesh.X[i, :], mesh.Y[i, :], 'b')
+        plt.plot(mesh.X[i, :], mesh.Y[i, :], 'k')
+    mesh_ = plt.pcolormesh(mesh.X, mesh.Y, aspect_ratio_, cmap='jet', rasterized=True,
+                   vmin=(aspect_min),
+                   vmax=(aspect_max))
+    plt.colorbar(mesh_)
 
-    plt.plot(X, Y, '*g')
-    plt.plot(X[:, 0], Y[:, 0], '*c')
-    for i in range(mesh.M):
-        plt.plot(X[i, :], Y[i, :], '*r')
+    # for i in range(1, mesh.M):
+    #     k = 0
+    #     colors = ['r', 'g', 'b', 'k', 'c']
+    #     for j in range(1, mesh.N):
+    #         x_ = [mesh.X[i-1, j-1], mesh.X[i, j-1], mesh.X[i, j], mesh.X[i-1, j]]
+    #         y_ = [mesh.Y[i-1, j-1], mesh.Y[i, j-1], mesh.Y[i, j], mesh.Y[i-1, j]]
+    #         plt.fill(x_, y_, color=cmap_((aspect_ratio[i, j] - aspect_min) / aspect_max))
 
+    # plt.figure('color mesh')
+    # plt.axis('equal')
+    # plt.plot(mesh.X, mesh.Y, 'k')
+    # plt.plot(mesh.X[:, 0], mesh.Y[:, 0], 'k')
+    # for i in range(mesh.M):
+    #     plt.plot(mesh.X[i, :], mesh.Y[i, :], 'k')
+    # plt.pcolormesh(X, Y, aspect_ratio[1:, 1:])
     plt.draw()
     plt.show()
 
