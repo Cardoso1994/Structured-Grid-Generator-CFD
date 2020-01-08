@@ -459,6 +459,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             V: malla vertical (intercalada en [i, j +- 1/2])
     '''
 
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+
     # se definen variables de la malla
     X = np.copy(mesh.X)
     Y = np.copy(mesh.Y)
@@ -469,51 +472,10 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
         mesh.tensor()
-
-    # importing from ESPAÑOLETA para LINUX
-    # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
-    # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
-    # g11e = np.genfromtxt('/home/cardoso/garbage/g11.csv', delimiter=',')
-    # g12e = np.genfromtxt('/home/cardoso/garbage/g12.csv', delimiter=',')
-    # g22e = np.genfromtxt('/home/cardoso/garbage/g22.csv', delimiter=',')
-    # Je = np.genfromtxt('/home/cardoso/garbage/J.csv', delimiter=',')
-    # x_xie = np.genfromtxt('/home/cardoso/garbage/x_xi.csv', delimiter=',')
-    # x_etae = np.genfromtxt('/home/cardoso/garbage/x_eta.csv', delimiter=',')
-    # y_xie = np.genfromtxt('/home/cardoso/garbage/y_xi.csv', delimiter=',')
-    # y_etae = np.genfromtxt('/home/cardoso/garbage/y_eta.csv', delimiter=',')
-
-    # importing from ESPAÑOLETA para LINUX work
-    # Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
-    # Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
-    # g11e = np.genfromtxt('/home/vivoxie/garbage/g11.csv', delimiter=',')
-    # g12e = np.genfromtxt('/home/vivoxie/garbage/g12.csv', delimiter=',')
-    # g22e = np.genfromtxt('/home/vivoxie/garbage/g22.csv', delimiter=',')
-    # Je = np.genfromtxt('/home/vivoxie/garbage/J.csv', delimiter=',')
-    # x_xie = np.genfromtxt('/home/vivoxie/garbage/x_xi.csv', delimiter=',')
-    # x_etae = np.genfromtxt('/home/vivoxie/garbage/x_eta.csv', delimiter=',')
-    # y_xie = np.genfromtxt('/home/vivoxie/garbage/y_xi.csv', delimiter=',')
-    # y_etae = np.genfromtxt('/home/vivoxie/garbage/y_eta.csv', delimiter=',')
-
-    # importing from ESPAÑOLETA para MacOS
-    # Xe = np.genfromtxt('/Users/cardosom/garbage/X.csv', delimiter=',')
-    # Ye = np.genfromtxt('/Users/cardosom/garbage/Y.csv', delimiter=',')
-    # g11e = np.genfromtxt('/Users/cardosom/garbage/g11.csv', delimiter=',')
-    # g12e = np.genfromtxt('/Users/cardosom/garbage/g12.csv', delimiter=',')
-    # g22e = np.genfromtxt('/Users/cardosom/garbage/g22.csv', delimiter=',')
-    # Je = np.genfromtxt('/Users/cardosom/garbage/J.csv', delimiter=',')
-    # x_xie = np.genfromtxt('/Users/cardosom/garbage/x_xi.csv', delimiter=',')
-    # x_etae = np.genfromtxt('/Users/cardosom/garbage/x_eta.csv', delimiter=',')
-    # y_xie = np.genfromtxt('/Users/cardosom/garbage/y_xi.csv', delimiter=',')
-    # y_etae = np.genfromtxt('/Users/cardosom/garbage/y_eta.csv', delimiter=',')
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
 
     g21 = g12
-
-    ###########################################################################
-    #
-    #   MALLA Y MATRICES DEL TENSOR COINCIDEN PERFECTAMENTE
-    #       ERRORES MENORES A 2 %
-    #
-    ###########################################################################
 
     x_xiV = np.zeros((M, N))
     x_etaV = np.zeros((M, N))
@@ -534,9 +496,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     g22H = np.zeros((M-1, N))
     JH = np.zeros((M-1, N))
 
-    # for i=1:M-1
     for i in range(M-1):
-        # for j=1:N-1
         for j in range(N-1):
             g11V[i, j] = 0.5 * (g11[i, j] + g11[i, j+1])
             g12V[i, j] = 0.5 * (g12[i, j] + g12[i, j+1])
@@ -547,26 +507,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             y_xiV[i, j] = 0.5 * (y_xi[i, j] + y_xi[i, j+1])
             y_etaV[i, j] = 0.5 * (y_eta[i, j] + y_eta[i, j+1])
 
-    # importing from ESPAÑOLETA para LINUX work
-    # g11Ve = np.genfromtxt('/home/vivoxie/garbage/g11V.csv', delimiter=',')
-    # g12Ve = np.genfromtxt('/home/vivoxie/garbage/g12V.csv', delimiter=',')
-    # g22Ve = np.genfromtxt('/home/vivoxie/garbage/g22V.csv', delimiter=',')
-    # JVe = np.genfromtxt('/home/vivoxie/garbage/JV.csv', delimiter=',')
-    # x_xiVe = np.genfromtxt('/home/vivoxie/garbage/x_xiV.csv', delimiter=',')
-    # x_etaVe = np.genfromtxt('/home/vivoxie/garbage/x_etaV.csv', delimiter=',')
-    # y_xiVe = np.genfromtxt('/home/vivoxie/garbage/y_xiV.csv', delimiter=',')
-    # y_etaVe = np.genfromtxt('/home/vivoxie/garbage/y_etaV.csv', delimiter=',')
-
-    ###########################################################################
-    #
-    #   MATRICES VERTICAL COINCIDEN PERFECTAMENTE
-    #       ERRORES MENORES A 2 %
-    #
-    ###########################################################################
-
-    # for i=1:M-1
     for i in range(M-1):
-        # for j=1:N
         for j in range(N):
             g11H[i, j] = 0.5 * (g11[i, j] + g11[i+1, j])
             g12H[i, j] = 0.5 * (g12[i, j] + g12[i+1, j])
@@ -577,56 +518,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             y_xiH[i, j] = 0.5 * (y_xi[i, j] + y_xi[i+1, j])
             y_etaH[i, j] = 0.5 * (y_eta[i, j] + y_eta[i+1, j])
 
-    # importing from ESPAÑOLETA para LINUX work
-    # g11He = np.genfromtxt('/home/vivoxie/garbage/g11H.csv', delimiter=',')
-    # g12He = np.genfromtxt('/home/vivoxie/garbage/g12H.csv', delimiter=',')
-    # g22He = np.genfromtxt('/home/vivoxie/garbage/g22H.csv', delimiter=',')
-    # JHe = np.genfromtxt('/home/vivoxie/garbage/JH.csv', delimiter=',')
-    # x_xiHe = np.genfromtxt('/home/vivoxie/garbage/x_xiH.csv', delimiter=',')
-    # x_etaHe = np.genfromtxt('/home/vivoxie/garbage/x_etaH.csv', delimiter=',')
-    # y_xiHe = np.genfromtxt('/home/vivoxie/garbage/y_xiH.csv', delimiter=',')
-    # y_etaHe = np.genfromtxt('/home/vivoxie/garbage/y_etaH.csv', delimiter=',')
-
-    # importing from ESPAÑOLETA para LINUX home
-    # g11He = np.genfromtxt('/home/cardoso/garbage/g11H.csv', delimiter=',')
-    # g12He = np.genfromtxt('/home/cardoso/garbage/g12H.csv', delimiter=',')
-    # g22He = np.genfromtxt('/home/cardoso/garbage/g22H.csv', delimiter=',')
-    # JHe = np.genfromtxt('/home/cardoso/garbage/JH.csv', delimiter=',')
-    # x_xiHe = np.genfromtxt('/home/cardoso/garbage/x_xiH.csv', delimiter=',')
-    # x_etaHe = np.genfromtxt('/home/cardoso/garbage/x_etaH.csv', delimiter=',')
-    # y_xiHe = np.genfromtxt('/home/cardoso/garbage/y_xiH.csv', delimiter=',')
-    # y_etaHe = np.genfromtxt('/home/cardoso/garbage/y_etaH.csv', delimiter=',')
-
-    ###########################################################################
-    #
-    #   MATRICES VERTICAL COINCIDEN PERFECTAMENTE
-    #       ERRORES MENORES A 2 %
-    #
-    ###########################################################################
-
     g21V = g12V
     g21H = g12H
-    # Calculamos el ángulo theta de cada nodo. Como el arco tangente
-    # nos devuelve el valor del ángulo en los cuadrantes I y IV lo
-    # recalculamos según el siguiente código.
-    # theta = np.arctan(Y / X)
-
-    # alfa = alfa * np.pi / 180
-    # # for i=1:M
-    # for i in range(M):
-    #     # for j=1:N
-    #     for j in range(N):
-    #         if X[i, j] <= 0 and Y[i, j] >= 0:
-    #             theta[i, j] = np.pi - np.abs(theta[i, j])
-    #         elif X[i, j] <= 0 and Y[i, j] < 0:
-    #             theta[i, j] = np.abs(theta[i, j]) + np.pi
-    #         elif X[i, j] > 0 and Y[i, j] < 0:
-    #             theta[i, j] = 2 * np.pi - np.abs(theta[i, j])
-
-
-
-    # theta[M-1, :] = 2 * np.pi
-    # theta[0, :] = 0
 
     # se calcula el ángulo theta de cada nodo, resultado en ángulos absolutos
     # desde 0 hasta 2 * pi
@@ -636,28 +529,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     theta[-1, :] = 2 * np.pi
     theta[0, :] = 0
     alfa = alfa * np.pi / 180
-
-    ###########################################################################
-    #
-    #   MATRICES VERTICAL COINCIDEN PERFECTAMENTE
-    #       ERRORES MENORES A 2 %
-    #
-    ###########################################################################
-
-    # importing from ESPAÑOLETA para LINUX home
-    # thetae = np.genfromtxt('/home/cardoso/garbage/theta.csv', delimiter=',')
-
-    # mask = np.isnan(thetae)
-    # thetae[mask] = 0
-    # percent = 2
-    # var = theta
-    # vare = thetae
-    # var += 1e-5
-    # vare += 1e-5
-    # print('comparing __theta__ matrices')
-    # print(np.all(np.abs(var - vare) / var * 100 <= percent))
-    # print(np.all(np.abs(vare - var) / vare * 100 <= percent))
-
 
     #----------------------------VALOR INICIAL----------------------------#
     C = 0.5
@@ -681,8 +552,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     tol = 1.e-9
-    omega = 0.5
-    # it_max = 1250
+    omega = 0.1
+    it_max = 4000
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -699,35 +570,19 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         elif arcotan[i] < 0 and arcosen[i] < 0:
             if (theta[i, 0] - alfa) > 0:
                 arcotan[i] = 2 * np.pi + arcotan[i]
-    ###########################################################################
-    #
-    #   ARCOTAN COINCIDE PERFECTAMENTE.
-    #   ADEMÁS PUEDE SACARSE DEL WHILE LOOP
-    #
-    ###########################################################################
 
     while ddd > tol and it < it_max:
         it = it + 1
         print(it, end='\r')
         phi_old = np.copy(phi)
 
-        # importing from ESPAÑOLETA para LINUX
-        # phi0e = np.genfromtxt('/home/cardoso/garbage/phi_old.csv', delimiter=',')
-
         phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0] \
                         * np.sin(alfa)) + C * arcotan[:] / (2 * np.pi)
-    ###########################################################################
-    #
-    #   phi[:, 0] COINCIDE PERFECTAMENTE PARA TODAS LAS ITERACIONES
-    #
-    ###########################################################################
 
         # --------------------NODOS INTERNOS DE LA NALLA----------------------#
         # Desarrollamos los parámetros en los nodos intercalados desarrollando
         # las fórmulas (4.9) y (4.10).
-        # for i=1:M-1
         for i in range(M-1):
-            # for j=1:N-1
             for j in range(N-1):
                 if i == 0 and j == N-2:
                     PV[i, j] = 0.25 * (phi[i+1, j] - phi[M-2, j] \
@@ -753,20 +608,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                     VV[i, j] = g21V[i, j] * PV[i, j] + g22V[i, j] \
                             * (phi[i, j+2] - phi[i, j+1])
 
-        # importing from ESPAÑOLETA para LINUX home
-        # VVe = np.genfromtxt('/home/cardoso/garbage/VV.csv', delimiter=',')
-
-    ###########################################################################
-    #
-    #   PV COINCIDE PERFECTAMENTE
-    #   UV COINCIDE PERFECTAMENTE
-    #   VV COINCIDE PERFECTAMENTE
-    #       ERRORES MENORES A 2%
-    #
-    ###########################################################################
-        # for i=1:M-1
         for i in range(M-1):
-            # for j=2:N-1
             for j in range(1, N-1):
                 PH[i, j] = 0.25 * (phi[i+1, j+1] - phi[i+1, j-1] \
                         + phi[i, j+1] - phi[i, j-1])
@@ -775,23 +617,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                 VH[i, j] = g21H[i, j] * (phi[i+1, j] - phi[i, j]) \
                         + g22H[i, j] * PH[i, j]
 
-    ###########################################################################
-    #
-    #   PH COINCIDE PERFECTAMENTE
-    #   UH COINCIDE PERFECTAMENTE
-    #   VH COINCIDE PERFECTAMENTE
-    #       ERRORES MENORES A 2%
-    #
-    ###########################################################################
-
-        # importing from ESPAÑOLETA para LINUX home
-        # VHe = np.genfromtxt('/home/cardoso/garbage/VH.csv', delimiter=',')
-
         # Calculamos la densidad, ecuación (4.13)
         IMA = 0
-        # for i=1:M
         for i in range(M):
-            # for j=1:N
             for j in range(N):
                 DDV[i, j] = 1 - ((x_xiV[i, j] ** 2 + y_xiV[i, j] ** 2) \
                         * UV[i, j] ** 2 + (x_etaV[i, j] ** 2 \
@@ -809,24 +637,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                 dV[i, j] = d0 * np.abs(DDV[i, j]) ** (1 / (gamma - 1))
                 dH[i, j] = d0 * np.abs(DDH[i, j]) ** (1 / (gamma - 1))
 
-    ###########################################################################
-    #
-    #   DDV COINCIDE PERFECTAMENTE
-    #   DDH COINCIDE PERFECTAMENTE
-    #   dV COINCIDE PERFECTAMENTE
-    #   dH COINCIDE PERFECTAMENTE
-    #       ERRORES MENORES A 1%
-    #
-    ###########################################################################
-
-        # importing from ESPAÑOLETA para LINUX home
-        # dHe = np.genfromtxt('/home/cardoso/garbage/dH.csv', delimiter=',')
-
         # Introducimos las variables anteriores en la ecuación del potencial.
         # Fórmula (4.11)
-        # for i=1:M-1
         for i in range(M-1):
-            # for j=2:N-1
             for j in range(1, N-1):
                 if i == 0:
                     phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] \
@@ -854,20 +667,13 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * g11H[i-1, j] + dV[i, j] * JV[i, j] * g22V[i, j] \
                             + dV[i, j-1] * JV[i, j-1] * g22V[i,  j-1])
 
-                # Aplicamos el método SOR de sobrerelajación, ecuación (4.29).
+                # Aplicamos el método SMR de sobrerelajación, ecuación (4.29).
                 phi[i, j] = omega * phi[i, j] + (1 - omega) * phi_old[i, j]
-
-    ###########################################################################
-    #
-    #   phi coincide hasta este punto
-    #
-    ###########################################################################
 
         g21 = g12
 
         # --------------------CONDICIÓN EN LA SUPEFICIE-----------------------#
         # Aplicamos la fórmula (4.15)
-        # for i=M-1:-1:2
         for i in range(M-2, 0, -1):
             phi[i, N-1] = (1 / 3) * (4 * phi[i, N-2] - phi[i, N-3] \
                     - g21[i, j] * (phi[i+1, N-1] - phi[i-1, N-1]) / g22[i, j])
@@ -875,48 +681,26 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         phi[0, N-1] = (1 / 3) * (4 * phi[1, N-2] - phi[1, N-3] - g21[0, N-1] \
                 * (phi[1, N-1] - phi[M-2, N-1] + C) / g22[0, N-1])
 
-    ###########################################################################
-    #
-    #   phi coincide hasta este punto
-    #
-    ###########################################################################
-
-        # ------------CMMDICIÓM EM LA DISCMMTIMUIDAD DEL PMTEMCIAL------------#
+        # ------------CONDICIÓN EM LA DISCONTINUIDAD DEL POTENCIAL------------#
         # Aplicamos la condición de Kutta, ecuación (4.16)
-        # for j=1:N
         for j in range(N):
             phi[M-1, j] = phi[0, j] + C
 
         ddd = np.max(np.abs(phi - phi_old))
-
-        # ----------------------CÁLCULM DE LA CIRCULACIÓM---------------------#
+        # ----------------------CÁLCULO DE LA CIRCULACIÓN---------------------#
         # Utilizamos la ecuación (4.18) que impone velocidad nula en el borde
         # de salida
         C = phi[M-2, N-1] - phi[1, N-1] - g12[0, N-1] \
                 * (phi[0, N-3] - 4 * phi[0, N-2] + 3 * phi[0, N-1]) \
                 / g11[0, N-1]
 
-        # importing from ESPAÑOLETA para LINUX home
-        # phie = np.genfromtxt('/home/cardoso/garbage/phi.csv', delimiter=',')
-
-        # comparing
-        # percent = 1
-        # var = phi
-        # vare = phie
-        # var += 1e-8
-        # vare += 1e-8
-
-        # print('C = ' + str(C))
-        # print('comparing phi')
-        # print(np.all(np.abs(vare - var) / vare * 100 <= percent))
-        # print(np.all(np.abs(vare - var) / var * 100 <= percent))
-        # exit()
-
-        print('it = ' + str(it))
         print('C = ' + str(C))
         print('ddd = ' + str(ddd))
     print('outside while. it = ' + str(it))
     print('C = ' + str(C))
     print('ddd = ' + str(ddd))
     print('IMA = ' + str(IMA))
+
+    phi = np.flip(phi)
+    theta = np.flip(theta)
     return (phi, C, theta, IMA)

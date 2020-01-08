@@ -14,7 +14,7 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from analysis import potential_flow_o, potential_flow_o_esp
+from potential import potential_flow_o, potential_flow_o_esp
 import helpers
 
 # tipo de malla (C, O)
@@ -59,38 +59,13 @@ elif malla == 'C':
 mallaNACA.X[:, 0] += 0.25
 mallaNACA.Y[0, :] = 0
 mallaNACA.Y[-1, :] = 0
-mallaNACA.gen_TFI()
-mallaNACA.X = np.flip(mallaNACA.X)
-mallaNACA.Y = np.flip(mallaNACA.Y)
-
-# Xe = np.genfromtxt('/home/vivoxie/garbage/X.csv', delimiter=',')
-# Ye = np.genfromtxt('/home/vivoxie/garbage/Y.csv', delimiter=',')
-
-# percent = 0.1
-# print('testing X')
-# var = mallaNACA.X
-# vare = Xe
-# var += 1e-5
-# vare += 1e-5
-# print(np.all(np.abs(var - vare) / var * 100 <= percent))
-# print(np.all(np.abs(vare - var) / vare * 100 <= percent))
-
-###############################################################################
-#   LA MALLA COINCIDE PERFECTAMENTE
-#    ERRORES MENORES A 0.5%
-###############################################################################
+mallaNACA.gen_Laplace()
+# mallaNACA.X = np.flip(mallaNACA.X)
+# mallaNACA.Y = np.flip(mallaNACA.Y)
 
 print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
-
-# mallaNACA.to_su2()'./garbage/mesh.su2')
-
-# mallaNACA.to_txt_mesh()
-# mallaNACA1 = helpers.from_txt_mesh()
-# mallaNACA1.plot()
-
-
 
 # variables de flujo
 t_inf = 300
@@ -114,11 +89,11 @@ mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
 (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
 
-print('Re = ' + str(Re))
-X = mallaNACA.X
-Y = mallaNACA.Y
 plt.figure('potential')
-plt.plot(X[:, N-1], Y[:, N-1], 'k')
-plt.contour(X, Y, phi, 300)
+plt.contour(mallaNACA.X, mallaNACA.Y, phi, 50)
+plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
+plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
+plt.axis('equal')
+
 plt.draw()
 plt.show()
