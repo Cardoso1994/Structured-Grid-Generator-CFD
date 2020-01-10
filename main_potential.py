@@ -14,7 +14,7 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, potential_flow_o_esp
+from potential import potential_flow_o, potential_flow_o_esp, velocity
 import helpers
 
 # tipo de malla (C, O)
@@ -95,5 +95,12 @@ plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
 plt.axis('equal')
 
+(u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
+
+plt.figure('velocity')
+plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=100000, scale_units='xy')
+plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
+plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
+plt.axis('equal')
 plt.draw()
 plt.show()
