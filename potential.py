@@ -553,7 +553,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     it_max = 20000
     tol = 1.e-9
     omega = 0.1
-    it_max = 4000
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -704,3 +703,66 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     phi = np.flip(phi)
     theta = np.flip(theta)
     return (phi, C, theta, IMA)
+
+def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
+    '''
+    computes the velocities u and v
+    '''
+
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+    M = mesh.M
+    N = mesh.N
+
+    u = np.zeros((M, N))
+    v = np.zeros((M, N))
+
+    # se obtiene el tensor de la malla
+    (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
+        mesh.tensor()
+    X = np.copy(mesh.X)
+    Y = np.copy(mesh.Y)
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+
+    # condición de frontera exterior
+    alfa = alfa * np.pi / 180
+
+    for i in range(N):
+        j = 0
+        u[i, j] = v_inf * np.cos(alfa) + (C / 2 / np.pi)\
+                    * (1 - mach_inf ** 2) ** 0.5\
+                    * (1 + np.tan(theta[i, j] - alfa) ** 2)\
+                    * (1 / (1 + (Y[i, j] / X[i, j]) ** 2))\
+                    * (-Y[i, j] / X[i, j] ** 2)\
+                    / (1 + (1 - mach_inf ** 2)\
+                        * np.tan(theta[i, j] - alfa) **2)
+        v[i, j] = v_inf * np.sin(alfa) + (C / 2 / np.pi)\
+                    * (1 - mach_inf ** 2) ** 0.5\
+                    * (1 + np.tan(theta[i, j] - alfa) ** 2)\
+                    * (1 / (1 + (Y[i, j] / X[i, j]) ** 2))\
+                    * (1 / X[i, j])\
+                    / (1 + (1 - mach_inf ** 2)\
+                        * np.tan(theta[i, j] - alfa) ** 2)
+
+    # condición nodos interiores de la malla
+    for i in range(1, M-1):
+        for j in range(1, N-1):
+            u[i, j] = (1 / J[i, j]) * (((phi[i+1, j] - phi[i-1, j]) / 2)\
+                            * y_eta[i, j] - ((phi[i, j+1] - phi[i, j-1]) / 2)\
+                            * y_xi[i, j])
+            v[i, j] = (1 / J[i, j]) * (((phi[i, j+1] - phi[i, j-1]) / 2)
+                            * x_xi[i, j] - ((phi[i+1, j] - phi[i-1, j]) / 2)
+                            * x_eta[i, j])
+
+    for j in range(1, N-1):
+        u[0, j] = (1 / J[0, j]) * (((phi[1, j] - phi[-2, j] + C) / 2)\
+                            * y_eta[0, j] - ((phi[0, j+1] - phi[0, j-1]) / 2)\
+                            * y_xi[0, j])
+        v[0, j] = (1 / J[0, j]) * (((phi[0, j+1] - phi[0, j-1]) / 2)\
+                            * x_xi[0, j] - ((phi[1, j] - phi[-2, j] + C) / 2)\
+                            * x_eta[0, j])
+
+    u[-1, :] = u[0, :]
+    v[-1, :] = v[0, :]
+
