@@ -553,6 +553,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     it_max = 20000
     tol = 1.e-9
     omega = 0.5
+    it_max = 9500
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -711,6 +712,8 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
 
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
+    theta = np.flip(theta)
+    phi = np.flip(phi)
     M = mesh.M
     N = mesh.N
 

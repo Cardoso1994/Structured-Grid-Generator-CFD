@@ -83,7 +83,7 @@ class mesh_O(mesh):
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        omega   = 1.4  # en caso de metodo SOR
+        omega   = 1.7  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger

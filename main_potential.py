@@ -59,7 +59,8 @@ elif malla == 'C':
 mallaNACA.X[:, 0] += 0.25
 mallaNACA.Y[0, :] = 0
 mallaNACA.Y[-1, :] = 0
-mallaNACA.gen_Laplace()
+# mallaNACA.gen_Laplace()
+mallaNACA.gen_Poisson()
 # mallaNACA.X = np.flip(mallaNACA.X)
 # mallaNACA.Y = np.flip(mallaNACA.Y)
 
@@ -87,6 +88,7 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
+
 (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
 
 mallaNACA.to_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
@@ -98,7 +100,7 @@ f.write(str(C))
 np.savetxt('./potential_test/theta.csv', theta, delimiter=',')
 
 plt.figure('potential')
-plt.contour(mallaNACA.X, mallaNACA.Y, phi, 50)
+plt.contour(mallaNACA.X, mallaNACA.Y, phi, 80)
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
 plt.axis('equal')
