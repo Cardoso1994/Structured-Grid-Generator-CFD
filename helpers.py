@@ -87,18 +87,6 @@ def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
     mesh.Y = Y
 
     return mesh
-    # print('tipo = ', tipo)
-    # print('d_eta = ', d_eta)
-    # print('d_xi = ', d_xi)
-    # print('R = ', R)
-    # print('M = ', M)
-    # print('N = ', N)
-    # print('airfoil_alone = ', airfoil_alone)
-    # print('airfoil_join = ', airfoil_join)
-    # print('airfoil_boundary = ', airfoil_boundary)
-    # print('X = ', X)
-    # print('Y = ', Y)
-
 
 def get_size_airfoil(airfoil_boundary):
     '''

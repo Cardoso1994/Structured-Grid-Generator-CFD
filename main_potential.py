@@ -70,7 +70,7 @@ print('N = ' + str(mallaNACA.N))
 # variables de flujo
 t_inf = 300
 p_inf = 101300
-v_inf = 10
+v_inf = 10 # [m / s]
 
 alfa = 0
 
@@ -89,6 +89,14 @@ mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
 (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
 
+mallaNACA.to_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
+np.savetxt('./potential_test/X.csv', mallaNACA.X, delimiter=',')
+np.savetxt('./potential_test/Y.csv', mallaNACA.Y, delimiter=',')
+np.savetxt('./potential_test/phi.csv', phi, delimiter=',')
+f = open("./potential_test/C.csv", "w+")
+f.write(str(C))
+np.savetxt('./potential_test/theta.csv', theta, delimiter=',')
+
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 50)
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
@@ -98,7 +106,7 @@ plt.axis('equal')
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 
 plt.figure('velocity')
-plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=100000, scale_units='xy')
+plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=4, scale_units='x')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
 plt.axis('equal')
