@@ -470,6 +470,16 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # d_xi = mesh.d_xi
     # d_eta = mesh.d_eta
 
+    ######################
+    ######################
+    mesh.X = np.genfromtxt('/home/desarrollo/Documents/Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
+    mesh.Y = np.genfromtxt('/home/desarrollo/Documents/Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
+    X = np.copy(mesh.X)
+    Y = np.copy(mesh.Y)
+    print(np.shape(X))
+    ######################
+    ######################
+
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
         mesh.tensor()
     mesh.X = np.flip(mesh.X)
@@ -523,12 +533,21 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     # se calcula el ángulo theta de cada nodo, resultado en ángulos absolutos
     # desde 0 hasta 2 * pi
+
     theta = np.arctan2(Y, X)
     mask = theta < 0
     theta[mask] += 2 * np.pi
     theta[-1, :] = 2 * np.pi
     theta[0, :] = 0
+
+
     alfa = alfa * np.pi / 180
+
+    ###########################################################################
+    #
+    #   THETA COINCIDE PERFECTAMENTE
+    #
+    ###########################################################################
 
     #----------------------------VALOR INICIAL----------------------------#
     C = 0.5
