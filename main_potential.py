@@ -108,7 +108,7 @@ plt.axis('equal')
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 
 plt.figure('velocity')
-plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=4, scale_units='x')
+plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=6, scale_units='x')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
 plt.axis('equal')

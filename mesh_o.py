@@ -198,8 +198,8 @@ class mesh_O(mesh):
         I           = 0
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
-        aa          = np.longdouble(7.5)
-        cc          = np.longdouble(7.2)
+        aa          = np.longdouble(15.5)
+        cc          = np.longdouble(7.3)
         linea_eta   = 0.0
         linea_xi    = 0.5
 

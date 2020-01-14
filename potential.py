@@ -553,7 +553,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     it_max = 20000
     tol = 1.e-9
     omega = 0.5
-    it_max = 9500
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -782,3 +781,51 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
 
     return (u, v)
 
+def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
+    '''
+    calcula la presion
+    '''
+
+    d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
+    p = p0 * (d / d0) ** gamma
+    cp = (2 * (p - p_inf) / (d_inf * v_inf ** 2))
+
+    return (cp, p)
+
+def streamlines(u, v, gamma, h0, d0, p, mesh):
+    '''
+    se calcula la funcion de corriente
+    '''
+
+    M = mesh.M
+    N = mesh.N
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+
+    psi = np.zeros((M, N))
+    JU = np.zeros((M, N))
+    c_ = np.zeros((M, N))
+    mach = np.zeros((M, N))
+
+    (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
+        mesh.tensor()
+    X = np.copy(mesh.X)
+    Y = np.copy(mesh.Y)
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+
+    d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
+
+    JU = u * y_eta - v * x_eta
+
+    for i in range(M):
+        for j in range(N-1, 0, -1):
+            psi[i, j-1] = psi[i, j] + JU[i, j] * d[i, j]
+
+    c_ = (gamma * p / d) ** 0.5
+    mach = (u ** 2 + v ** 2) ** 2 / c_
+
+    psi = np.flip(psi)
+    mach = np.flip(mach)
+
+    return (psi, mach)
