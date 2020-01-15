@@ -472,11 +472,11 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     ######################
     ######################
-    mesh.X = np.genfromtxt('/home/desarrollo/Documents/Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
-    mesh.Y = np.genfromtxt('/home/desarrollo/Documents/Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
+    path = '/home/cardoso/'
+    mesh.X = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
+    mesh.Y = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
     X = np.copy(mesh.X)
     Y = np.copy(mesh.Y)
-    print(np.shape(X))
     ######################
     ######################
 
@@ -589,6 +589,12 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             if (theta[i, 0] - alfa) > 0:
                 arcotan[i] = 2 * np.pi + arcotan[i]
 
+    ###########################################################################
+    #
+    #   ARCOTAN COINCIDE PERFECTAMENTE
+    #
+    ###########################################################################
+
     while ddd > tol and it < it_max:
         it = it + 1
         print(it, end='\r')
@@ -596,10 +602,16 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
         phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0] \
                         * np.sin(alfa)) + C * arcotan[:] / (2 * np.pi)
+    ###########################################################################
+    #
+    #   PHI COINCIDE PERFECTAMENTE
+    #
+    ###########################################################################
 
         # --------------------NODOS INTERNOS DE LA NALLA----------------------#
         # Desarrollamos los parámetros en los nodos intercalados desarrollando
         # las fórmulas (4.9) y (4.10).
+
         for i in range(M-1):
             for j in range(N-1):
                 if i == 0 and j == N-2:
@@ -625,6 +637,28 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * (phi[i, j+2] - phi[i, j+1])
                     VV[i, j] = g21V[i, j] * PV[i, j] + g22V[i, j] \
                             * (phi[i, j+2] - phi[i, j+1])
+
+    ###########################################################################
+    #
+    #   PV COINCIDE PERFECTAMENTE
+    #   UV COINCIDE PERFECTAMENTE
+    #   VV COINCIDE PERFECTAMENTE, excepto en j = -2
+    #
+    ###########################################################################
+        VV_es = np.genfromtxt(path + 'garbage/VV.csv', delimiter=',')
+        var_es = VV_es
+        var = VV
+
+        var_es += 1e-6
+        var += 1e-6
+
+        percent = 5
+        print(np.abs(var_es - var) / var_es * 100 < percent)
+        print(np.abs(var_es - var) / var * 100 < percent)
+        print(var[0, :])
+        print(var_es[0, :])
+        exit()
+
 
         for i in range(M-1):
             for j in range(1, N-1):
