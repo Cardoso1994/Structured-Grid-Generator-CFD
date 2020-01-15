@@ -2010,7 +2010,7 @@
 
 \chapter{Análisis de Flujo Potencial}
     \paragraph*{}
-        El modelo de flujo potencial es la consideración de flujo no viscoso en
+        El modelo de flujo potencial es la más simple consideración de flujo no viscoso en
         tomar en cuenta los efectos de compresibilidad.
 
     \paragraph*{}
@@ -2029,6 +2029,58 @@
         dicha sección puede ser despreciada durante el análisis. En cuanto al
         resto del flujo, la condición de irrotacionalidad, así como la no
         consideración de los efectos viscosos, son simplifaciones válidas.
+
+    \paragraph*{}
+        Como ya se mencionó, la condición principal que debe tener el flujo
+        para poder ser considerado potencial y no viscoso es la
+        irrotacionalidad. De acuerdo al teorema de Kelvin, si el flujo es
+        irrotacional en un momento, continuara siendo irrotacional y por lo
+        tanto también será isentrópico.
+
+    \paragraph*{}
+        Para flujos no viscosos, la función de potencial puede definirse
+        como:
+        \begin{equation}
+            \vec{v} = \vec{\nabla} \phi
+        \end{equation}
+        La forma conservativa de la ecuación del potencial puede obtenerse a
+        partir de la ecuación de la continuidad.
+        \begin{equation}
+            \pdv{\rho}{t} + \vec{\nabla} \cdot \left( \rho \vec{\nabla} \phi \right) = 0
+        \end{equation}
+
+    \paragraph*{}
+        La ecuación de momento y energía pueden reducirse a la siguiente
+        ecuación para la entalpía de estancamiento:
+        \begin{equation}
+            \pdv{\phi}{t} + H = H_{0}
+        \end{equation}
+        donde $H_0$ representa la entalpía de estancamiento y es un valor constante para todo el fluido.
+
+    \paragraph*{}
+        La densidad es una función tanto de $\vec{\nabla} \phi$ como de
+        $\pdv{\phi}{t}$, que para el caso de un gas perfecto (dado que el
+        flujo potencial se considera isentrópico) con valores
+        definidos para la densidad y entalpía de estancamiento $\rho_{0}$
+        y $H_{0}$ se escribe como:
+        \begin{equation}
+            \frac{\rho}{\rho_{0}} = \left[ 1
+                - \frac{(\vec{\nabla} \phi) ^ 2}{2 H_0}
+                - \frac{\pdv{\phi}{t}}{H_0} \right]^{\frac{1}{\gamma - 1}}
+        \end{equation}
+
+    \paragraph*{}
+        Para el caso de un flujo estacionario la ecuación del flujo potencial
+        resulta:
+        \begin{equation}
+            \vec{\nabla} \cdot \left( \rho \vec{\nabla} \phi \right) = 0
+        \end{equation}
+
+        mientras que la ecuación de la energía queda:
+        \begin{equation}
+            H \equiv h + \frac{\vec{v}^2}{2} = H_0
+        \end{equation}
+
 %
 %
 %
