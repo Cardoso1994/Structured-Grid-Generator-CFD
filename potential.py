@@ -448,7 +448,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     CÓDIGO ESPAÑOLETA
 '''
 
-
 def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     '''
         cálculo de flujo potencial para una malla tipo M
@@ -472,9 +471,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     ######################
     ######################
-    path = '/home/cardoso/'
-    mesh.X = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
-    mesh.Y = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
+    path = '/home/desarrollo/'
+    mesh.X = np.genfromtxt(path + 'Documents/' + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
+    mesh.Y = np.genfromtxt(path + 'Documents/' + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
     X = np.copy(mesh.X)
     Y = np.copy(mesh.Y)
     ######################
@@ -539,7 +538,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     theta[mask] += 2 * np.pi
     theta[-1, :] = 2 * np.pi
     theta[0, :] = 0
-
 
     alfa = alfa * np.pi / 180
 
@@ -642,23 +640,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     #
     #   PV COINCIDE PERFECTAMENTE
     #   UV COINCIDE PERFECTAMENTE
-    #   VV COINCIDE PERFECTAMENTE, excepto en j = -2
+    #   VV COINCIDE PERFECTAMENTE, excepto en j = -2 o j = 33
     #
     ###########################################################################
-        VV_es = np.genfromtxt(path + 'garbage/VV.csv', delimiter=',')
-        var_es = VV_es
-        var = VV
-
-        var_es += 1e-6
-        var += 1e-6
-
-        percent = 5
-        print(np.abs(var_es - var) / var_es * 100 < percent)
-        print(np.abs(var_es - var) / var * 100 < percent)
-        print(var[0, :])
-        print(var_es[0, :])
-        exit()
-
 
         for i in range(M-1):
             for j in range(1, N-1):
@@ -668,6 +652,14 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                         + g12H[i, j] * PH[i, j]
                 VH[i, j] = g21H[i, j] * (phi[i+1, j] - phi[i, j]) \
                         + g22H[i, j] * PH[i, j]
+
+    ###########################################################################
+    #
+    #   PH COINCIDE PERFECTAMENTE
+    #   UH COINCIDE PERFECTAMENTE
+    #   VH COINCIDE PERFECTAMENTE
+    #
+    ###########################################################################
 
         # Calculamos la densidad, ecuación (4.13)
         IMA = 0
@@ -688,6 +680,15 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
                 dV[i, j] = d0 * np.abs(DDV[i, j]) ** (1 / (gamma - 1))
                 dH[i, j] = d0 * np.abs(DDH[i, j]) ** (1 / (gamma - 1))
+
+    ###########################################################################
+    #
+    #   DDV COINCIDE PERFECTAMENTE
+    #   DDH COINCIDE PERFECTAMENTE
+    #   dV COINCIDE PERFECTAMENTE
+    #   dH COINCIDE PERFECTAMENTE
+    #
+    ###########################################################################
 
         # Introducimos las variables anteriores en la ecuación del potencial.
         # Fórmula (4.11)
@@ -718,9 +719,26 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * g11H[i, j] + dH[i-1, j] * JH[i-1, j] \
                             * g11H[i-1, j] + dV[i, j] * JV[i, j] * g22V[i, j] \
                             + dV[i, j-1] * JV[i, j-1] * g22V[i,  j-1])
+                var_es = np.genfromtxt(path + 'garbage/phi.csv', delimiter=',')
+                var = phi
+
+                var_es += 1e-6
+                var += 1e-6
+
+                percent = 5
+                print(np.all(np.abs(var_es - var) / var_es * 100 < percent))
+                print(np.all(np.abs(var_es - var) / var * 100 < percent))
+                print(np.where(np.abs(var_es - var) / var_es * 100 > percent))
+                print(np.where(np.abs(var_es - var) / var * 100 > percent))
+                print(var[0, :])
+                print(var_es[0, :])
+                print('testing phi')
+                exit()
+
 
                 # Aplicamos el método SMR de sobrerelajación, ecuación (4.29).
                 phi[i, j] = omega * phi[i, j] + (1 - omega) * phi_old[i, j]
+
 
         g21 = g12
 
