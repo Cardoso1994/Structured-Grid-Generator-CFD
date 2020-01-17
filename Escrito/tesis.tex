@@ -2042,6 +2042,7 @@
         como:
         \begin{equation}
             \vec{v} = \vec{\nabla} \phi
+            \label{u_eq_phi}
         \end{equation}
         La forma conservativa de la ecuación del potencial puede obtenerse a
         partir de la ecuación de la continuidad.
@@ -2074,12 +2075,74 @@
         resulta:
         \begin{equation}
             \vec{\nabla} \cdot \left( \rho \vec{\nabla} \phi \right) = 0
+            \label{stationary_flow}
         \end{equation}
 
         mientras que la ecuación de la energía queda:
         \begin{equation}
             H \equiv h + \frac{\vec{v}^2}{2} = H_0
         \end{equation}
+
+    \paragraph*{}
+        Dada una transformación de sistemas coordenados como la descrita en
+        capítulos anteriores:
+        \begin{align*}
+            \xi = \xi(x, y)
+            \\
+            \eta = \eta(x, y)
+        \end{align*}
+        la ecuación de flujo potencial puede ser escrita como
+        \begin{equation}
+            \pdv{t} \left( \frac{\rho}{J} \right) + \pdv{\xi} \left( \rho
+                    \frac{U}{J} \right) + \pdv{\eta} \left( \rho \frac{V}{J}
+                        \right) = 0
+        \end{equation}
+
+    \paragraph*{}
+        Las componentes de la velocidad en el dominio computacional $U$ y $V$
+        pueden definirse en función de las componentes del sistema cartesiano
+        $u$ y $v$ como:
+        \begin{equation}
+            U = \pdv{\xi}{x} \phi_{x} + \pdv{\xi}{y} \phi_{y}
+                    = \xi_{x} u + \xi_{y} v
+        \end{equation}
+
+    \paragraph*{}
+        A partir de las ecuaciones \ref{u_eq_phi} y \ref{stationary_flow} se
+        puede obtener una ecuacion para flujo potencial estacionario
+        \begin{equation}
+            \vec{\nabla} \cdot \left( \rho \vec{v} \right)
+                    = \pdv{\xi} \left[ \left(g^{11}\phi_{\xi}
+                            + g^{12} \phi_{\eta} \right) \frac{\rho}{J} \right]
+                        + \pdv{\eta} \left[ \left(g^{21} \phi_{\xi}
+                            + g^{22} \phi_{\eta} \right) \frac{\rho}{J} \right]
+                    = 0
+        \end{equation}
+        ya que tambien se tiene:
+        \begin{align}
+            U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
+            \\
+            V = g^{21} \phi_{\xi} + g^{22} \phi_{\eta}
+        \end{align}
+
+    \paragraph*{}
+        A su vez la matriz del tensor de la transformación $[g]$ tiene las
+        siguientes componentes
+        \begin{subequations}
+            \begin{equation}
+                g^{11} = \xi_{x}^{2} + \xi_{y}^2
+            \end{equation}
+            \begin{equation}
+                    g^{12} = g^{21} = \xi_{x} \eta_{x} + \xi_{y} \eta_{y}
+            \end{equation}
+            \begin{equation}
+                g^{22} = \eta_{x}^{2} + \eta_{y}^2
+            \end{equation}
+        \end{subequations}
+
+    \paragraph*{}
+        En la mayoría de los flujos de análisis práctico, es generalmente
+        necesario trabajar con la transformación inversa
 
 %
 %
