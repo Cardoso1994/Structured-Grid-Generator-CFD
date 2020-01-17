@@ -38,7 +38,7 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
 
-path_esp = '/home/cardoso/'
+path_esp = '/home/desarrollo/Documents/'
 
 mallaNACA = helpers.from_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
 
@@ -54,7 +54,7 @@ C_es = np.genfromtxt(path_esp + 'Tesis_base/Potencial/potential_test/C.csv', del
 theta_es = np.genfromtxt(path_esp + 'Tesis_base/Potencial/potential_test/theta.csv', delimiter=',')
 
 plt.figure('potential')
-plt.contour(mallaNACA.X, mallaNACA.Y, phi, 45)
+plt.contour(mallaNACA.X, mallaNACA.Y, phi, 45, cmap='jet')
 plt.contour(X, Y, phi_es, 45)
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')

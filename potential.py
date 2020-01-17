@@ -471,9 +471,9 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     ######################
     ######################
-    path = '/home/cardoso/'
-    mesh.X = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
-    mesh.Y = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
+    path = '/home/desarrollo/'
+    mesh.X = np.genfromtxt(path + 'Documents/' + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
+    mesh.Y = np.genfromtxt(path + 'Documents/' + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
     X = np.copy(mesh.X)
     Y = np.copy(mesh.Y)
     ######################
@@ -690,22 +690,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     #
     ###########################################################################
 
-        var_es = np.genfromtxt(path + 'garbage/phi.csv', delimiter=',')
-        var = phi
-
-        var_es += 1e-6
-        var += 1e-6
-
-        percent = 1
-        print(np.all(np.abs(var_es - var) / var_es * 100 < percent))
-        print(np.all(np.abs(var_es - var) / var * 100 < percent))
-        print(np.where(np.abs(var_es - var) / var_es * 100 > percent))
-        print(np.where(np.abs(var_es - var) / var * 100 > percent))
-        print(var[0, :])
-        print(var_es[0, :])
-        print('testing phi after nested')
-        exit()
-
         # Introducimos las variables anteriores en la ecuación del potencial.
         # Fórmula (4.11)
         for i in range(M-1):
@@ -738,7 +722,49 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                 # Aplicamos el método SOR de sobrerelajación, ecuación (4.29).
                 phi[i, j] = omega * phi[i, j] + (1 - omega) * phi_old[i, j]
 
+        # Introducimos las variables anteriores en la ecuación del potencial.
+        # Fórmula (4.11)
+        # for i = 1 : N-1
+        # for i in range(M-1):
+        #     # for j = 2 : M-1
+        #     for j in range(1, N-1):
+        #         if i == 0:
+        #             phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] + g11H[i,\
+        #                 j] * phi[i+1, j]) - dH[M-2, j] * JH[M-2, j] * (g12H[M-2, j] *\
+        #                 PH[M-2, j] - g11H[M-2, j] * (phi[M-2, j] - C)) + dV[i, j-1]\
+        #                 * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] + g22V[i, j-1] *\
+        #                 phi[i, j]) - dV[i, j] * JV[i, j] * (g21V[i, j] * PV[i, j]-\
+        #                 g22V[i, j] * phi[i, j-1])) / (dH[i, j] * JH[i, j] * g11H[\
+        #                 i, j] + dH[M-2, j] * JH[M-2, j] * g11H[M-2, j] + dV[i,j] * JV\
+        #                 [i,j] * g22V[i, j] + dV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
+        #         else:
+        #             phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] + g11H[i,\
+        #                 j] * phi[i+1, j]) - dH[i-1, j] * JH[i-1, j] * (g12H[i-1, j] *\
+        #                 PH[i-1, j] - g11H[i-1, j] * (phi[i-1, j])) + dV[i, j-1] * JV[\
+        #                 i, j-1] * (g21V[i, j-1] * PV[i, j-1] + g22V[i, j-1] * phi[i,\
+        #                 j+1]) - dV[i, j] * JV[i, j] * (g21V[i, j] * PV[i, j] - g22V[i, j\
+        #                 ] * phi[i, j-1])) / (dH[i, j] * JH[i, j] * g11H[i, j] + dH[i\
+        #                 -1, j] * JH[i-1, j] * g11H[i-1, j] + dV[i, j] * JV[i, j] * g22V\
+        #                 [i, j] + dV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
 
+        #         # Aplicamos el método SOR de sobrerelajación, ecuación (4.29).
+        #         phi[i, j] = omega * phi[i, j] + (1 - omega) * phi_old[i, j]
+
+        # var_es = np.genfromtxt(path + 'garbage/phi.csv', delimiter=',')
+        # var = phi
+
+        # var_es += 1e-6
+        # var += 1e-6
+
+        # percent = 15
+        # print(np.all(np.abs(var_es - var) / var_es * 100 < percent))
+        # print(np.all(np.abs(var_es - var) / var * 100 < percent))
+        # print(np.where(np.abs(var_es - var) / var_es * 100 > percent))
+        # print(np.where(np.abs(var_es - var) / var * 100 > percent))
+        # print(var[0, :])
+        # print(var_es[0, :])
+        # print('testing phi after SOR')
+        # exit()
 
         g21 = g12
 
@@ -748,7 +774,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             phi[i, N-1] = (1 / 3) * (4 * phi[i, N-2] - phi[i, N-3] \
                     - g21[i, j] * (phi[i+1, N-1] - phi[i-1, N-1]) / g22[i, j])
 
-        phi[0, N-1] = (1 / 3) * (4 * phi[1, N-2] - phi[1, N-3] - g21[0, N-1] \
+        phi[0, N-1] = (1 / 3) * (4 * phi[0, N-2] - phi[0, N-3] - g21[0, N-1] \
                 * (phi[1, N-1] - phi[M-2, N-1] + C) / g22[0, N-1])
 
         # ------------CONDICIÓN EM LA DISCONTINUIDAD DEL POTENCIAL------------#
