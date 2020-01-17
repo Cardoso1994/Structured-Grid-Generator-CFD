@@ -6,6 +6,8 @@ test*.py
 
 
 ## Core latex/pdflatex auxiliary files:
+Escrito/tesis.pdf
+*.pdf
 *.aux
 *.lof
 *.log
@@ -33,7 +35,7 @@ perfil_final.txt
 # *.pdf
 
 ## Generated if empty string is given at "Please type another file name for output:"
-.pdf
+*.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
