@@ -471,7 +471,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     ######################
     ######################
-    path = '/home/cardoso/'
+    path = '/home/desarrollo/'
     mesh.X = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
     mesh.Y = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
     X = np.copy(mesh.X)
@@ -483,6 +483,16 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         mesh.tensor()
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
+
+    # importing FROM ESPAÑOLETA
+    # g11 = np.genfromtxt(path + 'garbage/g11.csv', delimiter=',')
+    # g22 = np.genfromtxt(path + 'garbage/g22.csv', delimiter=',')
+    # g12 = np.genfromtxt(path + 'garbage/g12.csv', delimiter=',')
+    # J = np.genfromtxt(path + 'garbage/J.csv', delimiter=',')
+    # x_xi = np.genfromtxt(path + 'garbage/x_xi.csv', delimiter=',')
+    # x_eta = np.genfromtxt(path + 'garbage/x_eta.csv', delimiter=',')
+    # y_xi = np.genfromtxt(path + 'garbage/y_xi.csv', delimiter=',')
+    # y_eta = np.genfromtxt(path + 'garbage/y_eta.csv', delimiter=',')
 
     g21 = g12
 
@@ -792,16 +802,27 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
 
+    # importing from ESPAÑOLETA
+    # path = '/home/desarrollo/'
+    # g11 = np.genfromtxt(path + 'garbage/g11.csv', delimiter=',')
+    # g22 = np.genfromtxt(path + 'garbage/g22.csv', delimiter=',')
+    # g12 = np.genfromtxt(path + 'garbage/g12.csv', delimiter=',')
+    # J = np.genfromtxt(path + 'garbage/J.csv', delimiter=',')
+    # x_xi = np.genfromtxt(path + 'garbage/x_xi.csv', delimiter=',')
+    # x_eta = np.genfromtxt(path + 'garbage/x_eta.csv', delimiter=',')
+    # y_xi = np.genfromtxt(path + 'garbage/y_xi.csv', delimiter=',')
+    # y_eta = np.genfromtxt(path + 'garbage/y_eta.csv', delimiter=',')
+
     # condición de frontera exterior
     alfa = alfa * np.pi / 180
 
-    for i in range(N):
+    for i in range(M):
         j = 0
         u[i, j] = v_inf * np.cos(alfa) + (C / 2 / np.pi)\
                     * (1 - mach_inf ** 2) ** 0.5\
                     * (1 + np.tan(theta[i, j] - alfa) ** 2)\
                     * (1 / (1 + (Y[i, j] / X[i, j]) ** 2))\
-                    * (-Y[i, j] / X[i, j] ** 2)\
+                    * (-Y[i, j] / (X[i, j]) ** 2)\
                     / (1 + (1 - mach_inf ** 2)\
                         * np.tan(theta[i, j] - alfa) ** 2)
         v[i, j] = v_inf * np.sin(alfa) + (C / 2 / np.pi)\
@@ -853,7 +874,7 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
 
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
     p = p0 * (d / d0) ** gamma
-    cp = (2 * (p - p_inf) / (d_inf * v_inf ** 2))
+    cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
 
     return (cp, p)
 
@@ -866,6 +887,8 @@ def streamlines(u, v, gamma, h0, d0, p, mesh):
     N = mesh.N
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
+    u = np.flip(u)
+    v = np.flip(v)
 
     psi = np.zeros((M, N))
     JU = np.zeros((M, N))
@@ -879,6 +902,18 @@ def streamlines(u, v, gamma, h0, d0, p, mesh):
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
 
+    # IMPORTING FROM ESPAÑOLETA
+    # path = '/home/desarrollo/'
+    # g11 = np.genfromtxt(path + 'garbage/g11.csv', delimiter=',')
+    # g22 = np.genfromtxt(path + 'garbage/g22.csv', delimiter=',')
+    # g12 = np.genfromtxt(path + 'garbage/g12.csv', delimiter=',')
+    # J = np.genfromtxt(path + 'garbage/J.csv', delimiter=',')
+    # x_xi = np.genfromtxt(path + 'garbage/x_xi.csv', delimiter=',')
+    # x_eta = np.genfromtxt(path + 'garbage/x_eta.csv', delimiter=',')
+    # y_xi = np.genfromtxt(path + 'garbage/y_xi.csv', delimiter=',')
+    # y_eta = np.genfromtxt(path + 'garbage/y_eta.csv', delimiter=',')
+    # JU_es = np.genfromtxt(path + 'garbage/JU.csv', delimiter=',')
+
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
 
     JU = u * y_eta - v * x_eta
@@ -888,7 +923,7 @@ def streamlines(u, v, gamma, h0, d0, p, mesh):
             psi[i, j-1] = psi[i, j] + JU[i, j] * d[i, j]
 
     c_ = (gamma * p / d) ** 0.5
-    mach = (u ** 2 + v ** 2) ** 2 / c_
+    mach = (u ** 2 + v ** 2) ** 0.5 / c_
 
     psi = np.flip(psi)
     mach = np.flip(mach)

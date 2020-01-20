@@ -97,6 +97,7 @@ np.savetxt('./potential_test/Y.csv', mallaNACA.Y, delimiter=',')
 np.savetxt('./potential_test/phi.csv', phi, delimiter=',')
 f = open("./potential_test/C.csv", "w+")
 f.write(str(C))
+f.close()
 np.savetxt('./potential_test/theta.csv', theta, delimiter=',')
 
 plt.figure('potential')
