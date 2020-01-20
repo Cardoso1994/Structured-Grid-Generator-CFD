@@ -38,7 +38,7 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
 
-path_esp = '/home/desarrollo/Documents/'
+path_esp = '/home/cardoso/'
 
 mallaNACA = helpers.from_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
 
@@ -52,9 +52,12 @@ Y = np.genfromtxt(path_esp + 'Tesis_base/Potencial/potential_test/Y.csv', delimi
 phi_es = np.genfromtxt(path_esp + 'Tesis_base/Potencial/potential_test/phi.csv', delimiter=',')
 C_es = np.genfromtxt(path_esp + 'Tesis_base/Potencial/potential_test/C.csv', delimiter=',')
 theta_es = np.genfromtxt(path_esp + 'Tesis_base/Potencial/potential_test/theta.csv', delimiter=',')
+cp_es = np.genfromtxt(path_esp + 'garbage/cp.csv', delimiter=',')
+psi_es = np.genfromtxt(path_esp + 'garbage/psi.csv', delimiter=',')
 
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 45, cmap='jet')
+plt.colorbar()
 plt.contour(X, Y, phi_es, 45)
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
@@ -91,13 +94,18 @@ plt.axis('equal')
 
 plt.figure('pressure')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contour(mallaNACA.X, mallaNACA.Y, cp, 64)
-# plt.contour(X, Y, cp_es, 64)
+plt.contour(mallaNACA.X, mallaNACA.Y, cp, 45, cmap='jet')
+plt.colorbar()
+plt.contour(X, Y, cp_es, 45)
 plt.axis('equal')
+plt.colorbar()
 
 plt.figure('streamlines')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contour(mallaNACA.X, mallaNACA.Y, np.real(psi), 50)
+plt.contour(mallaNACA.X, mallaNACA.Y, np.real(psi), 45, cmap='jet')
+plt.colorbar()
+plt.contour(X, Y, np.real(psi_es), 45)
+plt.colorbar()
 plt.axis('equal')
 
 plt.draw()
