@@ -2038,6 +2038,15 @@
         tanto también será isentrópico.
 
     \paragraph*{}
+        Estas consideraciones teóricas llevan consigo una serie de
+        simplificaciones a las ecuaciones de Navier Stokes que facilitan el
+        análisis de diversos flujos. En primera instancia, al decirse que el
+        flujo es no viscoso se debe despreciar los efectos de los esfuerzos
+        cortantes, dicha simplificación nos permite trabajar con las ecuaciones
+        de Euler. Si además de esto, se toma como irrotacional el flujo, se
+        obtienen las ecuaciones de Bernoulli.
+
+    \paragraph*{}
         Para flujos no viscosos, la función de potencial puede definirse
         como:
         \begin{equation}
@@ -2142,8 +2151,25 @@
 
     \paragraph*{}
         En la mayoría de los flujos de análisis práctico, es generalmente
-        necesario trabajar con la transformación inversa
-
+        necesario trabajar con la transformación inversa:
+        \begin{subequations}
+            \begin{equation}
+                x = x \left( \xi, \eta \right)
+            \end{equation}
+            \begin{equation}
+                y = y \left( \xi, \eta \right)
+            \end{equation}
+        \end{subequations}
+    \\ la cual es obtenida a traves de las transformaciones
+    \begin{align}
+        \xi_{x} = J y_{\eta} && \xi_{y} = -J x_{\eta}
+        \\
+        \eta_{x} = -J y_{\xi} && \eta_{y} = J x_{\xi}
+    \end{align}
+    \\ con el Jacobiano
+    \begin{equation}
+        J = \frac{1}{x_{\xi} y_{\eta} - x_{\eta} y_{\xi}}
+    \end{equation}
 %
 %
 %
