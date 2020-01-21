@@ -22,7 +22,7 @@ Escrito/tesis.pdf
 .*.lb
 
 *.txt
-*.csv
+# *.csv
 perfil_final.txt
 
 ## Intermediate documents:
