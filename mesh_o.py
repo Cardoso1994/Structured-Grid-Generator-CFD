@@ -198,8 +198,8 @@ class mesh_O(mesh):
         I           = 0
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
-        aa          = np.longdouble(15.5)
-        cc          = np.longdouble(7.3)
+        aa          = np.longdouble(16.5)
+        cc          = np.longdouble(8.1)
         linea_eta   = 0.0
         linea_xi    = 0.5
 
@@ -753,47 +753,10 @@ class mesh_O(mesh):
         d_eta = self.d_eta
 
 
-        # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
-        # X += 0.0000001
-        # Xe += 0.0000001
-
-        # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
-        # Y += 1e-19
-        # Ye += 1e-19
-
-        # index = 34
-        # percent = 1
-        # var = Y
-        # vare = Ye
-        # print('inside potential')
-        # print('comparing X mesh')
-        # print(np.all((np.abs(vare - var) / vare * 100) < percent))
-        # print(Ye[:, index])
-        # print(Y[:, index])
-        # print('after comparing X mesh')
-        # exit()
-
-        '''
-        PARECE HABER INCONSISTENCIAS EN X para j = N-1
-        Y TIENE RESULTADOS CATASTROFICOS
-        '''
-
-
         x_xi = np.zeros((M, N))
         x_eta = np.zeros((M, N))
         y_xi = np.zeros((M, N))
         y_eta = np.zeros((M, N))
-        # ----------------------------VARIABLES--------------------------------#
-        # J= Jacobiano
-        # g11,g12,g21,g22= Tensor métrico transformación directa
-        # g11I,g12I,g21I,g22I= Tensor métrico transformación indirecta
-        # x_xi= Variación de la coordenada x con respecto a xi
-        # x_eta= Variación de la coordenada x con respecto a eta
-        # y_xi= Variación de la coordenada y con respecto a xi
-        # y_eta= Variación de la coordenada y con respecto a eta
-        # ---------------------------------------------------------------------#
-        #  Para el cálculo de las variaciones de las coordenadas x e y
-        #  se utilizan las discretizaciones de la tabla 4.3.1
 
         # for i= 1 : N-1
         for i in range(M-1):
