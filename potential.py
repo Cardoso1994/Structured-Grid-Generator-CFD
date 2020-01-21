@@ -469,30 +469,10 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # d_xi = mesh.d_xi
     # d_eta = mesh.d_eta
 
-    ######################
-    ######################
-    path = '/home/desarrollo/'
-    mesh.X = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/X.csv', delimiter=',')
-    mesh.Y = np.genfromtxt(path + 'Tesis_base/Potencial/potential_test/Y.csv', delimiter=',')
-    X = np.copy(mesh.X)
-    Y = np.copy(mesh.Y)
-    ######################
-    ######################
-
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
         mesh.tensor()
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
-
-    # importing FROM ESPAÑOLETA
-    # g11 = np.genfromtxt(path + 'garbage/g11.csv', delimiter=',')
-    # g22 = np.genfromtxt(path + 'garbage/g22.csv', delimiter=',')
-    # g12 = np.genfromtxt(path + 'garbage/g12.csv', delimiter=',')
-    # J = np.genfromtxt(path + 'garbage/J.csv', delimiter=',')
-    # x_xi = np.genfromtxt(path + 'garbage/x_xi.csv', delimiter=',')
-    # x_eta = np.genfromtxt(path + 'garbage/x_eta.csv', delimiter=',')
-    # y_xi = np.genfromtxt(path + 'garbage/y_xi.csv', delimiter=',')
-    # y_eta = np.genfromtxt(path + 'garbage/y_eta.csv', delimiter=',')
 
     g21 = g12
 
@@ -551,14 +531,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     alfa = alfa * np.pi / 180
 
-    ###########################################################################
-    #
-    #   THETA COINCIDE PERFECTAMENTE
-    #
-    ###########################################################################
-
     #----------------------------VALOR INICIAL----------------------------#
-    C = 0.5
+    C = 0.1
     phi = np.zeros((M, N))
     UH = np.zeros((M, N))
     VH = np.zeros((M, N))
@@ -610,15 +584,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
         phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0] \
                         * np.sin(alfa)) + C * arcotan[:] / (2 * np.pi)
-    ###########################################################################
-    #
-    #   PHI COINCIDE PERFECTAMENTE
-    #
-    ###########################################################################
 
         # --------------------NODOS INTERNOS DE LA NALLA----------------------#
-        # Desarrollamos los parámetros en los nodos intercalados desarrollando
-        # las fórmulas (4.9) y (4.10).
 
         for i in range(M-1):
             for j in range(N-1):
@@ -646,14 +613,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                     VV[i, j] = g21V[i, j] * PV[i, j] + g22V[i, j] \
                             * (phi[i, j+2] - phi[i, j+1])
 
-    ###########################################################################
-    #
-    #   PV COINCIDE PERFECTAMENTE
-    #   UV COINCIDE PERFECTAMENTE
-    #   VV COINCIDE PERFECTAMENTE, excepto en j = -2 o j = 33
-    #
-    ###########################################################################
-
         for i in range(M-1):
             for j in range(1, N-1):
                 PH[i, j] = 0.25 * (phi[i+1, j+1] - phi[i+1, j-1] \
@@ -662,14 +621,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                         + g12H[i, j] * PH[i, j]
                 VH[i, j] = g21H[i, j] * (phi[i+1, j] - phi[i, j]) \
                         + g22H[i, j] * PH[i, j]
-
-    ###########################################################################
-    #
-    #   PH COINCIDE PERFECTAMENTE
-    #   UH COINCIDE PERFECTAMENTE
-    #   VH COINCIDE PERFECTAMENTE
-    #
-    ###########################################################################
 
         # Calculamos la densidad, ecuación (4.13)
         IMA = 0
@@ -691,30 +642,33 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                 dV[i, j] = d0 * np.abs(DDV[i, j]) ** (1 / (gamma - 1))
                 dH[i, j] = d0 * np.abs(DDH[i, j]) ** (1 / (gamma - 1))
 
-    ###########################################################################
-    #
-    #   DDV COINCIDE PERFECTAMENTE
-    #   DDH COINCIDE PERFECTAMENTE
-    #   dV COINCIDE PERFECTAMENTE
-    #   dH COINCIDE PERFECTAMENTE
-    #
-    ###########################################################################
-
         # Introducimos las variables anteriores en la ecuación del potencial.
-        # Fórmula (4.11)
-        # for i = 1 : N-1
         for i in range(M-1):
-            # for j = 2 : M-1
             for j in range(1, N-1):
                 if i == 0:
-                    phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] + g11H[i,\
-                        j] * phi[i+1, j]) - dH[M-2, j] * JH[M-2, j] * (g12H[M-2, j] *\
-                        PH[M-2, j] - g11H[M-2, j] * (phi[M-2, j] - C)) + dV[i, j-1]\
-                        * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] + g22V[i, j-1] *\
-                        phi[i, j]) - dV[i, j] * JV[i, j] * (g21V[i, j] * PV[i, j]-\
-                        g22V[i, j] * phi[i, j-1])) / (dH[i, j] * JH[i, j] * g11H[\
-                        i, j] + dH[M-2, j] * JH[M-2, j] * g11H[M-2, j] + dV[i,j] * JV\
-                        [i,j] * g22V[i, j] + dV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
+                    phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] \
+                            + g11H[i, j] * phi[i+1, j]) - dH[M-2, j] \
+                            * JH[M-2, j] * (g12H[M-2, j] * PH[M-2, j] \
+                            - g11H[M-2, j] * (phi[M-2, j] - C)) + dV[i, j-1] \
+                            * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] \
+                            # + g22V[i, j-1] * phi[i, j]) - dV[i, j] * JV[i, j] \
+                            + g22V[i, j-1] * phi[i, j+1]) - dV[i, j] * JV[i, j] \
+                            * (g21V[i, j] * PV[i, j] - g22V[i, j] \
+                            * phi[i, j-1])) / (dH[i, j] * JH[i, j] \
+                            * g11H[i, j] + dH[M-2, j] * JH[M-2, j] \
+                            * g11H[M-2, j] + dV[i, j] * JV[i, j] * g22V[i, j] \
+                            + dV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
+                    # phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j]\
+                    #         + g11H[i, j] * phi[i+1, j]) - dH[M-2, j]\
+                    #         * JH[M-2, j] * (g12H[M-2, j] * PH[M-2, j]\
+                    #         - g11H[M-2, j] * (phi[M-2, j] - C)) + dV[i, j-1]\
+                    #         * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1]\
+                    #         + g22V[i, j-1] * phi[i, j]) - dV[i, j] * JV[i, j]\
+                    #         * (g21V[i, j] * PV[i, j] - g22V[i, j]\
+                    #         * phi[i, j-1])) / (dH[i, j] * JH[i, j]\
+                    #         * g11H[i, j] + dH[M-2, j] * JH[M-2, j]\
+                    #         * g11H[M-2, j] + dV[i,j] * JV[i,j] * g22V[i, j]\
+                    #         + dV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
                 else:
                     phi[i, j] = (dH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] + g11H[i,\
                         j] * phi[i+1, j]) - dH[i-1, j] * JH[i-1, j] * (g12H[i-1, j] *\
@@ -725,24 +679,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                         -1, j] * JH[i-1, j] * g11H[i-1, j] + dV[i, j] * JV[i, j] * g22V\
                         [i, j] + dV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
 
-                # Aplicamos el método SOR de sobrerelajación, ecuación (4.29).
-                phi[i, j] = omega * phi[i, j] + (1 - omega) * phi_old[i, j]
-
-        # var_es = np.genfromtxt(path + 'garbage/phi.csv', delimiter=',')
-        # var = phi
-
-        # var_es += 1e-6
-        # var += 1e-6
-
-        # percent = 15
-        # print(np.all(np.abs(var_es - var) / var_es * 100 < percent))
-        # print(np.all(np.abs(var_es - var) / var * 100 < percent))
-        # print(np.where(np.abs(var_es - var) / var_es * 100 > percent))
-        # print(np.where(np.abs(var_es - var) / var * 100 > percent))
-        # print(var[0, :])
-        # print(var_es[0, :])
-        # print('testing phi after SOR')
-        # exit()
+        # Aplicamos el método SOR de sobrerelajación, ecuación (4.29).
+        phi = omega * phi + (1 - omega) * phi_old
 
         g21 = g12
 
