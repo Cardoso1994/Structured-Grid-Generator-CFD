@@ -2170,6 +2170,68 @@
     \begin{equation}
         J = \frac{1}{x_{\xi} y_{\eta} - x_{\eta} y_{\xi}}
     \end{equation}
+
+    \section{Condiciones de Frontera}
+    \paragraph*{}
+        Para que una simulación se lleve a cabo es necesario establecer un
+        dominio computacional, el cual contará con una o más fronteras
+        $\Gamma$, sobre dichas fronteras se deben especificar las
+        correspondientes condiciones de frontera que dotarán de sentido físico
+        a la simulación, es decir, para este caso se deben especificar
+        condiciones de frontera que coincidan con la teoría de flujo potencial.
+
+    \subsection{Condiciones en las lejanías}
+    \paragraph*{}
+        En la frontera externa el campo de fluido se asume como conocido. Para
+        casos de flujos externos, como lo es el caso de un perfil inmerso en un
+        flujo uniforme con velocidad $\vec{V}_{\infty}$, el flujo potencial
+        está definido mediante:
+        \begin{equation}
+            \phi = \vec{V}_{\infty} \cdot \vec{x} + \phi_{0}
+        \end{equation}
+        donde $\phi_{0}$ es una constante arbitraria y $\vec{x}$ representa
+        la distancia a un punto de la frontera con respecto a una referencia
+        establecida previamente.
+
+    \paragraph*{}
+        Para cuerpos que producen sustentación con una circulación $\Gamma_{B}$,
+        se debe tomar en cuenta la contribución de dicha circulación al flujo
+        potencial en una distancia lejana. En el caso de perfil bidimensionales
+        esto se logra mediante la adición de un vórtice, corregido por efectos
+        de compresibilidad:
+        \begin{equation}
+            \phi_{\infty} = \vec{V}_{\infty} \cdot \vec{x}
+                            + \frac{\Gamma_B}{2 \pi} \tan^{-1}
+                                \left[ \sqrt{1-M_{\infty}^{2}}
+                                tan(\theta - \alpha_{\infty}) \right] + \phi_{0}
+        \end{equation}
+        donde $\theta$ es la posición angular de un punto en la lejanía,
+        $\Gamma_B$ es la circulación y $M_\infty$ es el número de Mach
+        correspondiente a la velocidad de la corriente libre $\vec{V}_\infty$
+        con un ángulo de incidencia $\alpha_{\infty}$.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/circulacion_phi}
+            \caption[Condiciones de frontera de flujo potencial]{Condiciones de
+                frontera de flujo potencial para perfil aerodinámico
+                bidimensional\cite{potential_flow}}
+            \label{phi_circulacion_malla}
+        \end{figure}
+
+    \paragraph*{}
+        Los perfiles aerodinámicos requieren una circulación cuya intensidad es
+        definida por la condición de Kutta. En simulaciones computacionales un
+        ``corte" debe definirse, a lo largo del cual existirá una discontinuidad
+        del potencial dado por
+        \begin{equation}
+            \phi_{P'} - \phi_{P} = \Gamma_{B} = \phi_{B} - \phi_{A}
+        \end{equation}
+
+    \paragraph*{}
+        El valor de la circulación debe ser actualizado en cada iteración del
+        proceso de solución, esto se logra imponiendo velocidades o presiones
+        iguales en ambos lados del borde de salida.
 %
 %
 %
