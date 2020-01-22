@@ -198,8 +198,8 @@ class mesh_O(mesh):
         I           = 0
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
-        aa          = np.longdouble(16.5)
-        cc          = np.longdouble(8.1)
+        aa          = np.longdouble(26.5)
+        cc          = np.longdouble(6.5)
         linea_eta   = 0.0
         linea_xi    = 0.5
 
@@ -731,100 +731,3 @@ class mesh_O(mesh):
         B       = g12I
 
         return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
-
-    def tensor_esp(self):
-        '''
-            Calcula el tensor métrico de la transformación para ambas
-                transformaciones, directa e indirecta
-            Calcula el Jacobiano de la matriz de transformación
-            Calcula el valor discretizado de las derivadas parciales:
-                x_xi
-                x_eta
-                y_xi
-                y_eta
-        '''
-
-        # se definen vairables de la malla
-        X = self.X
-        Y = self.Y
-        M = self.M
-        N = self.N
-        d_xi = self.d_xi
-        d_eta = self.d_eta
-
-
-        x_xi = np.zeros((M, N))
-        x_eta = np.zeros((M, N))
-        y_xi = np.zeros((M, N))
-        y_eta = np.zeros((M, N))
-
-        # for i= 1 : N-1
-        for i in range(M-1):
-            if i == 1:
-                # for j = 2 : M-1
-                for j in range(1, N-1):
-                    x_xi[i, j] = (X[i+1, j] - X[M-2, j]) / 2
-                    x_eta[i, j] = (X[i, j+1] - X[i, j-1]) / 2
-                    y_xi[i, j] = (Y[i+1, j] - Y[M-2, j]) / 2
-                    y_eta[i, j] = (Y[i, j+1] - Y[i, j-1]) / 2
-            else:
-                # for j = 2 : M-1
-                for j in range(1, N-1):
-                    x_xi[i, j] = (X[i+1, j] - X[i-1, j]) / 2
-                    x_eta[i, j] = (X[i, j+1] - X[i, j-1]) / 2
-                    y_xi[i, j] = (Y[i+1, j] - Y[i-1, j]) / 2
-                    y_eta[i, j] = (Y[i, j+1] - Y[i, j-1]) / 2
-
-                x_xi[i, N-1] = (X[i+1, N-1] - X[i-1, N-1]) / 2
-                x_eta[i, N-1] = (X[i, N-3] - 4 * X[i, N-2] + 3 * X[i, N-1]) / 2
-                y_xi[i, N-1] = (Y[i+1, N-1] - Y[i-1, N-1]) / 2
-                y_eta[i, N-1] = (Y[i, N-3] - 4 * Y[i, N-2] + 3 * Y[i, N-1]) / 2
-
-                x_xi[i, 0] = (X[i+1, 0] - X[i-1, 0]) / 2
-                x_eta[i, 0] = (-3 * X[i, 0] + 4 * X[i, 1] - X[i, 2]) / 2
-                y_xi[i, 0] = (Y[i+1, 0] - Y[i-1, 0]) / 2
-                y_eta[i, 0] = (-3 * Y[i, 0] + 4 * Y[i, 1] - Y[i, 2]) / 2
-
-        x_xi[0, N-1] = (X[1, N-1] - X[M-2, N-1]) / 2
-        x_eta[0, N-1] = (X[0, N-3] - 4 * X[0, N-2] + 3 * X[0, N-1]) / 2
-        y_xi[0, N-1] = (Y[1, N-1] - Y[M-2, N-1]) / 2
-        y_eta[0, N-1] = (Y[0, N-3] - 4 * Y[0, N-2] + 3 * Y[0, N-1]) / 2
-
-        x_xi[0, 0] = (X[1, 0] - X[M-2, 0]) / 2
-        x_eta[0, 0] = (-X[0, 2] + 4 * X[0, 1] - 3 * X[0, 0]) / 2
-        y_xi[0, 0] = (Y[1, 0] - Y[M-2, 0]) / 2
-        y_eta[0, 0] = (-Y[0, 2] + 4 * Y[0, 1] - 3 * Y[0, 0]) / 2
-
-        y_eta[M-1, :] = y_eta[0, :]
-        y_xi[M-1, :] = y_xi[0, :]
-        x_eta[M-1, :] = x_eta[0, :]
-        x_xi[M-1, :] = x_xi[0, :]
-
-        # Las fórmulas de los tensores métricos para las transformaciones
-        # directas o indirectas se encuentran en (2.21), (2.22) y (2.23).
-        J = x_xi * y_eta - x_eta * y_xi
-        J += 1e-16
-        g11I = x_xi ** 2 + y_xi ** 2
-        g12I = x_xi * x_eta + y_xi * y_eta
-        g22I = x_eta ** 2 + y_eta ** 2
-        g11 = g22I / (J ** 2)
-        g11 = g22I * (J ** -2)
-        g12 = -g12I / (J ** 2)
-        g22 = g11I / (J ** 2)
-        g21 = g12
-
-        C1 = g11I
-        A = g22I
-        B = g12I
-        return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
-
-    def to_su2(self, filename):
-        '''
-        convierte malla a formato SU2
-        '''
-
-        if self.airfoil_alone == True:
-            mesh_su2.to_su2_mesh_o_airfoil(self, filename)
-        else:
-            mesh_su2.to_su2_mesh_o_airfoil_n_flap(self, filename)
-

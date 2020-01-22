@@ -25,11 +25,10 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 45
+N = 55
 union = 6
 
-# points = 11
-airfoil_points = 45
+airfoil_points = 91
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -37,8 +36,8 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 0  # combadura
-p = 0  # posicion de la combadura
+m = 2  # combadura
+p = 4  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
 # radio frontera externa
@@ -46,9 +45,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-# perfil.join(flap, dx=0.055, dy=0.05, union=union)
-# perfil.rotate(30)
-# M = np.shape(perfil.x)[0]
+# perfil.rotate(0)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -59,10 +56,22 @@ elif malla == 'C':
 mallaNACA.X[:, 0] += 0.25
 mallaNACA.Y[0, :] = 0
 mallaNACA.Y[-1, :] = 0
-# mallaNACA.gen_Laplace()
 mallaNACA.gen_Poisson()
 mallaNACA.plot()
-input('hello.. after mesh')
+
+flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
+             + '[n] to exit execution: ')
+print()
+
+if flag == 'S':
+    mallaNACA.to_txt_mesh('./mesh_test.txt_mesh')
+    print('Mesh saved')
+elif flag == 'N':
+    print('Continue without saving')
+    pass
+else:
+    print('Quitting execution...')
+    exit()
 
 print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
@@ -89,7 +98,8 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
 
-(phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
+(phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
+                                            alfa, mallaNACA)
 
 mallaNACA.to_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
 np.savetxt('./potential_test/X.csv', mallaNACA.X, delimiter=',')
