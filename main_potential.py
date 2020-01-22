@@ -14,22 +14,22 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from analysis import potential_flow_o, potential_flow_o_esp
+from potential import potential_flow_o, potential_flow_o_esp, velocity
 import helpers
 
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 10
+N = 45
 union = 6
 
 # points = 11
-airfoil_points = 25
+airfoil_points = 45
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -46,9 +46,6 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-flap.create_sin(points)
-flap.rotate(10)
 # perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(30)
 # M = np.shape(perfil.x)[0]
@@ -59,27 +56,22 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-# perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR')
-# mallaNACA.gen_Laplace(metodo='SOR')
-# mallaNACA.gen_TFI()
+mallaNACA.X[:, 0] += 0.25
+mallaNACA.Y[0, :] = 0
+mallaNACA.Y[-1, :] = 0
+# mallaNACA.gen_Laplace()
+mallaNACA.gen_Poisson()
+mallaNACA.plot()
+input('hello.. after mesh')
+
 print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
-mallaNACA.to_su2('./garbage/mesh.su2')
-
-mallaNACA.to_txt_mesh('./garbage/25_10_002_01.txt_mesh')
-mallaNACA1 = helpers.from_txt_mesh()
-mallaNACA1.plot()
-exit()
-
-
-
 # variables de flujo
-t_inf = 273.15
-p_inf = 101325
-v_inf = 75
+t_inf = 300
+p_inf = 101300
+v_inf = 10 # [m / s]
 
 alfa = 0
 
@@ -96,10 +88,30 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
-print(mach_inf)
-print(Re)
+
 (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf, alfa, mallaNACA)
 
+mallaNACA.to_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
+np.savetxt('./potential_test/X.csv', mallaNACA.X, delimiter=',')
+np.savetxt('./potential_test/Y.csv', mallaNACA.Y, delimiter=',')
+np.savetxt('./potential_test/phi.csv', phi, delimiter=',')
+f = open("./potential_test/C.csv", "w+")
+f.write(str(C))
+f.close()
+np.savetxt('./potential_test/theta.csv', theta, delimiter=',')
+
 plt.figure('potential')
-plt.plot(X[:, N-1], Y[:, N-1], 'k')
-plt.contour(X, Y, phi)
+plt.contour(mallaNACA.X, mallaNACA.Y, phi, 80)
+plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
+plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
+plt.axis('equal')
+
+(u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
+
+plt.figure('velocity')
+plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=6, scale_units='x')
+plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
+plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
+plt.axis('equal')
+plt.draw()
+plt.show()

@@ -73,23 +73,17 @@ class mesh_O(mesh):
         '''
 
         # se genera malla antes por algún método algebráico
-        # self.gen_TFI()
+        self.gen_TFI()
+
         # se inician variables
         Xn  = self.X
         Yn  = self.Y
         m   = self.M
         n   = self.N
 
-        Xn[:, 0] += 0.25
-
-        for j in range(1, n-1):
-            Xn[:, j] = Xn[:, j-1] + (Xn[:, n-1] - Xn[:, 0]) / (n-1)
-            Yn[:, j] = Yn[:, j-1] + (Yn[:, n-1] - Yn[:, 0]) / (n-1)
-        #return
-
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        omega   = 1.2  # en caso de metodo SOR
+        omega   = 1.7  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -204,8 +198,8 @@ class mesh_O(mesh):
         I           = 0
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
-        aa          = np.longdouble(7.5)
-        cc          = np.longdouble(7.2)
+        aa          = np.longdouble(16.5)
+        cc          = np.longdouble(8.1)
         linea_eta   = 0.0
         linea_xi    = 0.5
 
@@ -759,47 +753,10 @@ class mesh_O(mesh):
         d_eta = self.d_eta
 
 
-        # Xe = np.genfromtxt('/home/cardoso/garbage/X.csv', delimiter=',')
-        # X += 0.0000001
-        # Xe += 0.0000001
-
-        # Ye = np.genfromtxt('/home/cardoso/garbage/Y.csv', delimiter=',')
-        # Y += 1e-19
-        # Ye += 1e-19
-
-        # index = 34
-        # percent = 1
-        # var = Y
-        # vare = Ye
-        # print('inside potential')
-        # print('comparing X mesh')
-        # print(np.all((np.abs(vare - var) / vare * 100) < percent))
-        # print(Ye[:, index])
-        # print(Y[:, index])
-        # print('after comparing X mesh')
-        # exit()
-
-        '''
-        PARECE HABER INCONSISTENCIAS EN X para j = N-1
-        Y TIENE RESULTADOS CATASTROFICOS
-        '''
-
-
         x_xi = np.zeros((M, N))
         x_eta = np.zeros((M, N))
         y_xi = np.zeros((M, N))
         y_eta = np.zeros((M, N))
-        # ----------------------------VARIABLES--------------------------------#
-        # J= Jacobiano
-        # g11,g12,g21,g22= Tensor métrico transformación directa
-        # g11I,g12I,g21I,g22I= Tensor métrico transformación indirecta
-        # x_xi= Variación de la coordenada x con respecto a xi
-        # x_eta= Variación de la coordenada x con respecto a eta
-        # y_xi= Variación de la coordenada y con respecto a xi
-        # y_eta= Variación de la coordenada y con respecto a eta
-        # ---------------------------------------------------------------------#
-        #  Para el cálculo de las variaciones de las coordenadas x e y
-        #  se utilizan las discretizaciones de la tabla 4.3.1
 
         # for i= 1 : N-1
         for i in range(M-1):

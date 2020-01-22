@@ -280,7 +280,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.1)  # en caso de metodo SOR
+        omega = np.longdouble(0.4)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
@@ -295,9 +295,9 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(0.4)  #0.4
-        cc = np.longdouble(4.3)  #3.3
-        linea_xi = 0.5
+        aa = np.longdouble(0.02)  #0.4
+        cc = np.longdouble(0.1)  #3.3
+        linea_xi = 0.0
         linea_eta = 0.0
 
         it = 0

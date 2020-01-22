@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# compila archivo latex con bibliografi .bib
+# escibir nombre de archivo sin extension
+
+FILE=$1
+
+pdflatex $FILE
+bibtex $FILE
+pdflatex $FILE
+pdflatex $FILE
