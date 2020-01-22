@@ -3,6 +3,7 @@ garbage
 test*.py
 
 *.odt
+.pdf
 
 
 ## Core latex/pdflatex auxiliary files:
