@@ -2087,7 +2087,8 @@
             \label{stationary_flow}
         \end{equation}
 
-        mientras que la ecuación de la energía queda:
+        mientras que la ecuación de la energía, a través de las relaciones
+        para gas isentrópico, queda como
         \begin{equation}
             H \equiv h + \frac{\vec{v}^2}{2} = H_0
         \end{equation}
@@ -2111,10 +2112,15 @@
         Las componentes de la velocidad en el dominio computacional $U$ y $V$
         pueden definirse en función de las componentes del sistema cartesiano
         $u$ y $v$ como:
-        \begin{equation}
-            U = \pdv{\xi}{x} \phi_{x} + \pdv{\xi}{y} \phi_{y}
-                    = \xi_{x} u + \xi_{y} v
-        \end{equation}
+        \begin{subequations}
+            \begin{equation}
+                U = \xi_{x} \phi_{x} + \xi_{y} \phi_{y}
+                        = \xi_{x} u + \xi_{y} v
+            \end{equation}
+            \begin{equation}
+                V = \eta_{x} \phi_{x} + \eta_{y} = \eta_{x} u + \eta_{y} v
+            \end{equation}
+        \end{subequations}
 
     \paragraph*{}
         A partir de las ecuaciones \ref{u_eq_phi} y \ref{stationary_flow} se
@@ -2219,6 +2225,7 @@
             \label{phi_circulacion_malla}
         \end{figure}
 
+    \subsection{Condiciones para perfiles aerodinámicos}
     \paragraph*{}
         Los perfiles aerodinámicos requieren una circulación cuya intensidad es
         definida por la condición de Kutta. En simulaciones computacionales un
@@ -2232,6 +2239,22 @@
         El valor de la circulación debe ser actualizado en cada iteración del
         proceso de solución, esto se logra imponiendo velocidades o presiones
         iguales en ambos lados del borde de salida.
+
+    \section{Discretización para flujo subsonico estacionario}
+    \paragraph*{}
+        La ecuación de flujo potencial en su variable estacionaria para flujo
+        subsonico es una ecuación diferencial parcial elíptica. Esto presenta la
+        facilidad de utilizar diferencias finitas como método de discretización
+        del problema, sin embargo es importante recalcar que este no es el
+        único método válido y que tambien es posible llevar a cabo la
+        discretización mediante los métodos de volumenes y elementos finitos.
+
+    \paragraph*{}
+        Ya que los flujos subsónicos presentan generalmente un comportamiento
+        ``suave" es posible realizar las simulaciones con mallas que tengan una
+        alta densidad de celdas, a excepción ciertas zonas donde se generan
+        grandes gradientes como lo son esquinas, y bordes de ataque y de salida
+        de perfiles alares, entre otros.
 %
 %
 %
