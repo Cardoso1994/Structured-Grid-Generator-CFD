@@ -2226,11 +2226,56 @@
         \end{figure}
 
     \subsection{Condiciones para perfiles aerodinámicos}
+    \subsubsection{Circulación y condición de Kutta}
     \paragraph*{}
-        Los perfiles aerodinámicos requieren una circulación cuya intensidad es
-        definida por la condición de Kutta. En simulaciones computacionales un
-        ``corte" debe definirse, a lo largo del cual existirá una discontinuidad
-        del potencial dado por
+        La condición de Kutta implica que en flujo no viscoso e incompresible
+        alrededor de un perfil alar, el fluido sale del borde de salida de
+        manera suave.
+
+    \paragraph*{}
+        Supongase el flujo sobre un perfil aerodinámico, en el momento en que
+        el flujo ha comenzado y en los primeros instantes, el fluido intentará
+        rodear el borde de salida, desde el lado inferior al superior, esto
+        implica la existencia de un punto de estancamiento en el extrados del
+        perfil. Sin embargo, este comportamiento no es sostenible en un flujo
+        real por mucho tiempo. En realidad conforme el flujo termina de
+        desarrollarse hasta llegar a un estado estacionario, dicho punto de
+        estancamiento va recorriendose hacia la parte posterior hasta llegar al
+        borde de salida, a partir de que se logra esta condición se cumple la
+        condición de Kutta, es decir el fluido deja el borde de salida de
+        manera suave.
+
+    \paragraph*{}
+        La figura \ref{kutta_condition} muestra este comportamiento, en la
+        subfigura \ref{kutta_condition}.1 se ve el instante inicial y se
+        evidencia la presencia de un punto de estancamiento en el extrados del
+        perfil. Conforme se avanza en los cuadros se observa como dicho punto de
+        estancamiento se desplaza hacia la sección posterior del perfil hasta
+        llegar al cuadro \ref{kutta_condition}.6 donde se ha alcanzado el flujo
+        estacionario. Es en este último cuadro donde se observa el cumplimiento
+        de la condición de Kutta.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/kutta_condition}
+            \caption[Desarrollo de flujo estacionario sobre un perfil
+            aerodinámico]{Desarrollo de flujo estacionario sobre un perfil
+            aerodinámico, desde el reposo hasta una velocidad estacionaria.}
+            \label{kutta_condition}
+        \end{figure}
+
+    \paragraph*{}
+        En resúmen lo que la condición de Kutta establece es que la circulación
+        alrededor de un perfil es la adecuada justo para asegurar que el flujo
+        deja de manera suave el borde de salida.\cite{anderson_fundamentals}
+
+    \subsubsection*{Condiciones de frontera}
+    \paragraph*{}
+        Los perfiles aerodinámicos requieren la presencia de una circulación
+        cuya intensidad es definida por la condición de Kutta. En simulaciones
+        computacionales un ``corte" debe definirse, a lo largo del cual existirá
+        una discontinuidad del potencial dado por
+
         \begin{equation}
             \phi_{P'} - \phi_{P} = \Gamma_{B} = \phi_{B} - \phi_{A}
         \end{equation}
@@ -2251,8 +2296,8 @@
 
     \paragraph*{}
         Ya que los flujos subsónicos presentan generalmente un comportamiento
-        ``suave" es posible realizar las simulaciones con mallas que tengan una
-        alta densidad de celdas, a excepción ciertas zonas donde se generan
+        suave es posible realizar las simulaciones con mallas que tengan una
+        baja densidad de celdas, a excepción ciertas zonas donde se generan
         grandes gradientes como lo son esquinas, y bordes de ataque y de salida
         de perfiles alares, entre otros.
 %
