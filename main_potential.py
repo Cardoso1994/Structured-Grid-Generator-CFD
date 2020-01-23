@@ -6,6 +6,7 @@ Created on Wed Apr 18 00:33:47 2018
 @author: cardoso
 """
 
+from os import mkdir
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -25,9 +26,8 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 55
-union = 6
 
+N = 55
 airfoil_points = 91
 
 if malla == 'C':
@@ -40,12 +40,13 @@ m = 2  # combadura
 p = 4  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
+
 # radio frontera externa
 R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-# perfil.rotate(0)
+perfil.rotate(5)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -53,9 +54,9 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-mallaNACA.X[:, 0] += 0.25
-mallaNACA.Y[0, :] = 0
-mallaNACA.Y[-1, :] = 0
+# mallaNACA.X[:, 0] += 0.25
+# mallaNACA.Y[0, :] = 0
+# mallaNACA.Y[-1, :] = 0
 mallaNACA.gen_Poisson()
 mallaNACA.plot()
 
@@ -64,8 +65,11 @@ flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
 print()
 
 if flag == 'S':
-    mallaNACA.to_txt_mesh('./mesh_test.txt_mesh')
-    print('Mesh saved')
+    path = input('carpeta donde se va a guardar: ')
+    try:
+        mkdir(path)
+    except:
+        pass
 elif flag == 'N':
     print('Continue without saving')
     pass
@@ -100,26 +104,18 @@ Re = v_inf * c * d_inf / 17e-6
 
 (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
                                             alfa, mallaNACA)
-
-mallaNACA.to_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
-np.savetxt('./potential_test/X.csv', mallaNACA.X, delimiter=',')
-np.savetxt('./potential_test/Y.csv', mallaNACA.Y, delimiter=',')
-np.savetxt('./potential_test/phi.csv', phi, delimiter=',')
-f = open("./potential_test/C.csv", "w+")
-f.write(str(C))
-f.close()
-np.savetxt('./potential_test/theta.csv', theta, delimiter=',')
+if flag == 'S':
+    mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
+    np.savetxt(path + '/X.csv', mallaNACA.X, delimiter=',')
+    np.savetxt(path + '/Y.csv', mallaNACA.Y, delimiter=',')
+    np.savetxt(path + '/phi.csv', phi, delimiter=',')
+    f = open(path + "/C.csv", "w+")
+    f.write(str(C))
+    f.close()
+    np.savetxt(path + '/theta.csv', theta, delimiter=',')
 
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 80)
-plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
-plt.axis('equal')
-
-(u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
-
-plt.figure('velocity')
-plt.quiver(mallaNACA.X, mallaNACA.Y, u, v, scale=6, scale_units='x')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
 plt.axis('equal')

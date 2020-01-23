@@ -553,7 +553,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     tol = 1.e-9
-    omega = 0.5
+    omega = 1.5
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
