@@ -17,4 +17,4 @@
 * gamma = 1.4
 * cp = 1006
 
-* omega = 1.2
+* omega = 1.5
