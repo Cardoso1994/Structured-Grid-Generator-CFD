@@ -2272,13 +2272,68 @@
     \subsubsection*{Condiciones de frontera}
     \paragraph*{}
         Los perfiles aerodinámicos requieren la presencia de una circulación
-        cuya intensidad es definida por la condición de Kutta. En simulaciones
-        computacionales un ``corte" debe definirse, a lo largo del cual existirá
-        una discontinuidad del potencial dado por
+        cuya intensidad es definida por la condición de Kutta. El origen de
+        dicha circulación se da a partir del inicio del flujo alrededor del perfil,
+        y tiene explicación gracias al teorema de Kelvin de la circulación, el
+        cual dice que la razón de cambio de la circulación con respecto al
+        tiempo alrededor de una curva cerrada conformada por el mismo fluido es
+        igual a cero
+        \begin{equation}
+            \frac{D\Gamma}{Dt} = 0
+        \end{equation}
 
+    \paragraph*{}
+        En un instante inicial, cuando el flujo alrededor del perfil está en
+        reposo y su velocidad es igual a cero, la circulación alredor de una
+        curva arbitraria que rodee al perfil tambien será cero, tal como se
+        muestra en la figura \ref{circulacion_reposo}.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/circulacion_reposo}
+            \caption[Fluido en reposo relativo a un perfil alar]{Fluido en
+                reposo relativo a un perfil alar\cite{anderson_fundamentals}}
+            \label{circulacion_reposo}
+        \end{figure}
+
+        Al pasar los primeros instantes el fluido intentará rodear el borde de
+        salida del perfil con lo cual se formará una región con grandes
+        gradientes de velocidad y vorticidad en el borde de salida. Esta región
+        es característica de las partículas que la forman con lo cual se
+        comienza a desplazar corriente abajo hasta que la condición de Kutta se
+        cumple, durante este proceso esta región adopta la forma de un vórtice
+        al cual se le conoce como vórtice de inicio.
+
+    \paragraph*{}
+        Una vez lograda la condición de Kutta, el vórtice de inicio ya no está
+        presente en el perfil sino que continuara alejándose corriente abajo
+        conforme el tiempo avanza. Sin embargo, tal como se muestra en la figura
+        \ref{circulacion_tiempo}, la curva que conformaba en el reposo al fluido
+        alrededor del perfil se ha deformado, y ahora contiene además al
+        vórtice de inicio. Se sabe gracias al teorema de Kelvin que la
+        circulación alrededor de la curva $C_2$ debe ser cero, pero si esta
+        curva la dividimos en $C_3$ y $C_4$ conteniedo al vórtice y al perfil
+        respectivamente, observamos que la circulación alrededor de $C_3$ tendrá
+        un valor finito debido al vórtice y por lo tanto alrededor de la curva
+        $C_4$ debe existir una circulación en sentido contrario, con lo que se
+        logra que alrededor de $C_2$ la circulación sea cero.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/circulacion_tiempo}
+            \caption[Flujo alrededor de perfil momentos después]{Flujo alrededor
+                de perfil momentos después\cite{anderson_fundamentals}}
+            \label{circulacion_tiempo}
+        \end{figure}
+
+    \paragraph*{}
+        En simulaciones computacionales un corte debe definirse, a lo largo del cual existirá
+        una discontinuidad del potencial dado por
         \begin{equation}
             \phi_{P'} - \phi_{P} = \Gamma_{B} = \phi_{B} - \phi_{A}
         \end{equation}
+        con lo cual se logra tomar en cuenta los efectos del vórtice de inicio
+        en los resultados.
 
     \paragraph*{}
         El valor de la circulación debe ser actualizado en cada iteración del
@@ -2300,6 +2355,25 @@
         baja densidad de celdas, a excepción ciertas zonas donde se generan
         grandes gradientes como lo son esquinas, y bordes de ataque y de salida
         de perfiles alares, entre otros.
+
+    \paragraph*{}
+        Sin embargo la discretización de la ecuación de flujo potencial supone
+        un esfuerzo mayor, debido a que a partir de la malla generada
+        previamente se deben calcular otras dos mallas escalonadas en los puntos
+        medios. Para una malla con puntos $(i, j)$ donde $i = 1, \ldots, M$ y
+        $j = 1, \ldots, N$ se tendrán puntos escalonados $(i\pm\frac{1}{2}, j
+        \pm\frac{1}{2})$. En los puntos pertenecientes a la malla original se 
+        calcula la función de potencial, mientras que en las mallas intercaladas
+        se calcula tanto la densidad como la velocidad.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/malla_escalonada}
+            \caption[Malla original y mallas escalonadas]{Malla original y
+                mallas escalonadas\cite{potential_flow}}
+            \label{malla_escalonada}
+        \end{figure}
+
 %
 %
 %
