@@ -5,7 +5,12 @@ Perfil NACA 2412
 * configuración central 75 x 75
 * Aumento en xi, 95 x 75
 * Aumento en eta, 75 x 95
+* omega = 1.4
 
+## Método Poisson
+* aa = 26.5
+* cc = 6.1
+* omega = 1.5
 
 
 
