@@ -126,11 +126,11 @@ class mesh_C(mesh):
         '''
         # dx = (x_line[-2] - x_line[-1]) * 253 / 254
         # x_line[1:-1] -= dx
-        perfil_x = np.concatenate((x_line, perfil_x[1:]))
+        perfil_x = np.concatenate((x_line[:-1], perfil_x[:]))
         x_line = np.flip(x_line, 0)
         perfil_x = np.concatenate((perfil_x, x_line[1:]))
         y_line[:] = 0
-        perfil_y = np.concatenate((y_line, perfil_y[1:]))
+        perfil_y = np.concatenate((y_line[:-1], perfil_y[:]))
         perfil_y = np.concatenate((perfil_y, y_line[1:]))
 
         # primera columna FI (perfil), ultima columna FE
@@ -138,6 +138,7 @@ class mesh_C(mesh):
         self.Y[:, -1] = y
         self.X[:, 0] = perfil_x
         self.Y[:, 0] = perfil_y
+
         return
 
     def gen_Laplace(self, metodo='SOR'):

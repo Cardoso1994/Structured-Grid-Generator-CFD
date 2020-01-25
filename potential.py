@@ -466,8 +466,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     Y = np.copy(mesh.Y)
     M = mesh.M
     N = mesh.N
-    # d_xi = mesh.d_xi
-    # d_eta = mesh.d_eta
 
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
         mesh.tensor()

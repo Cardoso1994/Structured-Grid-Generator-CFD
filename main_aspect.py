@@ -26,11 +26,10 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 15
+N = 10
 union = 6
 
-# points = 11
-airfoil_points = 35
+airfoil_points = 41
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -47,12 +46,12 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-flap.create_sin(points)
-# flap.rotate(5)
-perfil.join(flap, dx=0.055, dy=0.05, union=union)
-# perfil.rotate(0)
-M = np.shape(perfil.x)[0]
+# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+# flap.create_sin(points)
+# flap.rotate(15)
+# perfil.join(flap, dx=0.055, dy=0.05, union=union)
+perfil.rotate(3)
+# M = np.shape(perfil.x)[0]
 
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
