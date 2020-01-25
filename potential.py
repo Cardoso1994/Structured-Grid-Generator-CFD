@@ -552,8 +552,8 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     it = 0
     ddd = 1
     it_max = 20000
-    tol = 1.e-9
-    omega = 1.5
+    tol = 1.e-7
+    omega = 1.6
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -570,12 +570,6 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         elif arcotan[i] < 0 and arcosen[i] < 0:
             if (theta[i, 0] - alfa) > 0:
                 arcotan[i] = 2 * np.pi + arcotan[i]
-
-    ###########################################################################
-    #
-    #   ARCOTAN COINCIDE PERFECTAMENTE
-    #
-    ###########################################################################
 
     while ddd > tol and it < it_max:
         it = it + 1

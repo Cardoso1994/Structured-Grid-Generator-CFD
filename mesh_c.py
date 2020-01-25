@@ -75,7 +75,7 @@ class mesh_C(mesh):
         npoints = (M - points) // 2 + 1
         print('npoints')
         print(npoints)
-        weight = 1.5
+        weight = 1.15
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         print(delta_limit * (1 - weight))
