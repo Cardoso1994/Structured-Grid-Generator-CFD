@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# compila archivo latex con bibliografi .bib
+# compila archivo latex con bibliografia .bib
 # escibir nombre de archivo sin extension
 
-FILE=$1
+FILE=tesis
 
 pdflatex $FILE
 bibtex $FILE
