@@ -2106,6 +2106,7 @@
             \pdv{t} \left( \frac{\rho}{J} \right) + \pdv{\xi} \left( \rho
                     \frac{U}{J} \right) + \pdv{\eta} \left( \rho \frac{V}{J}
                         \right) = 0
+            \label{eq_potencial_0}
         \end{equation}
 
     \paragraph*{}
@@ -2136,8 +2137,10 @@
         ya que tambien se tiene:
         \begin{align}
             U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
+            \label{eq_potencial_1}
             \\
             V = g^{21} \phi_{\xi} + g^{22} \phi_{\eta}
+            \label{eq_potencial_2}
         \end{align}
 
     \paragraph*{}
@@ -2315,8 +2318,9 @@
         curva la dividimos en $C_3$ y $C_4$ conteniedo al vórtice y al perfil
         respectivamente, observamos que la circulación alrededor de $C_3$ tendrá
         un valor finito debido al vórtice y por lo tanto alrededor de la curva
-        $C_4$ debe existir una circulación en sentido contrario, con lo que se
-        logra que alrededor de $C_2$ la circulación sea cero.
+        $C_4$ debe existir una circulación de igual magnitud en sentido
+        contrario, con lo que se logra que alrededor de la curva $C_2$ la
+        circulación sea cero.
 
         \begin{figure}[htbp!]
             \centering
@@ -2373,6 +2377,58 @@
                 mallas escalonadas\cite{potential_flow}}
             \label{malla_escalonada}
         \end{figure}
+
+    \paragraph*{}
+        La figura \ref{malla_escalonada} es una representación de la
+        localización de los puntos de las mallas intercaladas. De dicha figura
+        se puede deducir la existencia de dos mallas escalonadas, una malla
+        vertical y otra horizontal. En la figura se observa una ``molecula''
+        delimitada por los puntos $ABCD$, sobre dicho contorno se encuentran
+        marcados con una $X$ los puntos de intersección de las mallas
+        escalonadas con la malla original, es importante resaltar que los puntos
+        $ABCD$ no forman parte de ninguna de las mallas y su único propósito en
+        la imagen es delimitar una partícula.
+
+    \paragraph*{}
+        Si a la ecuación \ref{eq_potencial_0} se le eliminan los términos
+        relacionados con el cambio respecto al tiempo, dado que se está
+        calculando flujo estacionario, y además utilizamos una diferencia de
+        tipo central para los términos de la densidad y las velocidades se 
+        obtiene
+        \begin{equation}
+            \frac{\left (\rho \frac{U}{J} \right)_{i + \frac{1}{2}, j} -
+                \left( \rho \frac{U}{J} \right)_{i - \frac{1}{2}, j}}{2\Delta\xi}
+            + \frac{\left (\rho \frac{V}{J} \right)_{i,j + \frac{1}{2}} -
+                \left( \rho \frac{V}{J} \right)_{i, j - \frac{1}{2}}}{2\Delta\eta}
+            = 0
+        \end{equation}
+        la cual se simplifica si se toman $\Delta\xi = \Delta\eta = 1$, quedando
+        \begin{equation}
+            \left (\rho \frac{U}{J} \right)_{i + \frac{1}{2}, j} -
+                \left( \rho \frac{U}{J} \right)_{i - \frac{1}{2}, j}
+            + \left (\rho \frac{V}{J} \right)_{i,j + \frac{1}{2}} -
+                \left( \rho \frac{V}{J} \right)_{i, j - \frac{1}{2}}
+            = 0
+        \end{equation}
+
+    \paragraph*{}
+        A partir de las ecuaciones \ref{eq_potencial_1} y \ref{eq_potencial_2}
+        (mostradas nuevamente por conveniencia) se obtienen los valores
+        correspondientes a las velocidades mediante la discretización de las
+        mismas por aproximaciones centrales.
+
+        \begin{align*}
+            U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
+            \\
+            V = g^{21} \phi_{\xi} + g^{22} \phi_{\eta}
+        \end{align*}
+
+    \paragraph*{}
+        En la malla intercalada vertical, es decir donde la variable $\xi$ es
+        constante,
+
+
+
 
 %
 %
