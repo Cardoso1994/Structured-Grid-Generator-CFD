@@ -19,20 +19,20 @@ import mesh_su2
 import helpers
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 10
+N = 75
 union = 6
 
-airfoil_points = 41
+airfoil_points = 193
 
 if malla == 'C':
-    points = airfoil_points // 3 * 2
+    points = airfoil_points // 3 #* 2
 elif malla == 'O':
     points = airfoil_points
 
@@ -50,8 +50,7 @@ perfil.create_sin(points)
 # flap.create_sin(points)
 # flap.rotate(15)
 # perfil.join(flap, dx=0.055, dy=0.05, union=union)
-perfil.rotate(3)
-# M = np.shape(perfil.x)[0]
+# perfil.rotate(3)
 
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)

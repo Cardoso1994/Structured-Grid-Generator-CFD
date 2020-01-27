@@ -25,7 +25,8 @@ class mesh_C(mesh):
         archivo = archivo con la nube de puntos de la frontera interna
         '''
 
-        M = np.shape(airfoil.x)[0] * 3 // 2 - 1
+        # M = np.shape(airfoil.x)[0] * 3 // 2 - 1
+        M = np.shape(airfoil.x)[0] * 3
         mesh.__init__(self, R, M, N, airfoil)
         self.tipo = 'C'
 
@@ -75,7 +76,7 @@ class mesh_C(mesh):
         npoints = (M - points) // 2 + 1
         print('npoints')
         print(npoints)
-        weight = 1.15
+        weight = 1.05
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         print(delta_limit * (1 - weight))
@@ -110,7 +111,7 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        # weight = 1.2
+        weight = 1.25
         delta_limit = 2.5 * R - perfil_x[0]
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** (npoints - 1))
@@ -158,7 +159,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.45)  # en caso de metodo SOR
+        omega = np.longdouble(1.5)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -281,7 +282,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(0.4)  # en caso de metodo SOR
+        omega = np.longdouble(0.7)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
@@ -296,8 +297,8 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(0.02)  #0.4
-        cc = np.longdouble(0.1)  #3.3
+        aa = np.longdouble(2.8)  #0.4
+        cc = np.longdouble(3.3)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 

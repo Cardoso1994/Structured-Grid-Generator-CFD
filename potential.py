@@ -262,12 +262,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * (phi[i, j+2] - phi[i, j +1])
                     VV[i, j] = g12V[i, j] * PV[i, j] + g22V[i, j] \
                             * (phi[i, j+2] - phi[i, j +1])
-        '''
-        it == 1
-            PV coincide PERFECTAMENTE
-            UV coincide casi PERFECTAMENTE excepto en [0, 0]
-            VV coincide casi PERFECTAMENTE excepto en [0, :]
-        '''
         #  for j in range(N-1):
         #      UV[:, j] = g11V[:, j] * PV[:, j] + g12V[:, j] \
         #              * (phi[:, j+1] - phi[:, j])
@@ -300,12 +294,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                         * PH[i, 1:N-1]
             VH[i, 1 : N-1] = g12H[i, 1:N-1] * (phi[i+1, 1:N-1] - phi[i, 1:N-1]) + g22H[i, 1:N-1] \
                 * PH[i, 1:N-1]
-        '''
-        it = 1
-        PH coincide PERFECTAMENTE
-        UH coincide PERFECTAMENTE
-        VH coincide PERFECTAMENTE
-        '''
 
         rhoV = 1 - (UV**2 * (x_xiV**2 + y_xiV**2)
                     + VV**2 * (x_etaV**2 + y_etaV**2)
@@ -404,20 +392,13 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                             * JH[i-1,j] * g11H[i-1,j] + rhoV[i,j] * JV[i,j] \
                             * g22V[i,j] + rhoV[i,j-1] * JV[i,j-1] * g22V[i,j-1])
 
-        # Aplicamos el m�todo SOR de sobrerelajaci�n, ecuaci�n (4.29).
-        # phi(i,j) = w * phi(i,j) + (1-w) * phiold(i,j);
+        # Aplicamos el método SOR de sobrerelajación, ecuación.
         phi = omega * phi + (1-omega) * phi_old
         print('phi[8, :]')
         print(phi[8, :])
         exit()
 
         # condición en la superficie del perfil
-
-        #######################################################################
-        #
-        #   YA SE HA HECHO LA CONVERSION ENTRE ESPAÑOLETA Y YO
-        #
-        #######################################################################
         # for i in range(1, M-1):
         for i in range(M-2, 0, -1):
             phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-2]
@@ -434,11 +415,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         ddd = abs(phi - phi_old).max()
 
         # cálculo de la Circulación
-        #######################################################################
-        #
-        #   YA SE HA HECHO LA CONVERSION ENTRE ESPAÑOLETA Y YO
-        #
-        #######################################################################
         C = phi[M-2, N-1] - phi[1, N-1] - g12[0, N-1] * \
             (phi[0, N-3] - 4 * phi[0, N-2] + 3 * phi[0, N-1]) / g11[0, N-1]
     print('outside while. it = ' + str(it))
@@ -731,17 +707,6 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
     Y = np.copy(mesh.Y)
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
-
-    # importing from ESPAÑOLETA
-    # path = '/home/desarrollo/'
-    # g11 = np.genfromtxt(path + 'garbage/g11.csv', delimiter=',')
-    # g22 = np.genfromtxt(path + 'garbage/g22.csv', delimiter=',')
-    # g12 = np.genfromtxt(path + 'garbage/g12.csv', delimiter=',')
-    # J = np.genfromtxt(path + 'garbage/J.csv', delimiter=',')
-    # x_xi = np.genfromtxt(path + 'garbage/x_xi.csv', delimiter=',')
-    # x_eta = np.genfromtxt(path + 'garbage/x_eta.csv', delimiter=',')
-    # y_xi = np.genfromtxt(path + 'garbage/y_xi.csv', delimiter=',')
-    # y_eta = np.genfromtxt(path + 'garbage/y_eta.csv', delimiter=',')
 
     # condición de frontera exterior
     alfa = alfa * np.pi / 180
