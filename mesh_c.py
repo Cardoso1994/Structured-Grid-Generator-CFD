@@ -297,12 +297,18 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(0.4)  #0.4
-        cc = np.longdouble(3.3)  #3.3
+        aa = np.longdouble(2.3)  #0.4
+        cc = np.longdouble(3.1)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 
         it = 0
+
+        #####
+        #####
+        mesh.err_max = 1e-3
+        #####
+        #####
 
         # inicio del método iterativo
         print("Poisson:")

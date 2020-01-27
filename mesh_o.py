@@ -203,6 +203,12 @@ class mesh_O(mesh):
         linea_eta   = 0.0
         linea_xi    = 0.5
 
+        #####
+        #####
+        # mesh.err_max = 1e-4
+        #####
+        #####
+
         it = 0
         print("Poisson:")
         # inicio del método iterativo
