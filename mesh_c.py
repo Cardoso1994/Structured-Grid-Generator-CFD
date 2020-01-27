@@ -111,7 +111,7 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        weight = 1.25
+        weight = 1.2
         delta_limit = 2.5 * R - perfil_x[0]
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** (npoints - 1))
@@ -297,7 +297,7 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(2.8)  #0.4
+        aa = np.longdouble(0.4)  #0.4
         cc = np.longdouble(3.3)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0

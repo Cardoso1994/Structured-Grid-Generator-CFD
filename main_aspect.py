@@ -26,10 +26,10 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 75
+N = 95
 union = 6
 
-airfoil_points = 193
+airfoil_points = 183
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
@@ -88,6 +88,5 @@ elif flag == 'N':
 else:
     print('Quitting execution...')
     exit()
-
 
 helpers.get_aspect_ratio(mallaNACA)
