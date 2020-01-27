@@ -2409,6 +2409,7 @@
             + \left (\rho \frac{V}{J} \right)_{i,j + \frac{1}{2}} -
                 \left( \rho \frac{V}{J} \right)_{i, j - \frac{1}{2}}
             = 0
+            \label{eq_potencial_3}
         \end{equation}
 
     \paragraph*{}
@@ -2425,8 +2426,158 @@
 
     \paragraph*{}
         En la malla intercalada vertical, es decir donde la variable $\xi$ es
-        constante,
+        constante, la variación del potencial respecto a $\xi$ se obtiene
+        calculando por aproximaciones centrales de dicha variación en los puntos
+        adyacentes pertenecientes a la malla original y calculando la media de
+        las mismas. Para la variacióncon con respecto a $\eta$ se calcula
+        unicamente una aproximación central entre los puntos adyacentes. Esto
+        es, para un punto $(i, j + \frac{1}{2})$ las variaciones con respecto a
+        $\xi$ se obtienen promediando las aproximaciones centrales con respecto
+        a $\xi$ de los puntos $(i, j)$ e $(i, j+1)$; para las variaciones
+        respecto a $\eta$ se hace una aproximación central entre los puntos
+        $(i, j)$ e $(i, j+1)$.
 
+    \paragraph*{}
+        Por otro lado, en la malla intercalada horizontal, donde $\eta=cte$,
+        la variación del potencial respecto a $\xi$ $\phi_\xi$ es simplemente
+        la aproximación central de dicha variación a partir de los puntos
+        adyacentes de la malla original. En el caso de la variación del
+        potencial respecto a $\eta$ $\phi_\eta$, primero se debe calcular dicha
+        variación en los puntos adyacentes de la malla y posteriormente obtener
+        la media de las mismas. Es decir, para un punto $(i + \frac{1}{2}, j)$,
+        las variaciones con respecto a $\xi$ son una aproximación central entre
+        los puntos $(i, j)$ e $(i + 1, j)$ y para las variaciones con respecto
+        a $\eta$ se deben calcular las aproximaciones centrales con respecto a
+        $\eta$ en los puntos $(i, j)$ e $(i + 1, j)$ para posteriormente
+        calcular la media.
+
+    \paragraph*{}
+        La discretización de las velocidades, considerando $\Delta\xi =$
+        $\Delta\eta = 1$, finalmente queda:
+        \begin{subequations}
+            % ecuaciones para U
+            \begin{equation}
+                U_{i + \frac{1}{2}, j} =
+                    g^{11}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j} - \phi_{i, j} \right)
+                    + \frac{1}{4} g^{12}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j+1} - \phi_{i+1, j-1}
+                        + \phi_{i, j+1} - \phi_{i, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                U_{i - \frac{1}{2}, j} =
+                    g^{11}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j} - \phi_{i-1, j} \right)
+                    + \frac{1}{4} g^{12}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j+1} - \phi_{i, j-1}
+                        + \phi_{i-1, j+1} - \phi_{i-1, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                U_{i, j + \frac{1}{2}} =
+                \frac{1}{4} g^{11}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i+1, j+1} - \phi_{i-1, j+1}
+                            + \phi_{i+1, j} - \phi_{i-1, j} \right)
+                    + g^{12}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i, j+1} - \phi_{i, j} \right)
+            \end{equation}
+            \begin{equation}
+                U_{i, j - \frac{1}{2}} =
+                \frac{1}{4} g^{11}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i+1, j} - \phi_{i-1, j}
+                            + \phi_{i+1, j-1} - \phi_{i-1, j-1} \right)
+                    + g^{12}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i, j} - \phi_{i, j-1} \right)
+            \end{equation}
+
+            % ecuaciones para V
+            \begin{equation}
+                V_{i + \frac{1}{2}, j} =
+                    g^{21}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j} - \phi_{i, j} \right)
+                    + \frac{1}{4} g^{22}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j+1} - \phi_{i+1, j-1}
+                        + \phi_{i, j+1} - \phi_{i, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                V_{i - \frac{1}{2}, j} =
+                    g^{21}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j} - \phi_{i-1, j} \right)
+                    + \frac{1}{4} g^{22}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j+1} - \phi_{i, j-1}
+                        + \phi_{i-1, j+1} - \phi_{i-1, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                V_{i, j + \frac{1}{2}} =
+                \frac{1}{4} g^{21}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i+1, j+1} - \phi_{i-1, j+1}
+                            + \phi_{i+1, j} - \phi_{i-1, j} \right)
+                    + g^{22}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i, j+1} - \phi_{i, j} \right)
+            \end{equation}
+            \begin{equation}
+                V_{i, j - \frac{1}{2}} =
+                \frac{1}{4} g^{21}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i+1, j} - \phi_{i-1, j}
+                            + \phi_{i+1, j-1} - \phi_{i-1, j-1} \right)
+                    + g^{22}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i, j} - \phi_{i, j-1} \right)
+            \end{equation}
+            \label{velocities}
+        \end{subequations}
+
+    \paragraph*{}
+        En las ecuaciones \ref{velocities} se ubican términos que se mantienen
+        iguales para un mismo punto intercalado, por simplicidad dichos términos
+        se agrupan en el término $P$, quedando como
+
+        \begin{subequations}
+            \begin{equation}
+                P_{i + \frac{1}{2}, j} = \phi_{i+1, j+1} - \phi_{i+1, j-1}
+                    + \phi_{i, j+1} - \phi_{i, j-1}
+            \end{equation}
+            \begin{equation}
+                P_{i - \frac{1}{2}, j} = \phi_{i, j+1} - \phi_{i, j-1}
+                    + \phi_{i-1, j+1} - \phi_{i-1, j-1}
+            \end{equation}
+            \begin{equation}
+                P_{i, j + \frac{1}{2}} = \phi_{i+1, j+1} - \phi_{i-1, j+1}
+                    + \phi_{i-1, j} - \phi_{i-1, j}
+            \end{equation}
+            \begin{equation}
+                P_{i, j - \frac{1}{2}} = \phi_{i+1, j} - \phi_{i-1, j}
+                    + \phi_{i+1, j-1} - \phi_{i-1, j-1}
+            \end{equation}
+        \end{subequations}
+
+    \paragraph*{}
+        Una vez discretizados los valores de las componentes de la velocidad,
+        se puede despejar el valor del potencial a partir de la ecuación
+        \ref{eq_potencial_3}
+        \begin{align}
+            \begin{aligned}
+            \phi_{i, j} &=
+                \frac{1}{\left( \frac{\rho g^{11}}{J} \right)_{i + \frac{1}{2}, j}
+                + \left( \frac{\rho g^{11}}{J} \right)_{i-\frac{1}{2}, j}
+                + \left( \frac{\rho g^{22}}{J} \right)_{i, j + \frac{1}{2}}
+                + \left( \frac{\rho g^{22}}{J} \right)_{i, j - \frac{1}{2}}}
+                \biggl(
+                    \left( \frac{\rho}{J} \right)_{i+\frac{1}{2}, j}
+                    \left( \left( g^{12}P \right)_{i + \frac{1}{2}, j} 
+                        + g^{11}_{i + \frac{1}{2}, j} \phi_{i+1, j} \right)
+                \\
+                    &- \left( \frac{\rho}{J} \right)_{i - \frac{1}{2}, j}
+                        \left( \left( g^{12} P \right)_{i - \frac{1}{2}, j}
+                        - g^{11}_{i - \frac{1}{2}, j} \phi_{i-1, j} \right)
+                    + \left( \frac{\rho}{J} \right)_{i, j + \frac{1}{2}}
+                        \left( \left( g^{21} P \right)_{i, j + \frac{1}{2}}
+                        + g^{22}_{i, j + \frac{1}{2}} \phi_{i, j + 1} \right)
+                    \\
+                    &- \left( \frac{\rho}{J} \right)_{i, j - \frac{1}{2}}
+                        \left( \left( g^{21} P \right)_{i, j - \frac{1}{2}}
+                        + g^{22}_{i, j - \frac{1}{2}} \phi_{i, j-1} \right)
+                \biggr)
+            \end{aligned}
+        \end{align}
 
 
 
