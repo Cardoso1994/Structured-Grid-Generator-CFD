@@ -9,9 +9,9 @@ Perfil NACA 2412
 
 ## Método Poisson
 * mismas dimensiones de malla que en Laplace
-* aa = 26.5
-* cc = 6.1
-* omega = 1.5
+* aa = 2.3
+* cc = 3.1
+* omega = 0.7
 
 
 ### Notas
