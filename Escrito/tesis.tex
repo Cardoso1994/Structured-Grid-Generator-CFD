@@ -2106,6 +2106,7 @@
             \pdv{t} \left( \frac{\rho}{J} \right) + \pdv{\xi} \left( \rho
                     \frac{U}{J} \right) + \pdv{\eta} \left( \rho \frac{V}{J}
                         \right) = 0
+            \label{eq_potencial_0}
         \end{equation}
 
     \paragraph*{}
@@ -2136,8 +2137,10 @@
         ya que tambien se tiene:
         \begin{align}
             U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
+            \label{eq_potencial_1}
             \\
             V = g^{21} \phi_{\xi} + g^{22} \phi_{\eta}
+            \label{eq_potencial_2}
         \end{align}
 
     \paragraph*{}
@@ -2272,13 +2275,69 @@
     \subsubsection*{Condiciones de frontera}
     \paragraph*{}
         Los perfiles aerodinámicos requieren la presencia de una circulación
-        cuya intensidad es definida por la condición de Kutta. En simulaciones
-        computacionales un ``corte" debe definirse, a lo largo del cual existirá
-        una discontinuidad del potencial dado por
+        cuya intensidad es definida por la condición de Kutta. El origen de
+        dicha circulación se da a partir del inicio del flujo alrededor del perfil,
+        y tiene explicación gracias al teorema de Kelvin de la circulación, el
+        cual dice que la razón de cambio de la circulación con respecto al
+        tiempo alrededor de una curva cerrada conformada por el mismo fluido es
+        igual a cero
+        \begin{equation}
+            \frac{D\Gamma}{Dt} = 0
+        \end{equation}
 
+    \paragraph*{}
+        En un instante inicial, cuando el flujo alrededor del perfil está en
+        reposo y su velocidad es igual a cero, la circulación alredor de una
+        curva arbitraria que rodee al perfil tambien será cero, tal como se
+        muestra en la figura \ref{circulacion_reposo}.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/circulacion_reposo}
+            \caption[Fluido en reposo relativo a un perfil alar]{Fluido en
+                reposo relativo a un perfil alar\cite{anderson_fundamentals}}
+            \label{circulacion_reposo}
+        \end{figure}
+
+        Al pasar los primeros instantes el fluido intentará rodear el borde de
+        salida del perfil con lo cual se formará una región con grandes
+        gradientes de velocidad y vorticidad en el borde de salida. Esta región
+        es característica de las partículas que la forman con lo cual se
+        comienza a desplazar corriente abajo hasta que la condición de Kutta se
+        cumple, durante este proceso esta región adopta la forma de un vórtice
+        al cual se le conoce como vórtice de inicio.
+
+    \paragraph*{}
+        Una vez lograda la condición de Kutta, el vórtice de inicio ya no está
+        presente en el perfil sino que continuara alejándose corriente abajo
+        conforme el tiempo avanza. Sin embargo, tal como se muestra en la figura
+        \ref{circulacion_tiempo}, la curva que conformaba en el reposo al fluido
+        alrededor del perfil se ha deformado, y ahora contiene además al
+        vórtice de inicio. Se sabe gracias al teorema de Kelvin que la
+        circulación alrededor de la curva $C_2$ debe ser cero, pero si esta
+        curva la dividimos en $C_3$ y $C_4$ conteniedo al vórtice y al perfil
+        respectivamente, observamos que la circulación alrededor de $C_3$ tendrá
+        un valor finito debido al vórtice y por lo tanto alrededor de la curva
+        $C_4$ debe existir una circulación de igual magnitud en sentido
+        contrario, con lo que se logra que alrededor de la curva $C_2$ la
+        circulación sea cero.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/circulacion_tiempo}
+            \caption[Flujo alrededor de perfil momentos después]{Flujo alrededor
+                de perfil momentos después\cite{anderson_fundamentals}}
+            \label{circulacion_tiempo}
+        \end{figure}
+
+    \paragraph*{}
+        En simulaciones computacionales un corte debe definirse, a lo largo del cual existirá
+        una discontinuidad del potencial dado por
         \begin{equation}
             \phi_{P'} - \phi_{P} = \Gamma_{B} = \phi_{B} - \phi_{A}
         \end{equation}
+        con lo cual se logra tomar en cuenta los efectos del vórtice de inicio
+        en los resultados.
 
     \paragraph*{}
         El valor de la circulación debe ser actualizado en cada iteración del
@@ -2300,6 +2359,228 @@
         baja densidad de celdas, a excepción ciertas zonas donde se generan
         grandes gradientes como lo son esquinas, y bordes de ataque y de salida
         de perfiles alares, entre otros.
+
+    \paragraph*{}
+        Sin embargo la discretización de la ecuación de flujo potencial supone
+        un esfuerzo mayor, debido a que a partir de la malla generada
+        previamente se deben calcular otras dos mallas escalonadas en los puntos
+        medios. Para una malla con puntos $(i, j)$ donde $i = 1, \ldots, M$ y
+        $j = 1, \ldots, N$ se tendrán puntos escalonados $(i\pm\frac{1}{2}, j
+        \pm\frac{1}{2})$. En los puntos pertenecientes a la malla original se 
+        calcula la función de potencial, mientras que en las mallas intercaladas
+        se calcula tanto la densidad como la velocidad.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=115mm]{./Imagenes/malla_escalonada}
+            \caption[Malla original y mallas escalonadas]{Malla original y
+                mallas escalonadas\cite{potential_flow}}
+            \label{malla_escalonada}
+        \end{figure}
+
+    \paragraph*{}
+        La figura \ref{malla_escalonada} es una representación de la
+        localización de los puntos de las mallas intercaladas. De dicha figura
+        se puede deducir la existencia de dos mallas escalonadas, una malla
+        vertical y otra horizontal. En la figura se observa una ``molecula''
+        delimitada por los puntos $ABCD$, sobre dicho contorno se encuentran
+        marcados con una $X$ los puntos de intersección de las mallas
+        escalonadas con la malla original, es importante resaltar que los puntos
+        $ABCD$ no forman parte de ninguna de las mallas y su único propósito en
+        la imagen es delimitar una partícula.
+
+    \paragraph*{}
+        Si a la ecuación \ref{eq_potencial_0} se le eliminan los términos
+        relacionados con el cambio respecto al tiempo, dado que se está
+        calculando flujo estacionario, y además utilizamos una diferencia de
+        tipo central para los términos de la densidad y las velocidades se 
+        obtiene
+        \begin{equation}
+            \frac{\left (\rho \frac{U}{J} \right)_{i + \frac{1}{2}, j} -
+                \left( \rho \frac{U}{J} \right)_{i - \frac{1}{2}, j}}{2\Delta\xi}
+            + \frac{\left (\rho \frac{V}{J} \right)_{i,j + \frac{1}{2}} -
+                \left( \rho \frac{V}{J} \right)_{i, j - \frac{1}{2}}}{2\Delta\eta}
+            = 0
+        \end{equation}
+        la cual se simplifica si se toman $\Delta\xi = \Delta\eta = 1$, quedando
+        \begin{equation}
+            \left (\rho \frac{U}{J} \right)_{i + \frac{1}{2}, j} -
+                \left( \rho \frac{U}{J} \right)_{i - \frac{1}{2}, j}
+            + \left (\rho \frac{V}{J} \right)_{i,j + \frac{1}{2}} -
+                \left( \rho \frac{V}{J} \right)_{i, j - \frac{1}{2}}
+            = 0
+            \label{eq_potencial_3}
+        \end{equation}
+
+    \paragraph*{}
+        A partir de las ecuaciones \ref{eq_potencial_1} y \ref{eq_potencial_2}
+        (mostradas nuevamente por conveniencia) se obtienen los valores
+        correspondientes a las velocidades mediante la discretización de las
+        mismas por aproximaciones centrales.
+
+        \begin{align*}
+            U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
+            \\
+            V = g^{21} \phi_{\xi} + g^{22} \phi_{\eta}
+        \end{align*}
+
+    \paragraph*{}
+        En la malla intercalada vertical, es decir donde la variable $\xi$ es
+        constante, la variación del potencial respecto a $\xi$ se obtiene
+        calculando por aproximaciones centrales de dicha variación en los puntos
+        adyacentes pertenecientes a la malla original y calculando la media de
+        las mismas. Para la variacióncon con respecto a $\eta$ se calcula
+        unicamente una aproximación central entre los puntos adyacentes. Esto
+        es, para un punto $(i, j + \frac{1}{2})$ las variaciones con respecto a
+        $\xi$ se obtienen promediando las aproximaciones centrales con respecto
+        a $\xi$ de los puntos $(i, j)$ e $(i, j+1)$; para las variaciones
+        respecto a $\eta$ se hace una aproximación central entre los puntos
+        $(i, j)$ e $(i, j+1)$.
+
+    \paragraph*{}
+        Por otro lado, en la malla intercalada horizontal, donde $\eta=cte$,
+        la variación del potencial respecto a $\xi$ $\phi_\xi$ es simplemente
+        la aproximación central de dicha variación a partir de los puntos
+        adyacentes de la malla original. En el caso de la variación del
+        potencial respecto a $\eta$ $\phi_\eta$, primero se debe calcular dicha
+        variación en los puntos adyacentes de la malla y posteriormente obtener
+        la media de las mismas. Es decir, para un punto $(i + \frac{1}{2}, j)$,
+        las variaciones con respecto a $\xi$ son una aproximación central entre
+        los puntos $(i, j)$ e $(i + 1, j)$ y para las variaciones con respecto
+        a $\eta$ se deben calcular las aproximaciones centrales con respecto a
+        $\eta$ en los puntos $(i, j)$ e $(i + 1, j)$ para posteriormente
+        calcular la media.
+
+    \paragraph*{}
+        La discretización de las velocidades, considerando $\Delta\xi =$
+        $\Delta\eta = 1$, finalmente queda:
+        \begin{subequations}
+            % ecuaciones para U
+            \begin{equation}
+                U_{i + \frac{1}{2}, j} =
+                    g^{11}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j} - \phi_{i, j} \right)
+                    + \frac{1}{4} g^{12}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j+1} - \phi_{i+1, j-1}
+                        + \phi_{i, j+1} - \phi_{i, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                U_{i - \frac{1}{2}, j} =
+                    g^{11}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j} - \phi_{i-1, j} \right)
+                    + \frac{1}{4} g^{12}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j+1} - \phi_{i, j-1}
+                        + \phi_{i-1, j+1} - \phi_{i-1, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                U_{i, j + \frac{1}{2}} =
+                \frac{1}{4} g^{11}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i+1, j+1} - \phi_{i-1, j+1}
+                            + \phi_{i+1, j} - \phi_{i-1, j} \right)
+                    + g^{12}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i, j+1} - \phi_{i, j} \right)
+            \end{equation}
+            \begin{equation}
+                U_{i, j - \frac{1}{2}} =
+                \frac{1}{4} g^{11}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i+1, j} - \phi_{i-1, j}
+                            + \phi_{i+1, j-1} - \phi_{i-1, j-1} \right)
+                    + g^{12}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i, j} - \phi_{i, j-1} \right)
+            \end{equation}
+
+            % ecuaciones para V
+            \begin{equation}
+                V_{i + \frac{1}{2}, j} =
+                    g^{21}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j} - \phi_{i, j} \right)
+                    + \frac{1}{4} g^{22}_{i + \frac{1}{2}, j}
+                        \left( \phi_{i+1, j+1} - \phi_{i+1, j-1}
+                        + \phi_{i, j+1} - \phi_{i, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                V_{i - \frac{1}{2}, j} =
+                    g^{21}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j} - \phi_{i-1, j} \right)
+                    + \frac{1}{4} g^{22}_{i - \frac{1}{2}, j}
+                        \left( \phi_{i, j+1} - \phi_{i, j-1}
+                        + \phi_{i-1, j+1} - \phi_{i-1, j-1} \right)
+            \end{equation}
+            \begin{equation}
+                V_{i, j + \frac{1}{2}} =
+                \frac{1}{4} g^{21}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i+1, j+1} - \phi_{i-1, j+1}
+                            + \phi_{i+1, j} - \phi_{i-1, j} \right)
+                    + g^{22}_{i, j + \frac{1}{2}}
+                        \left( \phi_{i, j+1} - \phi_{i, j} \right)
+            \end{equation}
+            \begin{equation}
+                V_{i, j - \frac{1}{2}} =
+                \frac{1}{4} g^{21}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i+1, j} - \phi_{i-1, j}
+                            + \phi_{i+1, j-1} - \phi_{i-1, j-1} \right)
+                    + g^{22}_{i, j - \frac{1}{2}}
+                        \left( \phi_{i, j} - \phi_{i, j-1} \right)
+            \end{equation}
+            \label{velocities}
+        \end{subequations}
+
+    \paragraph*{}
+        En las ecuaciones \ref{velocities} se ubican términos que se mantienen
+        iguales para un mismo punto intercalado, por simplicidad dichos términos
+        se agrupan en el término $P$, quedando como
+
+        \begin{subequations}
+            \begin{equation}
+                P_{i + \frac{1}{2}, j} = \phi_{i+1, j+1} - \phi_{i+1, j-1}
+                    + \phi_{i, j+1} - \phi_{i, j-1}
+            \end{equation}
+            \begin{equation}
+                P_{i - \frac{1}{2}, j} = \phi_{i, j+1} - \phi_{i, j-1}
+                    + \phi_{i-1, j+1} - \phi_{i-1, j-1}
+            \end{equation}
+            \begin{equation}
+                P_{i, j + \frac{1}{2}} = \phi_{i+1, j+1} - \phi_{i-1, j+1}
+                    + \phi_{i-1, j} - \phi_{i-1, j}
+            \end{equation}
+            \begin{equation}
+                P_{i, j - \frac{1}{2}} = \phi_{i+1, j} - \phi_{i-1, j}
+                    + \phi_{i+1, j-1} - \phi_{i-1, j-1}
+            \end{equation}
+        \end{subequations}
+
+    \paragraph*{}
+        Una vez discretizados los valores de las componentes de la velocidad,
+        se puede despejar el valor del potencial a partir de la ecuación
+        \ref{eq_potencial_3}
+        \begin{align}
+            \begin{aligned}
+            \phi_{i, j} &=
+                \frac{1}{\left( \frac{\rho g^{11}}{J} \right)_{i + \frac{1}{2}, j}
+                + \left( \frac{\rho g^{11}}{J} \right)_{i-\frac{1}{2}, j}
+                + \left( \frac{\rho g^{22}}{J} \right)_{i, j + \frac{1}{2}}
+                + \left( \frac{\rho g^{22}}{J} \right)_{i, j - \frac{1}{2}}}
+                \biggl(
+                    \left( \frac{\rho}{J} \right)_{i+\frac{1}{2}, j}
+                    \left( \left( g^{12}P \right)_{i + \frac{1}{2}, j} 
+                        + g^{11}_{i + \frac{1}{2}, j} \phi_{i+1, j} \right)
+                \\
+                    &- \left( \frac{\rho}{J} \right)_{i - \frac{1}{2}, j}
+                        \left( \left( g^{12} P \right)_{i - \frac{1}{2}, j}
+                        - g^{11}_{i - \frac{1}{2}, j} \phi_{i-1, j} \right)
+                    + \left( \frac{\rho}{J} \right)_{i, j + \frac{1}{2}}
+                        \left( \left( g^{21} P \right)_{i, j + \frac{1}{2}}
+                        + g^{22}_{i, j + \frac{1}{2}} \phi_{i, j + 1} \right)
+                    \\
+                    &- \left( \frac{\rho}{J} \right)_{i, j - \frac{1}{2}}
+                        \left( \left( g^{21} P \right)_{i, j - \frac{1}{2}}
+                        + g^{22}_{i, j - \frac{1}{2}} \phi_{i, j-1} \right)
+                \biggr)
+            \end{aligned}
+        \end{align}
+
+
+
 %
 %
 %

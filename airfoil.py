@@ -382,13 +382,15 @@ class NACA4(airfoil):
         yp      = np.flip(yp, 0)
         perfil  = np.zeros((np.shape(xp)[0], 2))
 
-        # xp[-1] = xp[0]
-        # yp[-1] = yp[0]
+        # coincidir puntos de borde de salida, perfil cerrado
+        xp[0] = xp[-1]
+        yp[0] = yp[-1]
+
+        # haciendo coincidir el borde de salida con y = 0
+        yp -= yp[0]
 
         perfil[:, 0]    = xp
         perfil[:, 1]    = yp
-        # perfil[0, 1]    = 0
-        # perfil[-1, 1]   = 0
 
         # se especifica que todos los puntos del perfil son frontera
         is_boundary         = np.ones((np.size(xp))) * self.number

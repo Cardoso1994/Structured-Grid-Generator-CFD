@@ -39,12 +39,12 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 mach_inf = v_inf / c_inf
 
 
-path = '/home/desarrollo/'
-mallaNACA = helpers.from_txt_mesh(filename='./potential_test/mallaNACA.txt_mesh')
-phi = np.genfromtxt('./potential_test/phi.csv', delimiter=',')
-f = open("./potential_test/C.csv", "r")
-C = np.genfromtxt('./potential_test/C.csv', delimiter=',')
-theta = np.genfromtxt('./potential_test/theta.csv', delimiter=',')
+# path = '/home/desarrollo/'
+mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/five/mallaNACA.txt_mesh')
+phi = np.genfromtxt('./potential_2412/five/phi.csv', delimiter=',')
+# f = open("./potential_2412/five/C.csv", "r")
+C = np.genfromtxt('./potential_2412/five/C.csv', delimiter=',')
+theta = np.genfromtxt('./potential_2412/five/theta.csv', delimiter=',')
 
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
@@ -68,7 +68,7 @@ plt.axis('equal')
 
 plt.figure('pressure')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 125, cmap='jet')
+plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 105, cmap='jet')
 plt.colorbar()
 plt.axis('equal')
 

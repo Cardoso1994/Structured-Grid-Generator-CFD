@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(5)
+perfil.rotate(3)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -106,8 +106,6 @@ Re = v_inf * c * d_inf / 17e-6
                                             alfa, mallaNACA)
 if flag == 'S':
     mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
-    np.savetxt(path + '/X.csv', mallaNACA.X, delimiter=',')
-    np.savetxt(path + '/Y.csv', mallaNACA.Y, delimiter=',')
     np.savetxt(path + '/phi.csv', phi, delimiter=',')
     f = open(path + "/C.csv", "w+")
     f.write(str(C))
