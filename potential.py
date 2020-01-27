@@ -66,6 +66,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     g12H = np.zeros((M, N))
     g22H = np.zeros((M, N))
     JH = np.zeros((M, N))
+
     # calculo del tensor de la métrica
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = mesh.tensor()
 
@@ -82,32 +83,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         y_xiV[:, j] = 0.5 * (y_xi[:, j] + y_xi[:, j+1])
         y_etaV[:, j] = 0.5 * (y_eta[:, j] + y_eta[:, j+1])
 
-    ###########################################################################
-    #
-    #   g11V coinicide en todo, excepto en j = 0 y i = 0 y i = -1
-    #   g12V coinicide en todo, excepto en j = 0 y i = 0 y i = -1
-    #   g22V coinicide en todo CASI PERFECTAMENTE. en j = 0 hay ligeras
-    #       variaciones
-    #   JV coincide casi PERFECTAMENTE
-    #   x_xiV coincide casi PERFECTAMENTE
-    #   x_etaV coincide casi PERFECTAMENTE
-    #   y_xiV coincide casi PERFECTAMENTE
-    #   y_etaV coincide casi PERFECTAMENTE
-    #
-    ###########################################################################
-
-    ###########################################################################
-    #
-    #   La forma de las matrices g11V, g12V, g22V, JV en MI código es (35, 34)
-    #       mientras que en el código de la españoleta es de (34, 34)
-    #   La forma de las matrices x_xiV, y_xiV, x_etaV, y_etaV en MI código es
-    #       (35, 34) mientras que en el código de la españoleta es de (35, 35)
-    #
-    #   No parece tener mucho sentido lo que hizo la españoleta ya que en su
-    #       PDF dice que la malla vertical es de tamaño (M, N-1)
-    #
-    ###########################################################################
-
     # malla horizontal
     for i in range(M-1):
         g11H[i, :] = 0.5 * (g11[i, :] + g11[i+1, :])
@@ -118,30 +93,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         x_etaH[i, :] = 0.5 * (x_eta[i, :] + x_eta[i+1, :])
         y_xiH[i, :] = 0.5 * (y_xi[i, :] + y_xi[i+1, :])
         y_etaH[i, :] = 0.5 * (y_eta[i, :] + y_eta[i+1, :])
-    ###########################################################################
-    #
-    #   g11H coincide casi PERFECTAMENTE. Algunas inconsistencias en i = 0
-    #       e i = -1, tanto para las primeras como últimas j. NADA GRAVE
-    #
-    #   g12H coincide casi PERFECTAMENTE. algunas diferencias, nada grave
-    #   g22H coincide casi PERFECTAMENTE.
-    #   x_xiH coincide casi PERFECTAMENTE.
-    #   x_etaH coincide casi PERFECTAMENTE.
-    #   y_xiH coincide casi PERFECTAMENTE.
-    #   y_etaH coincide casi PERFECTAMENTE.
-    ###########################################################################
-
-    ###########################################################################
-    #
-    #   La forma de las matrices g11H, g12H, g22H, JH en MI código es (34, 35)
-    #       mientras que en el código de la españoleta es de (34, 34)
-    #   La forma de las matrices x_xiH, y_xiH, x_etaH, y_etaH en MI código es
-    #       (34, 35) mientras que en el código de la españoleta es de (35, 35)
-    #
-    #   No parece tener mucho sentido lo que hizo la españoleta ya que en su
-    #       PDF dice que la malla vertical es de tamaño (M-1, N)
-    #
-    ###########################################################################
 
     # se calcula el ángulo theta de cada nodo, resultado en ángulos absolutos
     # desde 0 hasta 2 * pi
@@ -150,19 +101,9 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     theta[mask] += 2 * np.pi
     theta[0, :] = 2 * np.pi
     theta[-1, :] = 0
-    ###########################################################################
-    #
-    #   theta coincide PERFECTAMENTE
-    #
-    ###########################################################################
 
     # convierte angulo de ataque a radianes
     alfa = alfa * np.pi / 180
-    ###########################################################################
-    #
-    #   Inicia proceso iterativo para la solución del flujo potencial
-    #
-    ###########################################################################
     C = 0.5
     phi = np.zeros((M, N))
     '''
@@ -191,16 +132,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     arcotan[:] = np.arctan((1 - mach_inf ** 2) ** 0.5
                            * np.tan(theta[:, 0] - alfa))
-    ###########################################################################
-    #
-    #   arcotan coincide CASI PERFECTAMENTE. Hay diferencias cerca de las
-    #       fronteras i = 0 e i = -1. conforme uno se acerca al 'centro' van
-    #       coincidiendo mejor los valores
-    #   arcosen coincide CASI PERFECTAMENTE. Hay diferencias cerca de las
-    #       fronteras i = 0 e i = -1. conforme uno se acerca al 'centro' van
-    #       coincidiendo mejor los valores
-    #
-    ###########################################################################
     arcosen[:] = np.arcsin((1 - mach_inf ** 2) ** 0.5
                            * np.sin(theta[:, 0] - alfa))
     for i in range(M):
@@ -211,11 +142,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         elif arcotan[i] < 0 and arcosen[i] < 0:
             if theta[i, -1] - alfa > 0:
                 arcotan[i] += (2 * np.pi)
-    ###########################################################################
-    #
-    #   arcotan coincide casi PERFECTAMENTE
-    #
-    ###########################################################################
 
     print('Potential Flow')
     while ddd > error and it < it_max:
