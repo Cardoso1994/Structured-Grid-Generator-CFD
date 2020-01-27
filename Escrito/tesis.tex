@@ -2077,6 +2077,7 @@
             \frac{\rho}{\rho_{0}} = \left[ 1
                 - \frac{(\vec{\nabla} \phi) ^ 2}{2 H_0}
                 - \frac{\pdv{\phi}{t}}{H_0} \right]^{\frac{1}{\gamma - 1}}
+            \label{density}
         \end{equation}
 
     \paragraph*{}
@@ -2579,7 +2580,60 @@
             \end{aligned}
         \end{align}
 
+    \paragraph*{}
+        Mediante la ecuación \ref{density} se pueden obtener los valores de la
+        densidad, sustituyendo las ecuaciones de la velocidad en ella. Sin
+        embargo dicha ecuación requiere el cuadrado del móodulo de la velocidad
+        en el sistema de coordenadas del dominio físico $u$ y $v$ las cuales se
+        describen como
+        \begin{subequations}
+            \begin{equation}
+                u = x_\xi U + x_\eta V
+            \end{equation}
+            \begin{equation}
+                v = y_\xi U + y_\eta V
+            \end{equation}
+            \begin{equation}
+                u^2 + v^2 = U^2 \left( x_\xi^2 + y_\xi^2 \right)
+                        + V^2 \left( x_\eta^2 + y_\eta^2 \right)
+                        + 2UV \left( x_\xi x_\eta + y_\xi y_\eta \right)
+            \end{equation}
+        \end{subequations}
+        con lo cual la ecuación de la densidad queda
+        \begin{equation}
+            \frac{\rho}{\rho_0} = \left[ 1 -
+                \frac{U^2 \left( x_\xi^2 + y_\xi^2 \right)
+                        + V^2 \left( x_\eta^2 + y_\eta^2 \right)
+                        + 2UV \left( x_\xi x_\eta + y_\xi y_\eta \right)}
+                    {2H_0}
+            \right]
+        \end{equation}
 
+    \paragraph*{}
+        Para este punto es evidente la necesidad de obtener los valores en las
+        mallas intercaladas tanto de los elementos del tensor de la
+        transformación (elementos $g^{mn}$) como de las razones de cambio
+        $x_\xi, x_\eta, y_\xi, y_\eta$, los cuales se calculan de la misma
+        manera. Sea $s$ un paramétro de los previamente mencionados, sus
+        aproximaciones en las mallas escalonadas quedan:
+        \begin{subequations}
+            \begin{equation}
+                s_{i + \frac{1}{2}, j} = \frac{1}{2} \left( s_{i+1, j}
+                        + s_{i, j}\right)
+            \end{equation}
+            \begin{equation}
+                s_{i - \frac{1}{2}, j} = \frac{1}{2} \left( s_{i, j}
+                        + s_{i-1, j}\right)
+            \end{equation}
+            \begin{equation}
+                s_{i, j + \frac{1}{2}} = \frac{1}{2} \left( s_{i, j+1}
+                        + s_{i, j}\right)
+            \end{equation}
+            \begin{equation}
+                s_{i, j - \frac{1}{2}} = \frac{1}{2} \left( s_{i, j}
+                        + s_{i, j-1}\right)
+            \end{equation}
+        \end{subequations}
 
 %
 %
