@@ -184,7 +184,7 @@ class mesh_O(mesh):
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        omega   = np.longdouble(1.5)  # en caso de metodo SOR
+        omega   = np.longdouble(1.4)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -199,7 +199,7 @@ class mesh_O(mesh):
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
         aa          = np.longdouble(26.5)
-        cc          = np.longdouble(6.1)
+        cc          = np.longdouble(6.5)
         linea_eta   = 0.0
         linea_xi    = 0.5
 
