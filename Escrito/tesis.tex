@@ -2137,11 +2137,15 @@
         \end{equation}
         ya que tambien se tiene:
         \begin{align}
+            \begin{aligned}
             U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
             \label{eq_potencial_1}
+            \end{aligned}
             \\
+            \begin{aligned}
             V = g^{21} \phi_{\xi} + g^{22} \phi_{\eta}
             \label{eq_potencial_2}
+            \end{aligned}
         \end{align}
 
     \paragraph*{}
@@ -2542,7 +2546,7 @@
             \end{equation}
             \begin{equation}
                 P_{i, j + \frac{1}{2}} = \phi_{i+1, j+1} - \phi_{i-1, j+1}
-                    + \phi_{i-1, j} - \phi_{i-1, j}
+                    + \phi_{i+1, j} - \phi_{i-1, j}
             \end{equation}
             \begin{equation}
                 P_{i, j - \frac{1}{2}} = \phi_{i+1, j} - \phi_{i-1, j}
@@ -2635,6 +2639,44 @@
             \end{equation}
         \end{subequations}
 
+    \subsection{Condiciones de frontera}
+    \paragraph*{}
+        En el caso del perfil alar, se considera que la velocidad normal al
+        mismo es cero, por lo que la ecuación \ref{eq_potencial_2} se iguala a
+        cero y se discretiza
+        \begin{equation}
+            \frac{\phi_{i+1, j} - \phi_{i-1, j}}{2 \Delta \xi} g^{21}
+            + \frac{\phi_{i, j-2} - 4 \phi{i, j-1} + 3 \phi_{i, j}}{2\Delta \eta}
+                    g^{22} = 0
+        \end{equation}
+        si se despeja el potencial se obtiene:
+        \begin{equation}
+            \phi_{i, j} = \frac{1}{3} \left(4 \phi_{i, j-1} - \phi_{i, j-2}
+                - \frac{g^{21}}{g^{22}} \left( \phi_{i+1, j} - \phi_{i-1, j}
+                    \right) \right)
+        \end{equation}
+
+    \paragraph*{}
+        Como ya se comentó, en la simulación se debe especíifcar un corte a lo
+        largo del cual existirá una discontinuidad en el potencial, dicho corte
+        se hace coincidir por conveniencia con el corte ya presente en la malla
+        durante su generación.
+        \begin{equation}
+            \phi_{1, j} = \phi_{M, j} + \Gamma
+        \end{equation}
+
+    \paragraph*{}
+        El valor de la circulación, como ya se ha mencionado, debe ser
+        actualizado durante la ejecución del proceso iterativo, y como lo
+        inidica la condición de Kutta para este tipo de perfiles la velocidad
+        en el borde de salida es cero. Como ya se mencionó en la frontera
+        interna la velocidad normal es cero, solo resta igualar la velocidad
+        tangencial, también a cero. La velocidad tangencial discretizada queda
+        \begin{equation}
+            \frac{\phi_{i+1, j} - \phi_{i-1, j}}{2 \Delta \xi} g^{11}
+            + \frac{\phi_{i, j-2} - 4 \phi_{i, j-1} + 3 \phi_{i, j}}{2 \Delta \eta}
+                g^{12} = 0
+        \end{equation}
 %
 %
 %
