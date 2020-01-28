@@ -19,17 +19,17 @@ import mesh_su2
 import helpers
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 95
+N = 75
 union = 6
 
-airfoil_points = 45
+airfoil_points = 53
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
