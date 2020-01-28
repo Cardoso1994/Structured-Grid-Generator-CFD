@@ -2,9 +2,9 @@
 Perfil NACA 2412
 
 ## Método Laplace
-* configuración central 183 x 75 [queda 183x75]
-* Aumento en xi, 203 x 75 [queda 201x75]
-* Aumento en eta, 183 x 95
+* configuración central 99 x 75
+* Aumento en xi, 119 x 75 [queda 117x75]
+* Aumento en eta, 99 x 95
 * omega = 1.5
 
 ## Método Poisson
