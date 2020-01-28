@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(3)
+perfil.rotate(0)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -102,7 +102,7 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
 
-(phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
+(phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
                                             alfa, mallaNACA)
 if flag == 'S':
     mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))

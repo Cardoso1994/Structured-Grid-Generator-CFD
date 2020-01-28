@@ -40,11 +40,17 @@ mach_inf = v_inf / c_inf
 
 
 # path = '/home/desarrollo/'
-mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/five/mallaNACA.txt_mesh')
-phi = np.genfromtxt('./potential_2412/five/phi.csv', delimiter=',')
+# mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/zero/mallaNACA.txt_mesh')
+# phi = np.genfromtxt('./potential_2412/zero/phi.csv', delimiter=',')
+# # f = open("./potential_2412/five/C.csv", "r")
+# C = np.genfromtxt('./potential_2412/zero/C.csv', delimiter=',')
+# theta = np.genfromtxt('./potential_2412/zero/theta.csv', delimiter=',')
+# path = '/home/desarrollo/'
+mallaNACA = helpers.from_txt_mesh(filename='/home/desarrollo/garbage/own/mallaNACA.txt_mesh')
+phi = np.genfromtxt('/home/desarrollo/garbage/own/phi.csv', delimiter=',')
 # f = open("./potential_2412/five/C.csv", "r")
-C = np.genfromtxt('./potential_2412/five/C.csv', delimiter=',')
-theta = np.genfromtxt('./potential_2412/five/theta.csv', delimiter=',')
+C = np.genfromtxt('/home/desarrollo/garbage/own/C.csv', delimiter=',')
+theta = np.genfromtxt('/home/desarrollo/garbage/own/theta.csv', delimiter=',')
 
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
