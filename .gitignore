@@ -2,6 +2,7 @@
 garbage
 test*.py
 
+perfil_final.csv
 *.odt
 .pdf
 
