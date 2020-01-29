@@ -57,6 +57,7 @@ elif malla == 'C':
 # mallaNACA.X[:, 0] += 0.25
 # mallaNACA.Y[0, :] = 0
 # mallaNACA.Y[-1, :] = 0
+# mallaNACA.gen_Laplace()
 mallaNACA.gen_Poisson()
 mallaNACA.plot()
 
@@ -101,6 +102,12 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
 Re = v_inf * c * d_inf / 17e-6
+
+print('Re = ' + str(Re))
+print('mach_inf = ' + str(mach_inf))
+if mach_inf > 0.8:
+    print('Las condiciones de flujo son inválidas')
+    exit()
 
 (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
                                             alfa, mallaNACA)
