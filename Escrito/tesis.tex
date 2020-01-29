@@ -1,5 +1,5 @@
 \documentclass[letterpaper, openright, 12pt]{book}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-tabla]{babel} %es-tabla para nombrar a las tablas en vez de cuadros
 \usepackage[utf8]{inputenc}
 
 \usepackage{graphicx} % para imagenes
@@ -1964,44 +1964,6 @@
     %
     %
     %
-\chapter{Desarrollo Práctico}
-    \paragraph*{}
-        Los códigos de este trabajo fueron implementados en lenguaje Python 3,
-        utilizando el paradigma de programación orientada a objetos, en éste los
-        datos son trabajados como objetos con atributos y métodos pertenecientes
-        a una clase, y que pueden ser heredados y aplicados a objetos o
-        instancias de alguna subclase. Un objeto  es la representación en un
-        programa de un concepto y contiene toda la información necesaria para
-        abstraerlo, como son los datos que describen sus atributos y operaciones
-        que pueden realizarse dobre los mismos.  En otras palabras un objetos es
-        la relación que existe entre un conjunto de variables y métodos.
-    \paragraph*{}
-        Se dice que todos las instancias (objetos) de un mismo tipo, son
-        pertenecientes a una misma clase. Una de las características más
-        importantes de la programación orientada a objetos es la herencia, la
-        cual permite la definición de nuevas clases a partir de una
-        ``superclase'' ya existente, las cuales se conocen como ``subclases''.
-        Una subclase hereda todo el comportamiento de su superclase, pero se
-        puede introducir además características propias.
-    \paragraph*{}
-        En el presente trabajo se implementaron dos superclases: ``airfoil'' y
-        ``mesh'', cada una con sus respectivas subclases.
-        La clase airfoil se desarrolló para la creación de perfiles alares a
-        partir de una archivo de texto que contenga la nube de puntos del perfil
-        deseado, como dato de entrada se requiere el nombre del archivo texto y
-        la dimensión en metros de la cuerda. Esta clase tiene una subclase
-        ``NACA4'' la cual genera perfiles de la serie de 4 dígitos de perfiles
-        aerodinámicos de la NACA. La creación del perfil se hace a partir de la
-        ecuación constitutiva de la serie. Como datos de entrada se requieren
-        los valores de m (combudara máxima), p (posición de la combadura
-        máxima), t (espesor máximo) y c (cuerda). La subclase NACA4 tiene dos
-        métodos para la creación del perfil, el primero de ellos, el método
-        ``create\textunderscore linear'' crea la nube de puntos con una
-        distribución equidistante de los puntos en dirección del eje $x$.
-        El segundo método, llamado ``create\textunderscore sin''genera a partir
-        de una función senoidal una nube de punto que permite que haya mayor
-        densidad de nodos tanto en el borde de ataque como en el borde de salida
-        del perfil.
 %
 %
 %
@@ -2677,11 +2639,56 @@
             + \frac{\phi_{i, j-2} - 4 \phi_{i, j-1} + 3 \phi_{i, j}}{2 \Delta \eta}
                 g^{12} = 0
         \end{equation}
+        entonces la circulación viene dada por:
+        \begin{equation}
+            \Gamma = \phi_{1, 1}
+        \end{equation}
+
 %
 %
 %
 %
 %
+
+%
+%
+%
+%
+%
+
+\chapter{Desarrollo Práctico}
+    \paragraph*{}
+        Los códigos de este trabajo fueron implementados en lenguaje Python 3,
+        utilizando el paradigma de programación orientada a objetos, en éste los
+        datos son trabajados como objetos con atributos y métodos pertenecientes
+        a una clase, y que pueden ser heredados y aplicados a objetos o
+        instancias de alguna subclase.
+
+    \paragraph*{}
+        En el presente trabajo se implementaron dos superclases: ``airfoil'' y
+        ``mesh'', cada una con sus respectivas subclases.
+    \paragraph*{}
+        La clase airfoil se desarrolló para la creación de perfiles alares a
+        partir de una archivo de texto que contenga la nube de puntos del perfil
+        deseado, como dato de entrada se requiere el nombre del archivo texto y
+        la dimensión en metros de la cuerda. Esta clase tiene una subclase
+        ``NACA4'' la cual genera perfiles de la serie de 4 dígitos de perfiles
+        aerodinámicos de la NACA. La creación del perfil se hace a partir de la
+        ecuación constitutiva de la serie. Como datos de entrada se requieren
+        los valores de m (combudara máxima), p (posición de la combadura
+        máxima), t (espesor máximo) y c (cuerda). La subclase NACA4 tiene dos
+        métodos para la creación del perfil, el primero de ellos, el método
+        ``create\textunderscore linear'' crea la nube de puntos con una
+        distribución equidistante de los puntos en dirección del eje $x$.
+        El segundo método, llamado ``create\textunderscore sin''genera a partir
+        de una función senoidal una nube de punto que permite que haya mayor
+        densidad de nodos tanto en el borde de ataque como en el borde de salida
+        del perfil.
+
+    \paragraph*{}
+        La clase airfoil contiene métodos que son utilizados por las demás
+        subclases
+
 
 %
 %
