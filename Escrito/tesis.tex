@@ -2667,73 +2667,219 @@
     \paragraph*{}
         En el presente trabajo se implementaron dos superclases: ``airfoil'' y
         ``mesh'', cada una con sus respectivas subclases.
+
+    \section{Clase Airfoil}
     \paragraph*{}
         La clase airfoil se desarrolló para la creación de perfiles alares a
         partir de una archivo de texto que contenga la nube de puntos del perfil
         deseado, como dato de entrada se requiere el nombre del archivo texto y
-        la dimensión en metros de la cuerda. Esta clase tiene una subclase
-        ``NACA4'' la cual genera perfiles de la serie de 4 dígitos de perfiles
-        aerodinámicos de la NACA. La creación del perfil se hace a partir de la
-        ecuación constitutiva de la serie. Como datos de entrada se requieren
-        los valores de m (combudara máxima), p (posición de la combadura
-        máxima), t (espesor máximo) y c (cuerda). La subclase NACA4 tiene dos
-        métodos para la creación del perfil, el primero de ellos, el método
-        ``create\textunderscore linear'' crea la nube de puntos con una
-        distribución equidistante de los puntos en dirección del eje $x$.
-        El segundo método, llamado ``create\textunderscore sin''genera a partir
-        de una función senoidal una nube de punto que permite que haya mayor
-        densidad de nodos tanto en el borde de ataque como en el borde de salida
-        del perfil.
-
+        la dimensión en metros de la cuerda.
     \paragraph*{}
         La clase airfoil contiene métodos que son utilizados por las demás
-        subclases. La tabla \ref{tabla_airfoil}
+        subclases. La tabla \ref{tabla_airfoil} enlista y da una breve
+        descripción de los métodos pertenecientes a dicha clase.
 
     \begin{table}[htbp!]
     \begin{center}
         \begin{tabular}{ | l | p{9cm} |}
         \hline
         Método & Descripción \\ \hline
-        \textunderscore\textunderscore init\textunderscore\textunderscore(c,
-        number) & Crea objeto airfoil, con cuerda c [m]. number representa
-        el número de perfil (en caso de flaps), por default es igual a uno.\\ \hline
+        \textbf{\textunderscore\textunderscore init\textunderscore
+            \textunderscore(c, number)} & Crea objeto airfoil, con cuerda c [m].
+        number representa el número de perfil (en caso de flaps), por default es
+        igual a uno.
+        \\ \hline
 
-        create(filename) & Crea perfil aerodinámico a partir de un archivo que
-        contiene la nube de puntos que lo describen.\\ \hline
+        \textbf{create(filename)} & Crea perfil aerodinámico a partir de un
+        archivo que contiene la nube de puntos que lo describen.\\ \hline
 
-        size() & Regresa el número de puntos que forman el perfil. \\ \hline
+        \textbf{size()} & Regresa el número de puntos que forman el perfil.
+        \\ \hline
 
-        plot() & Grafica el perfil alar. \\ \hline
+        \textbf{plot()} & Grafica el perfil alar. \\ \hline
 
-        rotate(degrees) & Rota el perfil degrees grados. Se considera rotación
-        positiva en sentido horario. \\ \hline
+        \textbf{rotate(degrees)} & Rota el perfil degrees grados. Se considera
+        rotación positiva en sentido horario. \\ \hline
 
-        join(other, dx, dy, union) & Une dos perfiles alares. El que invoca
-        el método con other. dx y dy son las distancias sobre los ejes entre el
-        borde de salida de un perfil y el borde de ataque del otro. \\ \hline
+        \textbf{join(other, dx, dy, union)} & Une dos perfiles alares. El que
+        invoca el método con other. dx y dy son las distancias sobre los ejes
+        entre el borde de salida de un perfil y el borde de ataque del otro.
+        \\ \hline
 
-        to\textunderscore csv(filename) & Exporta la nube de puntos del perfil a
-        un archivo de valores separados por comas (.csv) \\ \hline
+        \textbf{to\textunderscore csv(filename)} & Exporta la nube de puntos del
+        perfil a un archivo de valores separados por comas (.csv) \\ \hline
         \end{tabular}
         \caption{Métodos de la clase airfoil}
     \label{tabla_airfoil}
     \end{center}
     \end{table}
-    % \begin{center}
-    %     \begin{tabular}{ | l | l | l | p{9cm} |}
-    %     \hline
-    %     Day & Min Temp & Max Temp & Summary \\ \hline
-    %     Monday & 11C & 22C & A clear day with lots of sunshine.  
-    %     However, the strong breeze will bring down the temperatures. \\ \hline
-    %     Tuesday & 9C & 19C & Cloudy with rain, across many northern regions. Clear spells 
-    %     across most of Scotland and Northern Ireland, 
-    %     but rain reaching the far northwest. \\ \hline
-    %     Wednesday & 10C & 21C & Rain will still linger for the morning. 
-    %     Conditions will improve by early afternoon and continue 
-    %     throughout the evening. \\
-    %     \hline
-    %     \end{tabular}
-    % \end{center}
+
+    \paragraph*{}
+        Esta clase tiene una subclase de nombre ``NACA4'' la cual genera
+        perfiles aerodinámicos NACA de la serie de 4 dígitos. La creación del
+        perfil se hace a partir de la ecuación constitutiva de la serie. Como
+        datos de entrada se requieren los valores de m (combudara máxima),
+        p (posición de la combadura máxima), t (espesor máximo) y c (cuerda).
+        La subclase NACA4 tiene dos métodos para la creación del perfil, el
+        primero de ellos, el método ``create\textunderscore linear'' crea la
+        nube de puntos con una distribución equidistante de los puntos en
+        dirección del eje $x$. El segundo método, llamado
+        ``create\textunderscore sin''genera a partir de una función senoidal una
+        nube de punto que permite que haya mayor densidad de nodos tanto en el
+        borde de ataque como en el borde de salida del perfil.
+
+    \paragraph*{}
+        La tabla \ref{tabla_naca4} presenta los métodos pertenecientes a esta
+        subclase, así como una breve descripción de los mismos.
+
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{ | l | p{9cm} |}
+        \hline
+        Método & Descripción \\ \hline
+        \textbf{\textunderscore\textunderscore init\textunderscore
+            \textunderscore(m, p, t, c, number)} & Crea objeto NACA4, con
+        combadura máxima m, posición de ésta p, espesor máximo t y cuerda
+        aerodinámica c. number representa el número de perfil (en caso de flaps),
+        por default es igual a uno.
+        \\ \hline
+
+        \textbf{create\textunderscore linear(points)} & Crea perfil NACA4 con 
+        una distribución equidistante de los puntos en el eje $x$ con un número
+        de puntos points. \\ \hline
+
+        \textbf{create\textunderscore sin(points)} & Crea perfil NACA4 con 
+        una distribución senoidal de los puntos en el eje $x$ con un número
+        de puntos points. Esta distribución permite obtener mayor densidad
+        de puntos tanto en el borde de ataque como de salida con respecto a la
+        distribución lineal para un mismo número de puntos.\\ \hline
+
+        \textbf{size()} & Regresa el número de puntos que forman el perfil.
+        \\ \hline
+
+        \textbf{plot()} & Grafica el perfil alar. \\ \hline
+
+        \textbf{rotate(degrees)} & Rota el perfil degrees grados. Se considera
+        rotación positiva en sentido horario. \\ \hline
+
+        \textbf{join(other, dx, dy, union)} & Une dos perfiles alares. El que
+        invoca el método con other. dx y dy son las distancias sobre los ejes
+        entre el borde de salida de un perfil y el borde de ataque del otro.
+        \\ \hline
+
+        \textbf{to\textunderscore csv(filename)} & Exporta la nube de puntos del
+        perfil a un archivo de valores separados por comas (.csv) \\ \hline
+        \end{tabular}
+        \caption{Métodos de la subclase NACA4}
+    \label{tabla_naca4}
+    \end{center}
+    \end{table}
+
+    \section{Clase Mesh}
+    \paragraph*{}
+        La clase mesh se desarrolló para el desarrollo de mallas estructuradas.
+        Además es la superclase a la que pertenecen las subclases mesh
+        \textunderscore c y mesh\textunderscore o. En esta clase están definidos
+        los métodos de creación de malla mediante ecuaciones algebráicas, los
+        cuales son independientes de la tipología de la malla.
+
+    \paragraph*{}
+        La tabla \ref{tabla_mesh} contiene información con respecto a los
+        métodos pertenecientes a esta clase.
+
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        Método & Descripción \\ \hline
+        \textbf{\textunderscore\textunderscore init\textunderscore
+            \textunderscore(R, M, N, airfoil)} & Crea un objeto mesh donde R es
+        la dimesión de la frontera externa, M es el número de niveles en el eje
+        $\xi$, N es el número de niveles en el eje $\eta$ y airfoil es un objeto
+        de la clase homónima que contiene la información del perfil aerodinámico
+        a analizar.
+        \\ \hline
+
+        \textbf{plot()} & Representación gráfica de la malla generada.\\ \hline
+
+        \textbf{to\textunderscore txt\textunderscore mesh(filename)} & Exporta
+        la malla a un archivo de texto de extensión .txt\textunderscore mesh.
+        Este formato es de desarrollo propio y se implementó con la intención de
+        importar al software mallas previamente generadas para su análisis.
+        \\ \hline
+
+        \textbf{gen\textunderscore inter\textunderscore pol(eje)} & Genera una
+        malla mediante el método de interpolación polinamial, la cual se basa en
+        el polinomio de Lagrange. eje representa el eje a lo largo del cual se
+        realiza la interpolación, por default es el eje $\eta$. \\ \hline
+
+        \textbf{gen\textunderscore TFI()} & Genera una malla mediante el método
+        de interpolación transfinita (TFI).\\ \hline
+
+        \textbf{gen\textunderscore inter\textunderscore Hermite()} & Genera una
+        malla mediante el método de interpolación de Hermite.\\ \hline
+
+        \end{tabular}
+        \caption{Métodos de la clase mesh}
+    \label{tabla_mesh}
+    \end{center}
+    \end{table}
+
+    \paragraph*{}
+        Como previamente se ha mencionado, la clase mesh sirve de superclase de
+        las subclases mesh\textunderscore c y mesh\textunderscore o. Como el
+        nombre de las mismas lo indica son subclases desarrolladas para la
+        generación de mallas tipo C y tipo O respectivamente. En este trabajo se
+        han desarrollado los mismos métodos para ambas subclases, con lo que se
+        logra la misma funcionalidad en ambos casos. La razón de desarrollar dos
+        clases distintas atiende a la necesidad de manejar las ecuaciones de
+        diferente manera en las fronteras de la malla dependiendo de la
+        tipología de ésta. La tabla \ref{tabla_mesh_c_o} enlista los métodos
+        disponibles para ambos tipos de malla, así como una breve descripción de
+        ellos.
+
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{ | l | p{11cm} |}
+        \hline
+        Método & Descripción \\ \hline
+        \textbf{\textunderscore\textunderscore init\textunderscore
+            \textunderscore(R, M, N, airfoil)} & Crea un objeto
+        mesh\textunderscore c o mesh\textunderscore o, donde R es la dimesión de
+        la frontera externa, M es el número de niveles en el eje $\xi$, N es el
+        número de niveles en el eje $\eta$ y airfoil es un objeto de la clase
+        homónima que contiene la información del perfil aerodinámico a analizar.
+        \\ \hline
+
+        \textbf{gen\textunderscore Laplace(metodo)} & Genera la malla
+        resolviendo la ecuación de Laplace. La variable metodo se refiere al
+        método iterativo de solución, el usuario puede escoger entre Jacobi,
+        Gauss-Seidel y SOR. Por default se utiliza el método SOR.\\ \hline
+
+        \textbf{gen\textunderscore Poisson(metodo)} & Genera la malla
+        resolviendo la ecuación de Poisson. La variable metodo se refiere al
+        método iterativo de solución, el usuario puede escoger entre Jacobi,
+        Gauss-Seidel y SOR. Por default se utiliza el método SOR
+        \\ \hline
+
+        \textbf{tensor()} & Calcula el tensor métrico de la transformación,
+        tanto la transformación directa como indirecta. Tambien calcula el
+        Jacobiano de dicha transformación y los valores de las derivadas
+        parciales $x_\xi$, $x_\eta$, $y_xi$ y $y_\eta$. Los valores que
+        regresa el método son matrives de $M$x$N$, ya que todos los términos se
+        calculan para cada uno de los puntos de la mall. \\\hline
+
+        \textbf{to\textunderscore su2()} & Convierte la malla al formato del 
+        software SU2, con el objetivo de realizar simulaciones en dicho
+        programa sobre las mallas desarrolladas en este proyecto.\\ \hline
+
+        \end{tabular}
+        \caption{Métodos de las clases mesh\textunderscore c y
+            mesh\textunderscore o}
+    \label{tabla_mesh_c_o}
+    \end{center}
+    \end{table}
+
 %
 %
 %
