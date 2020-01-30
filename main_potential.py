@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(0)
+perfil.rotate(10)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -61,9 +61,15 @@ elif malla == 'C':
 mallaNACA.gen_Poisson()
 mallaNACA.plot()
 
-flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
+flag = 'r'
+is_ok = False
+
+while not is_ok:
+    flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
              + '[n] to exit execution: ')
-print()
+    print()
+    if flag == 'S' or flag == 'N' or flag == 'n':
+        is_ok = True
 
 if flag == 'S':
     path = input('carpeta donde se va a guardar: ')
@@ -83,14 +89,14 @@ print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # variables de flujo
-t_inf = 300
-p_inf = 101300
-v_inf = 10 # [m / s]
+t_inf = 293.15
+p_inf = 101325
+v_inf = 48 # [m / s]
 
 alfa = 0
 
 gamma = 1.4
-cp = 1006
+cp = 1007
 Rg = cp * (gamma - 1) / gamma
 d_inf = p_inf / (Rg * t_inf)
 h_inf = cp * t_inf
@@ -101,7 +107,7 @@ d0 = d_inf / (1 - 0.5 * v_inf ** 2 / h0)
 p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
-Re = v_inf * c * d_inf / 17e-6
+Re = v_inf * c * d_inf / 18.25e-6
 
 print('Re = ' + str(Re))
 print('mach_inf = ' + str(mach_inf))
