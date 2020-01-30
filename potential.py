@@ -111,8 +111,8 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     it = 0
-    error = 1e-7
-    omega = 1.4
+    error = 1e-6
+    omega = 1.3
     IMA = 0
 
     arcotan = np.zeros((M,))
@@ -133,7 +133,9 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     print('Potential Flow')
     while ddd > error and it < it_max:
-        print(it, end='\r')
+        print('it =  ' + str(it), end=' ')
+        print('ddd = ' + str(ddd), end=' ')
+        print('C = ' + str(C), end='\r')
         it += 1
         phi_old = np.copy(phi)
 
@@ -368,7 +370,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     tol = 1.e-7
-    omega = 1.6
+    omega = 0.6
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente

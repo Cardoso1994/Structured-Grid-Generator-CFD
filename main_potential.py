@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(10)
+perfil.rotate(-6)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
