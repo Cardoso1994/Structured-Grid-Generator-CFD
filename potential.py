@@ -611,7 +611,8 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     '''
 
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
-    p = p0 * (d / d0) ** gamma
+    # p = p0 * (d / d0) ** gamma
+    p = (p0 - p_inf) * (d / d0) ** gamma
     cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
 
     return (cp, p)

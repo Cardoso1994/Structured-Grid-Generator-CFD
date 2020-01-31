@@ -40,7 +40,7 @@ mach_inf = v_inf / c_inf
 
 
 path = '/home/desarrollo/'
-direc = 'six-/'
+direc = 'eight/'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
@@ -84,7 +84,7 @@ plt.axis('equal')
 
 plt.figure('streamlines')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contour(mallaNACA.X, mallaNACA.Y, np.real(psi), 95, cmap='brg')
+plt.contour(mallaNACA.X, mallaNACA.Y, np.real(psi), 195, cmap='brg')
 plt.colorbar()
 plt.axis('equal')
 

@@ -14,7 +14,7 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from analysis import potential_flow_o, potential_flow_o_esp
+from potential import potential_flow_o, potential_flow_o_esp
 import helpers
 
 # tipo de malla (C, O)
@@ -25,14 +25,14 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 10
+N = 60
 union = 6
 
 # points = 11
-airfoil_points = 25
+airfoil_points = 39
 
 if malla == 'C':
-    points = airfoil_points // 3 * 2
+    points = airfoil_points // 3  # * 2
 elif malla == 'O':
     points = airfoil_points
 
@@ -48,7 +48,7 @@ perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 flap.create_sin(points)
-flap.rotate(10)
+# flap.rotate(10)
 # perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(30)
 # M = np.shape(perfil.x)[0]
@@ -70,8 +70,7 @@ print('N = ' + str(mallaNACA.N))
 mallaNACA.to_su2('./garbage/mesh.su2')
 
 mallaNACA.to_txt_mesh('./garbage/25_10_002_01.txt_mesh')
-mallaNACA1 = helpers.from_txt_mesh()
-mallaNACA1.plot()
+mallaNACA.plot()
 exit()
 
 
