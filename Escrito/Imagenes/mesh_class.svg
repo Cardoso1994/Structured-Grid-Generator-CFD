@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 297 210"
+   height="210mm"
+   width="297mm"
+   sodipodi:docname="mesh_class.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1074"
+     inkscape:window-height="1891"
+     id="namedview544"
+     showgrid="false"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="937.32359"
+     inkscape:cy="151.541"
+     inkscape:window-x="1440"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-grids="true">
+    <sodipodi:guide
+       position="148.45981,105.50244"
+       orientation="1,0"
+       id="guide667"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="149.55477,104.89412"
+       orientation="0,1"
+       id="guide786"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="74.228027,104.25824"
+       orientation="1,0"
+       id="guide1169"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="222.7963,104.89412"
+       orientation="1,0"
+       id="guide1175"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="75.703906,52.222135"
+       orientation="0,1"
+       id="guide1181"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="37.169257,51.928799"
+       orientation="1,0"
+       id="guide1232"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="55.696859,51.55861"
+       orientation="1,0"
+       id="guide1238"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="259.92935,52.607642"
+       orientation="1,0"
+       id="guide1244"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="241.36201,78.861336"
+       orientation="1,0"
+       id="guide1250"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="EmptyTriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="EmptyTriangleOutL"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path2289"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;fill:#ffffff;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="scale(0.8) translate(-6,0)" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="EmptyTriangleInL"
+       refX="0"
+       refY="0"
+       orient="auto">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,4.8,0)"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path1122"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(0,-87)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.30990237;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       y="87.854149"
+       x="111.147"
+       height="148.29208"
+       width="74.639534"
+       id="rect10" />
+    <flowRoot
+       transform="scale(0.26458333)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot827"
+       xml:space="preserve"><flowRegion
+         id="flowRegion829"><rect
+           y="239.66254"
+           x="414.28571"
+           height="137.14285"
+           width="77.14286"
+           id="rect831" /></flowRegion><flowPara
+         id="flowPara833">jajajajajajajaeras la mamada</flowPara><flowPara
+         id="flowPara835" /></flowRoot>    <flowRoot
+       transform="scale(0.26458333)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot837"
+       xml:space="preserve"><flowRegion
+         id="flowRegion839"><rect
+           y="716.80542"
+           x="431.42856"
+           height="394.28571"
+           width="1182.8572"
+           id="rect841" /></flowRegion><flowPara
+         id="flowPara843" /></flowRoot>    <flowRoot
+       transform="scale(0.26458333)"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot857"
+       xml:space="preserve"><flowRegion
+         id="flowRegion859"><rect
+           y="648.23395"
+           x="251.42857"
+           height="262.85715"
+           width="340"
+           id="rect861" /></flowRegion><flowPara
+         id="flowPara863" /></flowRoot>    <path
+       id="path896"
+       d="m 111.07661,100.11973 h 74.74015 v 0.2201"
+       style="fill:none;stroke:#000000;stroke-width:0.17766009px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="scale(1.0638684,0.93996588)"
+       id="text900"
+       y="104.67204"
+       x="125.62801"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.45304003"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.45304003"
+         y="104.67204"
+         x="125.62801"
+         id="tspan898">mesh</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.45304003"
+         y="104.67204"
+         x="125.62801"
+         id="tspan780" /></text>
+    <path
+       id="path896-8"
+       d="m 111.12669,149.88407 h 74.67435 v 0.22459"
+       style="fill:none;stroke:#000000;stroke-width:0.17939018px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <text
+       id="text4725"
+       y="166.43884"
+       x="67.351921"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="stroke-width:0.26458332"
+         y="175.80261"
+         x="67.351921"
+         id="tspan4723" /></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot629"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="scale(0.26458333)"><flowRegion
+         id="flowRegion631"><rect
+           id="rect633"
+           width="35.735176"
+           height="113.09132"
+           x="414.94843"
+           y="366.19522" /></flowRegion><flowPara
+         id="flowPara635"></flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="122.23518"
+       y="104.79132"
+       id="text798"><tspan
+         sodipodi:role="line"
+         id="tspan796"
+         x="122.23518"
+         y="104.79132"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">tipo : char</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="110.08298"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan800">d_eta : float</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="115.37466"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan802">d_xi : float</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="120.66632"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan804">R : float</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="125.95798"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan808">M : int</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="131.24965"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan812">N : int</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="136.54132"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan814">airfoil : airfoil (clase)</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="141.83299"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan816">X : numpy.ndarray</tspan><tspan
+         sodipodi:role="line"
+         x="122.23518"
+         y="147.12465"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan818">Y : numpy.ndarray</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="125.38395"
+       y="154.16107"
+       id="text798-3"><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="154.16107"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan818-5">get_tipo()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="159.45274"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan878">get_d_eta()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="164.7444"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan880">get_d_xi()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="170.03607"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan882">get_R()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="175.32774"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan884">get_M()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="180.6194"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan886">get_N()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="185.91107"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan888">is_airfoil_alone()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="191.20274"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan890">get_airfoil_join()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="196.4944"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan892">get_airfoil_boundary()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="201.78607"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan894">get_X()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="207.07773"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan896">get_Y()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="212.3694"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan899">plot()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="217.66107"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan901">to_txt_mesh()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="222.95273"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan903">gen_inter_pol()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="228.2444"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan905">gen_TFI()</tspan><tspan
+         sodipodi:role="line"
+         x="125.38395"
+         y="233.53607"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan907">gen_inter_Hermite()</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.16771887;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       y="223.1035"
+       x="18.305096"
+       height="43.351639"
+       width="74.781723"
+       id="rect10-7" />
+    <path
+       id="path896-9"
+       d="m 18.305789,235.44016 h 74.740139 v 0.2201"
+       style="fill:none;stroke:#000000;stroke-width:0.17766008px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="scale(1.0638684,0.93996588)"
+       id="text900-6"
+       y="248.63516"
+       x="31.216045"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.45304003"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.45304003"
+         y="248.63516"
+         x="31.216045"
+         id="tspan898-0">mesh_c</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.45304003"
+         y="248.63516"
+         x="31.216045"
+         id="tspan780-4" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="42.145069"
+       y="241.47513"
+       id="text798-3-9"><tspan
+         sodipodi:role="line"
+         x="42.145069"
+         y="241.47513"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan907-5">boundaries()</tspan><tspan
+         sodipodi:role="line"
+         x="42.145069"
+         y="246.7668"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1157">gen_Laplace()</tspan><tspan
+         sodipodi:role="line"
+         x="42.145069"
+         y="252.05846"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1159">gen_Poisson()</tspan><tspan
+         sodipodi:role="line"
+         x="42.145069"
+         y="257.3501"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1161">tensor()</tspan><tspan
+         sodipodi:role="line"
+         x="42.145069"
+         y="262.64178"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1163">to_su2()</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.16771887;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       y="223.10309"
+       x="203.9696"
+       height="43.351639"
+       width="74.781723"
+       id="rect10-7-1" />
+    <path
+       id="path896-9-9"
+       d="m 203.9703,235.43973 h 74.74014 v 0.2201"
+       style="fill:none;stroke:#000000;stroke-width:0.17766008px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <text
+       transform="scale(1.0638684,0.93996588)"
+       id="text900-6-9"
+       y="248.63472"
+       x="205.73434"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.45304003"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.11111164px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.45304003"
+         y="248.63472"
+         x="205.73434"
+         id="tspan898-0-7">mesh_o</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;line-height:1.25;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="227.80959"
+       y="241.39"
+       id="text798-3-9-2"><tspan
+         sodipodi:role="line"
+         x="227.80959"
+         y="241.39"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan907-5-5">boundaries()</tspan><tspan
+         sodipodi:role="line"
+         x="227.80959"
+         y="246.68167"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1157-3">gen_Laplace()</tspan><tspan
+         sodipodi:role="line"
+         x="227.80959"
+         y="251.97333"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1159-4">gen_Poisson()</tspan><tspan
+         sodipodi:role="line"
+         x="227.80959"
+         y="257.26498"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1161-9">tensor()</tspan><tspan
+         sodipodi:role="line"
+         x="227.80959"
+         y="262.55664"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333311px;font-family:'InconsolataGo NF';-inkscape-font-specification:'InconsolataGo NF, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan1163-0">to_su2()</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.28019375;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#EmptyTriangleInL)"
+       d="M 111.14242,192.10589 55.696859,223.02002"
+       id="path1316"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.28019375;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#EmptyTriangleInL)"
+       d="m 185.73749,192.10589 55.62452,30.98344"
+       id="path3150"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
