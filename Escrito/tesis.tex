@@ -2,6 +2,8 @@
 \usepackage[spanish,es-tabla]{babel} %es-tabla para nombrar a las tablas en vez de cuadros
 \usepackage[utf8]{inputenc}
 
+\usepackage{pstricks,pst-node}
+\usepackage{auto-pst-pdf}
 \usepackage{graphicx} % para imagenes
 \usepackage{subfigure} % para subfiguras
 \usepackage{caption}
@@ -16,6 +18,9 @@
 \usepackage{cleveref}
 
 
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
 
 % Cabiar el titulo por default de los indices
 \addto{\captionsspanish}{\renewcommand*{\listfigurename}{Indice de Figuras}} %cambia el nombre del indice de figuras
@@ -2879,6 +2884,73 @@
     \label{tabla_mesh_c_o}
     \end{center}
     \end{table}
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}[htbp!]
+    \begin{center}
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, node distance=2.5cm,
+    text width=7em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse, node distance=4cm,
+    minimum height=1cm, text width=5.5em, text badly centered]
+\tikzstyle{decision} = [diamond, draw, text badly centered, aspect=2]
+
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [cloud] (criterios) {Identificar criterios};
+    \node [cloud, left of=criterios] (tabla) {Tabla de estimaciones inciales};
+    \node [block, below of=criterios] (n) {Tamaño de muestra};
+    \node [block, below of=n] (neff) {Tamaño de muestra efectivo};
+    \node [cloud, right of=neff] (suprimir) {Suprimir};
+    \node [block, below of=neff] (casos) {Número de casos};
+    \node [block, below of=casos] (cve) {Coeficiente de variación};
+    \node [block, below of=cve] (df) {Grados de libertad};
+    \node [block, below of=df] (cvL) {Coeficiente de variación Logit};
+    \node [cloud, left of=cvL] (publicar) {Publicar};
+    \node [cloud, right of=cvL] (revisar) {Revisión};
+    \node [decision, below of=cvL] (jaja) {tu mama es mi perra};
+ 
+    % Draw edges
+    %\path [line] (n) -- node {sí}(neff);
+    \path [line] (neff) -- node {sí}(casos);
+    \path [line] (casos) -- node {sí}(cve);
+    \path [line] (cve) -- node {sí}(df);  
+    \path [line] (df) -- node {sí}(cvL);    
+    \path [line] (cvL) -- node {sí}(jaja);    
+    \path [line,dashed] (tabla) -- (criterios);
+    \path [line,dashed] (criterios) -- (n);
+    \path [line,dashed] (cvL) -- node {sí}(publicar);
+    \path [line,dashed] (cvL) -- node {no}(revisar);
+    \path [line,dashed] (df) -| node [near start]{no}(revisar);
+    \path [line,dashed] (df) -| node [near start]{no}(revisar);
+    \path [line,dashed] (n) -| node [near start]{no}(suprimir);
+    \path [line,dashed] (neff) -- node {no}(suprimir);
+    \path [line,dashed] (casos) -| node [near start]{no}(suprimir);
+    \path [line,dashed] (cve) -| node[near start] {no}(suprimir);
+\end{tikzpicture}
+\end{center}
+    \caption{tu mama}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
 
 %
 %

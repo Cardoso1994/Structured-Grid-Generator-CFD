@@ -5,7 +5,7 @@
 
 FILE=tesis
 
-pdflatex $FILE
+pdflatex  -shell-escape $FILE
 bibtex $FILE
-pdflatex $FILE
-pdflatex $FILE
+pdflatex  -shell-escape $FILE
+pdflatex  -shell-escape $FILE
