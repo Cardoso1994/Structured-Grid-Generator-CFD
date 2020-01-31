@@ -61,6 +61,39 @@ class mesh(object):
 
         return
 
+    def get_tipo(self):
+        return self.tipo
+
+    def get_d_eta(self):
+        return self.d_eta
+
+    def get_d_xi(self):
+        return self.dxi
+
+    def get_R(self):
+        return self.R
+
+    def get_M(self):
+        return self.M
+
+    def get_N(self):
+        return self.N
+
+    def is_airfoil_alone(self):
+        return self.airfoil_alone
+
+    def get_airfoil_join(self):
+        return self.arifoil_join
+
+    def get_airfoil_boundary(self):
+        return self.airfoil_boundary
+
+    def get_X(self):
+        return (np.copy(self.X))
+
+    def get_Y(self):
+        return (np.copy(self.Y))
+
     def plot(self):
         '''
         función para graficar la malla

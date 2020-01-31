@@ -31,6 +31,30 @@ class airfoil(object):
         self.is_boundary    = None
         self.union          = 0
 
+    '''
+    métodos para acceder a los atributos de la clase
+    '''
+    def get_chord(self):
+        return (self.c)
+
+    def get_number(self):
+        return (self.number)
+
+    def get_x(self):
+        return (np.copy(self.x))
+
+    def get_y(self):
+        return (np.copy(self.y))
+
+    def is_alone(self):
+        return (self.alone)
+
+    def is_boundary_(self):
+        return (self.is_boundary)
+
+    def get_union(self):
+        return (self.union)
+
     # se crea un perfil a partir de un archivo con la nube de puntos
     def create(self, filename):
         '''

@@ -737,3 +737,15 @@ class mesh_O(mesh):
         B       = g12I
 
         return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
+
+    def to_su2(self, filename):
+        '''
+        convierte malla a formato SU2
+        '''
+
+        if self.airfoil_alone == True:
+            mesh_su2.to_su2_mesh_o_airfoil(self, filename)
+        else:
+            mesh_su2.to_su2_mesh_o_airfoil_n_flap(self, filename)
+
+        return
