@@ -67,9 +67,9 @@ print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
-mallaNACA.to_su2('./garbage/mesh.su2')
-
-mallaNACA.to_txt_mesh('./garbage/25_10_002_01.txt_mesh')
+# mallaNACA.to_su2('./garbage/mesh.su2')
+#
+# mallaNACA.to_txt_mesh('./garbage/25_10_002_01.txt_mesh')
 mallaNACA.plot()
 exit()
 
