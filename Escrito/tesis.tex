@@ -2,11 +2,10 @@
 \usepackage[spanish,es-tabla]{babel} %es-tabla para nombrar a las tablas en vez de cuadros
 \usepackage[utf8]{inputenc}
 
-\usepackage{pstricks,pst-node}
-\usepackage{auto-pst-pdf}
 \usepackage{graphicx} % para imagenes
 \usepackage{subfigure} % para subfiguras
 \usepackage{caption}
+\usepackage{rotating}
 
 \usepackage{physics} % para formulas matemáticas
 \usepackage{amsmath}
@@ -2673,6 +2672,7 @@
         En el presente trabajo se implementaron dos superclases: ``airfoil'' y
         ``mesh'', cada una con sus respectivas subclases.
 
+
     \section{Clase Airfoil}
     \paragraph*{}
         La clase airfoil se desarrolló para la creación de perfiles alares a
@@ -2681,12 +2681,11 @@
         la dimensión en metros de la cuerda.
     \paragraph*{}
         La clase airfoil contiene métodos que son utilizados por las demás
-        subclases. La tabla \ref{tabla_airfoil} enlista y da una breve
-        descripción de los métodos pertenecientes a dicha clase.
+        subclases.
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | l | p{9cm} |}
+        \begin{tabular}{ | l | p{11cm} |}
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
@@ -2695,13 +2694,36 @@
         igual a uno.
         \\ \hline
 
-        \textbf{create(filename)} & Crea perfil aerodinámico a partir de un
-        archivo que contiene la nube de puntos que lo describen.\\ \hline
+        \textbf{get\textunderscore chord()} & Regresa la dimensión de la 
+        cuerda aerodinámica.\\ \hline
+
+        \textbf{get\textunderscore number()} & Regresa el número de perfil (en
+        caso de flaps o varios perfiles).\\ \hline
+
+        \textbf{get\textunderscore x()} & Regresa un arreglo que contiene todas
+        las coordenadas en el eje $x$ de los puntos del perfil.\\ \hline
+
+        \textbf{get\textunderscore y()} & Regresa un arreglo que contiene todas
+        las coordenadas en el eje $y$ de los puntos del perfil.\\ \hline
+
+        \textbf{get\textunderscore union()} & Regresa el número de puntos que
+        unen a los perfiles. Por default es cero.\\ \hline
+
+        \textbf{is\textunderscore alone()} & Regresa verdadero o falso,
+        dependiendo si existen 2 o más perfiles.\\ \hline
+
+        \textbf{is\textunderscore boundary\textunderscore()} & Regresa un
+        arreglo de componentes verdadero o falso, dependiendo si el punto
+        correspondiente forma parte de una frontera (perfil) o es un punto de
+        unión.\\ \hline
 
         \textbf{size()} & Regresa el número de puntos que forman el perfil.
         \\ \hline
 
         \textbf{plot()} & Grafica el perfil alar. \\ \hline
+
+        \textbf{create(filename)} & Crea perfil aerodinámico a partir de un
+        archivo que contiene la nube de puntos que lo describen.\\ \hline
 
         \textbf{rotate(degrees)} & Rota el perfil degrees grados. Se considera
         rotación positiva en sentido horario. \\ \hline
@@ -2734,12 +2756,17 @@
         borde de ataque como en el borde de salida del perfil.
 
     \paragraph*{}
-        La tabla \ref{tabla_naca4} presenta los métodos pertenecientes a esta
-        subclase, así como una breve descripción de los mismos.
+        Las tablas \ref{tabla_airfoil} y \ref{tabla_naca4} presentan los métodos
+        pertenecientes a la clase airfoil y a la clase NACA4 respectivamente,
+        así como una breve descripción de los mismos. A su vez, la figura
+        \ref{airfoil_class} presenta un diagrama de clase donde se muestran los
+        atributos y métodos de la clase airfoil, así como su herencia con
+        respecto a la clase NACA4, junto con los atributos y  métodos de la
+        misma.
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | l | p{9cm} |}
+        \begin{tabular}{ | l | p{11cm} |}
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
@@ -2758,27 +2785,20 @@
         de puntos points. Esta distribución permite obtener mayor densidad
         de puntos tanto en el borde de ataque como de salida con respecto a la
         distribución lineal para un mismo número de puntos.\\ \hline
-
-        \textbf{size()} & Regresa el número de puntos que forman el perfil.
-        \\ \hline
-
-        \textbf{plot()} & Grafica el perfil alar. \\ \hline
-
-        \textbf{rotate(degrees)} & Rota el perfil degrees grados. Se considera
-        rotación positiva en sentido horario. \\ \hline
-
-        \textbf{join(other, dx, dy, union)} & Une dos perfiles alares. El que
-        invoca el método con other. dx y dy son las distancias sobre los ejes
-        entre el borde de salida de un perfil y el borde de ataque del otro.
-        \\ \hline
-
-        \textbf{to\textunderscore csv(filename)} & Exporta la nube de puntos del
-        perfil a un archivo de valores separados por comas (.csv) \\ \hline
         \end{tabular}
         \caption{Métodos de la subclase NACA4}
     \label{tabla_naca4}
     \end{center}
     \end{table}
+
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[width=55mm]{./Imagenes/airfoil_class}
+        \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase airfoil y subclase
+        NACA4}
+        \label{airfoil_class}
+    \end{figure}
+
 
     \section{Clase Mesh}
     \paragraph*{}
@@ -2885,72 +2905,25 @@
     \end{center}
     \end{table}
 
+    % \begin{figure}[htbp!]
+    %     \centering
+    %     \includegraphics[width=205mm, angle=90]{./Imagenes/mesh_class}
+    %     \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase airfoil y subclase
+    %     NACA4}
+    %     \label{airfoil_class}
+    % \end{figure}
 
-
-
-
-
-
-
-
-
-
-\begin{figure}[htbp!]
-    \begin{center}
-% Define block styles
-\tikzstyle{block} = [rectangle, draw, node distance=2.5cm,
-    text width=7em, text centered, rounded corners, minimum height=4em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse, node distance=4cm,
-    minimum height=1cm, text width=5.5em, text badly centered]
-\tikzstyle{decision} = [diamond, draw, text badly centered, aspect=2]
-
-\begin{tikzpicture}[node distance = 2cm, auto]
-    % Place nodes
-    \node [cloud] (criterios) {Identificar criterios};
-    \node [cloud, left of=criterios] (tabla) {Tabla de estimaciones inciales};
-    \node [block, below of=criterios] (n) {Tamaño de muestra};
-    \node [block, below of=n] (neff) {Tamaño de muestra efectivo};
-    \node [cloud, right of=neff] (suprimir) {Suprimir};
-    \node [block, below of=neff] (casos) {Número de casos};
-    \node [block, below of=casos] (cve) {Coeficiente de variación};
-    \node [block, below of=cve] (df) {Grados de libertad};
-    \node [block, below of=df] (cvL) {Coeficiente de variación Logit};
-    \node [cloud, left of=cvL] (publicar) {Publicar};
-    \node [cloud, right of=cvL] (revisar) {Revisión};
-    \node [decision, below of=cvL] (jaja) {tu mama es mi perra};
- 
-    % Draw edges
-    %\path [line] (n) -- node {sí}(neff);
-    \path [line] (neff) -- node {sí}(casos);
-    \path [line] (casos) -- node {sí}(cve);
-    \path [line] (cve) -- node {sí}(df);  
-    \path [line] (df) -- node {sí}(cvL);    
-    \path [line] (cvL) -- node {sí}(jaja);    
-    \path [line,dashed] (tabla) -- (criterios);
-    \path [line,dashed] (criterios) -- (n);
-    \path [line,dashed] (cvL) -- node {sí}(publicar);
-    \path [line,dashed] (cvL) -- node {no}(revisar);
-    \path [line,dashed] (df) -| node [near start]{no}(revisar);
-    \path [line,dashed] (df) -| node [near start]{no}(revisar);
-    \path [line,dashed] (n) -| node [near start]{no}(suprimir);
-    \path [line,dashed] (neff) -- node {no}(suprimir);
-    \path [line,dashed] (casos) -| node [near start]{no}(suprimir);
-    \path [line,dashed] (cve) -| node[near start] {no}(suprimir);
-\end{tikzpicture}
-\end{center}
-    \caption{tu mama}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
+    \begin{sidewaysfigure}
+        \centering
+        \includegraphics[width=205mm]{./Imagenes/mesh_class}
+        \caption{Diagrama de clase mesh y subclases mesh\textunderscore c y
+            mesh\textunderscore o}
+    \end{sidewaysfigure}
+%
+%
+%
+%
+%
 
 %
 %
@@ -2959,6 +2932,17 @@
 %
 \appendix
 \chapter{Códigos}\label{appCode}
+%
+%
+%
+%
+%
+
+%
+%
+%
+%
+%
 \chapter{Métodos Numéricos Iterativos}\label{appIter}
     \paragraph*{}
         Existen en general, dos métodos de solución de sistemas de ecuaciones
