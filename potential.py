@@ -641,18 +641,6 @@ def streamlines(u, v, gamma, h0, d0, p, mesh):
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
 
-    # IMPORTING FROM ESPAÑOLETA
-    # path = '/home/desarrollo/'
-    # g11 = np.genfromtxt(path + 'garbage/g11.csv', delimiter=',')
-    # g22 = np.genfromtxt(path + 'garbage/g22.csv', delimiter=',')
-    # g12 = np.genfromtxt(path + 'garbage/g12.csv', delimiter=',')
-    # J = np.genfromtxt(path + 'garbage/J.csv', delimiter=',')
-    # x_xi = np.genfromtxt(path + 'garbage/x_xi.csv', delimiter=',')
-    # x_eta = np.genfromtxt(path + 'garbage/x_eta.csv', delimiter=',')
-    # y_xi = np.genfromtxt(path + 'garbage/y_xi.csv', delimiter=',')
-    # y_eta = np.genfromtxt(path + 'garbage/y_eta.csv', delimiter=',')
-    # JU_es = np.genfromtxt(path + 'garbage/JU.csv', delimiter=',')
-
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
 
     JU = u * y_eta - v * x_eta
