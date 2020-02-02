@@ -2670,10 +2670,36 @@
 
     \paragraph*{}
         En el presente trabajo se implementaron dos superclases: ``airfoil'' y
-        ``mesh'', cada una con sus respectivas subclases.
+        ``mesh'', cada una con sus respectivas subclases. Además se generaron
+        funciones que lleven a cabo análisis de flujo potencial, las cuales
+        no forman parte de ninguna clase, pero que reciben como datos de entrada
+        objetos de las clases mesh.
+
+    \paragraph*{}
+        A continuación se enlistan los nombres de los archivos de código que se
+        desarrollaron, así como una breve descripción de su funcionalidad
+        \begin{itemize}
+            \item airfoil.py. Contiene la definición de las clases airfoil y
+                NACA4
+            \item helpers.py. Contiene diversas funciones que se ocupan dentro
+                de los métodos de las clases.
+            \item mesh.py. Contiene la definición de la clase mesh.
+            \item mesh\textunderscore c.py. Contiene la definición de la clase
+                mesh\textunderscore c.
+            \item mesh\textunderscore o.py. Contiene la definición de la clase
+                mesh\textunderscore o.
+            \item mesh\textunderscore su2. Contiene las funciones que permiten
+                exportar las mallas del formato propio, al formato utilizado por
+                el software SU2.
+            \item potential.py. Contiene todas las funciones relacionadas con
+                el análisis de flujo potencial, como es el mismo flujo
+                potencial, el campo de velocidades, el campo de presiones y el
+                coeficiente de presión, la función de corriente, entre otros.
+        \end{itemize}
 
 
-    \section{Clase Airfoil}
+    \section{Estructura de las clases}
+    \subsection{Clase Airfoil}
     \paragraph*{}
         La clase airfoil se desarrolló para la creación de perfiles alares a
         partir de una archivo de texto que contenga la nube de puntos del perfil
@@ -2800,13 +2826,13 @@
     \end{figure}
 
 
-    \section{Clase Mesh}
+    \subsection{Clase Mesh}
     \paragraph*{}
         La clase mesh se desarrolló para el desarrollo de mallas estructuradas.
-        Además es la superclase a la que pertenecen las subclases mesh
-        \textunderscore c y mesh\textunderscore o. En esta clase están definidos
-        los métodos de creación de malla mediante ecuaciones algebráicas, los
-        cuales son independientes de la tipología de la malla.
+        Además es la superclase a la que pertenecen las subclases
+        mesh\textunderscore c y mesh\textunderscore o. En esta clase están
+        definidos los métodos de creación de malla mediante ecuaciones
+        algebráicas, los cuales son independientes de la tipología de la malla.
 
     \paragraph*{}
         La tabla \ref{tabla_mesh} contiene información con respecto a los
@@ -2892,7 +2918,7 @@
         Jacobiano de dicha transformación y los valores de las derivadas
         parciales $x_\xi$, $x_\eta$, $y_xi$ y $y_\eta$. Los valores que
         regresa el método son matrives de $M$x$N$, ya que todos los términos se
-        calculan para cada uno de los puntos de la mall. \\\hline
+        calculan para cada uno de los puntos de la malla. \\\hline
 
         \textbf{to\textunderscore su2()} & Convierte la malla al formato del 
         software SU2, con el objetivo de realizar simulaciones en dicho
@@ -2905,20 +2931,56 @@
     \end{center}
     \end{table}
 
-    % \begin{figure}[htbp!]
-    %     \centering
-    %     \includegraphics[width=205mm, angle=90]{./Imagenes/mesh_class}
-    %     \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase airfoil y subclase
-    %     NACA4}
-    %     \label{airfoil_class}
-    % \end{figure}
-
+    \paragraph*{}
+        La figura \ref{mesh_class} es una representación de la estructura de la
+        clase mesh y su relación (herencia) con respecto a las subclases
+        mesh\textunderscore c y mesh\textunderscore o. En este diagrama se
+        enlistan los atributos y métodos pertenecientes a cada clase.
     \begin{sidewaysfigure}
         \centering
         \includegraphics[width=205mm]{./Imagenes/mesh_class}
         \caption{Diagrama de clase mesh y subclases mesh\textunderscore c y
             mesh\textunderscore o}
+        \label{mesh_class}
     \end{sidewaysfigure}
+
+    \section{Diagramas de flujo}
+    \paragraph*{}
+        A continuación se muestran los diagramas de flujo que explican el
+        funcionamiento de todos los métodos descritos a lo largo de este
+        trabajo.
+
+    \paragraph*{}
+        La figura \ref{flujo_malla} presenta el diagrama de flujo que se sigue
+        para generar una malla y poder guardar dichos datos tanto en el formato
+        de este proyecto como en el formato de SU2.
+
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[width=60mm]{./Imagenes/flujo_malla}
+        \caption{Diagrama de flujo para generación de mallas}
+        \label{flujo_malla}
+    \end{figure}
+
+    \paragraph*{}
+        El diagrama de flujo de la figura \ref{flujo_potencial} representa el
+        algoritmo empleado para el análisis de flujo potencial.
+
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[width=60mm]{./Imagenes/flujo_potencial}
+        \caption{Diagrama de flujo para análisis de flujo potencial}
+        \label{flujo_potencial}
+    \end{figure}
+
+    \paragraph*{}
+        Hasta ahora, solo se han presentado diagramas de flujo que presentan el
+        funcionamiento general del programa sin entrar en específicos sobre los
+        algoritmos de las funciones y los métodos que lo componen. Se muestran a
+        continuación diagramas de flujo para la generación de mediante la
+        ecuación de Laplace y Poisson, además de solución a la ecuación de
+        potencial, dado que son los algoritmos más complejos en este trabajo.
+
 %
 %
 %
