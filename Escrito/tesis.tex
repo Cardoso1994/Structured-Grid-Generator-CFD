@@ -1370,6 +1370,36 @@
             atracción en el eje $\eta$ por la función $Q(\xi, \eta)$}
             \label{fig:densidad-eta}
         \end{figure}
+
+    \paragraph*{}
+        Las ecuaciones discretizadas para la generación de mallas mediante las
+        ecuaciones de Laplace y Poisson quedan
+
+        \begin{align}
+            X_{i, j} =& \frac{1}{2 \left(\alpha + \gamma\right)}
+            \Biggl[
+                \alpha \left(X_{i+1, j} + X_{i-1, j}\right)
+                + \gamma \left(X_{i, j+1} - X_{i, j-1}\right)\\
+                &- \frac{\beta}{2} \left(X_{i+1, j+1} + X_{i-1, j-1}
+                        - X_{i-1, j+1} - X_{i+1, j-1}\right)\\
+                &+ \frac{I^2}{2} \left( P \left(X_{i+1, j} - X_{i-1, j}\right)
+                + Q \left( X_{i, j+1} - X_{i, j-1} \right)\right)
+            \Biggr]
+        \end{align}
+        \begin{align}
+            Y_{i, j} =& \frac{1}{2 \left(\alpha + \gamma\right)}
+            \Biggl[
+                \alpha \left(Y_{i+1, j} + Y_{i-1, j}\right)
+                + \gamma \left(Y_{i, j+1} - Y_{i, j-1}\right)\\
+                &- \frac{\beta}{2} \left(Y_{i+1, j+1} + Y_{i-1, j-1}
+                        - Y_{i-1, j+1} - Y_{i+1, j-1}\right)\\
+                &+ \frac{I^2}{2} \left( P \left(Y_{i+1, j} - Y_{i-1, j}\right)
+                + Q \left( Y_{i, j+1} - Y_{i, j-1} \right)\right)
+            \Biggr]
+        \end{align}
+        donde $P=0$ y $Q=0$ si se pretende utilizar la ecuación de Laplace.
+
+
     \subsubsection{Generación de mallas mediante EDP hiperbólicas}
     \paragraph*{}
         La generación de mallas mediante EDP elípticas puede ser demasiado
