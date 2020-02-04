@@ -612,10 +612,15 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     calcula la presion y el coeficiente de presión
     '''
 
+    # de las ecuaciones de flujo potencial
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
-    p = p0 * (d / d0) ** gamma
-    # p = (p0 - p_inf) * (d / d0) ** gamma
-    cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
+
+    # relaciones isentropicas
+    p = p0 / (d0 / d) ** gamma
+    #  p = (p0 - p_inf) * (d / d0) ** gamma
+    # cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
+    # cp = 1 - (u ** 2 + v ** 2) / v_inf ** 2
+    cp = (p - p_inf) / (p0 - p_inf)
 
     return (cp, p)
 
@@ -669,8 +674,6 @@ def lift_n_drag(mesh, cp, alfa, c):
     N = mesh.N
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
-    X = np.copy(mesh.X)
-    Y = np.copy(mesh.Y)
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
         mesh.tensor()
     mesh.X = np.flip(mesh.X)

@@ -91,7 +91,7 @@ print('N = ' + str(mallaNACA.N))
 t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
-# v_inf = 10 # [m / s]
+v_inf = 68 # [m / s]
 
 ###############################################################################
 #
@@ -112,8 +112,11 @@ d_inf = p_inf / (Rg * t_inf)
 h_inf = cp_ * t_inf
 c_inf = (gamma * p_inf / d_inf) ** 0.5
 
+# relaciones isentrópicas
 h0 = h_inf + 0.5 * v_inf ** 2
-d0 = d_inf / (1 - 0.5 * v_inf ** 2 / h0)
+# de cengel temro
+d0 = d_inf * (1 + (gamma - 1) / 2 * (v_inf / c_inf) ** 2) ** (1 / (gamma - 1))
+# d0 = d_inf / (1 - 0.5 * v_inf ** 2 / h0)
 p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
@@ -145,6 +148,9 @@ if flag == 'S':
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
 (L, D) = lift_n_drag(mallaNACA, cp, 8, 1)
 
+print('L = ' + str(L))
+print('D = ' + str(D))
+
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap='jet')
 plt.colorbar()
@@ -156,6 +162,12 @@ plt.colorbar()
 plt.figure('pressure')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 105, cmap='jet')
+plt.colorbar()
+plt.axis('equal')
+
+plt.figure('pressure_')
+plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
+plt.contourf(mallaNACA.X, mallaNACA.Y, p, 105, cmap='jet')
 plt.colorbar()
 plt.axis('equal')
 

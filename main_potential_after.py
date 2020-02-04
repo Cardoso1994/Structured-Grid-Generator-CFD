@@ -21,6 +21,7 @@ import helpers
 t_inf = 293.15
 p_inf = 101325
 v_inf = 48 # [m / s]
+v_inf = 10 # [m / s]
 
 alfa = 0
 
