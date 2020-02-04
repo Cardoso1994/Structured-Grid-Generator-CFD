@@ -115,6 +115,8 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     omega = 1.3
     IMA = 0
 
+    it_max = 3000
+
     arcotan = np.zeros((M,))
     arcosen = np.zeros((M,))
 
@@ -607,12 +609,12 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
 
 def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     '''
-    calcula la presion
+    calcula la presion y el coeficiente de presión
     '''
 
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
-    # p = p0 * (d / d0) ** gamma
-    p = (p0 - p_inf) * (d / d0) ** gamma
+    p = p0 * (d / d0) ** gamma
+    # p = (p0 - p_inf) * (d / d0) ** gamma
     cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
 
     return (cp, p)
@@ -654,5 +656,38 @@ def streamlines(u, v, gamma, h0, d0, p, mesh):
 
     psi = np.flip(psi)
     mach = np.flip(mach)
+    u = np.flip(u)
+    v = np.flip(v)
 
     return (psi, mach)
+
+def lift_n_drag(mesh, cp, alfa, c):
+    '''
+    calcula coeficientes y fuerzas de levantamiento y arrastre
+    '''
+    M = mesh.M
+    N = mesh.N
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+    X = np.copy(mesh.X)
+    Y = np.copy(mesh.Y)
+    (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
+        mesh.tensor()
+    mesh.X = np.flip(mesh.X)
+    mesh.Y = np.flip(mesh.Y)
+
+    alfa = alfa * np.pi / 180
+    kx = np.zeros((M,))
+    ky = np.zeros((M,))
+
+    kx = cp[:, -1] * x_xi[:, -1] / c
+    kx = cp[:, -1] * y_xi[:, -1] / c
+
+    xi = np.linspace(1, M, M)
+    cl_x = np.trapz(xi, kx)
+    cl_y = np.trapz(xi, ky)
+
+    L = -cl_x * np.sin(alfa) + cl_y * np.cos(alfa)
+    D = cl_x * np.cos(alfa) + cl_y * np.sin(alfa)
+
+    return (L, D)

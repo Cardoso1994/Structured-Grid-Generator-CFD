@@ -15,21 +15,30 @@ import mesh_c
 import mesh_o
 import mesh_su2
 from potential import potential_flow_o, potential_flow_o_esp, velocity,\
-                        pressure, streamlines
+                        pressure, streamlines, lift_n_drag
 import helpers
-
-#           variables de flujo
-t_inf = 300
-p_inf = 101300
-v_inf = 10 # [m / s]
+# variables de flujo
+t_inf = 293.15
+p_inf = 101325
+v_inf = 48 # [m / s]
 
 alfa = 0
 
 gamma = 1.4
-cp = 1006
-Rg = cp * (gamma - 1) / gamma
+cp_ = 1007
+
+#           variables de flujo
+# t_inf = 300
+# p_inf = 101300
+# v_inf = 10 # [m / s]
+#
+# alfa = 0
+#
+# gamma = 1.4
+# cp_ = 1006
+Rg = cp_ * (gamma - 1) / gamma
 d_inf = p_inf / (Rg * t_inf)
-h_inf = cp * t_inf
+h_inf = cp_ * t_inf
 c_inf = (gamma * p_inf / d_inf) ** 0.5
 
 h0 = h_inf + 0.5 * v_inf ** 2
@@ -59,7 +68,7 @@ theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-
+(L, D) = lift_n_drag(mallaNACA, cp, 8, 1)
 
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap='jet')

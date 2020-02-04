@@ -14,9 +14,6 @@ mismas.
 import numpy as np
 import matplotlib.pyplot as plt
 from sys import maxsize
-# import mesh_c
-# import mesh_o
-# import airfoil
 
 np.set_printoptions(threshold=maxsize)
 

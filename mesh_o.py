@@ -205,7 +205,7 @@ class mesh_O(mesh):
 
         #####
         #####
-        # mesh.err_max = 1e-4
+        #mesh.it_max = 1
         #####
         #####
 
