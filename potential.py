@@ -115,7 +115,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     omega = 1.3
     IMA = 0
 
-    it_max = 3000
+    # it_max = 3000
 
     arcotan = np.zeros((M,))
     arcosen = np.zeros((M,))
