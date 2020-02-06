@@ -130,7 +130,9 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         elif arcotan[i] < 0 and arcosen[i] > 0:
             arcotan[i] = np.pi - np.abs(arcotan[i])
         elif arcotan[i] < 0 and arcosen[i] < 0:
-            if theta[i, -1] - alfa > 0:
+            # código antes de modificación
+            # if theta[i, -1] - alfa > 0:
+            if theta[i, 0] - alfa > 0:
                 arcotan[i] += (2 * np.pi)
 
     print('Potential Flow')
@@ -183,10 +185,10 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             VH[i, 1 : N-1] = g12H[i, 1:N-1] * (phi[i+1, 1:N-1] - phi[i, 1:N-1]) + g22H[i, 1:N-1] \
                 * PH[i, 1:N-1]
 
-        rhoV = 1 - (UV**2 * (x_xiV**2 + y_xiV**2)
+        rhoV = 1 - ((UV**2 * (x_xiV**2 + y_xiV**2)
                     + VV**2 * (x_etaV**2 + y_etaV**2)
                     + 2 * UV * VV * (x_xiV * x_etaV + y_xiV * y_etaV))\
-                    / 2 / H0
+                    / 2 / H0)
         rhoH = 1 - ((UH**2 * (x_xiH**2 + y_xiH**2)
                     + VH**2 * (x_etaH**2 + y_etaH**2)
                     + 2 * UH * VH * (x_xiH * x_etaH + y_xiH * y_etaH))
@@ -211,6 +213,8 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         rhoH = d0 * np.abs(rhoH_tmp) ** (1 / (gamma - 1))  # abs()?
 
         # cálculo de función potencial phi
+        ## al parecer hay error en los términos de las mallas veritcales
+        ## ñps términos de j + 0.5 y j - 0.5 están desfazados un índice
         for i in range(M-1):
             for j in range(1, N-1):
                 if i == 0:
@@ -259,6 +263,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             (phi[0, N-3] - 4 * phi[0, N-2] + 3 * phi[0, N-1]) / g11[0, N-1]
 
     print('outside while. it = ' + str(it))
+    print('IMA = ' + str(IMA))
 
     phi = np.flip(phi)
     theta = np.flip(theta)
@@ -372,7 +377,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     tol = 1.e-7
-    omega = 0.6
+    omega = 0.8
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -616,8 +621,9 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
 
     # relaciones isentropicas
-    p = p0 / (d0 / d) ** gamma
-    #  p = (p0 - p_inf) * (d / d0) ** gamma
+    # p = p0 / (d0 / d) ** gamma
+    # p = (p0 - p_inf) * (d / d0) ** gamma
+    p = p0 * (d / d0) ** gamma
     # cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
     # cp = 1 - (u ** 2 + v ** 2) / v_inf ** 2
     cp = (p - p_inf) / (p0 - p_inf)

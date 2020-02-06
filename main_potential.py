@@ -91,7 +91,6 @@ print('N = ' + str(mallaNACA.N))
 t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
-v_inf = 68 # [m / s]
 
 ###############################################################################
 #
@@ -114,7 +113,7 @@ c_inf = (gamma * p_inf / d_inf) ** 0.5
 
 # relaciones isentrópicas
 h0 = h_inf + 0.5 * v_inf ** 2
-# de cengel temro
+# de cengel termo
 d0 = d_inf * (1 + (gamma - 1) / 2 * (v_inf / c_inf) ** 2) ** (1 / (gamma - 1))
 # d0 = d_inf / (1 - 0.5 * v_inf ** 2 / h0)
 p0 = p_inf * (d0 / d_inf) ** gamma
@@ -133,7 +132,9 @@ if mach_inf > 0.8:
     exit()
 
 (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
-                                            alfa, mallaNACA)
+                                             alfa, mallaNACA)
+# (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
+#                                             alfa, mallaNACA)
 if flag == 'S':
     mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
     np.savetxt(path + '/phi.csv', phi, delimiter=',')
