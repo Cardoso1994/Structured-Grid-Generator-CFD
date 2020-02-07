@@ -282,7 +282,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(0.7)  # en caso de metodo SOR
+        omega = np.longdouble(0.3)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
@@ -297,18 +297,12 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(3.5)  #0.4
-        cc = np.longdouble(5.6)  #3.3
+        aa = np.longdouble(4.0)  #0.4
+        cc = np.longdouble(3.6)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 
         it = 0
-
-        #####
-        #####
-        #mesh.err_max = 1e-3
-        #####
-        #####
 
         # inicio del método iterativo
         print("Poisson:")
@@ -326,14 +320,14 @@ class mesh_C(mesh):
 
             for j in range(1, n-1):
                 for i in range(1, m-1):
-                    x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-                    y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-                    x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi
-                    y_xi = (Y[i+1, j] - Y[i-1, j]) / 2 / d_xi
+                    x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
+                    y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
+                    x_xi = np.longdouble((X[i+1, j] - X[i-1, j]) / 2 / d_xi)
+                    y_xi = np.longdouble((Y[i+1, j] - Y[i-1, j]) / 2 / d_xi)
 
-                    alpha = x_eta ** 2 + y_eta ** 2
-                    beta = x_xi * x_eta + y_xi * y_eta
-                    gamma = x_xi ** 2 + y_xi ** 2
+                    alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
+                    beta = np.longdouble(x_xi * x_eta + y_xi * y_eta)
+                    gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
 
                     if np.abs(i / (m-1) - linea_xi) == 0:
                         P = np.longdouble(0)
@@ -346,12 +340,15 @@ class mesh_C(mesh):
                     if np.abs(j / (n-1) - linea_eta) == 0:
                         Q = np.longdouble(0)
                     else:
-                        Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                                / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                                * np.exp(-cc * np.abs(np.longdouble(j /
-                                                        (n-1) - linea_eta)))
+                        # Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                        #         / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                        #         * np.exp(-cc * np.abs(np.longdouble(j /
+                        #                                 (n-1) - linea_eta)))
+                        Q = -aa * (np.longdouble(j) / (n-1) - 0.0)\
+                            / (np.abs(np.longdouble(j) / (n-1) - 0.0))\
+                            * np.exp(-cc * np.abs(np.longdouble(j) / (n-1) - 0.0))
 
-                    I = x_xi * y_eta - x_eta * y_xi
+                    I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
                     Xn[i, j] = (d_xi * d_eta)**2\
                         / (2 * (alpha * d_eta**2 + gamma * d_xi**2)) \
@@ -375,14 +372,14 @@ class mesh_C(mesh):
                 # se ocupan diferencias finitas "forward" para derivadas
                 # respecto a "XI"
                 i = 0
-                x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-                y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-                x_xi = (X[i+1, j] - X[i, j]) / d_xi
-                y_xi = (Y[i+1, j] - Y[i, j]) / d_xi
+                x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
+                y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
+                x_xi =  np.longdouble((X[i+1, j] - X[i, j]) / d_xi)
+                y_xi =  np.longdouble((Y[i+1, j] - Y[i, j]) / d_xi)
 
-                alpha = x_eta ** 2 + y_eta ** 2
-                beta = x_xi * x_eta + y_xi * y_eta
-                gamma = x_xi ** 2 + y_xi ** 2
+                alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
+                beta =  np.longdouble(x_xi * x_eta + y_xi * y_eta)
+                gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
 
                 if np.abs(i / (m-1) - linea_xi) == 0:
                     P = np.longdouble(0)
@@ -399,7 +396,7 @@ class mesh_C(mesh):
                             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
                             * np.exp(-cc
                                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-                I = x_xi * y_eta - x_eta * y_xi
+                I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
                 Yn[i, j] = (d_xi * d_eta) ** 2\
                     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
@@ -414,14 +411,14 @@ class mesh_C(mesh):
                 # se ocupan diferencias finitas "backward" para derivadas
                 # respecto a "XI"
                 i = m-1
-                x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-                y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-                x_xi = (X[i, j] - X[i-1, j]) / d_xi
-                y_xi = (Y[i, j] - Y[i-1, j]) / d_xi
+                x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
+                y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
+                x_xi =  np.longdouble((X[i, j] - X[i-1, j]) / d_xi)
+                y_xi =  np.longdouble((Y[i, j] - Y[i-1, j]) / d_xi)
 
-                alpha = x_eta ** 2 + y_eta ** 2
-                beta = x_xi * x_eta + y_xi * y_eta
-                gamma = x_xi ** 2 + y_xi ** 2
+                alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
+                beta =  np.longdouble(x_xi * x_eta + y_xi * y_eta)
+                gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
 
                 if np.abs(i / (m-1) - linea_xi) == 0:
                     P = np.longdouble(0)
@@ -438,7 +435,7 @@ class mesh_C(mesh):
                             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
                             * np.exp(-cc * np.abs(np.longdouble(j / (n-1)
                                                                 - linea_eta)))
-                I = x_xi * y_eta - x_eta * y_xi
+                I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
                 Yn[i, j] = (d_xi * d_eta) ** 2\
                     / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\

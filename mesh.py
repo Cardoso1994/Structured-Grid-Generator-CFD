@@ -44,8 +44,10 @@ class mesh(object):
         '''
 
         self.tipo               = None
-        self.d_eta              = 1  # 1 / (self.N - 1)
-        self.d_xi               = 1  # 1 / (self.M - 1)
+        # self.d_eta              = 1 / (self.N - 1)
+        # self.d_xi               = 1 / (self.M - 1)
+        self.d_eta              = 1
+        self.d_xi               = 1
         self.R                  = R
         self.M                  = M
         self.N                  = N
@@ -53,8 +55,8 @@ class mesh(object):
         self.airfoil_join       = airfoil.union
         self.airfoil_boundary   = airfoil.is_boundary
 
-        self.X                  = np.zeros((M, N))
-        self.Y                  = np.zeros((M, N))
+        self.X                  = np.zeros((M, N), dtype=np.longdouble)
+        self.Y                  = np.zeros((M, N), dtype=np.longdouble)
 
         return
 
