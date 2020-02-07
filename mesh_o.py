@@ -96,7 +96,7 @@ class mesh_O(mesh):
 
         # inicio del método iterativo
         while it < mesh.it_max:
-            print(it, end='\r')
+            print('it = ' + str(it) + '\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
 
@@ -198,8 +198,8 @@ class mesh_O(mesh):
         I           = 0
         a           = np.longdouble(0.0)
         c           = np.longdouble(0.0)
-        aa          = np.longdouble(26.5)
-        cc          = np.longdouble(6.5)
+        aa          = np.longdouble(20.5) # 26.5
+        cc          = np.longdouble(6.5)  # 6.5
         linea_eta   = 0.0
         linea_xi    = 0.5
 
@@ -213,7 +213,7 @@ class mesh_O(mesh):
         print("Poisson:")
         # inicio del método iterativo
         while it < mesh.it_max:
-            print(it, end='\r')
+            print('it = ' + str(it) + '\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
             # si el método iterativo es Jacobi
