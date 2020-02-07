@@ -2950,7 +2950,7 @@
         regresa el método son matrives de $M$x$N$, ya que todos los términos se
         calculan para cada uno de los puntos de la malla. \\\hline
 
-        \textbf{to\textunderscore su2()} & Convierte la malla al formato del 
+        \textbf{to\textunderscore su2()} & Convierte la malla al formato del
         software SU2, con el objetivo de realizar simulaciones en dicho
         programa sobre las mallas desarrolladas en este proyecto.\\ \hline
 
@@ -2975,34 +2975,73 @@
     \end{sidewaysfigure}
 
     \section{Diagramas de flujo}
+
+    \subsection{Estructura global del programa}
+    \paragraph*{}
+        Siguiendo la estructura adoptada por los software de simulación y
+        análisis de ingeniería, donde la solución del problema se divide en 3
+        procesos generales
+        \begin{enumerate}
+            \item Preproceso
+            \item Solver
+            \item Postproceso
+        \end{enumerate}
+        se muestra un diagrama en la figura \ref{estructura_global} donde se
+        relaciona cada parte de este proyecto con el correspondiente proceso de
+        los arriba mencionados.
+
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[width=110mm]{./Imagenes/estructura_global}
+        \caption[Estructura global del programa]{Estructura global del programa,
+        dividido en preproceso, solver y postproceso}
+        \label{estructura_global}
+    \end{figure}
+
     \paragraph*{}
         A continuación se muestran los diagramas de flujo que explican el
-        funcionamiento de todos los métodos descritos a lo largo de este
-        trabajo.
+        funcionamiento de los 3 procesos generales dentro de este proyecto.
 
     \paragraph*{}
         La figura \ref{flujo_malla} presenta el diagrama de flujo que se sigue
         para generar una malla y poder guardar dichos datos tanto en el formato
-        de este proyecto como en el formato de SU2.
+        de este proyecto como en el formato de SU2. Estas acciones corresponden
+        al preproceso del análisis.
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=60mm]{./Imagenes/flujo_malla}
-        \caption{Diagrama de flujo para generación de mallas}
+        \includegraphics[width=80mm]{./Imagenes/flujo_malla}
+        \caption{Diagrama de flujo para generación de mallas (preproceso)}
         \label{flujo_malla}
     \end{figure}
 
     \paragraph*{}
         El diagrama de flujo de la figura \ref{flujo_potencial} representa el
-        algoritmo empleado para el análisis de flujo potencial.
+        algoritmo empleado para el análisis de flujo potencial, lo cual
+        corresponde al ``solver'' del programa.
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=60mm]{./Imagenes/flujo_potencial}
-        \caption{Diagrama de flujo para análisis de flujo potencial}
+        \includegraphics[width=80mm]{./Imagenes/flujo_potencial}
+        \caption{Diagrama de flujo para análisis de flujo potencial(solver)}
         \label{flujo_potencial}
     \end{figure}
 
+    \paragraph*{}
+        El postproceso se ve ilustrado en la figura \ref{flujo_potencial_after},
+        la cual representa el algoritmo para la obtención de diferentes
+        parámetros de interés en los análisis aerodinámicos, entre ellos los
+        coeficientes de presión ($c_p$), de sustentación ($c_l$) y de
+        resistencia al avance ($c_d$).
+
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[width=80mm]{./Imagenes/flujo_potencial_after}
+        \caption{Diagrama de flujo para análisis de postproceso}
+        \label{flujo_potencial_after}
+    \end{figure}
+
+    \subsection{Funciones principales}
     \paragraph*{}
         Hasta ahora, solo se han presentado diagramas de flujo que presentan el
         funcionamiento general del programa sin entrar en específicos sobre los
@@ -3042,6 +3081,32 @@
             ecuación de Poisson}
         \label{flujo_potencial_funcion}
     \end{figure}
+%
+%
+%
+%
+%
+
+%
+%
+%
+%
+%
+\chapter{Resultados}
+    \paragraph*{}
+        Los resultados de este trabajo se dividen en tres secciones diferentes,
+        la primera de ellas muestra para diferentes configuraciones de mallas
+        el ``aspect ratio'' de las celdas generadas, con la intención de mostrar
+        la calidad de la malla, lo que dota de confiabilidad al proyecto para su
+        uso en posteriores proyectos. La siguiente sección lidia con el alcance
+        de las mallas generadas mediante este programa, analizando para
+        diferentes configuraciones la distribución de los nodos. Por último se
+        llevan a cabo simulaciones de flujo potencial utilizando el código
+        desarrollado como parte de este proyecto, y también a través del uso del
+        software SU2, con el fin de confirmar la correcta generación de las
+        mallas y de mostrar su aplicabilidad.
+
+    \section{Calidad de la malla}
 
 %
 %
