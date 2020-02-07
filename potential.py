@@ -115,8 +115,6 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     omega = 1.3
     IMA = 0
 
-    # it_max = 3000
-
     arcotan = np.zeros((M,))
     arcosen = np.zeros((M,))
 
@@ -218,23 +216,42 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         for i in range(M-1):
             for j in range(1, N-1):
                 if i == 0:
+                    # phi[i, j] = (rhoH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] \
+                    #         + g11H[i, j] * phi[i+1, j]) - rhoH[M-2, j] \
+                    #         * JH[M-2, j] * (g12H[M-2, j] * PH[M-2, j] \
+                    #         - g11H[M-2, j] * (phi[M-2, j] - C)) + rhoV[i, j-1] \
+                    #         * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] \
+                    #         + g22V[i, j-1] * phi[i, j+1]) - rhoV[i, j] * JV[i, j] \
+                    #         * (g21V[i, j] * PV[i, j] - g22V[i, j] \
+                    #         * phi[i, j-1])) / (rhoH[i, j] * JH[i, j] \
+                    #         * g11H[i, j] + rhoH[M-2, j] * JH[M-2, j] \
+                    #         * g11H[M-2, j] + rhoV[i, j] * JV[i, j] * g22V[i, j] \
+                    #         + rhoV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
                     phi[i, j] = (rhoH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] \
                             + g11H[i, j] * phi[i+1, j]) - rhoH[M-2, j] \
                             * JH[M-2, j] * (g12H[M-2, j] * PH[M-2, j] \
-                            - g11H[M-2, j] * (phi[M-2, j] - C)) + rhoV[i, j-1] \
-                            * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] \
-                            + g22V[i, j-1] * phi[i, j+1]) - rhoV[i, j] * JV[i, j] \
-                            * (g21V[i, j] * PV[i, j] - g22V[i, j] \
+                            - g11H[M-2, j] * (phi[M-2, j] - C)) + rhoV[i, j] \
+                            * JV[i, j] * (g21V[i, j] * PV[i, j] \
+                            + g22V[i, j] * phi[i, j+1]) - rhoV[i, j-1] * JV[i, j-1] \
+                            * (g21V[i, j-1] * PV[i, j-1] - g22V[i, j-1] \
                             * phi[i, j-1])) / (rhoH[i, j] * JH[i, j] \
                             * g11H[i, j] + rhoH[M-2, j] * JH[M-2, j] \
                             * g11H[M-2, j] + rhoV[i, j] * JV[i, j] * g22V[i, j] \
                             + rhoV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
                 else:
+                    # phi[i, j] = (rhoH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] + g11H[i,\
+                    #     j] * phi[i+1, j]) - rhoH[i-1, j] * JH[i-1, j] * (g12H[i-1, j] *\
+                    #     PH[i-1, j] - g11H[i-1, j] * (phi[i-1, j])) + rhoV[i, j-1] * JV[\
+                    #     i, j-1] * (g21V[i, j-1] * PV[i, j-1] + g22V[i, j-1] * phi[i,\
+                    #     j+1]) - rhoV[i, j] * JV[i, j] * (g21V[i, j] * PV[i, j] - g22V[i, j\
+                    #     ] * phi[i, j-1])) / (rhoH[i, j] * JH[i, j] * g11H[i, j] + rhoH[i\
+                    #     -1, j] * JH[i-1, j] * g11H[i-1, j] + rhoV[i, j] * JV[i, j] * g22V\
+                    #     [i, j] + rhoV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
                     phi[i, j] = (rhoH[i, j] * JH[i, j] * (g12H[i, j] * PH[i, j] + g11H[i,\
                         j] * phi[i+1, j]) - rhoH[i-1, j] * JH[i-1, j] * (g12H[i-1, j] *\
-                        PH[i-1, j] - g11H[i-1, j] * (phi[i-1, j])) + rhoV[i, j-1] * JV[\
-                        i, j-1] * (g21V[i, j-1] * PV[i, j-1] + g22V[i, j-1] * phi[i,\
-                        j+1]) - rhoV[i, j] * JV[i, j] * (g21V[i, j] * PV[i, j] - g22V[i, j\
+                        PH[i-1, j] - g11H[i-1, j] * (phi[i-1, j])) + rhoV[i, j] * JV[\
+                        i, j] * (g21V[i, j] * PV[i, j] + g22V[i, j] * phi[i,\
+                        j+1]) - rhoV[i, j-1] * JV[i, j-1] * (g21V[i, j-1] * PV[i, j-1] - g22V[i, j-1\
                         ] * phi[i, j-1])) / (rhoH[i, j] * JH[i, j] * g11H[i, j] + rhoH[i\
                         -1, j] * JH[i-1, j] * g11H[i-1, j] + rhoV[i, j] * JV[i, j] * g22V\
                         [i, j] + rhoV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
@@ -262,7 +279,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         C = phi[M-2, N-1] - phi[1, N-1] - g12[0, N-1] * \
             (phi[0, N-3] - 4 * phi[0, N-2] + 3 * phi[0, N-1]) / g11[0, N-1]
 
-    print('outside while. it = ' + str(it))
+    print('\noutside while. it = ' + str(it))
     print('IMA = ' + str(IMA))
 
     phi = np.flip(phi)

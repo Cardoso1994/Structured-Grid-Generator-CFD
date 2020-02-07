@@ -55,7 +55,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Poisson()
-direc = '/zero/'
+direc = '/four-/'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 mallaNACA.plot()
@@ -92,16 +92,6 @@ t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
 
-###############################################################################
-#
-#   Con V = 48:
-#           * restando p_inf a p0 dan cp de -72
-#           * sin restar p_inf a p0 dan cp de 0 a 9
-#   Con V = 10:
-#           * restando p_inf a p0 dan cp de 0 a -0.07
-#           * sin restar p_inf a p0 dan cp de 0 a 9
-#
-###############################################################################
 alfa = 0
 
 gamma = 1.4
@@ -127,14 +117,14 @@ print('d_inf = ' + str(d_inf))
 print('h0 = ' + str(h0))
 print('d0 = ' + str(d0))
 print('p0 = ' + str(p0))
+
 if mach_inf > 0.8:
     print('Las condiciones de flujo son inválidas')
     exit()
 
 (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
                                              alfa, mallaNACA)
-# (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
-#                                             alfa, mallaNACA)
+
 if flag == 'S':
     mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
     np.savetxt(path + '/phi.csv', phi, delimiter=',')
@@ -158,7 +148,6 @@ plt.colorbar()
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
 plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
 plt.axis('equal')
-plt.colorbar()
 
 plt.figure('pressure')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
@@ -168,8 +157,9 @@ plt.axis('equal')
 
 plt.figure('pressure_')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contourf(mallaNACA.X, mallaNACA.Y, p, 105, cmap='jet')
+plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 105, cmap='jet')
 plt.colorbar()
+mallaNACA.plot()
 plt.axis('equal')
 
 plt.figure('streamlines')
