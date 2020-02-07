@@ -50,7 +50,7 @@ mach_inf = v_inf / c_inf
 
 
 path = '/home/desarrollo/'
-direc = 'eight/'
+direc = 'ten/'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')

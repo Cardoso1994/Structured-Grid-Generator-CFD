@@ -108,7 +108,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PH = np.zeros((M-1, N))
     PV = np.zeros((M, N-1))
 
-    ddd = 1
+    ddd = 1.0
     it_max = 20000
     it = 0
     error = 1e-6
@@ -136,8 +136,9 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     print('Potential Flow')
     while ddd > error and it < it_max:
         print('it =  ' + str(it), end=' ')
-        print('ddd = ' + str(ddd), end=' ')
-        print('C = ' + str(C), end='\r')
+        print('ddd = ' + '{0:.4e}'.format(ddd), end=' ')
+        print('C = ' + '{:.5e}'.format(C), end=' ')
+        print('\t', end='\r')
         it += 1
         phi_old = np.copy(phi)
 

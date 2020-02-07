@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 65
-airfoil_points = 41
+N = 55
+airfoil_points = 91
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-# perfil.rotate(0)
+perfil.rotate(10)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -54,10 +54,10 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-# mallaNACA.gen_Poisson()
-direc = '/four-/'
-mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
-                                  + '/mallaNACA.txt_mesh')
+mallaNACA.gen_Poisson()
+# direc = '/four-/'
+# mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
+#                                   + '/mallaNACA.txt_mesh')
 mallaNACA.plot()
 
 flag = 'r'
@@ -96,6 +96,7 @@ alfa = 0
 
 gamma = 1.4
 cp_ = 1007
+mu = 18.25e-6
 Rg = cp_ * (gamma - 1) / gamma
 d_inf = p_inf / (Rg * t_inf)
 h_inf = cp_ * t_inf
@@ -109,7 +110,7 @@ d0 = d_inf * (1 + (gamma - 1) / 2 * (v_inf / c_inf) ** 2) ** (1 / (gamma - 1))
 p0 = p_inf * (d0 / d_inf) ** gamma
 
 mach_inf = v_inf / c_inf
-Re = v_inf * c * d_inf / 18.25e-6
+Re = v_inf * c * d_inf / mu
 
 print('Re = ' + str(Re))
 print('mach_inf = ' + str(mach_inf))
@@ -151,15 +152,14 @@ plt.axis('equal')
 
 plt.figure('pressure')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 105, cmap='jet')
+plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 75, cmap='jet')
 plt.colorbar()
 plt.axis('equal')
 
 plt.figure('pressure_')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 105, cmap='jet')
+plt.contour(mallaNACA.X, mallaNACA.Y, cp, 75, cmap='jet')
 plt.colorbar()
-mallaNACA.plot()
 plt.axis('equal')
 
 plt.figure('streamlines')
