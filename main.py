@@ -29,7 +29,7 @@ N = 60
 union = 6
 
 # points = 11
-airfoil_points = 57
+airfoil_points = 77
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2

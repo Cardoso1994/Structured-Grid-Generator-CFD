@@ -171,7 +171,7 @@ class mesh_C(mesh):
         # inicio del método iterativo
         print("Laplace:")
         while it < mesh.it_max:
-            print(it, end='\r')
+            print('it = ' + str(it) + '\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
 
@@ -297,8 +297,8 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(4.0)  #0.4
-        cc = np.longdouble(3.6)  #3.3
+        aa = np.longdouble(5.2)  #0.4
+        cc = np.longdouble(4.5)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 
@@ -307,7 +307,7 @@ class mesh_C(mesh):
         # inicio del método iterativo
         print("Poisson:")
         while it < mesh.it_max:
-            print(it, end="\r")
+            print('it = ' + str(it) + '\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
             # si el método iterativo es Jacobi
