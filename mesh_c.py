@@ -297,8 +297,8 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(5.2)  #0.4
-        cc = np.longdouble(4.5)  #3.3
+        aa = np.longdouble(5.6)  #0.4
+        cc = np.longdouble(5.3)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 
