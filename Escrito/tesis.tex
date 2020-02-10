@@ -1987,6 +1987,119 @@
         externa no modificada. La intersección de la línea $AA$ y del arco $CC$
         representa los valores dados para las coordenadas $(XO_{i, j + 1},
         YO_{i, j+1})$ con el uso de una frontera modificada.
+
+    \section{Calidad de las Mallas}
+    \paragraph*{}
+        La calidad de la malla es un tema de vital importancia en la generación
+        de las mismas, ya que representa un indicativo de la confiabilidad y la
+        usabilidad de la malla. Por lo tanto es necesario desarrollar métodos
+        que permitan analizar dicha característica en las mallas generadas con
+        el fin de poder modificar las anomalías y erroes que se presenten.
+
+    \paragraph*{}
+        Esto conlleva la necesidad de determinar las características correctas
+        con las cuales se evaluará la calidad, y entender como los resultados
+        obtenidos se relacionan con los errores que puedan presentarse durante
+        las simulaciones de flujos.
+
+    \paragraph*{}
+        Las características que más suelen evaluarse son:
+        \begin{itemize}
+            \item \it{Skewness}
+            \item Alargamiento
+            \item Torsión
+            \item \it{Aspect Ratio}
+            \item Volúmen de Celda
+            \item Densidad de Nodos
+        \end{itemize}
+
+    \paragraph*{}
+        En el caso de mallas estructuradas, dados los conceptos con los que se
+        lleva a cabo su generación, se pueden definir muchas de las
+        características de la malla tomando la transformación de coordenadas
+        como propiedades de las curvas, supercicies y volúmenes. Estos valores
+        se determinan mediante los elemetos del tensor de la métrica de la
+        transformación y las derivadas de éste. \cite{vladimir-grid}
+
+    \subsection*{Aspect Ratio}
+        El aspect ratio es un valor característico de cada celda, mide que tan
+        alejada está la forma de la celda de una figura que sirve de base para
+        la comparación. Para mallas bidimiensionales, las celdas pueden ser
+        triangulares o cuadrilaterales, en el caso de celdas triangulares la
+        figura base suele ser un triángulo equilátero, mientras que para celdas
+        de 4 lados, algunas fuentes toman como figura base el rombo, mientras
+        que otras fuentes toman como base el cuadrado.
+
+    \paragraph*{}
+        Por ejemplo, Liseikin \cite{vladimir-grid}, presenta un método que toma
+        como referencia el rombo, dicho método viene dado por la ecuación
+        \begin{equation}
+            Q_{as}^{l} = \frac{g_{ii}}{g_{jj}} + \frac{g_{jj}}{g_{ii}}
+                = \frac{\left( g_{ii} + g_{jj} \right)^2}{g_{ii} g_{jj}} - 2
+       \end{equation}
+       esta ecuación presenta la desigualdad $Q_{as}^{l} \geq 2$ la cual se
+       vuelve una igualdad si, y solo si, $g_{ii} = g_{jj}$, lo cual se traduce
+       a que el paralelogramo es un rombo. Por lo tanto, esta ecuación
+       indica qué tan alejada está la forma de la celda de un rombo.
+
+    \paragraph*{}
+        Por su parte ANSYS, uno de los programas más reconocidos en el ámbito de
+        la ingeniería asistida por computadora (CAE por sus siglas en inglés),
+        considera el aspect ratio como una medida del alargamiento de la celda,
+        y lo calcula como la relación entre entre el valor máximo y el valor
+        mínimo de alguno de diferentes valores como pueden ser: distancia entre
+        el centroide de la celda a los nodos, distancia entre el centroide de la
+        celda y los centroides de las caras que la forman. La figura
+        \ref{aspect_ansys} es una representación gráfica de este método.
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=110mm]{./Imagenes/aspect_ansys.png}
+            \caption[Cálculo de aspect ratio en ANSYS]{Cálculo de aspect ratio
+            para una celda tridimensional en ANSYS}
+            \label{aspect_ansys}
+        \end{figure}
+
+    \paragraph*{}
+        Otro método que se debe resaltar es el empleado en la librería ``The
+        Verdict Quality Library'', esta librería contiene rutinas para evaluar
+        la calidad geométrica de diferentes tipos de celdas como pueden ser
+        triangulos, cuadrilateros, tetahedros y exahedros. Para el cálculo del
+        aspect ratio de celdas formadas por cuadrilateros utiliza la siguiente
+        fórmula
+        \begin{equation}
+            q = \frac{L_{\max}\left( L_0 + L_1 + L_2 + L_3 \right)}{4A}
+        \end{equation}
+        donde
+        \begin{subequations}
+            \begin{equation*}
+                L_{\max} = max\left( L_0, L_1, L_2, L_3 \right)
+            \end{equation*}
+            \begin{equation*}
+                A = \frac{1}{2} \lvert \vec{L_0} \times \vec{L_1} \lvert
+                    + \frac{1}{2} \lvert \vec{L_2} \times \vec{L_3} \lvert
+            \end{equation*}
+        \end{subequations}
+        la figura \ref{aspect_verdict} muestra graficamente los elementos que
+        de una celda formada por un cuadrilatero, con los cuales se calculan las
+        metricas propuestas por esta librería.
+
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[width=110mm]{./Imagenes/aspect_verdict.png}
+            \caption[Estrcutura celda cuadrilatera en Verdict]{Estructura de
+            celda cuadrilátera en Verdict. Del lado derecho se muestran los
+            nodos y los elementos que la forman. Del lado izquierdo se muestran
+            los ejes principales de la misma\cite{verdict_quality}}
+            \label{aspect_verdict}
+        \end{figure}
+
+    \paragraph*{}
+        Esta librería y sus métodos son utilizados por diversos programas, entre
+        ellos destaca el programa SALOME, el cual es un software de código
+        abierto desarrollado para las etapas de preproceso y postproceso en
+        análisis computacionales de ingeniería.
+
+
     %
     %
     %
@@ -3051,9 +3164,9 @@
         potencial, dado que son los algoritmos más complejos en este trabajo.
 
     \paragraph*{}
-        La figura \ref{flujo_laplace} presenta el algoritmo utilizado para la
+        La figura ~\ref{flujo_laplace} presenta el algoritmo utilizado para la
         generación de mallas mediante la solución de la ecuación de Laplace.
-        De igual manera la figura \ref{flujo_poisson} presenta el diagrama
+        De igual manera la figura ~\ref{flujo_poisson} presenta el diagrama
         de flujo para la solución de la ecuación de Poisson. Por último, el
         diagrama de flujo ilustrado en la figura \ref{flujo_potencial_funcion}
         muestra el algoritmo empleado para resolver la función potencial.
