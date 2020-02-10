@@ -76,7 +76,7 @@ class mesh_C(mesh):
         npoints = (M - points) // 2 + 1
         print('npoints')
         print(npoints)
-        weight = 1.05
+        weight = 1.1
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         print(delta_limit * (1 - weight))
@@ -282,7 +282,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(0.3)  # en caso de metodo SOR
+        omega = np.longdouble(0.1)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
@@ -297,8 +297,8 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(5.6)  #0.4
-        cc = np.longdouble(5.3)  #3.3
+        aa = np.longdouble(1.1)  #0.4
+        cc = np.longdouble(0.5)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 
@@ -337,16 +337,24 @@ class mesh_C(mesh):
                                 * np.exp(-c * np.abs(np.longdouble(i /
                                                          (m-1) - linea_xi)))
 
-                    if np.abs(j / (n-1) - linea_eta) == 0:
+                    # if np.abs(j / (n-1) - linea_eta) == 0:
+                    #     Q = np.longdouble(0)
+                    # else:
+                    #     # Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                    #     #         / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                    #     #         * np.exp(-cc * np.abs(np.longdouble(j /
+                    #     #                                 (n-1) - linea_eta)))
+                    #     Q = -aa * (np.longdouble(j) / (n-1) - 0.0)\
+                    #         / (np.abs(np.longdouble(j) / (n-1) - 0.0))\
+                    #         * np.exp(-cc * np.abs(np.longdouble(j) / (n-1) - 0.0))
+                    if np.abs(j - linea_eta) == 0:
                         Q = np.longdouble(0)
                     else:
-                        # Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                        #         / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                        #         * np.exp(-cc * np.abs(np.longdouble(j /
-                        #                                 (n-1) - linea_eta)))
-                        Q = -aa * (np.longdouble(j) / (n-1) - 0.0)\
-                            / (np.abs(np.longdouble(j) / (n-1) - 0.0))\
-                            * np.exp(-cc * np.abs(np.longdouble(j) / (n-1) - 0.0))
+                        Q = -aa * (j - linea_eta) / np.abs(j - linea_eta)\
+                            * np.exp(-cc * np.abs(j - linea_eta))
+
+                    if (j == 3 or j == 1) and i == 5:
+                        print('j = ' + str(j) + ' Q = ' + str(Q))
 
                     I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
@@ -389,13 +397,19 @@ class mesh_C(mesh):
                             * np.exp(-c
                                 * np.abs(np.longdouble(i / (m-1) - linea_xi)))
 
-                if np.abs(j / (n-1) - linea_eta) == 0:
+                # if np.abs(j / (n-1) - linea_eta) == 0:
+                #     Q = np.longdouble(0)
+                # else:
+                #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                #             * np.exp(-cc
+                #                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
+                if np.abs(j - linea_eta) == 0:
                     Q = np.longdouble(0)
                 else:
-                    Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                            * np.exp(-cc
-                                * np.abs(np.longdouble(j / (n-1) - linea_eta)))
+                    Q = -aa * (j - linea_eta) / np.abs(j - linea_eta)\
+                        * np.exp(-cc * np.abs(j - linea_eta))
+
                 I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
                 Yn[i, j] = (d_xi * d_eta) ** 2\
@@ -428,13 +442,19 @@ class mesh_C(mesh):
                             * np.exp(-c * np.abs(np.longdouble(i / (m-1)
                                                                - linea_xi)))
 
-                if np.abs(j / (n-1) - linea_eta) == 0:
+                # if np.abs(j / (n-1) - linea_eta) == 0:
+                #     Q = np.longdouble(0)
+                # else:
+                #     Q = - aa * (np.longdouble(j / (n-1) - linea_eta))\
+                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                #             * np.exp(-cc * np.abs(np.longdouble(j / (n-1)
+                #                                                 - linea_eta)))
+                if np.abs(j - linea_eta) == 0:
                     Q = np.longdouble(0)
                 else:
-                    Q = - aa * (np.longdouble(j / (n-1) - linea_eta))\
-                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                            * np.exp(-cc * np.abs(np.longdouble(j / (n-1)
-                                                                - linea_eta)))
+                    Q = -aa * (j - linea_eta) / np.abs(j - linea_eta)\
+                        * np.exp(-cc * np.abs(j - linea_eta))
+
                 I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
                 Yn[i, j] = (d_xi * d_eta) ** 2\
