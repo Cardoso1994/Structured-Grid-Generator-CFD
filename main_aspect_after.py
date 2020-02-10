@@ -90,5 +90,6 @@ import helpers
 #     exit()
 
 path = './aspect_ratio/mesh_O_flap/p_45_95/'
+path = './potential_2412/two/'
 mallaNACA = helpers.from_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
 helpers.get_aspect_ratio(mallaNACA)
