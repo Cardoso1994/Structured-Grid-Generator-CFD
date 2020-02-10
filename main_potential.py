@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(10)
+perfil.rotate(-4)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -58,6 +58,7 @@ mallaNACA.gen_Poisson()
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
+
 mallaNACA.plot()
 
 flag = 'r'
