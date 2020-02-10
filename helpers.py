@@ -125,13 +125,17 @@ def get_size_airfoil_n_flap(airfoil_boundary):
 def get_aspect_ratio(mesh):
     '''
     Calcula el aspect ratio de cada celda. Para cualquier tipo de malla
+    Basado en el método de:
+        The Verdict Geometric Quality Library
     '''
-    X = np.zeros((mesh.M + 1, mesh.N + 1))
-    Y = np.zeros((mesh.M + 1, mesh.N + 1))
+    # X = np.zeros((mesh.M + 1, mesh.N + 1))
+    # Y = np.zeros((mesh.M + 1, mesh.N + 1))
     aspect_ratio_ = np.zeros((mesh.M - 1, mesh.N - 1))
 
+    # se calculan longitudes de los elementos de la celda
     for i in range(0, mesh.M - 1):
         for j in range(0, mesh.N -1):
+            # dist = (l0, l1, l2, l3)
             dist = (((mesh.X[i, j] - mesh.X[i+1, j]) ** 2
                             + (mesh.Y[i, j] - mesh.Y[i+1, j]) ** 2) ** 0.5,
                     ((mesh.X[i+1, j] - mesh.X[i+1, j+1]) ** 2
@@ -140,16 +144,21 @@ def get_aspect_ratio(mesh):
                             + (mesh.Y[i+1, j+1] - mesh.Y[i, j+1]) ** 2) ** 0.5,
                     ((mesh.X[i, j+1] - mesh.X[i, j]) ** 2
                             + (mesh.Y[i, j+1] - mesh.Y[i, j]) ** 2) ** 0.5)
+
             max_dist = max(dist)
+
             dist_sum = dist[0] + dist[1] + dist[2] + dist[3]
-            l0_l1 = np.abs((mesh.X[i, j] - mesh.X[i+1, j])
-                                *  (mesh.Y[i+1, j] - mesh.Y[i+1, j+1])
-                            - (mesh.Y[i, j] - mesh.Y[i+1, j])
-                                 *  (mesh.X[i+1, j] - mesh.X[i+1, j+1]))
-            l2_l3 = np.abs((mesh.X[i+1, j+1] - mesh.X[i, j+1])
-                                * (mesh.Y[i, j+1] - mesh.Y[i, j])
-                            - (mesh.Y[i+1, j+1] - mesh.Y[i, j+1])
-                                * (mesh.X[i, j+1] - mesh.X[i, j]))
+
+            # cálculo de productos cruz
+            l0_l1 = np.abs((mesh.X[i+1, j] - mesh.X[i, j])
+                                *  (mesh.Y[i+1, j+1] - mesh.Y[i+1, j])
+                            - (mesh.Y[i+1, j] - mesh.Y[i, j])
+                                 *  (mesh.X[i+1, j+1] - mesh.X[i+1, j]))
+
+            l2_l3 = np.abs((mesh.X[i, j+1] - mesh.X[i+1, j+1])
+                                * (mesh.Y[i, j] - mesh.Y[i, j+1])
+                            - (mesh.Y[i, j+1] - mesh.Y[i+1, j+1])
+                                * (mesh.X[i, j] - mesh.X[i, j+1]))
             area = 0.5 * l0_l1 + 0.5 * l2_l3
             aspect_ratio_[i, j] = max_dist * dist_sum / 4 / area
 
