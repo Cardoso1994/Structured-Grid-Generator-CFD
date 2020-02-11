@@ -57,13 +57,17 @@ class mesh_C(mesh):
         print(M)
 
         # frontera externa
+        a = 1.15 * R
+        b = R
+        exe = (1 - b ** 2 / a ** 2) ** 0.5
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)
         theta2 = np.linspace(np.pi, np.pi / 2, points1)
         theta = np.concatenate((theta, theta2[1:]))
+        r = b / (1 - exe ** 2 * np.cos(theta) ** 2) ** 0.5
         del(theta2, points1)
         # parte circular de FE
-        x = R * np.cos(theta)
-        y = R * np.sin(theta)
+        x = r * np.cos(theta)
+        y = r * np.sin(theta)
         # se termina FE
 
         # cambiar variable x_line para que no sea distribución lineal
@@ -297,13 +301,13 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(2.2)  #0.4
-        cc = np.longdouble(3.4)  #3.3
+        aa = np.longdouble(40.8)  #0.4
+        cc = np.longdouble(7.4)  #3.3
         linea_xi = 0.0
         linea_eta = 0.0
 
         it = 0
-        mesh.err_max = 1e-3
+        # mesh.err_max = 8e-3
 
         # inicio del método iterativo
         print("Poisson:")
@@ -319,8 +323,10 @@ class mesh_C(mesh):
                 X = Xn
                 Y = Yn
 
-            for j in range(1, n-1):
-                for i in range(1, m-1):
+            # for j in range(1, n-1):
+            for j in range(n-2, 0, -1):
+                # for i in range(1, m-1):
+                for i in range(m-2, 0, -1):
                     x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
                     y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
                     x_xi = np.longdouble((X[i+1, j] - X[i-1, j]) / 2 / d_xi)
@@ -405,91 +411,91 @@ class mesh_C(mesh):
                 # parte inferior a partir del corte
                 # se ocupan diferencias finitas "forward" para derivadas
                 # respecto a "XI"
-                # i = 0
-                # x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
-                # y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
-                # x_xi =  np.longdouble((X[i+1, j] - X[i, j]) / d_xi)
-                # y_xi =  np.longdouble((Y[i+1, j] - Y[i, j]) / d_xi)
+                i = 0
+                x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
+                y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
+                x_xi =  np.longdouble((X[i+1, j] - X[i, j]) / d_xi)
+                y_xi =  np.longdouble((Y[i+1, j] - Y[i, j]) / d_xi)
 
-                # alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
-                # beta =  np.longdouble(x_xi * x_eta + y_xi * y_eta)
-                # gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
+                alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
+                beta =  np.longdouble(x_xi * x_eta + y_xi * y_eta)
+                gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
 
-                # if np.abs(i / (m-1) - linea_xi) == 0:
-                #     P = np.longdouble(0)
-                # else:
-                #     P = -a * (np.longdouble(i / (m-1) - linea_xi))\
-                #             / np.abs(np.longdouble(i / (m-1) - linea_xi))\
-                #             * np.exp(-c
-                #                 * np.abs(np.longdouble(i / (m-1) - linea_xi)))
+                if np.abs(i / (m-1) - linea_xi) == 0:
+                    P = np.longdouble(0)
+                else:
+                    P = -a * (np.longdouble(i / (m-1) - linea_xi))\
+                            / np.abs(np.longdouble(i / (m-1) - linea_xi))\
+                            * np.exp(-c
+                                * np.abs(np.longdouble(i / (m-1) - linea_xi)))
 
-                # if np.abs(j / (n-1) - linea_eta) == 0:
-                #     Q = np.longdouble(0)
-                # else:
-                #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                #             * np.exp(-cc
-                #                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
+                if np.abs(j / (n-1) - linea_eta) == 0:
+                    Q = np.longdouble(0)
+                else:
+                    Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                            * np.exp(-cc
+                                * np.abs(np.longdouble(j / (n-1) - linea_eta)))
                 # if np.abs(j - linea_eta) == 0:
                 #     Q = np.longdouble(0)
                 # else:
                 #     Q = -aa * (j - linea_eta) / np.abs(j - linea_eta)\
                 #         * np.exp(-cc * np.abs(j - linea_eta))
 
-                # I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
+                I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
-                # Yn[i, j] = (d_xi * d_eta) ** 2\
-                #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-                #     * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
-                #         - beta / d_xi / d_eta
-                #         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
-                #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
-                #         + I**2 * (P * y_xi + Q * y_eta))
+                Yn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                    * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+                        - beta / d_xi / d_eta
+                        * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+                        + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                        + I**2 * (P * y_xi + Q * y_eta))
 
                 # se calculan los puntos en la sección de salida de la malla
                 # parte superior a partir del corte
                 # se ocupan diferencias finitas "backward" para derivadas
                 # respecto a "XI"
-                # i = m-1
-                # x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
-                # y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
-                # x_xi =  np.longdouble((X[i, j] - X[i-1, j]) / d_xi)
-                # y_xi =  np.longdouble((Y[i, j] - Y[i-1, j]) / d_xi)
+                i = m-1
+                x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
+                y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
+                x_xi =  np.longdouble((X[i, j] - X[i-1, j]) / d_xi)
+                y_xi =  np.longdouble((Y[i, j] - Y[i-1, j]) / d_xi)
 
-                # alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
-                # beta =  np.longdouble(x_xi * x_eta + y_xi * y_eta)
-                # gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
+                alpha = np.longdouble(x_eta ** 2 + y_eta ** 2)
+                beta =  np.longdouble(x_xi * x_eta + y_xi * y_eta)
+                gamma = np.longdouble(x_xi ** 2 + y_xi ** 2)
 
-                # if np.abs(i / (m-1) - linea_xi) == 0:
-                #     P = np.longdouble(0)
-                # else:
-                #     P = -a * (np.longdouble(i / (m-1) - linea_xi))\
-                #             / np.abs(np.longdouble(i / (m-1) - linea_xi))\
-                #             * np.exp(-c * np.abs(np.longdouble(i / (m-1)
-                #                                                - linea_xi)))
+                if np.abs(i / (m-1) - linea_xi) == 0:
+                    P = np.longdouble(0)
+                else:
+                    P = -a * (np.longdouble(i / (m-1) - linea_xi))\
+                            / np.abs(np.longdouble(i / (m-1) - linea_xi))\
+                            * np.exp(-c * np.abs(np.longdouble(i / (m-1)
+                                                               - linea_xi)))
 
-                # if np.abs(j / (n-1) - linea_eta) == 0:
-                #     Q = np.longdouble(0)
-                # else:
-                #     Q = - aa * (np.longdouble(j / (n-1) - linea_eta))\
-                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                #             * np.exp(-cc * np.abs(np.longdouble(j / (n-1)
-                #                                                 - linea_eta)))
+                if np.abs(j / (n-1) - linea_eta) == 0:
+                    Q = np.longdouble(0)
+                else:
+                    Q = - aa * (np.longdouble(j / (n-1) - linea_eta))\
+                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                            * np.exp(-cc * np.abs(np.longdouble(j / (n-1)
+                                                                - linea_eta)))
                 # if np.abs(j - linea_eta) == 0:
                 #     Q = np.longdouble(0)
                 # else:
                 #     Q = -aa * (j - linea_eta) / np.abs(j - linea_eta)\
                 #         * np.exp(-cc * np.abs(j - linea_eta))
 
-                # I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
+                I = np.longdouble(x_xi * y_eta - x_eta * y_xi)
 
-                # Yn[i, j] = (d_xi * d_eta) ** 2\
-                #     / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
-                #     * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
-                #         - beta / d_xi / d_eta
-                #         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
-                #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
-                #         + I**2 * (P * y_xi + Q * y_eta))
+                Yn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
+                    * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+                        - beta / d_xi / d_eta
+                        * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+                        + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                        + I**2 * (P * y_xi + Q * y_eta))
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':

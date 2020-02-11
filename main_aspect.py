@@ -29,7 +29,7 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 N = 37 # 60
 union = 6
 
-airfoil_points = 21
+airfoil_points = 41
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
