@@ -251,6 +251,11 @@ class mesh_O(mesh):
                                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
                     I           = x_xi * y_eta - x_eta * y_xi
 
+                    ###
+                    if (j <= 5) and i == 5 and it < 5:
+                        print('j = ' + str(j) + ' Q = ' + str(Q))
+                    ###
+
                     Xn[i, j]    = (d_xi * d_eta) ** 2\
                         / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
                         * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
