@@ -848,7 +848,9 @@
                 \centering
                 \includegraphics[width=170mm]{./Imagenes/malla-h}
                 \captionsetup{justification=centering, margin=2cm}
-                \caption[Malla tipo O]{Malla tipo H y su transformación del espacio físico (izquierda) al espacio lógico (derecha). \cite{blazek}}
+                \caption[Malla tipo O]{Malla tipo H y su transformación del
+                    espacio físico (izquierda) al espacio lógico (derecha).
+                    \cite{blazek}}
             \label{fig:malla-h}
             \end{figure}
 
@@ -3215,12 +3217,34 @@
         de las mallas generadas mediante este programa, analizando para
         diferentes configuraciones la distribución de los nodos. Por último se
         llevan a cabo simulaciones de flujo potencial utilizando el código
-        desarrollado como parte de este proyecto, y también a través del uso del
-        software SU2, con el fin de confirmar la correcta generación de las
-        mallas y de mostrar su aplicabilidad.
+        desarrollado como parte de este proyecto, y también se realizan
+        simulaciones a través del uso del software SU2, con el fin de confirmar
+        la correcta generación de las mallas y de mostrar su aplicabilidad.
 
     \section{Calidad de la malla}
+    \paragraph*{}
+        En esta sección se discuten los resultados obtenidos para diferentes
+        configuraciones de malla, analizando la calidad de la misma. Este
+        aspecto es evaluado mediante el método utilizado en la librería ``The
+        Verdict Geometric Quality Library'', mencionado previamente en el
+        capítulo \ref{chap:mallas}.
 
+    \paragraph*{}
+        Para esto se define una configuración inicial, es decir se define la
+        tipología de la malla, el perfil a mallar, las dimensiones de la malla
+        $M$ y $N$, y los valores de entrada para las funciones que afectan la
+        densidad del mallado en la ecuación de Poisson. A partir de dicha
+        configuración se varía un parametro a la vez, de los previamente
+        mencionados, para mostrar el efecto que cada uno tiene sobre la malla.
+
+    \section{Alcance y Límites de Aplicación}
+    \paragraph*{}
+        En esta sección se analizan las mallas resultantes para diferentes
+        ángulos de ataque un perfil seleccionado, con lo que se obtiene un rango
+        de valores para el ángulo de ataque en los que todavía se cuenta con una
+        malla que resulte de utilidad para análisis de DFC. Normalmente este
+        límite se alcanza cuando se presentan cruces en las líneas que forman la
+        malla.
 %
 %
 %
