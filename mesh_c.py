@@ -299,8 +299,8 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(231.5)  # 231.5 # 105.2
-        cc = np.longdouble(12.3)  # 12.3 # 8.3
+        aa = np.longdouble(498.2)  # 231.5 # 105.2
+        cc = np.longdouble(8.3)  # 12.3 # 8.3
         linea_xi = 0.0
         linea_eta = 0.0
         P_ = np.arange(1, m)
@@ -315,6 +315,7 @@ class mesh_C(mesh):
                                 * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
 
         it = 0
+        mesh.err_max = 1e-3
 
         # inicio del método iterativo
         print("Poisson:")
