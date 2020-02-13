@@ -128,8 +128,6 @@ def get_aspect_ratio(mesh):
     Basado en el método de:
         The Verdict Geometric Quality Library
     '''
-    # X = np.zeros((mesh.M + 1, mesh.N + 1))
-    # Y = np.zeros((mesh.M + 1, mesh.N + 1))
     aspect_ratio_ = np.zeros((mesh.M - 1, mesh.N - 1))
 
     # se calculan longitudes de los elementos de la celda
@@ -181,7 +179,7 @@ def get_aspect_ratio(mesh):
                    vmax=(aspect_max))
     plt.colorbar(mesh_)
 
-    # plt.pcolormesh(X, Y, aspect_ratio[1:, 1:])
     plt.draw()
     plt.show()
 
+    return
