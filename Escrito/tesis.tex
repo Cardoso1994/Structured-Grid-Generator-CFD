@@ -9,6 +9,8 @@
 
 \usepackage{physics} % para formulas matemáticas
 \usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage{siunitx}
 
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry} % controla márgenes
 \usepackage{cite} % para dar formato a las referencias bibliográficas
@@ -3245,6 +3247,119 @@
         malla que resulte de utilidad para análisis de DFC. Normalmente este
         límite se alcanza cuando se presentan cruces en las líneas que forman la
         malla.
+
+    \paragraph*{}
+        La primera malla que se presenta es una malla tipo O con un solo perfil.
+        La tabla \ref{tabla_o_naca_4415} presenta las características de la
+        malla, así como los casos límite de aplicabilidad
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{ | c | c |}
+        \hline
+        \multicolumn{2}{|c|}{Malla O}\\
+
+        \hline
+        \textbf{Caracterísitca} & \textbf{Valor} \\ \hline
+
+        Perfil & NACA 4415
+        \\ \hline
+
+        M & 45
+        \\ \hline
+
+        N & 45
+        \\ \hline
+
+        Ecuación & Poisson
+        \\\hline
+
+        $aa_m$ & 20.5
+        \\ \hline
+
+        $cc_m$ & 6.5
+        \\ \hline
+
+        Método & SOR
+        \\\hline
+
+        Ángulo máximo & 75\si{\degree}
+        \\ \hline
+
+        Ángulo máximo recomendado & 60\si{\degree}
+        \\ \hline
+
+        Ángulo mínimo & -75\si{\degree}
+        \\ \hline
+
+        Ángulo mínimo recomendado & -60\si{\degree}
+        \\ \hline
+        \end{tabular}
+        \caption{Caracetísticas de malla O con perfil NACA 4415}
+    \label{tabla_o_naca_4415}
+    \end{center}
+    \end{table}
+
+    \paragraph*{}
+        A continuación se analiza una malla tipo O con un perfil NACA 4415 y un
+        flap del tipo perfil externo, el cual tambien es un perfil NACA 4415. En
+        el caso de esta configuración, el ángulo de ataque del perfil se
+        mantiene constante a cero grados, mientras que el ángulo de deflexión
+        del flap se va variando. La tabla \ref{tabla_o_naca_4415_flap} presenta
+        las  caraterísticas de esta configuración.
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{ | c | c |}
+        \hline
+        \multicolumn{2}{|c|}{Malla O}\\
+
+        \hline
+        \textbf{Caracterísitca} & \textbf{Valor} \\ \hline
+
+        Perfil & NACA 4415
+        \\ \hline
+
+        Flap & NACA 4415
+        \\ \hline
+
+        M & 83
+        \\ \hline
+
+        N & 45
+        \\ \hline
+
+        Union entre perfil y flap & 6
+        \\ \hline
+
+        Ecuación & Poisson
+        \\\hline
+
+        $aa_m$ & 20.5
+        \\ \hline
+
+        $cc_m$ & 6.5
+        \\ \hline
+
+        Método & SOR
+        \\\hline
+
+        Ángulo máximo & 85\si{\degree}
+        \\ \hline
+
+        Ángulo máximo recomendado & 60\si{\degree}
+        \\ \hline
+
+        Ángulo mínimo & -10\si{\degree}
+        \\ \hline
+
+        Ángulo mínimo recomendado & -5\si{\degree}
+        \\ \hline
+        \end{tabular}
+        \caption{Caracetísticas de malla O con perfil y flap NACA 4415}
+    \label{tabla_o_naca_4415_flap}
+    \end{center}
+    \end{table}
+
+
 %
 %
 %
