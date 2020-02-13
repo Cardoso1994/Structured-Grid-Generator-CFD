@@ -29,7 +29,7 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 N = 45 # 60
 union = 6
 
-airfoil_points = 45
+airfoil_points = 35
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
@@ -37,20 +37,20 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 2  # combadura
+m = 4  # combadura
 p = 4  # posicion de la combadura
-t = 12  # espesor
+t = 15  # espesor
 c = 1  # cuerda [m]
 # radio frontera externa
 R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-# flap.create_sin(points)
-# flap.rotate(15)
-# perfil.join(flap, dx=0.055, dy=0.05, union=union)
-perfil.rotate(90)
+flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+flap.create_sin(points)
+flap.rotate(-5)
+perfil.join(flap, dx=0.055, dy=0.05, union=union)
+perfil.rotate(0)
 
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)

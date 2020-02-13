@@ -201,13 +201,21 @@ class mesh_O(mesh):
         aa          = np.longdouble(20.5) # 26.5
         cc          = np.longdouble(6.5)  # 6.5
         linea_eta   = 0.0
-        linea_xi    = 0.5
+        linea_xi    = 0.0
+        P_ = np.arange(1, m)
+        Q_ = np.arange(1, n)
 
-        #####
-        #####
-        #mesh.it_max = 1
-        #####
-        #####
+        P_ = -a * (np.longdouble(P_ / (m-1) - linea_xi))\
+                                / np.abs(np.longdouble(P_ / (m-1) - linea_xi))\
+                                * np.exp(-c * np.abs(np.longdouble(P_ /
+                                                         (m-1) - linea_xi)))
+        Q_ = -aa * (np.longdouble(Q_ / (n-1) - linea_eta))\
+                    / np.abs(np.longdouble(Q_ / (n-1) - linea_eta))\
+                    * np.exp(-cc * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
+        mask = np.isnan(P_)
+        P_[mask] = 0
+        mask = np.isnan(Q_)
+        Q_[mask] = 0
 
         it = 0
         print("Poisson:")
@@ -216,11 +224,11 @@ class mesh_O(mesh):
             print('it = ' + str(it) + '\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
-            # si el método iterativo es Jacobi
+            # método iterativo Jacobi
             if metodo == 'J':
                 X = Xo
                 Y = Yo
-            else:   # si el método es Gauss-Seidel o SOR
+            else:   # método Gauss-Seidel o SOR
                 X = Xn
                 Y = Yn
             for j in range(1, n-1):
@@ -233,28 +241,38 @@ class mesh_O(mesh):
                     alpha   = x_eta ** 2 + y_eta ** 2
                     beta    = x_xi * x_eta + y_xi * y_eta
                     gamma   = x_xi ** 2 + y_xi ** 2
+                    I       = x_xi * y_eta - x_eta * y_xi
 
-                    if np.abs(i / (m-1) - linea_xi) == 0:
-                        P = np.longdouble(0)
-                    else:
-                        P = -a * (np.longdouble(i / (m-1) - linea_xi))\
-                                / np.abs(np.longdouble(i / (m-1) - linea_xi))\
-                                * np.exp(-c
-                                * np.abs(np.longdouble(i / (m-1) - linea_xi)))
+                    # if np.abs(i / (m-1) - linea_xi) == 0:
+                    #     P = np.longdouble(0)
+                    # else:
+                    #     P = -a * (np.longdouble(i / (m-1) - linea_xi))\
+                    #             / np.abs(np.longdouble(i / (m-1) - linea_xi))\
+                    #             * np.exp(-c
+                    #             * np.abs(np.longdouble(i / (m-1) - linea_xi)))
 
-                    if np.abs(j / (n-1) - linea_eta) == 0:
-                        Q = 0
-                    else:
-                        Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                                / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                                * np.exp(-cc
-                                * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-                    I           = x_xi * y_eta - x_eta * y_xi
+                    # if np.abs(j / (n-1) - linea_eta) == 0:
+                    #     Q = 0
+                    # else:
+                    #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                    #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                    #             * np.exp(-cc
+                    #             * np.abs(np.longdouble(j / (n-1) - linea_eta)))
 
-                    ###
-                    if (j <= 5) and i == 5 and it < 5:
-                        print('j = ' + str(j) + ' Q = ' + str(Q))
-                    ###
+                    # Xn[i, j]    = (d_xi * d_eta) ** 2\
+                    #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
+                    #     * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
+                    #         + gamma / (d_eta ** 2) * (X[i, j+1] + X[i, j-1])
+                    #         - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
+                    #                 - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])
+                    #         + I ** 2 * (P * x_xi + Q * x_eta))
+                    # Yn[i, j]    = (d_xi * d_eta) ** 2\
+                    #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                    #     * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
+                    #         + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
+                    #         - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
+                    #                 - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
+                    #         + I**2 * (P * y_xi + Q * y_eta))
 
                     Xn[i, j]    = (d_xi * d_eta) ** 2\
                         / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
@@ -262,14 +280,14 @@ class mesh_O(mesh):
                             + gamma / (d_eta ** 2) * (X[i, j+1] + X[i, j-1])
                             - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
                                     - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                            + I ** 2 * (P * x_xi + Q * x_eta))
+                            + I ** 2 * (P_[i-1] * x_xi + Q_[j-1] * x_eta))
                     Yn[i, j]    = (d_xi * d_eta) ** 2\
                         / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
                         * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
                             + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
                             - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
                                     - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
-                            + I**2 * (P * y_xi + Q * y_eta))
+                            + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
                 i       = m-1
                 x_eta   = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
@@ -280,30 +298,37 @@ class mesh_O(mesh):
                 alpha   = x_eta ** 2 + y_eta ** 2
                 beta    = x_xi * x_eta + y_xi * y_eta
                 gamma   = x_xi ** 2 + y_xi ** 2
+                I       = x_xi * y_eta - x_eta * y_xi
 
-                if np.abs(i / (m-1) - linea_xi) == 0:
-                    P = 0
-                else:
-                    P = -a * (i / (m-1) - linea_xi)\
-                            / np.abs(i / (m-1) - linea_xi)\
-                            * np.exp(-c * np.abs(i / (m-1) - linea_xi))
+                # if np.abs(i / (m-1) - linea_xi) == 0:
+                #     P = 0
+                # else:
+                #     P = -a * (i / (m-1) - linea_xi)\
+                #             / np.abs(i / (m-1) - linea_xi)\
+                #             * np.exp(-c * np.abs(i / (m-1) - linea_xi))
 
-                if np.abs(j / (n-1) - linea_eta) == 0:
-                    Q = 0
-                else:
-                    Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                            / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                            * np.exp(-cc
-                                * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-                I = x_xi * y_eta - x_eta * y_xi
+                # if np.abs(j / (n-1) - linea_eta) == 0:
+                #     Q = 0
+                # else:
+                #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
+                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
+                #             * np.exp(-cc
+                #                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
 
+                # Xn[i, j]    = (d_xi * d_eta) ** 2\
+                #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                #     * (alpha / (d_xi**2) * (X[1, j] + X[i-1, j])
+                #         + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
+                #         - beta / (2 * d_xi * d_eta)
+                #         * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])
+                #         + I**2 * (P * x_xi + Q * x_eta))
                 Xn[i, j]    = (d_xi * d_eta) ** 2\
                     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
                     * (alpha / (d_xi**2) * (X[1, j] + X[i-1, j])
                         + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
                         - beta / (2 * d_xi * d_eta)
                         * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                        + I**2 * (P * x_xi + Q * x_eta))
+                        + I**2 * (P_[i-1] * x_xi + Q_[j-1] * x_eta))
             Xn[0, :] = Xn[-1, :]
             Yn[0, :] = Yn[-1, :]
 
