@@ -25,11 +25,11 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 155
+N = 235
 union = 6
 
 # points = 11
-airfoil_points = 77
+airfoil_points = 237
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
