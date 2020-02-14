@@ -6,11 +6,18 @@
 \usepackage{subfigure} % para subfiguras
 \usepackage{caption}
 \usepackage{rotating}
+\usepackage{layouts}
 
 \usepackage{physics} % para formulas matemáticas
 \usepackage{amsmath}
 \usepackage{gensymb}
 \usepackage{siunitx}
+\usepackage{pgf}
+\newcommand\inputpgf[2]{{
+\let\pgfimageWithoutPath\pgfimage
+\renewcommand{\pgfimage}[2][]{\pgfimageWithoutPath[##1]{#1/##2}}
+\input{#1/#2}
+}}
 
 \usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry} % controla márgenes
 \usepackage{cite} % para dar formato a las referencias bibliográficas
@@ -35,7 +42,7 @@
 		\begin{center}
 			\begin{figure}
 				\begin{center}
-					\includegraphics[width=3cm]{./Imagenes/ipn-logo}
+					\includegraphics[keepaspectratio, width=3cm]{./Imagenes/ipn-logo}
 				\end{center}
 			\end{figure}
 		\rule{100mm}{0.3mm}\\
@@ -539,7 +546,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=95mm]{./Imagenes/malla-DF1}
+        \includegraphics[keepaspectratio, width=95mm]{./Imagenes/malla-DF1}
         \caption[Discretización por Diferencias Finitas]{Discretización espacial (malla) por el método de diferencias finitas \cite{anderson-yotros}}
         \label{malla-DF1}
     \end{figure}
@@ -576,9 +583,9 @@
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Aproximación forward]{\label{fig:grafica-forward}\includegraphics[width=65mm]{./Imagenes/grafica-forward}}
-        \subfigure[Aproximación backward]{\label{fig:grafica-backward}\includegraphics[width=65mm]{./Imagenes/grafica-backward}}
-        \subfigure[Aproximación central]{\label{fig:grafica-central} \includegraphics[width=65mm]{./Imagenes/grafica-central}}
+        \subfigure[Aproximación forward]{\label{fig:grafica-forward}\includegraphics[keepaspectratio, width=65mm]{./Imagenes/grafica-forward}}
+        \subfigure[Aproximación backward]{\label{fig:grafica-backward}\includegraphics[keepaspectratio, width=65mm]{./Imagenes/grafica-backward}}
+        \subfigure[Aproximación central]{\label{fig:grafica-central} \includegraphics[keepaspectratio, width=65mm]{./Imagenes/grafica-central}}
         \caption[Aproximaciones por Diferencias Finitas]{Esquemas de las aproximaciones por el método de diferencias finitas.\cite{chapra}}
     \end{figure}
 
@@ -726,7 +733,7 @@
     es el dominio continuo para el cual se desea una solución numérica.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=170mm]{./Imagenes/dominios}
+        \includegraphics[keepaspectratio, width=170mm]{./Imagenes/dominios}
         \caption[Dominios lógico y físico]{Dominios lógico (izquierda) y físico (derecha). \cite{numerical-grid}}
         \label{fig:dominios}
     \end{figure}
@@ -747,8 +754,8 @@
         alar con el que se esté trabajando como frontera interna del dominio.
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Malla Estructurada]{\label{fig:malla-estructurada}\includegraphics[width=50mm]{./Imagenes/malla-estructurada}} \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Malla no Estructurada]{\label{fig:malla-no-estructurada}\includegraphics[width=50mm]{./Imagenes/malla-no-estructurada}}
+        \subfigure[Malla Estructurada]{\label{fig:malla-estructurada}\includegraphics[keepaspectratio, width=50mm]{./Imagenes/malla-estructurada}} \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Malla no Estructurada]{\label{fig:malla-no-estructurada}\includegraphics[keepaspectratio, width=50mm]{./Imagenes/malla-no-estructurada}}
         \caption[Mallas estructuradas y no estructuradas]{Mallas estructuradas
         y no estructuradas.\cite{cengel}}
         \label{fig:malla-estructurada-noestructurada}
@@ -771,7 +778,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=170mm]{./Imagenes/tipos-de-malla}
+            \includegraphics[keepaspectratio, width=170mm]{./Imagenes/tipos-de-malla}
             \captionsetup{justification=centering, margin=2cm}
             \caption[Tipología de mallas]{Tipología de malla y sus respectivos espacios computacionales. H(izquierda), O(centro), C(derecha).\cite{vladimir-grid}}
             \label{fig:tipos-de-malla}
@@ -800,7 +807,7 @@
         computacional este segmento representa dos segmentos diferentes.
             \begin{figure}[htbp!]
                 \centering
-                \includegraphics[width=155mm]{./Imagenes/malla-c}
+                \includegraphics[keepaspectratio, width=155mm]{./Imagenes/malla-c}
                 \captionsetup{justification=centering, margin=2cm}
                 \caption[Malla tipo C]{Malla tipo C y su transformación del espacio físico (izquierda) al espacio lógico (derecha). \cite{blazek}}
                 \label{fig:malla-c}
@@ -822,7 +829,7 @@
         alcanzar la forma cuadrada esperada.
             \begin{figure}[htbp!]
                 \centering
-                    \includegraphics[width=170mm]{./Imagenes/malla-o}
+                    \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-o}
                     \captionsetup{justification=centering, margin=2cm}
                     \caption[Malla tipo O]{Malla tipo O y su transformación del
                     espacio físico (izquierda) al espacio lógico (derecha).\cite{blazek}}
@@ -848,7 +855,7 @@
         alguno en el dominio lógico.
             \begin{figure}[htbp!]
                 \centering
-                \includegraphics[width=170mm]{./Imagenes/malla-h}
+                \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-h}
                 \captionsetup{justification=centering, margin=2cm}
                 \caption[Malla tipo O]{Malla tipo H y su transformación del
                     espacio físico (izquierda) al espacio lógico (derecha).
@@ -1020,7 +1027,7 @@
         alrededor de un perfil aerodinámico.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=120mm]{./Imagenes/M-inter_pol}
+            \includegraphics[keepaspectratio, width=120mm]{./Imagenes/M-inter_pol}
             \captionsetup{justification=centering, margin=2cm}
             \caption[Malla Interpolación Polinomial]{Malla tipo O generada
             mediante el método de interpolación polinomial alrededor de un
@@ -1123,7 +1130,7 @@
         reemplazan las fronteras en $\xi$ por líneas rectas.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=120mm]{./Imagenes/mapeo_eta}
+            \includegraphics[keepaspectratio, width=120mm]{./Imagenes/mapeo_eta}
             \caption[Transformación de malla por $P_{\eta}$]{Transormación de
             una malla a través del proyector $P_{\eta}$ \cite{farrashkhalvat}}
             \label{fig:mapeo_eta}
@@ -1154,7 +1161,7 @@
         en la figura\ref{fig:mapeo_xieta}.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=120mm]{./Imagenes/mapeo_xieta}
+            \includegraphics[keepaspectratio, width=120mm]{./Imagenes/mapeo_xieta}
             \caption[Transformación de malla por $P_{\xi}P_{\eta}$]{Transormación
             de una malla a través del proyector compuesto
             $P_{\xi}P_{\eta}$\cite{farrashkhalvat}}
@@ -1357,9 +1364,9 @@
         efecto de repulsión.
         \begin{figure}[htbp!]
             \centering
-            \subfigure[Efecto de atracción a la línea $\xi = \xi_{m}$]{\label{fig:densidad-xi-linea}\includegraphics[width=80mm]{./Imagenes/densidad-xi-linea}}
+            \subfigure[Efecto de atracción a la línea $\xi = \xi_{m}$]{\label{fig:densidad-xi-linea}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-xi-linea}}
             \hspace{1cm}
-            \subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-xi-punto}\includegraphics[width=80mm]{./Imagenes/densidad-xi-punto}}
+            \subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-xi-punto}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-xi-punto}}
             \caption[Efecto de atracción por función $P(\xi,\eta)$]{Efecto de
             atracción en el eje $\xi$ por la función $P(\xi, \eta)$}
             \label{fig:densidad-xi}
@@ -1367,9 +1374,9 @@
 
         \begin{figure}[htbp!]
             \centering
-            \subfigure[Efecto de atracción a la línea $\eta = \eta_{m}$]{\label{fig:densidad-eta-linea}\includegraphics[width=80mm]{./Imagenes/densidad-eta-linea}}
+            \subfigure[Efecto de atracción a la línea $\eta = \eta_{m}$]{\label{fig:densidad-eta-linea}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-eta-linea}}
             \hspace{1cm}
-            \subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-eta-punto}\includegraphics[width=80mm]{./Imagenes/densidad-eta-punto}}
+            \subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-eta-punto}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-eta-punto}}
             \caption[Efecto de atracción por función $Q(\xi,\eta)$]{Efecto de
             atracción en el eje $\eta$ por la función $Q(\xi, \eta)$}
             \label{fig:densidad-eta}
@@ -1766,7 +1773,7 @@
         un enfoque válido.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=100mm]{./Imagenes/parabolic_non_uniform.png}
+            \includegraphics[keepaspectratio, width=100mm]{./Imagenes/parabolic_non_uniform.png}
             \caption[Generación de malla cuasi uniforme por ecuaciones
             parabólicas]{Generación de malla estructurada cuasi uniforme
             desarrollada mediante ecuaciones parabólicas \cite{siladicParabolic}}
@@ -1817,7 +1824,7 @@
         dirección $\eta$.\\
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=110mm]{./Imagenes/eliptic_non_uniform.png}
+            \includegraphics[keepaspectratio, width=110mm]{./Imagenes/eliptic_non_uniform.png}
             \caption[Generación de malla por ecuaciones elípticas]{Generación de
             malla estructurada no uniforme desarrollada mediante ecuaciones
             elípticas \cite{siladicParabolic}}
@@ -1974,7 +1981,7 @@
         \ref{fig:parabolic_modified}.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=110mm]{./Imagenes/parabolic_modified_boundary.png}
+            \includegraphics[keepaspectratio, width=110mm]{./Imagenes/parabolic_modified_boundary.png}
             \caption[Control de ortogonalidad]{Control de ortogonalidad en la
             generación de mallas por ecuaciones parabólicas \cite{siladicParabolic}}
             \label{fig:parabolic_modified}
@@ -2057,7 +2064,7 @@
         \ref{aspect_ansys} es una representación gráfica de este método.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=110mm]{./Imagenes/aspect_ansys.png}
+            \includegraphics[keepaspectratio, width=110mm]{./Imagenes/aspect_ansys.png}
             \caption[Cálculo de aspect ratio en ANSYS]{Cálculo de aspect ratio
             para una celda tridimensional en ANSYS}
             \label{aspect_ansys}
@@ -2089,7 +2096,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=110mm]{./Imagenes/aspect_verdict.png}
+            \includegraphics[keepaspectratio, width=110mm]{./Imagenes/aspect_verdict.png}
             \caption[Estrcutura celda cuadrilatera en Verdict]{Estructura de
             celda cuadrilátera en Verdict. Del lado derecho se muestran los
             nodos y los elementos que la forman. Del lado izquierdo se muestran
@@ -2339,7 +2346,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=115mm]{./Imagenes/circulacion_phi}
+            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/circulacion_phi}
             \caption[Condiciones de frontera de flujo potencial]{Condiciones de
                 frontera de flujo potencial para perfil aerodinámico
                 bidimensional\cite{potential_flow}}
@@ -2378,7 +2385,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=115mm]{./Imagenes/kutta_condition}
+            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/kutta_condition}
             \caption[Desarrollo de flujo estacionario sobre un perfil
             aerodinámico]{Desarrollo de flujo estacionario sobre un perfil
             aerodinámico, desde el reposo hasta una velocidad estacionaria.}
@@ -2411,7 +2418,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=115mm]{./Imagenes/circulacion_reposo}
+            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/circulacion_reposo}
             \caption[Fluido en reposo relativo a un perfil alar]{Fluido en
                 reposo relativo a un perfil alar\cite{anderson_fundamentals}}
             \label{circulacion_reposo}
@@ -2442,7 +2449,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=115mm]{./Imagenes/circulacion_tiempo}
+            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/circulacion_tiempo}
             \caption[Flujo alrededor de perfil momentos después]{Flujo alrededor
                 de perfil momentos después\cite{anderson_fundamentals}}
             \label{circulacion_tiempo}
@@ -2490,7 +2497,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[width=115mm]{./Imagenes/malla_escalonada}
+            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/malla_escalonada}
             \caption[Malla original y mallas escalonadas]{Malla original y
                 mallas escalonadas\cite{potential_flow}}
             \label{malla_escalonada}
@@ -2966,7 +2973,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=55mm]{./Imagenes/airfoil_class}
+        \includegraphics[keepaspectratio, width=55mm]{./Imagenes/airfoil_class}
         \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase airfoil y subclase
         NACA4}
         \label{airfoil_class}
@@ -3085,7 +3092,7 @@
         enlistan los atributos y métodos pertenecientes a cada clase.
     \begin{sidewaysfigure}
         \centering
-        \includegraphics[width=205mm]{./Imagenes/mesh_class}
+        \includegraphics[keepaspectratio, width=205mm]{./Imagenes/mesh_class}
         \caption{Diagrama de clase mesh y subclases mesh\textunderscore c y
             mesh\textunderscore o}
         \label{mesh_class}
@@ -3109,7 +3116,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=110mm]{./Imagenes/estructura_global}
+        \includegraphics[keepaspectratio, width=110mm]{./Imagenes/estructura_global}
         \caption[Estructura global del programa]{Estructura global del programa,
         dividido en preproceso, solver y postproceso}
         \label{estructura_global}
@@ -3127,7 +3134,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=80mm]{./Imagenes/flujo_malla}
+        \includegraphics[keepaspectratio, width=80mm]{./Imagenes/flujo_malla}
         \caption{Diagrama de flujo para generación de mallas (preproceso)}
         \label{flujo_malla}
     \end{figure}
@@ -3139,7 +3146,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=80mm]{./Imagenes/flujo_potencial}
+        \includegraphics[keepaspectratio, width=80mm]{./Imagenes/flujo_potencial}
         \caption{Diagrama de flujo para análisis de flujo potencial(solver)}
         \label{flujo_potencial}
     \end{figure}
@@ -3153,7 +3160,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=80mm]{./Imagenes/flujo_potencial_after}
+        \includegraphics[keepaspectratio, width=80mm]{./Imagenes/flujo_potencial_after}
         \caption{Diagrama de flujo para análisis de postproceso}
         \label{flujo_potencial_after}
     \end{figure}
@@ -3177,7 +3184,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=90mm]{./Imagenes/flujo_laplace}
+        \includegraphics[keepaspectratio, width=90mm]{./Imagenes/flujo_laplace}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Laplace}
         \label{flujo_laplace}
@@ -3185,7 +3192,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=90mm]{./Imagenes/flujo_poisson}
+        \includegraphics[keepaspectratio, width=90mm]{./Imagenes/flujo_poisson}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Poisson}
         \label{flujo_poisson}
@@ -3193,7 +3200,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=90mm]{./Imagenes/flujo_potencial_funcion}
+        \includegraphics[keepaspectratio, width=90mm]{./Imagenes/flujo_potencial_funcion}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Poisson}
         \label{flujo_potencial_funcion}
@@ -3242,16 +3249,18 @@
     \section{Alcance y Límites de Aplicación}
     \paragraph*{}
         En esta sección se analizan las mallas resultantes para diferentes
-        ángulos de ataque un perfil seleccionado, con lo que se obtiene un rango
-        de valores para el ángulo de ataque en los que todavía se cuenta con una
-        malla que resulte de utilidad para análisis de DFC. Normalmente este
-        límite se alcanza cuando se presentan cruces en las líneas que forman la
-        malla.
+        ángulos de ataque de un perfil seleccionado, con lo que se obtiene un
+        rango de valores para el ángulo de ataque en los que todavía se cuenta
+        con una malla que resulte de utilidad para análisis de DFC. Normalmente
+        este límite se alcanza cuando se presentan cruces en las líneas que
+        forman la malla.
 
     \paragraph*{}
         La primera malla que se presenta es una malla tipo O con un solo perfil.
         La tabla \ref{tabla_o_naca_4415} presenta las características de la
-        malla, así como los casos límite de aplicabilidad
+        malla, así como los casos límite de aplicabilidad. La figura
+        \ref{fig:naca4415} muestra la malla generada para un ángulo de ataque
+        $\alpha = 0 \si{\degree}$.
     \begin{table}[htbp!]
     \begin{center}
         \begin{tabular}{ | c | c |}
@@ -3298,6 +3307,15 @@
     \label{tabla_o_naca_4415}
     \end{center}
     \end{table}
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Vista Completa]{\label{fig:naca4415_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_far}}
+        \subfigure[Acercamiento a perfil]{\label{fig:naca4415_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_close}}
+        \caption[Malla tipo O con perfil NACA4415]{Malla tipo O con perfil NACA4415
+                        con ángulo de ataque 0\si{\degree}}
+        \label{fig:naca4415}
+    \end{figure}
 
     \paragraph*{}
         A continuación se analiza una malla tipo O con un perfil NACA 4415 y un
@@ -3359,6 +3377,9 @@
     \end{center}
     \end{table}
 
+    % \begin{figure}
+    % \inputpgf{./Imagenes}{test.pgf}
+    % \end{figure}
 
 %
 %
