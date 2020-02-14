@@ -48,9 +48,9 @@ perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 # flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 # flap.create_sin(points)
-# flap.rotate(-5)
+# flap.rotate(-25)
 # perfil.join(flap, dx=0.055, dy=0.05, union=union)
-perfil.rotate(0)
+perfil.rotate(90)
 
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
@@ -64,7 +64,7 @@ print('N = ' + str(mallaNACA.N))
 mallaNACA.gen_Poisson(metodo='SOR')
 print('after laplace')
 # mallaNACA.plot()
-limits = [[-1.0, 1.0, -0.5, 0.5], [-20.5, 20.5, -20.5, 20.5]]
+limits = [[-0.4, 0.6, -0.2, 1.2], [-0.02, 0.02, -0.028, 0.028]]
 for limit in limits:
     fig = plt.figure('malla')
     ax = fig.add_subplot(1, 1, 1)
