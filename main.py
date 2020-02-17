@@ -46,8 +46,8 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-flap.create_sin(points)
+# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+# flap.create_sin(points)
 # flap.rotate(10)
 # perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(30)
@@ -67,7 +67,7 @@ print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
-mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
+# mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 #
 # mallaNACA.to_txt_mesh('./garbage/25_10_002_01.txt_mesh')
 mallaNACA.plot()

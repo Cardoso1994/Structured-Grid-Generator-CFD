@@ -231,6 +231,12 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
+                Xn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                    * (alpha / d_xi**2 * (X[i+2, j] - 2 * X[i+1, j])
+                        - beta / d_xi / d_eta
+                        * (X[i+1, j+1] - X[i+1, j-1] - X[i, j+1] + X[i, j-1])
+                        + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
 
                 # se calculan los puntos en la sección de salida de la malla
                 # parte superior a partir del corte
@@ -252,6 +258,12 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
+                Xn[i, j] = (d_xi * d_eta) ** 2\
+                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                    * (alpha / d_xi**2 * (-2 * X[i-1, j] + X[i-2, j])
+                        - beta / d_xi / d_eta
+                        * (X[i, j+1] - X[i, j-1] - X[i-1, j+1] + X[i-1, j-1])
+                        + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
