@@ -3255,27 +3255,28 @@
         este límite se alcanza cuando se presentan cruces en las líneas que
         forman la malla.
 
+    \subsection{Malla O. Frontera interna única}
     \paragraph*{}
         La primera malla que se presenta es una malla tipo O con un solo perfil.
-        La tabla \ref{tabla_o_naca_4415} presenta las características de la
-        malla, así como los casos límite de aplicabilidad. La figura
-        \ref{fig:naca4415} muestra la malla generada para un ángulo de ataque
-        $\alpha = 0 \si{\degree}$. A su vez, la figura \ref{fig:naca4415_90}
+        La tabla~\ref{tabla_o_naca_4415} presenta las características de la
+        malla, así como los casos límite de aplicabilidad. La
+        figura~\ref{fig:naca4415} muestra la malla generada para un ángulo de ataque
+        $\alpha = 0 \si{\degree}$. A su vez, la figura~\ref{fig:naca4415_90}
         muestra un acercamiento al perfil para un ángulo de ataque
         $\alpha = 90\si{\degree}$, condición en la cual todavía se muestra una malla dentro
-        del rango de usabilidad. Mientras que la figura \ref{fig:naca4415_90}
+        del rango de usabilidad. Mientras que la figura~\ref{fig:naca4415_90}
         muestra un acercamiento al perfil con un ángulo de ataque $\alpha =
         -90\si{\degree}$, e ilustra una malla de mala calidad en el borde de
         salida.
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | c | c |}
+        \begin{tabular}{| c | c |}
         \hline
         \multicolumn{2}{|c|}{Malla O}\\
 
         \hline
-        \textbf{Caracterísitca} & \textbf{Valor} \\ \hline
+        \textbf{Característica} & \textbf{Valor} \\ \hline
 
         Perfil & NACA 4415
         \\ \hline
@@ -3345,21 +3346,22 @@
         \label{fig:naca4415_-90}
     \end{figure}
 
+    \subsection{Malla O. Frontera interna múltiple}
     \paragraph*{}
         El segundo caso de análisis presenta una malla tipo O con un perfil
         NACA 4415 y un flap del tipo perfil externo, el cual tambien es un
         perfil NACA 4415. En el caso de esta configuración, el ángulo de ataque
         del perfil se mantiene constante a 0\si{\degree}, mientras que el ángulo
-        de deflexión del flap se va variando. La tabla
-        \ref{tabla_o_naca_4415_flap} presenta las  caraterísticas de esta
-        configuración. La figura \ref{fig:naca4415_flap} presenta la
-        malla generada, tanto una vista completa de la misma, así como un
-        acercamiento en el cual se logra apreciar tanto el perfil como el flap,
-        el cual tiene un ángulo de deflexión igual a 0\si{\degree}. Por su parte
-        la figura \ref{fig:naca4415_flap_40} muestra una malla generada bajo los
+        de deflexión del flap se va variando. La tabla~\ref{tabla_o_naca_4415_flap}
+        presenta las  caraterísticas de esta configuración. La
+        figura~\ref{fig:naca4415_flap} presenta la malla generada, tanto una
+        vista completa de la misma, así como un acercamiento en el cual se logra
+        apreciar tanto el perfil como el flap, el cual tiene un ángulo de
+        deflexión igual a 0\si{\degree}. Por su parte la
+        figura~\ref{fig:naca4415_flap_40} muestra una malla generada bajo los
         mismos parámetros y una deflexión del flap igual a 40\si{\degree}, la
         cual cumple en términos generales con las características de una malla
-        de calidad. En contraste, la figura \ref{fig:naca4415_flap_-20} muestra
+        de calidad. En contraste, la figura~\ref{fig:naca4415_flap_-20} muestra
         una malla para el caso en el cual el flap tiene un angulo de deflexión
         igual a $-20\si{\degree}$, dicha malla resulta inservible para el
         análisis, ya que en la vista de acercamiento al borde de ataque del flap
@@ -3368,7 +3370,7 @@
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | c | c |}
+        \begin{tabular}{| c | c |}
         \hline
         \multicolumn{2}{|c|}{Malla O}\\
 
@@ -3423,7 +3425,7 @@
     \begin{figure}[htbp!]
         \centering
         \subfigure[Vista completa]{\label{fig:naca4415_flap_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_far}}
-        \subfigure[Acercamiento a perfil]{\label{fig:naca4415_flap:close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_close}}
+        \subfigure[Acercamiento a perfil]{\label{fig:naca4415_flap_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_close}}
         \caption[Malla tipo O con perfily flap NACA4415]{Malla tipo O con perfil
              y flap NACA4415, ambos con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_flap}
@@ -3457,6 +3459,92 @@
         \label{fig:naca4415_flap_-20}
     \end{figure}
 
+    \subsection{Malla C. Frontera interna única.}
+    \paragraph*{}
+    El tercer caso de análisis es similar al primer caso, es decir se genera una
+    malla alrededor de un perfil aerodinámico NACA 4415, sin embargo la malla
+    resultante es una malla tipo C. En la tabla~\ref{tabla_c_naca_4415} se
+    muestran los valores asignados a cada parámetro con los que esta malla ha
+    sido generada. La figura~\ref{fig:naca4415_c} muestra la vista de la malla,
+    brinda una vista total de la misma así como un acercamiento a la región
+    donde se encuentra el perfil.
+
+
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{| c | c |}
+        \hline
+        \multicolumn{2}{|c|}{Malla C}\\
+
+        \hline
+        \textbf{Característica} & \textbf{Valor} \\ \hline
+
+        Perfil & NACA 4415
+        \\ \hline
+
+        M & 99
+        \\ \hline
+
+        N & 45
+        \\ \hline
+
+        Ecuación & Poisson
+        \\\hline
+
+        $aa_m$ & 37
+        \\ \hline
+
+        $cc_m$ & 7
+        \\ \hline
+
+        Método & SOR
+        \\\hline
+
+        Ángulo máximo & 90\si{\degree}
+        \\ \hline
+
+        Ángulo máximo recomendado & 80\si{\degree}
+        \\ \hline
+
+        Ángulo mínimo & -90\si{\degree}
+        \\ \hline
+
+        Ángulo mínimo recomendado & -80\si{\degree}
+        \\ \hline
+        \end{tabular}
+        \caption{Caracetísticas de malla C con perfil NACA 4415}
+    \label{tabla_c_naca_4415}
+    \end{center}
+    \end{table}
+
+    % relación (1:1) y (2:1) [x:y]
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Vista
+          completa]{\label{fig:naca4415_c_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_c_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_close}}
+        \caption[Malla tipo C con perfily flap NACA4415]{Malla tipo O con perfil
+             y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
+        \label{fig:naca4415_c}
+    \end{figure}
+
+    % relación (1:1.4) [x:y]
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[-80\si{\degree} Vista del
+          perfil]{\label{fig:naca4415_c_-80_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_-80_far}}
+        \subfigure[-80\si{\degree} Vista del borde de
+          ataque]{\label{fig:naca4415_c_-80_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_-80_close}}
+        \caption[Malla tipo C con perfil NACA4415 a -80\si{\degree}]{Malla tipo
+          C con perfil NACA 4415 con ángulo de ataque 90\si{\degree}.
+          Acercamiento al perfil y al borde de ataque}
+        \label{fig:naca4415_c_-80}
+    \end{figure}
 %
 %
 %
