@@ -19,7 +19,7 @@ import mesh_su2
 import helpers
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla
@@ -29,7 +29,7 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 N = 45 # 60
 union = 6
 
-airfoil_points = 35 # 45
+airfoil_points = 99 # 45
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
@@ -46,11 +46,11 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-flap.create_sin(points)
-flap.rotate(40)
-perfil.join(flap, dx=0.055, dy=0.05, union=union)
-# perfil.rotate(-90)
+# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+# flap.create_sin(points)
+# flap.rotate(40)
+# perfil.join(flap, dx=0.055, dy=0.05, union=union)
+perfil.rotate(-80)
 
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
@@ -62,9 +62,11 @@ print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.gen_Laplace(metodo='SOR')
 mallaNACA.gen_Poisson(metodo='SOR')
-print('after laplace')
-# mallaNACA.plot()
-limits = [[-0.4, 1.2, -0.3, 0.5], [0.69, 0.85, 0.12, 0.20],
+print('after mesh generation')
+
+mallaNACA.plot()
+
+limits = [[-0.5, 0.5, -1.2, 0.2], [-0.2, 0.1,-1.11, -0.71],
             [0.91, 1.01, -0.025, 0.025]]
 for limit in limits:
     fig = plt.figure('malla')

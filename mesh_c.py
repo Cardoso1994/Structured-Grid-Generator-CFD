@@ -311,8 +311,10 @@ class mesh_C(mesh):
         I = 0
         a = np.longdouble(0)
         c = np.longdouble(0)
-        aa = np.longdouble(279.2) # 489.2 # 231.5 # 105.2
-        cc = np.longdouble(7.0)  # 8.3 # 12.3 # 8.3
+        # aa = np.longdouble(279.2) # 489.2 # 231.5 # 105.2
+        # cc = np.longdouble(7.0)  # 8.3 # 12.3 # 8.3
+        aa = np.longdouble(37)
+        cc = np.longdouble(7)
         linea_xi = 0.0
         linea_eta = 0.0
         P_ = np.arange(1, m)
