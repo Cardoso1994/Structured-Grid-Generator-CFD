@@ -741,7 +741,7 @@
         Una malla es un conjunto de puntos destribuidos a lo largo de un campo
         dentro del cuál se llevaran a cabo los cálculos para obtener la solución
         de ecuaciones diferenciales parciales. Existen dos tipos principales de
-        mallas: estructuradas y no estructuradas. (Figura \ref{fig:malla-estructurada-noestructurada})
+        mallas: estructuradas y no estructuradas. (Figura~\ref{fig:malla-estructurada-noestructurada})
         Las mallas estructuradas se forman mediante la intersección de
         coordenadas curvilíneas, formando celdas cuadriláteras en dos
         dimensiones, o hexahedros en tres dimensiones. En contraste, las mallas
@@ -801,7 +801,7 @@
         conocido como corte, ya que este proceso implica conceptualemte, una
         separación en dicho corte, para posteriormente deformar el espacio
         físico llevándolo así a convertirse en una malla estructurada uniforme.
-        En la figura \ref{fig:malla-c} se observa que en el dominio físico, el
+        En la figura~\ref{fig:malla-c} se observa que en el dominio físico, el
         segmento $(ab)$ representa la sección del mallado donde se realiza el
         corte y que tambien se le llama $(a'b')$, y que en el dominio
         computacional este segmento representa dos segmentos diferentes.
@@ -3426,7 +3426,7 @@
         \centering
         \subfigure[Vista completa]{\label{fig:naca4415_flap_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_far}}
         \subfigure[Acercamiento a perfil]{\label{fig:naca4415_flap_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_close}}
-        \caption[Malla tipo O con perfily flap NACA4415]{Malla tipo O con perfil
+        \caption[Malla tipo O con perfily flap NACA 4415]{Malla tipo O con perfil
              y flap NACA4415, ambos con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_flap}
     \end{figure}
@@ -3434,7 +3434,7 @@
     % relación (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Flap a 40\si{\degree}]{\label{fig:naca4415_flap_40}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40}}
+        \subfigure[Flap a 40\si{\degree}]{\label{fig:naca4415_flap_40_both}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40}}
         \subfigure[Acercamiento a borde de salida de perfil y borde de ataque de
         flap]{\label{fig:naca4415_flap_40_airfoil}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40_airfoil}}
         \subfigure[Acercamiento a borde de salida de flap]{\label{fig:naca4415_flap_40_flap}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40_flap}}
@@ -3448,7 +3448,7 @@
     % relación (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Acercamiento a perfil y flap]{\label{fig:naca4415_flap_-20}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20}}
+        \subfigure[Acercamiento a perfil y flap]{\label{fig:naca4415_flap_-20_both}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20}}
         \subfigure[Acercamiento a borde de salida de perfil y borde de ataque de
         flap]{\label{fig:naca4415_flap_-20_airfoil}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20_airfoil}}
         \subfigure[Acercamiento a borde de salida de flap]{\label{fig:naca4415_flap_-20_flap}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20_flap}}
@@ -3467,8 +3467,10 @@
     muestran los valores asignados a cada parámetro con los que esta malla ha
     sido generada. La figura~\ref{fig:naca4415_c} muestra la vista de la malla,
     brinda una vista total de la misma así como un acercamiento a la región
-    donde se encuentra el perfil.
-
+    donde se encuentra el perfil. La figura~\ref{fig:naca4415_c_-80} presenta la
+    malla generada para el caso en el que el perfil tiene un ángulo de ataque
+    $\alpha = -80\si{\degree}$, caso que se mantiene dentro del rango de
+    usabilidad de la malla.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3506,10 +3508,10 @@
         Ángulo máximo recomendado & 80\si{\degree}
         \\ \hline
 
-        Ángulo mínimo & -90\si{\degree}
+        Ángulo mínimo & -110\si{\degree}
         \\ \hline
 
-        Ángulo mínimo recomendado & -80\si{\degree}
+        Ángulo mínimo recomendado & -90\si{\degree}
         \\ \hline
         \end{tabular}
         \caption{Caracetísticas de malla C con perfil NACA 4415}
@@ -3526,8 +3528,8 @@
         \subfigure[Acercamiento a
           perfil]{\label{fig:naca4415_c_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/naca4415_c_close}}
-        \caption[Malla tipo C con perfily flap NACA4415]{Malla tipo O con perfil
-             y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
+        \caption[Malla tipo C con perfil NACA 4415]{Malla tipo C con perfil
+             NACA 4415, a un ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_c}
     \end{figure}
 
@@ -3541,9 +3543,46 @@
           ataque]{\label{fig:naca4415_c_-80_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/naca4415_c_-80_close}}
         \caption[Malla tipo C con perfil NACA4415 a -80\si{\degree}]{Malla tipo
-          C con perfil NACA 4415 con ángulo de ataque 90\si{\degree}.
+          C con perfil NACA 4415 con ángulo de ataque -80\si{\degree}.
           Acercamiento al perfil y al borde de ataque}
         \label{fig:naca4415_c_-80}
+    \end{figure}
+
+    % relación (1:1.4) [x:y]
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[-130\si{\degree} Vista del
+          perfil]{\label{fig:naca4415_c_-130_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_-130_far}}
+        \subfigure[-130\si{\degree} Vista del borde de
+          ataque]{\label{fig:naca4415_c_-130_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_-130_close}}
+        \caption[Malla tipo C con perfil NACA4415 a -130\si{\degree}]{Malla tipo
+          C con perfil NACA 4415 con ángulo de ataque -130\si{\degree}.
+          Acercamiento al perfil y al borde de ataque}
+        \label{fig:naca4415_c_-130}
+    \end{figure}
+
+   \subsection{Malla C. Frontera interna múltiple}
+   \paragraph*{}
+   El último caso de estudio corresponde a una malla tipo C, la cual tiene como
+   frontera interna un perfil NACA 4415 el cual cuenta con un flap con el mismo
+   diseño NACA 4415. El perfil se mantiene constante con un ángulo de ataque
+   $\alpha = 0\si{\degree}$ mientras que el ángulo de deflexión del flap se
+   varía.
+
+    % relación (1:1) y (2:1) [x:y]
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Vista
+          completa]{\label{fig:naca4415_c_flap_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_c_flap_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_close}}
+        \caption[Malla tipo O con perfily flap NACA 4415]{Malla tipo O con perfil
+             y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
+        \label{fig:naca4415_c_flap}
     \end{figure}
 %
 %
@@ -3558,6 +3597,7 @@
 %
 \appendix
 \chapter{Códigos}\label{appCode}
+
 %
 %
 %
