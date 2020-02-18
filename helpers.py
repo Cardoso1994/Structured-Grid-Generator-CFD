@@ -177,7 +177,7 @@ def get_aspect_ratio(mesh):
     mesh_ = plt.pcolormesh(mesh.X, mesh.Y, aspect_ratio_, cmap='jet', rasterized=True,
                    vmin=(aspect_min),
                    vmax=(aspect_max))
-    plt.colorbar(mesh_)
+    plt.colorbar(mesh_, extend='both')
 
     plt.draw()
     plt.show()
