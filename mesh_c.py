@@ -49,15 +49,9 @@ class mesh_C(mesh):
         perfil_y = perfil.y
         points = np.shape(perfil_x)[0]
         points1 = (points + 1) // 2
-        print('points')
-        print(points)
-        print('points1')
-        print(points1)
-        print('M')
-        print(M)
 
         # frontera externa
-        a = 1.1 * R
+        a = 1.2 * R
         b = R
         exe = (1 - b ** 2 / a ** 2) ** 0.5
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)
@@ -78,13 +72,9 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        print('npoints')
-        print(npoints)
         weight = 1.1
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
-        print(delta_limit * (1 - weight))
-        print(1 - weight ** (npoints))
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
         # x_line[0] = perfil_x[0]
         x_line[-1] = 2.5 * R
@@ -282,7 +272,8 @@ class mesh_C(mesh):
         self.Y = Yn
         return
 
-    def gen_Poisson(self, metodo='SOR'):
+    def gen_Poisson(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
         '''
         Genera malla resolviendo ecuación de Poisson
         metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
@@ -298,7 +289,7 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(0.3)  # en caso de metodo SOR
+        # omega = np.longdouble(0.3)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
@@ -308,15 +299,14 @@ class mesh_C(mesh):
         '''
 
         # parámetros de ecuación de Poisson
-        I = 0
-        a = np.longdouble(0)
-        c = np.longdouble(0)
+        # a = np.longdouble(0)
+        # c = np.longdouble(0)
         # aa = np.longdouble(279.2) # 489.2 # 231.5 # 105.2
         # cc = np.longdouble(7.0)  # 8.3 # 12.3 # 8.3
-        aa = np.longdouble(45)
-        cc = np.longdouble(7)
-        linea_xi = 0.0
-        linea_eta = 0.0
+        # aa = np.longdouble(45)
+        # cc = np.longdouble(7)
+        # linea_xi = 0.0
+        # linea_eta = 0.0
         P_ = np.arange(1, m)
         Q_ = np.arange(1, n)
         P_ = -a * (np.longdouble(P_ / (m-1) - linea_xi))\

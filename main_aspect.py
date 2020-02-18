@@ -19,7 +19,7 @@ import mesh_su2
 import helpers
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla
@@ -27,7 +27,7 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 35 # 37 # 60
+N = 55 # 37 # 60
 union = 6
 
 airfoil_points = 77 # 41
@@ -59,7 +59,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Laplace(metodo='SOR')
-mallaNACA.gen_Poisson(metodo='SOR')
+mallaNACA.gen_Poisson(metodo='SOR', omega=1.3, aa=10, cc=6, linea_eta=0)
 print('after laplace')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))

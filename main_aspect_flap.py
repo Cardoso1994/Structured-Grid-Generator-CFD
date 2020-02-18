@@ -62,7 +62,7 @@ print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.gen_Laplace(metodo='SOR')
-mallaNACA.gen_Poisson(metodo='SOR')
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.5, aa=75, cc=20, linea_eta=0)
 print('after mesh genration')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))

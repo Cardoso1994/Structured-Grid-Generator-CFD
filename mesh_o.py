@@ -173,7 +173,8 @@ class mesh_O(mesh):
         self.Y = Yn
         return
 
-    def gen_Poisson(self, metodo='SOR'):
+    def gen_Poisson(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
         '''
         Genera malla resolviendo ecuación de Poisson
         metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
@@ -190,7 +191,7 @@ class mesh_O(mesh):
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        omega   = np.longdouble(1.3)  # en caso de metodo SOR
+        # omega   = np.longdouble(1.3)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -202,12 +203,12 @@ class mesh_O(mesh):
         Q           = 0
         P           = 0
         I           = 0
-        a           = np.longdouble(0.0)
-        c           = np.longdouble(0.0)
-        aa          = np.longdouble(20.5) # 26.5
-        cc          = np.longdouble(6.5)  # 6.5
-        linea_eta   = 0.0
-        linea_xi    = 0.0
+        # a           = np.longdouble(0.0)
+        # c           = np.longdouble(0.0)
+        # aa          = np.longdouble(20.5) # 26.5
+        # cc          = np.longdouble(6.5)  # 6.5
+        # linea_eta   = 0.0
+        # linea_xi    = 0.0
         P_ = np.arange(1, m)
         Q_ = np.arange(1, n)
 

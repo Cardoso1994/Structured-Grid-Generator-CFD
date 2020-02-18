@@ -60,7 +60,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR')
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=39, cc=5, linea_eta=0)
 # mallaNACA.gen_Laplace(metodo='SOR')
 # mallaNACA.gen_TFI()
 print('after mesh generation')

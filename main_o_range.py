@@ -26,8 +26,8 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 45 # 60
-union = 6
+N = 65 # 60
+union = 3
 
 airfoil_points = 75 # 45
 
@@ -61,7 +61,7 @@ print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.gen_Laplace(metodo='SOR')
-mallaNACA.gen_Poisson(metodo='SOR')
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=30, cc=6, linea_eta=0)
 print('after mesh generation')
 
 mallaNACA.plot()

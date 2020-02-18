@@ -170,13 +170,13 @@ def get_aspect_ratio(mesh):
     print(aspect_min)
     plt.figure('aspect')
     plt.axis('equal')
-    plt.plot(mesh.X, mesh.Y, 'k')
-    plt.plot(mesh.X[:, 0], mesh.Y[:, 0], 'k')
+    plt.plot(mesh.X, mesh.Y, 'k', linewidth=0.5)
+    plt.plot(mesh.X[:, 0], mesh.Y[:, 0], 'k', linewidth=0.5)
     for i in range(mesh.M):
-        plt.plot(mesh.X[i, :], mesh.Y[i, :], 'k')
+        plt.plot(mesh.X[i, :], mesh.Y[i, :], 'k', linewidth=0.5)
     mesh_ = plt.pcolormesh(mesh.X, mesh.Y, aspect_ratio_, cmap='jet', rasterized=True,
-                   vmin=(aspect_min),
-                   vmax=(aspect_max))
+                   vmin=(5*aspect_min),
+                   vmax=(15*aspect_min))
     plt.colorbar(mesh_, extend='both')
 
     plt.draw()
