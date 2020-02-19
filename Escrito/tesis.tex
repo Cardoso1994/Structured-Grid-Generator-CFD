@@ -201,7 +201,7 @@
     de software libre.
 
 	\paragraph*{}
-	En el capítulo 1....\\************añadir descripción breve de los capítulos****************
+	En el capítulo 1\\************añadir descripción breve de los capítulos****************
 
 
 
@@ -468,15 +468,28 @@
 
 				\paragraph*{XFlow}
 				\paragraph*{}
-					Es un software privativo desarrollado por la empresa Dassault Systèmes, el cual ofrece soluciones mediante el método de Lattice-Boltzman basado en partículas. El usuario puede analizar casos de aerodinámica transitoria, flujos multifase complejos, acústica aérea, geometrías en movimiento e interacciones fluido-estructura. Destaca por sus capacidades de renderizado.\cite{xflow}
+					Es un software privativo desarrollado por la empresa
+                    Dassault Systèmes, el cual ofrece soluciones mediante el
+                    método de Lattice-Boltzman basado en partículas. El usuario
+                    puede analizar casos de aerodinámica transitoria, flujos
+                    multifase complejos, acústica aérea, geometrías en
+                    movimiento e interacciones fluido-estructura. Destaca por
+                    sus capacidades de renderizado.\cite{xflow}
 				
 				\paragraph*{ANSYS Fluent}
 				\paragraph*{}
-					Ansys Fluent es un software privativo creado por la empresa ANSYS, Inc. dedicado a la simulación de DFC, implementado para dar soluciones mediante el método de volúmenes finitos.
+				Ansys Fluent es un software privativo creado por la empresa
+                ANSYS, Inc.\ dedicado a la simulación de DFC, implementado
+                para dar soluciones mediante el método de volúmenes finitos.
 					
 				\paragraph*{SU2}
 				\paragraph*{}
-					SU2 es una colección de software \textit{``open source"} desarrollado en los lenguajes Python y C++ para el análisis de ecuaciones diferenciales parciales mediante métodos numéricos, del actual estado del arte de la DFC. Enfocado principalmente a su aplicación en la industria aeronáutica, así como la industria automotriz, naval y de energías renovables, entre otras.\cite{SU2}
+				SU2 es una colección de software \textit{``open source"}
+                desarrollado en los lenguajes Python y C++ para el análisis de
+                ecuaciones diferenciales parciales mediante métodos numéricos,
+                del actual estado del arte de la DFC\@. Enfocado principalmente a
+                su aplicación en la industria aeronáutica, así como la industria
+                automotriz, naval y de energías renovables, entre otras.\cite{SU2}
 	%
 	%
 	%
@@ -489,16 +502,31 @@
 	%
 	\chapter{Discretización Espacial} \label{chap:discretizacion-espacial}
 	\paragraph*{}
-	Las soluciones analíticas modeladas mediante ecuaciones diferenciales parciales de las ecuaciones que describen el flujo de fluidos dan resultados ``continuos'' a lo largo del dominio que se está estudiando, por otro lado, las soluciones numéricas  dan resultados en puntos ``discretos'' del dominio llamados nodos, éstos, unidos mediante líneas, generan la malla del dominio en el que se está trabajando el problema. Para el caso de un análisis en dos dimensiones, la malla se forma por triangulos o cuadriláteros, mientras que en un caso de tridimensional la malla es conformada por tetrahédros o hexaédros. 
+	Las soluciones analíticas modeladas mediante ecuaciones diferenciales
+    parciales de las ecuaciones que describen el flujo de fluidos dan resultados
+    ``continuos'' a lo largo del dominio que se está estudiando, por otro lado,
+    las soluciones numéricas  dan resultados en puntos ``discretos'' del dominio
+    llamados nodos, éstos, unidos mediante líneas, generan la malla del dominio
+    en el que se está trabajando el problema. Para el caso de un análisis en dos
+    dimensiones, la malla se forma por triangulos o cuadriláteros, mientras que
+    en un caso de tridimensional la malla es conformada por tetrahédros o hexaédros.
 	
 	\paragraph*{}
-	En las aplicaciones de DFC se busca que la distribución de los nodos sea uniforme, dado que esto simplifica los algoritmos de solución a implementar,  y que se traduce en un ahorro de tiempo en la ejecución de los programas, además de un uso considerablemente menor de memoria.
+	En las aplicaciones de DFC se busca que la distribución de los nodos sea
+    uniforme, dado que esto simplifica los algoritmos de solución a implementar,
+    y que se traduce en un ahorro de tiempo en la ejecución de los programas,
+    además de un uso considerablemente menor de memoria.
 	
 	\paragraph*{}
 	Existen básicamente dos tipos de mallas:
 	\begin{itemize}
-		\item Estructuradas: los nodos de la malla están alineados entre sí y son identificados mediante ínidices $i, j, k$. Una malla estructurada bidimiensional está formada por cuadriláteros, mientras que una malla tridimensional se forma por hexahédros. Figura \ref{fig:malla-estructurada}.
-		\item No estructuradas: los nodos no tienen un orden particular, por lo que no se pueden identificar mediante índices, por lo que se debe llevar a cabo una forma diferente de identificación. Figura \ref{fig:malla-no-estructurada}
+	\item Estructuradas: los nodos de la malla están alineados entre sí y
+      son identificados mediante ínidices $i, j, k$. Una malla estructurada
+      bidimiensional está formada por cuadriláteros, mientras que una malla
+      tridimensional se forma por hexahédros. Figura~\ref{fig:malla-estructurada}.
+	\item No estructuradas: los nodos no tienen un orden particular, por lo
+      que no se pueden identificar mediante índices, por lo que se debe llevar a
+      cabo una forma diferente de identificación. Figura~\ref{fig:malla-no-estructurada}
 	\end{itemize}
 
 
@@ -508,7 +536,7 @@
         El método de diferencias finitas fue de los primero métodos numéricos
         que se emplearon para la resolución de ecuaciones diferenciales
         parciales, y ha sido hasta la fecha, uno de los más utilizados en
-        aplicaciones de DFC. Este método está basado en las series de expansión
+        aplicaciones de DFC\@. Este método está basado en las series de expansión
         de Taylor.
 
     \paragraph*{}
@@ -523,7 +551,7 @@
     \paragraph*{}
         Supongamos que se tiene el valor de una propiedad de flujo de $f_{i,j}$
         en un punto $(i,j)$ y se pretende calcular el valor de dicha propiedad
-        en un punto $(i+1,j)$ (Figura \ref{malla-DF1}) es decir, se quiere
+        en un punto $(i+1,j)$ (Figura~\ref{malla-DF1}) es decir, se quiere
         conocer el valor de $f_{i+1,j}$, dicho valor se puede expresar mediante
         una serie de expansión de Taylor, quedando:
     \begin{equation}
@@ -532,10 +560,13 @@
     \end{equation}
 
     \paragraph*{}
-    Matemáticamente, esta serie es una solución exacta bajo una de dos condiciones:
+    Matemáticamente, esta serie es una solución exacta bajo una de dos
+    condiciones:
     \begin{itemize}
-        \item La serie está formada por un número infinito de términos, haciendo que la serie converja
-        \item El valor del intervalo entre puntos tiende a cero $(\Delta x \rightarrow 0)$
+    \item La serie está formada por un número infinito de términos, haciendo
+      que la serie converja
+    \item El valor del intervalo entre puntos tiende a cero
+      $(\Delta x \rightarrow 0)$
     \end{itemize}
 
     \paragraph*{}
@@ -547,7 +578,8 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=95mm]{./Imagenes/malla-DF1}
-        \caption[Discretización por Diferencias Finitas]{Discretización espacial (malla) por el método de diferencias finitas \cite{anderson-yotros}}
+        \caption[Discretización por Diferencias Finitas]{Discretización espacial
+          (malla) por el método de diferencias finitas \cite{anderson-yotros}}
         \label{malla-DF1}
     \end{figure}
 
@@ -576,10 +608,11 @@
     primer orden, ya que se están despreciando los términos de orden superior.
 
     \paragraph*{}
-    La ecuación \ref{forward-x1} se le conoce como una aproximación tipo
+    La ecuación~\ref{forward-x1} se le conoce como una aproximación tipo
     ``forward'' de primer orden y representa el valor aproximado del valor de la
     derivada parcial $\left( \pdv{f}{x}\right)_{i,j}$ calculada mediante la
-    relación lineal del punto $(i,j)$ con el punto $(i+1,j)$. (Figura \ref{fig:grafica-forward})
+    relación lineal del punto $(i,j)$ con el punto $(i+1,j)$.
+    (Figura~\ref{fig:grafica-forward})
 
     \begin{figure}[htbp!]
         \centering
@@ -602,14 +635,14 @@
     \left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i,j} - f_{i-1,j}}{\Delta x}
     \label{backward-x1}
     \end{equation}
-    \\que es la ecuación de una aproximación ``backward''. (Figura \ref{fig:grafica-backward})
+    \\que es la ecuación de una aproximación ``backward''. (Figura~\ref{fig:grafica-backward})
 
     \paragraph*{}
     Para diferentes aplicaciones de DFC, no basta con tener aproximaciones con
     precisión de primer orden, por lo cual se opta por generar una ecuación que
     tenga una precisión de segundo orden, a esta se le conoce como
     ``aproximación central de segundo orden''. La deducción de ésta, parte de la
-    resta de la ecuación \ref{taylor-forward} y la ecuación \ref{taylor-backward},
+    resta de la ecuación~\ref{taylor-forward} y la ecuación~\ref{taylor-backward},
     que da como resultado:
     \begin{equation}
     f_{i+1,j} - f_{i-1, j} = 2 \left( \pdv{f}{x} \right)_{i,j} \Delta x + 2 \left( \pdv[3]{f}{x} \right)_{i,j} \frac{(\Delta x)^3}{3 \,!} + \dotsb + 2 \left( \pdv[n]{f}{x} \right)_{i,j} \frac{(\Delta x)^n}{n\,!}
@@ -619,9 +652,9 @@
     \left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i+1,j} - f_{i-1,j}}{2 \Delta x}
     \label{central-x1}
     \end{equation}
-    se observa en la ecuación \ref{central-x1} que para obtener un coeficiente
+    se observa en la ecuación~\ref{central-x1} que para obtener un coeficiente
     en el punto $(i,j)$ se está utilizando información proveniente de los nodos
-    $(i-1, j)$ e $(i+1, j)$, adyacentes a dicho punto. (Figura \ref{fig:grafica-central})
+    $(i-1, j)$ e $(i+1, j)$, adyacentes a dicho punto. (Figura~\ref{fig:grafica-central})
 
     \paragraph*{}
     Para el análisis de flujos viscosos, además de los coeficientes que sustituyen
@@ -632,7 +665,7 @@
     segundo orden.
 
     \paragraph*{}
-    Si se suman las ecuaciones \ref{taylor-forward} y \ref{taylor-backward}, se
+    Si se suman las ecuaciones~\ref{taylor-forward} y~\ref{taylor-backward}, se
     obtiene un coeficiente para $\pdv[2]{f}{x}$, como se muestra a continuación:
     \begin{equation*}
     f_{i+1,j} + f_{i-1, j} = 2 f_{i,j} + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(\Delta x) ^2}{2\,!} + \left( \pdv[4]{f}{x} \right)_{i,j} \frac{(\Delta x)^4}{4\,!} + \dotsb + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{(\Delta x)^n}{n\,!}
@@ -642,7 +675,7 @@
     \left( \pdv[2]{f}{x} \right) = \frac{f_{i+1,j} - 2f_{i,j} + f_{i-1,j}}{(\Delta x)^2}
     \label{central-x2}
     \end{equation}
-    a la ecuación \ref{central-x2} se le conoce como aproximación central para
+    a la ecuación~\ref{central-x2} se le conoce como aproximación central para
     la derivada de segundo orden.
 
     \paragraph*{}
@@ -678,7 +711,7 @@
     únicamente es aplicable a mallas estructuradas, además de tampoco poderse
     aplicar a cuerpos de geometría curvilíneas, por lo que es necesario hcer una
     transformación de la malla, de un dominio físico a un dominio lógico, como
-    se analiza en el capítulo \ref{chap:mallas}.
+    se analiza en el capítulo~\ref{chap:mallas}.
 
     \paragraph*{}
     Es este último punto, la piedra angular en la importancia del desarrollo de
@@ -728,7 +761,7 @@
     frontera interna de manera exacta a la forma de la geometría a analizar.
     Esto presenta una limitante que se debe atender, se debe llevar a cabo una
     transofrmación de sistemas de coordenadas, llevando el dominio físico del
-    problema a un dominio computacional. (Figura \ref{fig:dominios}) El dominio
+    problema a un dominio computacional. (Figura~\ref{fig:dominios}) El dominio
     computacional es una abstración matemática, mientras que el dominio físico
     es el dominio continuo para el cual se desea una solución numérica.
     \begin{figure}[htbp!]
@@ -824,7 +857,7 @@
         En este caso, al igual que sucede con las mallas tipo C, el resultado en
         el dominio lógico es un cuadrado.El proceso de transformación de este
         tipo de malla se puede conceptualizar como el desdoble del espacio
-        físico a partir de un corte, en la figura \ref{fig:malla-o} se
+        físico a partir de un corte, en la figura~\ref{fig:malla-o} se
         representa como $(ac)$ o como $(a'c')$, para después deformarlo hasta
         alcanzar la forma cuadrada esperada.
             \begin{figure}[htbp!]
@@ -987,11 +1020,11 @@
         los cuales pertenecen a la frontera interna y externa respectivamente.
         Para este caso, se tienen los siguientes términos:
         \begin{align*}
-            L_{0} = \frac{ ( x - x_{1} ) }{ (x_{0} - x_{1} ) } && L_{1} = \frac{ ( x - x_{0} ) }{ (x_{1} - x_{0} ) }
+            L_{0} = \frac{( x - x_{1} )}{(x_{0} - x_{1})} && L_{1} = \frac{( x - x_{0} )}{(x_{1} - x_{0} )}
         \end{align*}
         dando como resultado la ecuación que describe a una recta
         \begin{equation}
-            y = y_{0} \frac{ ( x - x_{1} ) }{ ( x_{0} - x_{1} ) }  + y_{1} \frac{ (x - x_{0})  }{( x_{1} - x_{0} )} = y_{0} (1 - \xi) + y_{1}\xi
+            y = y_{0} \frac{( x - x_{1} )}{( x_{0} - x_{1} )}  + y_{1} \frac{(x - x_{0})}{( x_{1} - x_{0} )} = y_{0} (1 - \xi) + y_{1}\xi
         \end{equation}
         de donde se sabe que
         \begin{equation}
@@ -1118,7 +1151,7 @@
             P_{\xi}(\xi, \eta) = (1 - \xi)r(0, \eta) + \xi r(1, \eta)
         \end{equation}
     \paragraph*{}
-        Como ya se explicó en la sección \ref{Lagrange}, esta tranformación hace
+        Como ya se explicó en la sección~\ref{Lagrange}, esta tranformación hace
         una transformación con la cual las fronteras en la dirección de $\xi$
         son mapeadas, mientras que las fronteras en dirección de $\eta$ son
         reemplazadas por lineas rectas. De manera análoga se puede definir el
@@ -1136,7 +1169,7 @@
             \label{fig:mapeo_eta}
         \end{figure}
     \paragraph*{}
-        La figura \ref{fig:mapeo_eta} representa gráficamente la transformación
+        La figura~\ref{fig:mapeo_eta} representa gráficamente la transformación
         de la malla del dominio lógico al dominio computacional mediante la
         aplicación del proyector $P_{\eta}$. Se observa como las fronteras
         conformadas por los segmentos $AC$ y $BD$ se conservan durante las
@@ -1228,7 +1261,7 @@
         La solución se obtiene mediante diferentes métodos numéricos iterativos
         entre los que destacan el método de Jacobi, el método de Gauss-Seidel y
         métodos de sobre relajación. Informacion sobre el procedimiento y
-        desarrollo de estos métodos está disponible en el apéndice \ref{appIter}.
+        desarrollo de estos métodos está disponible en el apéndice~\ref{appIter}.
     \paragraph*{}
         La idea es que se calculen las coordenadas $(\xi, \eta)$ y que la
         solución del sistema de ecuaciones genere las correspondientes
@@ -1275,10 +1308,10 @@
 
     \paragraph*{}
         La distribución de los nodos, obtenidos mediante la solución de la
-        ecuación de Laplace (ecuación \ref{ec-laplace}), tiende ser uniforme
+        ecuación de Laplace (ecuación~\ref{ec-laplace}), tiende ser uniforme
         debido al efecto suavizante de dicha ecuación. Para poder manipular esta
-        distribución, es necesario agregar funciones de forzado a la ecuación
-        \ref{ec-laplace}, dando como resultado la ecuación de Poisson:
+        distribución, es necesario agregar funciones de forzado a la
+        ecuación~\ref{ec-laplace}, dando como resultado la ecuación de Poisson:
         \begin{subequations}
             \begin{equation}
                 \xi_{xx} + \xi_{yy} = P(\xi, \eta)
@@ -1335,7 +1368,7 @@
         diversos textos tanto de dinámica de fluidos computacional como de
         generación numérica de mallas.
     \paragraph*{}
-        En las ecuaciones \ref{ec-P} y \ref{ec-Q} el valor de $M$ es el número
+        En las ecuaciones~\ref{ec-P} y~\ref{ec-Q} el valor de $M$ es el número
         de líneas existentes en la malla, tanto líneas coordenadas
         $\xi = \xi_{m}$ como líneas $\eta = \eta_{m}$ y $N$ representa el número
         de nodos ($\xi = \xi_{n}, \eta = \eta_{n}, 0 \leq \xi_{n}, \eta_{n} \leq 1$)
@@ -1444,28 +1477,30 @@
         trabajar utilizando $F$ como una función de $\xi, \eta$, lo que
         permitiría incrementar la densidad de la malla cerca de la frontera
         donde $\eta = 0$ haciendo que $F$ tenga un valor pequeño en dicha zona.
-        De las ecuaciones \ref{ec-hyper-base}:
+        De las ecuaciones~\ref{ec-hyper-base}:
         \begin{subequations}
             \begin{equation}
-                x_\eta = - \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
+                x_\eta = - \frac{F}{x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
             \end{equation}
             \begin{equation}
-                y_\eta = \frac{F}{ x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
+                y_\eta = \frac{F}{x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
             \end{equation}
         \end{subequations}
+
     \paragraph*{}
-        Antes de proceder a la solución del sistema de las ecuaciones
-        \ref{ec-hyper-base} se deben tomar en cuenta algunas consideraciones. En
-        primera instancia debe tenerse en cuenta que el sistema es un sistema no
-        lineal por lo que un proceso de linearización debe llevarse a cabo, una
-        segunda consideración es que al ser un sistema de ecuaciones
-        hiperbólicas se debe llevar a cabo el proceso de solución mediante un
-        proceso de marcha, en este trabajo la marcha se realizará en la
-        dirección del eje $\eta$. Tercera, para un sistema de ecuaciones
-        hiperbólicas se debe especificar una condicion inicial así como un
-        condición de frontera y por último, con el objetivo de evitar la
-        presencia de oscilaciones, se puede agregar un término de``damping'', o
-        viscosidad artificial, al lado derecho de las ecuaciones.
+    Antes de proceder a la solución del sistema de las
+    ecuaciones~\ref{ec-hyper-base} se deben tomar en cuenta algunas consideraciones. En
+    primera instancia debe tenerse en cuenta que el sistema es un sistema no
+    lineal por lo que un proceso de linearización debe llevarse a cabo, una
+    segunda consideración es que al ser un sistema de ecuaciones
+    hiperbólicas se debe llevar a cabo el proceso de solución mediante un
+    proceso de marcha, en este trabajo la marcha se realizará en la
+    dirección del eje $\eta$. Tercera, para un sistema de ecuaciones
+    hiperbólicas se debe especificar una condicion inicial así como un
+    condición de frontera y por último, con el objetivo de evitar la
+    presencia de oscilaciones, se puede agregar un término de ``damping'', o
+    viscosidad artificial, al lado derecho de las ecuaciones.
+
     \paragraph*{}
         Para el proceso de linearización, se utilizará el esquema iterativo de
         Newton, el cual especifica que un termino no lineal es aproximado
@@ -1489,8 +1524,8 @@
             \label{ec-hyper-linear}
         \end{subequations}
     \paragraph*{}
-        Aplicando el concepto de las ecuaciones \ref{ec-hyper-base} a las
-        ecuaciones \ref{ec-hyper-linear} podemos simplificar las últimas,
+        Aplicando el concepto de las ecuaciones~\ref{ec-hyper-base} a las
+        ecuaciones~\ref{ec-hyper-linear} podemos simplificar las últimas,
         quedando como
         \begin{subequations}
             \begin{equation}
@@ -1526,9 +1561,10 @@
             F + F^{k}
             \end{bmatrix}
         \end{align*}
+
     \paragraph*{}
-        Por definición, el sistema de ecuaciones descrito por la ecuación
-        \ref{ec-hyper-compacta} es hiperbólico si los eigenvalores de
+    Por definición, el sistema de ecuaciones descrito por la
+    ecuación~\ref{ec-hyper-compacta} es hiperbólico si los eigenvalores de
         $\left[ B \right]^{-1} \left[ A \right]$ son reales. Se observa que\\
         \begin{equation*}
             \left[ B \right]^{-1} = \frac{1}{DN}\begin{bmatrix}
@@ -1549,6 +1585,7 @@
         \begin{equation*}
             DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2
         \end{equation*}
+
     \paragraph*{}
         Los eigenvalores de $\left[ C \right]$ son
         \begin{equation*}
@@ -1559,6 +1596,7 @@
         \begin{equation*}
             DN = \left( x_{\xi}^{k} \right)^2 + \left( y_{\xi}^{k} \right)^2 \neq 0
         \end{equation*}
+
     \paragraph*{}
         Para obtener un sistema de ecuaciones algebráico, debemos aplicar el
         método de diferencias finitas. Para la sustitución de las derivadas
@@ -1595,7 +1633,7 @@
                 \left[ DD \right] = \left[ B \right]_{i, j - 1}^{-1} H_{i, j} + \frac{R_{i, j-1}}{\Delta \eta}
             \end{equation*}
         \end{subequations}\\
-        una vez que se ha desarrollado la ecuación \ref{ec-hyper-final} para
+        una vez que se ha desarrollado la ecuación~\ref{ec-hyper-final} para
         todas las instancias existentes a lo largo de $i$ para un mismo nivel
         $j$, se obtiene un sistema de bloque tridiagonal
         \begin{equation}
@@ -1645,10 +1683,10 @@
         actualizar dichos puntos.
     \paragraph*{}
         Un algoritmopara la solución de sistemas de ecuaciones de bloque
-        tridiagonal es proporcionado en el apéndice \ref{appTridiagonal}
+        tridiagonal es proporcionado en el apéndice~\ref{appTridiagonal}
     \subsubsection{Generación de mallas mediante EDP parabólicas}
     \paragraph*{}
-        El esquema elíptico desarrollado por Thompson et. al.
+        El esquema elíptico desarrollado por Thompson et.\ al.
         \cite{thompson1974automatic} ha sido de los más utilizados en la
         generación de mallas estructuradas, sin embargo presenta ciertas
         desventajas que han hecho que se desarrollen otros enfoques y esquemas
@@ -1713,7 +1751,7 @@
         considerados términos fuente. En este esquema, la frontera externa se
         impone como una restricción sobre el comportamiento de la solución en la
         direccion $j$ mientras que la frontera interna funge como condición
-        inicial del problema. Las ecuaciones \ref{parabolic0} son discretizadas
+        inicial del problema. Las ecuaciones~\ref{parabolic0} son discretizadas
         mediante el método de diferencias finitas, las derivadas parciales con
         respecto al eje $\eta$ son sustituidas por aproximaciones tipo
         ``backwards'' mientras que las derivadas respecto al eje $\xi$ son
@@ -1746,12 +1784,12 @@
             \end{equation}
             \label{source-effect}
         \end{subequations}\\
-        en las ecuaciones \ref{source-effect} se observa que conforme $\eta$
+        en las ecuaciones~\ref{source-effect} se observa que conforme $\eta$
         aumenta, el cambio tanto en $x$ como en $y$ está determinado por $V_x$
         y $V_y$ respectivamente, lo que implica que ambos términos fuente deben
         especificarse de tal modo que $x$ y $y$ aumenten en la dirección y
         magnitud deseados. Por otro lado, las segundas derivadas parciales
-        $x_{\xi\xi}$ y $y_{\xi\xi}$ en las ecuaciones \ref{parabolic0} tienen un
+        $x_{\xi\xi}$ y $y_{\xi\xi}$ en las ecuaciones~\ref{parabolic0} tienen un
         efecto disipador para los intervalos en dirección $\xi$. Los valores de
         los términos fuente $V_x$ y $V_y$ pueden ser determinados mediante
         interpolación, ya sea polinomial o lineal, entre las fronteras interna y
@@ -1759,7 +1797,7 @@
         mallado, es posible la introducción de una frontera falsa para la
         frontera externa que permita lograr dicha característica, sumado a esto,
         es posible variar la distancia entre nodos en ambas direcciones $\xi$ y
-        $\eta$ al discretizar las ecuaciones \ref{parabolic0} sobre una malla no
+        $\eta$ al discretizar las ecuaciones~\ref{parabolic0} sobre una malla no
         uniforme en el plano computacional.
     \paragraph*{}
         En la mayoría de casos, y en general en la literatura encontrada en la
@@ -1780,11 +1818,11 @@
             \label{fig:parabolic_non_uniform}
         \end{figure}
     \paragraph*{}
-        En la figura \ref{fig:parabolic_non_uniform} se muestra un ejemplo de
+        En la figura~\ref{fig:parabolic_non_uniform} se muestra un ejemplo de
         malla no uniforme, donde $\Delta L$ y $\Delta R$ representan incrementos
         en la dirección $i$, a su vez $\Delta U$ y $\Delta D$ representan
         incrementos en términos de $j$ para un punto $(i, j)$ dado. Retomando lo
-        expuesto en el capítulo \ref{chap:discretizacion-espacial}, se pueden
+        expuesto en el capítulo~\ref{chap:discretizacion-espacial}, se pueden
         usar series de Taylor para aproximar los términos que incluyen derivadas
         en las ecuaciones gobernantes en el esquema parabólico, quedando de la
         siguiente manera:
@@ -1797,7 +1835,7 @@
         f_{yy} = \frac{2}{\Delta D + \Delta U} \left( \frac{f_{i, j+1} - f_{i,j}}{\Delta U} - \frac{f_{i, j} - f_{i, j-1}}{\Delta D} \right)\\
         f_{xy} = \frac{f_{i+1,j+1} - f_{i+1, j-1} - f_{i-1, j+1} + f_{i-1, j-1}}{\left( \Delta R + \Delta L \right) \left( \Delta D + \Delta U \right)}
         \end{align*}\\
-        con esto, las ecuaciones gobernantes \ref{parabolic0} se discretizan de
+        con esto, las ecuaciones gobernantes~\ref{parabolic0} se discretizan de
         la siguiente manera
         \begin{subequations}
             \begin{equation}
@@ -1814,11 +1852,11 @@
         mallado, se deben relacionar las ecuaciones gobernantes con un conjunto
         de ecuaciones conocidas en el plano computacional. Con este propósito es
         que se seleccionan las ecuaciones de Laplace en el modelo de generación
-        de mallas mediante ecuaciones elípticas (ecuaciones
-        \ref{ec-laplace-invertida}), intentando obtener un método equivalente al
+        de mallas mediante ecuaciones elípticas
+        (ecuaciones~\ref{ec-laplace-invertida}), intentando obtener un método equivalente al
         obtenido en el esquema elíptico, en el que cualquier línea $m$ en la
         dirección $\eta$ sea forzada a moverse hacia una línea $m - 1$. En la
-        figura \ref{fig:eliptic_non_uniform} se muestra un representación de lo
+        figura~\ref{fig:eliptic_non_uniform} se muestra un representación de lo
         descrito, siendo para un punto $(i, j)$, $F_{i-1}$ y $F_i$ incrementos
         en la dirección $\xi$ y a su vez $g_{j-1}$ y $g_j$ incrementos en la
         dirección $\eta$.\\
@@ -1831,8 +1869,8 @@
             \label{fig:eliptic_non_uniform}
         \end{figure}
     \paragraph*{}
-        Las ecuaciones del modelo de generación de mallas elíptico (ecuaciones
-        \ref{ec-laplace-invertida}), bajo este nuevo esquema basado en la
+    Las ecuaciones del modelo de generación de mallas elíptico
+    (ecuaciones~\ref{ec-laplace-invertida}), bajo este nuevo esquema basado en la
         generación de una malla cuasi uniforme se discretizan en $(\xi, \eta)$
         dando como resultado
         \begin{align}
@@ -1842,7 +1880,7 @@
             \label{eliptic_non_uniform}
         \end{align}
     \paragraph*{}
-        A partir de la ecuación \ref{eliptic_non_uniform} se propone un
+        A partir de la ecuación~\ref{eliptic_non_uniform} se propone un
         procedimiento de marcha, reemplazando en dicha ecuación los valores
         $x_{i, j + 1}$ y $y_{i, j+1}$ por valores conocidos $XO_{i, j + 1}$ y
         $YO_{i, j + 1}$ los cuales son obtenidos mediante interpolación lineal
@@ -1875,8 +1913,8 @@
         $G_j$ representa la distancia entre las líneas $(i, j)$ e $(i, JO)$ en
         el plano computacional, por lo tanto $SO_{i, j} = XO_{i, j}$ o
         $YO_{i, j}$. Si comparamos ambos modelos discutidos en esta sección, es
-        decir el modelo parabólico (ecuaciones \ref{parabolic1}) y el modelo
-        elíptico (ecuaciones \ref{eliptic_non_uniform1}) se puede establecer una
+        decir el modelo parabólico (ecuaciones~\ref{parabolic1}) y el modelo
+        elíptico (ecuaciones~\ref{eliptic_non_uniform1}) se puede establecer una
         clara relación, al colocar de un lado las incógnitas de cada ecuación, y
         del otro todos los valores conocidos, es decir
         \begin{align}
@@ -1906,8 +1944,8 @@
             \end{equation*}
         \end{subequations}\\
         donde $\alpha$, $\beta$ y $\gamma$ son los coeficientes de las
-        ecuaciones \ref{ec-laplace-invertida}. El sistema representado por la
-        ecuación \ref{eliptic_non_uniform1} representa un sistema tridiagonal de
+        ecuaciones~\ref{ec-laplace-invertida}. El sistema representado por la
+        ecuación~\ref{eliptic_non_uniform1} representa un sistema tridiagonal de
         matrices $2$x$2$ el cual se desarrolla del siguiente modo\\
         \begin{align*}
             &\begin{aligned}
@@ -1935,7 +1973,7 @@
             \label{parabolic_final}
         \end{subequations}
     \paragraph*{}
-        Las ecuaciones \ref{parabolic_final} se resuelven simultaneamente para
+        Las ecuaciones~\ref{parabolic_final} se resuelven simultaneamente para
         todos los puntos de la malla para el mismo nivel $\eta$ (línea $j$)
         resolviendo el sistema tridiagonal para cada $x_{i, j}$ y $y_{i, j}$. La
         solución comienza en $j = 1$ (justo después de la frontera interna) y
@@ -2060,8 +2098,8 @@
         y lo calcula como la relación entre entre el valor máximo y el valor
         mínimo de alguno de diferentes valores como pueden ser: distancia entre
         el centroide de la celda a los nodos, distancia entre el centroide de la
-        celda y los centroides de las caras que la forman. La figura
-        \ref{aspect_ansys} es una representación gráfica de este método.
+        celda y los centroides de las caras que la forman. La
+        figura~\ref{aspect_ansys} es una representación gráfica de este método.
         \begin{figure}[htbp!]
             \centering
             \includegraphics[keepaspectratio, width=110mm]{./Imagenes/aspect_ansys.png}
@@ -2090,7 +2128,7 @@
                     + \frac{1}{2} \lvert \vec{L_2} \times \vec{L_3} \lvert
             \end{equation*}
         \end{subequations}
-        la figura \ref{aspect_verdict} muestra graficamente los elementos que
+        la figura~\ref{aspect_verdict} muestra graficamente los elementos que
         de una celda formada por un cuadrilatero, con los cuales se calculan las
         metricas propuestas por esta librería.
 
@@ -2245,7 +2283,7 @@
         \end{subequations}
 
     \paragraph*{}
-        A partir de las ecuaciones \ref{u_eq_phi} y \ref{stationary_flow} se
+        A partir de las ecuaciones~\ref{u_eq_phi} y~\ref{stationary_flow} se
         puede obtener una ecuacion para flujo potencial estacionario
         \begin{equation}
             \vec{\nabla} \cdot \left( \rho \vec{v} \right)
@@ -2374,12 +2412,12 @@
         manera suave.
 
     \paragraph*{}
-        La figura \ref{kutta_condition} muestra este comportamiento, en la
-        subfigura \ref{kutta_condition}.1 se ve el instante inicial y se
+        La figura~\ref{kutta_condition} muestra este comportamiento, en la
+        subfigura~\ref{kutta_condition}.1 se ve el instante inicial y se
         evidencia la presencia de un punto de estancamiento en el extrados del
         perfil. Conforme se avanza en los cuadros se observa como dicho punto de
         estancamiento se desplaza hacia la sección posterior del perfil hasta
-        llegar al cuadro \ref{kutta_condition}.6 donde se ha alcanzado el flujo
+        llegar al cuadro~\ref{kutta_condition}.6 donde se ha alcanzado el flujo
         estacionario. Es en este último cuadro donde se observa el cumplimiento
         de la condición de Kutta.
 
@@ -2414,7 +2452,7 @@
         En un instante inicial, cuando el flujo alrededor del perfil está en
         reposo y su velocidad es igual a cero, la circulación alredor de una
         curva arbitraria que rodee al perfil tambien será cero, tal como se
-        muestra en la figura \ref{circulacion_reposo}.
+        muestra en la figura~\ref{circulacion_reposo}.
 
         \begin{figure}[htbp!]
             \centering
@@ -2435,8 +2473,8 @@
     \paragraph*{}
         Una vez lograda la condición de Kutta, el vórtice de inicio ya no está
         presente en el perfil sino que continuara alejándose corriente abajo
-        conforme el tiempo avanza. Sin embargo, tal como se muestra en la figura
-        \ref{circulacion_tiempo}, la curva que conformaba en el reposo al fluido
+        conforme el tiempo avanza. Sin embargo, tal como se muestra en la
+        figura~\ref{circulacion_tiempo}, la curva que conformaba en el reposo al fluido
         alrededor del perfil se ha deformado, y ahora contiene además al
         vórtice de inicio. Se sabe gracias al teorema de Kelvin que la
         circulación alrededor de la curva $C_2$ debe ser cero, pero si esta
@@ -2504,7 +2542,7 @@
         \end{figure}
 
     \paragraph*{}
-        La figura \ref{malla_escalonada} es una representación de la
+        La figura~\ref{malla_escalonada} es una representación de la
         localización de los puntos de las mallas intercaladas. De dicha figura
         se puede deducir la existencia de dos mallas escalonadas, una malla
         vertical y otra horizontal. En la figura se observa una ``molecula''
@@ -2515,7 +2553,7 @@
         la imagen es delimitar una partícula.
 
     \paragraph*{}
-        Si a la ecuación \ref{eq_potencial_0} se le eliminan los términos
+        Si a la ecuación~\ref{eq_potencial_0} se le eliminan los términos
         relacionados con el cambio respecto al tiempo, dado que se está
         calculando flujo estacionario, y además utilizamos una diferencia de
         tipo central para los términos de la densidad y las velocidades se 
@@ -2538,7 +2576,7 @@
         \end{equation}
 
     \paragraph*{}
-        A partir de las ecuaciones \ref{eq_potencial_1} y \ref{eq_potencial_2}
+        A partir de las ecuaciones~\ref{eq_potencial_1} y~\ref{eq_potencial_2}
         (mostradas nuevamente por conveniencia) se obtienen los valores
         correspondientes a las velocidades mediante la discretización de las
         mismas por aproximaciones centrales.
@@ -2651,7 +2689,7 @@
         \end{subequations}
 
     \paragraph*{}
-        En las ecuaciones \ref{velocities} se ubican términos que se mantienen
+        En las ecuaciones~\ref{velocities} se ubican términos que se mantienen
         iguales para un mismo punto intercalado, por simplicidad dichos términos
         se agrupan en el término $P$, quedando como
 
@@ -2705,7 +2743,7 @@
         \end{align}
 
     \paragraph*{}
-        Mediante la ecuación \ref{density} se pueden obtener los valores de la
+        Mediante la ecuación~\ref{density} se pueden obtener los valores de la
         densidad, sustituyendo las ecuaciones de la velocidad en ella. Sin
         embargo dicha ecuación requiere el cuadrado del móodulo de la velocidad
         en el sistema de coordenadas del dominio físico $u$ y $v$ las cuales se
@@ -2762,7 +2800,7 @@
     \subsection{Condiciones de frontera}
     \paragraph*{}
         En el caso del perfil alar, se considera que la velocidad normal al
-        mismo es cero, por lo que la ecuación \ref{eq_potencial_2} se iguala a
+        mismo es cero, por lo que la ecuación~\ref{eq_potencial_2} se iguala a
         cero y se discretiza
         \begin{equation}
             \frac{\phi_{i+1, j} - \phi_{i-1, j}}{2 \Delta \xi} g^{21}
@@ -2865,7 +2903,7 @@
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | l | p{11cm} |}
+        \begin{tabular}{| l | p{11cm} |}
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
@@ -2909,7 +2947,7 @@
         rotación positiva en sentido horario. \\ \hline
 
         \textbf{join(other, dx, dy, union)} & Une dos perfiles alares. El que
-        invoca el método con other. dx y dy son las distancias sobre los ejes
+        invoca el método con other.\ dx y dy son las distancias sobre los ejes
         entre el borde de salida de un perfil y el borde de ataque del otro.
         \\ \hline
 
@@ -2936,23 +2974,23 @@
         borde de ataque como en el borde de salida del perfil.
 
     \paragraph*{}
-        Las tablas \ref{tabla_airfoil} y \ref{tabla_naca4} presentan los métodos
+        Las tablas~\ref{tabla_airfoil} y~\ref{tabla_naca4} presentan los métodos
         pertenecientes a la clase airfoil y a la clase NACA4 respectivamente,
-        así como una breve descripción de los mismos. A su vez, la figura
-        \ref{airfoil_class} presenta un diagrama de clase donde se muestran los
+        así como una breve descripción de los mismos. A su vez, la
+        figura\ref{airfoil_class} presenta un diagrama de clase donde se muestran los
         atributos y métodos de la clase airfoil, así como su herencia con
         respecto a la clase NACA4, junto con los atributos y  métodos de la
         misma.
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | l | p{11cm} |}
+        \begin{tabular}{| l | p{11cm} |}
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
             \textunderscore(m, p, t, c, number)} & Crea objeto NACA4, con
         combadura máxima m, posición de ésta p, espesor máximo t y cuerda
-        aerodinámica c. number representa el número de perfil (en caso de flaps),
+        aerodinámica c.\ number representa el número de perfil (en caso de flaps),
         por default es igual a uno.
         \\ \hline
 
@@ -2989,12 +3027,12 @@
         algebráicas, los cuales son independientes de la tipología de la malla.
 
     \paragraph*{}
-        La tabla \ref{tabla_mesh} contiene información con respecto a los
+        La tabla~\ref{tabla_mesh} contiene información con respecto a los
         métodos pertenecientes a esta clase.
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | l | p{11cm} |}
+        \begin{tabular}{| l | p{11cm} |}
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
@@ -3008,14 +3046,14 @@
         \textbf{plot()} & Representación gráfica de la malla generada.\\ \hline
 
         \textbf{to\textunderscore txt\textunderscore mesh(filename)} & Exporta
-        la malla a un archivo de texto de extensión .txt\textunderscore mesh.
+        la malla a un archivo de texto de extensión \.txt\textunderscore mesh.
         Este formato es de desarrollo propio y se implementó con la intención de
         importar al software mallas previamente generadas para su análisis.
         \\ \hline
 
         \textbf{gen\textunderscore inter\textunderscore pol(eje)} & Genera una
         malla mediante el método de interpolación polinamial, la cual se basa en
-        el polinomio de Lagrange. eje representa el eje a lo largo del cual se
+        el polinomio de Lagrange.\ eje representa el eje a lo largo del cual se
         realiza la interpolación, por default es el eje $\eta$. \\ \hline
 
         \textbf{gen\textunderscore TFI()} & Genera una malla mediante el método
@@ -3039,13 +3077,13 @@
         logra la misma funcionalidad en ambos casos. La razón de desarrollar dos
         clases distintas atiende a la necesidad de manejar las ecuaciones de
         diferente manera en las fronteras de la malla dependiendo de la
-        tipología de ésta. La tabla \ref{tabla_mesh_c_o} enlista los métodos
+        tipología de ésta. La tabla~\ref{tabla_mesh_c_o} enlista los métodos
         disponibles para ambos tipos de malla, así como una breve descripción de
         ellos.
 
     \begin{table}[htbp!]
     \begin{center}
-        \begin{tabular}{ | l | p{11cm} |}
+        \begin{tabular}{| l | p{11cm} |}
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
@@ -3059,12 +3097,12 @@
         \textbf{gen\textunderscore Laplace(metodo)} & Genera la malla
         resolviendo la ecuación de Laplace. La variable metodo se refiere al
         método iterativo de solución, el usuario puede escoger entre Jacobi,
-        Gauss-Seidel y SOR. Por default se utiliza el método SOR.\\ \hline
+        Gauss-Seidel y SOR\@. Por default se utiliza el método SOR\\ \hline
 
         \textbf{gen\textunderscore Poisson(metodo)} & Genera la malla
         resolviendo la ecuación de Poisson. La variable metodo se refiere al
         método iterativo de solución, el usuario puede escoger entre Jacobi,
-        Gauss-Seidel y SOR. Por default se utiliza el método SOR
+        Gauss-Seidel y SOR\@. Por default se utiliza el método SOR.
         \\ \hline
 
         \textbf{tensor()} & Calcula el tensor métrico de la transformación,
@@ -3086,7 +3124,7 @@
     \end{table}
 
     \paragraph*{}
-        La figura \ref{mesh_class} es una representación de la estructura de la
+        La figura~\ref{mesh_class} es una representación de la estructura de la
         clase mesh y su relación (herencia) con respecto a las subclases
         mesh\textunderscore c y mesh\textunderscore o. En este diagrama se
         enlistan los atributos y métodos pertenecientes a cada clase.
@@ -3110,7 +3148,7 @@
             \item Solver
             \item Postproceso
         \end{enumerate}
-        se muestra un diagrama en la figura \ref{estructura_global} donde se
+        se muestra un diagrama en la figura~\ref{estructura_global} donde se
         relaciona cada parte de este proyecto con el correspondiente proceso de
         los arriba mencionados.
 
@@ -3127,7 +3165,7 @@
         funcionamiento de los 3 procesos generales dentro de este proyecto.
 
     \paragraph*{}
-        La figura \ref{flujo_malla} presenta el diagrama de flujo que se sigue
+        La figura~\ref{flujo_malla} presenta el diagrama de flujo que se sigue
         para generar una malla y poder guardar dichos datos tanto en el formato
         de este proyecto como en el formato de SU2. Estas acciones corresponden
         al preproceso del análisis.
@@ -3140,7 +3178,7 @@
     \end{figure}
 
     \paragraph*{}
-        El diagrama de flujo de la figura \ref{flujo_potencial} representa el
+        El diagrama de flujo de la figura~\ref{flujo_potencial} representa el
         algoritmo empleado para el análisis de flujo potencial, lo cual
         corresponde al ``solver'' del programa.
 
@@ -3152,7 +3190,7 @@
     \end{figure}
 
     \paragraph*{}
-        El postproceso se ve ilustrado en la figura \ref{flujo_potencial_after},
+        El postproceso se ve ilustrado en la figura~\ref{flujo_potencial_after},
         la cual representa el algoritmo para la obtención de diferentes
         parámetros de interés en los análisis aerodinámicos, entre ellos los
         coeficientes de presión ($c_p$), de sustentación ($c_l$) y de
@@ -3175,11 +3213,11 @@
         potencial, dado que son los algoritmos más complejos en este trabajo.
 
     \paragraph*{}
-        La figura ~\ref{flujo_laplace} presenta el algoritmo utilizado para la
+        La figura~\ref{flujo_laplace} presenta el algoritmo utilizado para la
         generación de mallas mediante la solución de la ecuación de Laplace.
-        De igual manera la figura ~\ref{flujo_poisson} presenta el diagrama
+        De igual manera la figura~\ref{flujo_poisson} presenta el diagrama
         de flujo para la solución de la ecuación de Poisson. Por último, el
-        diagrama de flujo ilustrado en la figura \ref{flujo_potencial_funcion}
+        diagrama de flujo ilustrado en la figura~\ref{flujo_potencial_funcion}
         muestra el algoritmo empleado para resolver la función potencial.
 
     \begin{figure}[htbp!]
@@ -3236,7 +3274,7 @@
         configuraciones de malla, analizando la calidad de la misma. Este
         aspecto es evaluado mediante el método utilizado en la librería ``The
         Verdict Geometric Quality Library'', mencionado previamente en el
-        capítulo \ref{chap:mallas}.
+        capítulo~\ref{chap:mallas}.
 
     \paragraph*{}
         Para esto se define una configuración inicial, es decir se define la
@@ -3251,7 +3289,7 @@
         En esta sección se analizan las mallas resultantes para diferentes
         ángulos de ataque de un perfil seleccionado, con lo que se obtiene un
         rango de valores para el ángulo de ataque en los que todavía se cuenta
-        con una malla que resulte de utilidad para análisis de DFC. Normalmente
+        con una malla que resulte de utilidad para análisis de DFC\@. Normalmente
         este límite se alcanza cuando se presentan cruces en las líneas que
         forman la malla.
 
@@ -3583,7 +3621,7 @@
         Perfil & NACA 4415
         \\ \hline
 
-        M & 171
+        M & 159
         \\ \hline
 
         N & 65
@@ -3592,10 +3630,10 @@
         Ecuación & Poisson
         \\\hline
 
-        $aa_m$ & 30
+        $aa_m$ & 35
         \\ \hline
 
-        $cc_m$ & 6
+        $cc_m$ & 6.5
         \\ \hline
 
         Método & SOR
@@ -3626,7 +3664,7 @@
         \subfigure[Acercamiento a
           perfil]{\label{fig:naca4415_c_flap_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/naca4415_c_flap_close}}
-        \caption[Malla tipo O con perfily flap NACA 4415]{Malla tipo O con perfil
+        \caption[Malla tipo C con perfily flap NACA 4415]{Malla tipo C con perfil
              y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_c_flap}
     \end{figure}
