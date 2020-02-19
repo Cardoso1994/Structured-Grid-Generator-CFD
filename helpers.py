@@ -175,9 +175,58 @@ def get_aspect_ratio(mesh):
     for i in range(mesh.M):
         plt.plot(mesh.X[i, :], mesh.Y[i, :], 'k', linewidth=0.5)
     mesh_ = plt.pcolormesh(mesh.X, mesh.Y, aspect_ratio_, cmap='jet', rasterized=True,
-                   vmin=(5*aspect_min),
-                   vmax=(15*aspect_min))
+                   vmin=(aspect_min),
+                   vmax=(aspect_max))
     plt.colorbar(mesh_, extend='both')
+
+    plt.draw()
+    plt.show()
+
+    return
+
+def get_skew(mesh):
+    '''
+    Calcula el aspect ratio de cada celda. Para cualquier tipo de malla
+    Basado en el método de:
+        The Verdict Geometric Quality Library
+    '''
+
+    X = np.copy(mesh.X)
+    Y = np.copy(mesh.Y)
+    skew = np.zeros((mesh.M - 1, mesh.N - 1))
+
+    for i in range(mesh.M -1):
+        for j in range(mesh.N -1):
+            P0 = np.array(([X[i, j], Y[i, j]]))
+            P1 = np.array(([X[i+1, j], Y[i+1, j]]))
+            P2 = np.array(([X[i+1, j+1], Y[i+1, j+1]]))
+            P3 = np.array(([X[i, j+1], Y[i, j+1]]))
+            X1 = (P1 - P0) + (P2 - P3)
+            X2 = (P2 - P1) + (P3 - P0)
+            mag = (X1[0] ** 2 + X1[1] ** 2) ** 0.5
+            X1 /= mag
+            mag = (X2[0] ** 2 + X2[1] ** 2) ** 0.5
+            X2 /= mag
+            skew[i, j] = 1 - np.abs(X1[0] * X2[0] + X1[1] * X2[1])
+
+    skew_min = np.nanmin(skew)
+    skew_max = np.nanmax(skew)
+    # cmap_ = cm.get_cmap('jet')
+
+    print('skew_max')
+    print(skew_max)
+    print('skew_min')
+    print(skew_min)
+    plt.figure('aspect')
+    plt.axis('equal')
+    plt.plot(mesh.X, mesh.Y, 'k', linewidth=0.5)
+    plt.plot(mesh.X[:, 0], mesh.Y[:, 0], 'k', linewidth=0.5)
+    for i in range(mesh.M):
+        plt.plot(mesh.X[i, :], mesh.Y[i, :], 'k', linewidth=0.5)
+    mesh_ = plt.pcolormesh(mesh.X, mesh.Y, skew, cmap='jet', rasterized=True,
+                   vmin=(skew_min),
+                   vmax=(skew_max))
+    plt.colorbar(mesh_)
 
     plt.draw()
     plt.show()

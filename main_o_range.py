@@ -29,7 +29,7 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 N = 65 # 60
 union = 3
 
-airfoil_points = 75 # 45
+airfoil_points = 73 # 45
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
@@ -48,7 +48,7 @@ perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 flap.create_sin(points)
-flap.rotate(0)
+flap.rotate(90)
 perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(-130)
 
@@ -61,7 +61,7 @@ print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.gen_Laplace(metodo='SOR')
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=30, cc=6, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=32.5, cc=6.5, linea_eta=0)
 print('after mesh generation')
 
 mallaNACA.plot()
