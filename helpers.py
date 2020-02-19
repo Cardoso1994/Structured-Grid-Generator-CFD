@@ -182,7 +182,7 @@ def get_aspect_ratio(mesh):
     plt.draw()
     plt.show()
 
-    return
+    return (aspect_ratio_)
 
 def get_skew(mesh):
     '''
@@ -231,4 +231,4 @@ def get_skew(mesh):
     plt.draw()
     plt.show()
 
-    return
+    return (skew)

@@ -2143,12 +2143,83 @@
         \end{figure}
 
     \paragraph*{}
-        Esta librería y sus métodos son utilizados por diversos programas, entre
-        ellos destaca el programa SALOME, el cual es un software de código
-        abierto desarrollado para las etapas de preproceso y postproceso en
-        análisis computacionales de ingeniería.
+    Esta librería y sus métodos son utilizados por diversos programas, entre
+    ellos destaca el programa SALOME, el cual es un software de código
+    abierto desarrollado para las etapas de preproceso y postproceso en
+    análisis computacionales de ingeniería.
 
+    \subsection{Skewness}
+    \paragraph*{}
+    El ``skew'' puede interpretarse geométricamente como el sesgo de la celda,
+    es decir, se interpreta como la desviación de la simetría, dicha simetría
+    depende del tipo de celda que contenga la malla, por ejemplo para celdas
+    triangulares la simetría corresponde a una celda equilátera la cual por lo
+    tanto se considera no sesgada. En el caso en el que la malla está formada
+    por celdas cuadrilaterales, se considera una celda no sesgada a una celda
+    cuadrada o rectangular.
 
+    \paragraph*{}
+    Cengel \cite{cengel} presenta una fórmula para calcular el ``skew'' de la
+    celda mediante la siguiente formula
+    \begin{equation}
+      Q_{EAS} = MAX \left(
+      \frac{\theta_{max} - \theta_{igual}}{180\si{\degree} - \theta_{igual}},
+      \frac{\theta_{igual} - \theta_{min}}{\theta_{igual}}
+      \right)
+    \end{equation}
+    donde $\theta_{min}$ y $\theta_{max}$ son los ángulos mínimo y máximo entre
+    los lados de las celdas, mientras que $\theta_{igual}$ es el ángulo entre
+    los lados de una celda ideal, es decir no sesgada, el cual para celdas
+    cuadriláteras es $\theta_{igual} = 90\si{\degree}$ y para celdas
+    triangulares corresponde a $\theta_{igual} = 60\si{\degree}$.
+
+    \paragraph*{}
+    Los resultados de esta fórmula arrojan valores entre $0$ y $1$, donde $0$
+    representa una celda sin sesgo, es decir que la celda es un cuadrado o un
+    rectángulo si la malla se compone de cuadrilateros. Celdas muy
+    distorisionadas o alejadas de dicha simetría tienden a tener valores
+    cercanos a la unidad.
+
+    \paragraph*{}
+    Por su parte, ``The Verdict Quality Library'' presenta su propio método para
+    evaluar el ``skew'' de una celda. Este método evalua el ángulo existente
+    entre los ejes principales de la celda y de manera más precisa, evalua el
+    valor del coseno de dicho ángulo. La figura~\ref{aspect_verdict} muestra
+    gráficamente los elementos que conforman una celda.
+
+    \paragraph*{}
+    El método usado por la librería es el siguiente. Primero se deben normalizar
+    los ejes principales $\vec{X_1}$ y $\vec{X_2}$, los cuales están definidos
+    por
+    \begin{subequations}
+    \begin{equation}
+      \vec{X_1} = (\vec{P_1} - \vec{P_0}) + (\vec{P_2} - \vec{P_3})
+    \end{equation}
+    \begin{equation}
+      \vec{X_2} = (\vec{P_2} - \vec{P_1}) + (\vec{P_3} - \vec{P_0})
+    \end{equation}
+    \end{subequations}
+    y normalizados se definen como
+    \begin{subequations}
+      \begin{equation}
+        \hat{X_1} = \frac{\vec{X_1}}{\lvert\lvert\vec{X_1}\rvert\rvert}
+      \end{equation}
+      \begin{equation}
+        \hat{X_2} = \frac{\vec{X_2}}{\lvert\lvert\vec{X_2}\rvert\rvert}
+      \end{equation}
+    \end{subequations}
+
+    \paragraph*{}
+    Con esto, el ``skew'' está dado por
+    \begin{equation}
+      q = \lvert \hat{X_1} \cdot \hat{X_2} \rvert
+    \end{equation}
+
+    \paragraph*{}
+    En este método el rango de valores también se encuentra entre $0$ y $1$, sin
+    embargo a diferencia del método propuesto por Cengel, en éste una celda sin
+    cesgo presenta un valor $q = 1$, mientras que los valores de $q$ para celdas
+    muy sesgadas tienden a $0$.
     %
     %
     %
@@ -3208,7 +3279,7 @@
         Hasta ahora, solo se han presentado diagramas de flujo que presentan el
         funcionamiento general del programa sin entrar en específicos sobre los
         algoritmos de las funciones y los métodos que lo componen. Se muestran a
-        continuación diagramas de flujo para la generación de mediante la
+        continuación diagramas de flujo para la generación de mallas mediante la
         ecuación de Laplace y Poisson, además de solución a la ecuación de
         potencial, dado que son los algoritmos más complejos en este trabajo.
 
@@ -3256,56 +3327,42 @@
 %
 \chapter{Resultados}
     \paragraph*{}
-        Los resultados de este trabajo se dividen en tres secciones diferentes,
-        la primera de ellas muestra para diferentes configuraciones de mallas
-        el ``aspect ratio'' de las celdas generadas, con la intención de mostrar
-        la calidad de la malla, lo que dota de confiabilidad al proyecto para su
-        uso en posteriores proyectos. La siguiente sección lidia con el alcance
-        de las mallas generadas mediante este programa, analizando para
-        diferentes configuraciones la distribución de los nodos. Por último se
-        llevan a cabo simulaciones de flujo potencial utilizando el código
-        desarrollado como parte de este proyecto, y también se realizan
-        simulaciones a través del uso del software SU2, con el fin de confirmar
-        la correcta generación de las mallas y de mostrar su aplicabilidad.
-
-    \section{Calidad de la malla}
-    \paragraph*{}
-        En esta sección se discuten los resultados obtenidos para diferentes
-        configuraciones de malla, analizando la calidad de la misma. Este
-        aspecto es evaluado mediante el método utilizado en la librería ``The
-        Verdict Geometric Quality Library'', mencionado previamente en el
-        capítulo~\ref{chap:mallas}.
-
-    \paragraph*{}
-        Para esto se define una configuración inicial, es decir se define la
-        tipología de la malla, el perfil a mallar, las dimensiones de la malla
-        $M$ y $N$, y los valores de entrada para las funciones que afectan la
-        densidad del mallado en la ecuación de Poisson. A partir de dicha
-        configuración se varía un parametro a la vez, de los previamente
-        mencionados, para mostrar el efecto que cada uno tiene sobre la malla.
+    Los resultados de este trabajo se dividen en tres secciones diferentes,
+    la primera de ellas lidia con el alcance de las mallas generadas
+    mediante este programa, analizando para diferentes configuraciones la
+    distribución de los nodos. En segundo lugar para diferentes
+    configuraciones se evalua la calidad de la malla mediante el
+    ``aspect ratio'' y el ``skewness'' de las celdas de la misma, con la
+    intención de mostrar la calidad lograda, lo que dota de
+    confiabilidad al proyecto para su uso en posteriores proyectos.
+    Por último se llevan a cabo simulaciones de flujo potencial utilizando
+    el código desarrollado como parte de este proyecto, y también se
+    realizan simulaciones a través del uso del software SU2, con el fin de
+    confirmar la correcta generación de las mallas y de mostrar su
+    aplicabilidad.
 
     \section{Alcance y Límites de Aplicación}
     \paragraph*{}
-        En esta sección se analizan las mallas resultantes para diferentes
-        ángulos de ataque de un perfil seleccionado, con lo que se obtiene un
-        rango de valores para el ángulo de ataque en los que todavía se cuenta
-        con una malla que resulte de utilidad para análisis de DFC\@. Normalmente
-        este límite se alcanza cuando se presentan cruces en las líneas que
-        forman la malla.
+    En esta sección se analizan las mallas resultantes para diferentes
+    ángulos de ataque de un perfil seleccionado, con lo que se obtiene un
+    rango de valores para el ángulo de ataque en los que todavía se cuenta
+    con una malla que resulte de utilidad para análisis de DFC\@. Normalmente
+    este límite se alcanza cuando se presentan cruces en las líneas que
+    forman la malla.
 
     \subsection{Malla O. Frontera interna única}
     \paragraph*{}
-        La primera malla que se presenta es una malla tipo O con un solo perfil.
-        La tabla~\ref{tabla_o_naca_4415} presenta las características de la
-        malla, así como los casos límite de aplicabilidad. La
-        figura~\ref{fig:naca4415} muestra la malla generada para un ángulo de ataque
-        $\alpha = 0 \si{\degree}$. A su vez, la figura~\ref{fig:naca4415_90}
-        muestra un acercamiento al perfil para un ángulo de ataque
-        $\alpha = 90\si{\degree}$, condición en la cual todavía se muestra una malla dentro
-        del rango de usabilidad. Mientras que la figura~\ref{fig:naca4415_90}
-        muestra un acercamiento al perfil con un ángulo de ataque $\alpha =
-        -90\si{\degree}$, e ilustra una malla de mala calidad en el borde de
-        salida.
+    La primera malla que se presenta es una malla tipo O con un solo perfil.
+    La tabla~\ref{tabla_o_naca_4415} presenta las características de la
+    malla, así como los casos límite de aplicabilidad. La
+    figura~\ref{fig:naca4415} muestra la malla generada para un ángulo de ataque
+    $\alpha = 0 \si{\degree}$. A su vez, la figura~\ref{fig:naca4415_90}
+    muestra un acercamiento al perfil para un ángulo de ataque
+    $\alpha = 90\si{\degree}$, condición en la cual todavía se muestra una
+    malla dentro del rango de usabilidad. Mientras que la
+    figura~\ref{fig:naca4415_90} muestra un acercamiento al perfil con un
+    ángulo de ataque $\alpha = -90\si{\degree}$, e ilustra una malla de mala
+    calidad en el borde de salida.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3639,22 +3696,23 @@
         Método & SOR
         \\\hline
 
-        Ángulo máximo & 90\si{\degree}
+        Ángulo máximo & 100\si{\degree}
         \\ \hline
 
         Ángulo máximo recomendado & 80\si{\degree}
         \\ \hline
 
-        Ángulo mínimo & -110\si{\degree}
+        Ángulo mínimo & -50\si{\degree}
         \\ \hline
 
-        Ángulo mínimo recomendado & -90\si{\degree}
+        Ángulo mínimo recomendado & -40\si{\degree}
         \\ \hline
         \end{tabular}
-        \caption{Caracetísticas de malla C con perfil NACA 4415}
+        \caption{Caracetísticas de malla C con perfil y flap NACA 4415}
     \label{tabla_c_naca_4415}
     \end{center}
     \end{table}
+
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
@@ -3668,6 +3726,104 @@
              y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_c_flap}
     \end{figure}
+
+
+    \section{Calidad de la malla}
+    \paragraph*{}
+    En esta sección se discuten los resultados obtenidos para diferentes
+    configuraciones de malla, analizando la calidad de la misma. Este
+    aspecto es evaluado mediante el método utilizado en la librería ``The
+    Verdict Geometric Quality Library'', mencionado previamente en el
+    capítulo~\ref{chap:mallas}. Los aspectos que se van a analizar son el
+    ``aspect ratio'' y el ``skewness'' en cada una de las celdas.
+
+    \paragraph*{}
+    Para esto se define una configuración inicial, es decir se define la
+    tipología de la malla, el perfil a mallar, las dimensiones de la malla
+    $M$ y $N$, y los valores de entrada para las funciones que afectan la
+    densidad del mallado en la ecuación de Poisson. A partir de dicha
+    configuración se varía un parametro a la vez, de los previamente
+    mencionados, para mostrar el efecto que cada uno tiene sobre la malla.
+
+    \paragraph*{}
+    El primer caso corresponde al descrito por la tabla~\ref{tabla_o_naca_4415}
+    y representado por la malla de la figura~\ref{fig:naca4415}. A esta
+    configuración se le realizarán variaciones en sus parámetros con el fin de
+    identificar el efecto de cada uno de ellos en la calidad de la malla. Las
+    figuras~\ref{fig:naca4415_aspect} y~\ref{fig:naca4415_skew} se muestran el
+    aspect ratio y el skew de las celdas, respectivamente. El primer cambio es
+    el aumento de la dimensión $M$ de la malla desde $M=45$ a $M=65$.
+
+    % relación (1:1) y (2:1) [x:y]
+    \begin{figure}[htbp!]
+        \centering
+
+        \subfigure[Vista
+          Completa]{\label{fig:naca4415_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_aspect_close}}
+
+        \subfigure[Vista
+          Completa $M=65$]{\label{fig:naca4415_m_65_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_m_65_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $M=65$]{\label{fig:naca4415_m_65_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_m_65_aspect_close}}
+
+        \caption[Aspect ratio para malla tipo O con perfil NACA4415]{Aspect
+          ratio para malla tipo O con perfil NACA4415}
+    \end{figure}
+    \begin{figure}[htbp!]\ContinuedFloat
+        \centering
+        \subfigure[Vista
+          Completa $N=65$]{\label{fig:naca4415_n_65_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_n_65_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $N=65$]{\label{fig:naca4415_n_65_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_n_65_aspect_close}}
+
+        \caption[Aspect ratio para malla tipo O con perfil NACA4415]{Aspect
+          ratio para malla tipo O con perfil NACA4415}
+        \label{fig:naca4415_aspect}
+    \end{figure}
+
+    % relación (1:1) y (2:1) [x:y]
+    \begin{figure}[htbp!]
+        \centering
+
+        \subfigure[Vista
+          Completa]{\label{fig:naca4415_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_skew_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_skew_close}}
+
+        \subfigure[Vista
+          Completa $M=65$]{\label{fig:naca4415_m_65_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_m_65_skew_far}}
+        \subfigure[Acercamiento a
+          perfil $M=65$]{\label{fig:naca4415_m_65_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_m_65_skew_close}}
+
+        \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
+          tipo O con perfil NACA4415}
+    \end{figure}
+    \begin{figure}[htbp!]\ContinuedFloat
+        \centering
+        \subfigure[Vista
+          Completa $N=65$]{\label{fig:naca4415_n_65_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_n_65_skew_far}}
+        \subfigure[Acercamiento a
+          perfil $N=65$]{\label{fig:naca4415_n_65_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_n_65_skew_close}}
+
+        \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
+          tipo O con perfil NACA4415}
+        \label{fig:naca4415_skew}
+    \end{figure}
+
 %
 %
 %
