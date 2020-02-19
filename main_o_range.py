@@ -48,7 +48,7 @@ perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 flap.create_sin(points)
-flap.rotate(90)
+flap.rotate(-40)
 perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(-130)
 
