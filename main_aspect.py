@@ -27,7 +27,7 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 65 # 37 # 60
+N = 45 # 37 # 60
 union = 6
 
 airfoil_points = 45 # 41
@@ -59,7 +59,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Laplace(metodo='SOR')
-mallaNACA.gen_Poisson(metodo='SOR', omega=1.3, aa=20.5, cc=6.5, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=1.3, aa=21.5, cc=6.5, linea_eta=0)
 print('after laplace')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
@@ -100,6 +100,8 @@ skew_max = np.nanmax(skew)
 
 aspect_min = 1.04805
 aspect_max = 2.01482
+skew_min = 0.99999
+skew_max = 0.86711
 
 limits = [[-20.5, 20.5, -20.5, 20.5], [-1., 1, -0.5, 0.5],
             [0.91, 1.01, -0.025, 0.025]]
