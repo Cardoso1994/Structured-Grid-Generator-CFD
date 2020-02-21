@@ -224,6 +224,7 @@ class mesh_O(mesh):
         mask = np.isnan(Q_)
         Q_[mask] = 0
 
+        mesh.err_max = 10e-2
         it = 0
         print("Poisson:")
         # inicio del método iterativo
