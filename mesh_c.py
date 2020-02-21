@@ -51,7 +51,7 @@ class mesh_C(mesh):
         points1 = (points + 1) // 2
 
         # frontera externa
-        a = 1.2 * R
+        a = 1.1 * R
         b = R
         exe = (1 - b ** 2 / a ** 2) ** 0.5
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)

@@ -19,7 +19,7 @@ import mesh_su2
 import helpers
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla
@@ -27,10 +27,10 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 45 # 37 # 60
-union = 6
+N = 65 # 37 # 60
+union = 3 #6
 
-airfoil_points = 35 # 41
+airfoil_points = 69 # 41
 
 if malla == 'C':
     points = airfoil_points // 3 #* 2
@@ -61,7 +61,7 @@ elif malla == 'C':
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 # mallaNACA.gen_Laplace(metodo='SOR')
-mallaNACA.gen_Poisson(metodo='SOR', omega=1.3, aa=21.5, cc=6.5, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.6, aa=36, cc=6.5, linea_eta=0)
 print('after laplace')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
@@ -100,12 +100,12 @@ aspect_max = np.nanmax(aspect)
 skew_min = np.nanmin(skew)
 skew_max = np.nanmax(skew)
 
-aspect_min = 1.0221
-aspect_max = 6.2893
+# aspect_min = 5
+aspect_max = 10
 skew_min = 0.99999
-skew_max = 0.1046
+skew_max = 0.1067
 
-limits = [[-20.5, 20.5, -20.5, 20.5], [-0.75, 1.25, -0.5, 0.5],
+limits = [[-22.5, 50.5, -20.5, 20.5], [-0.75, 1.25, -0.5, 0.5],
             [0.91, 1.01, -0.025, 0.025]]
 for limit in limits:
     fig = plt.figure('malla_aspect')

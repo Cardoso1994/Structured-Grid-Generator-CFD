@@ -3709,7 +3709,7 @@
         \\ \hline
         \end{tabular}
         \caption{Caracetísticas de malla C con perfil y flap NACA 4415}
-    \label{tabla_c_naca_4415}
+    \label{tabla_c_flap_naca_4415}
     \end{center}
     \end{table}
 
@@ -3750,8 +3750,10 @@
     y representado por la malla de la figura~\ref{fig:naca4415}. A esta
     configuración se le realizarán variaciones en sus parámetros con el fin de
     identificar el efecto de cada uno de ellos en la calidad de la malla. Las
-    figuras~\ref{fig:naca4415_aspect} y~\ref{fig:naca4415_skew} se muestran el
-    aspect ratio y el skew de las celdas, respectivamente. El primer cambio es
+    figuras~\ref{fig:naca4415_aspect_0} y~\ref{fig:naca4415_aspect_1}  muestran
+    el efecto de las variables en el aspect ratio, y las
+    figuras~\ref{fig:naca4415_skew_0} y~\ref{fig:naca4415_skew_1} el efecto en
+    el skew de las celdas. El primer cambio es
     el aumento de la dimensión $M$ de la malla desde $M=45$ a $M=65$. El segundo
     cambio implica un incremento en el número de nodos en la dirección del eje
     $\eta$, es decir, aumentando el número de nodos desde $N=45$ a $N=65$. Por
@@ -3759,7 +3761,7 @@
     ecuación de Poisson, de $aa_m = 20.5$ a $aa_m=21.5$.
 
     % relación (1:1) y (2:1) [x:y]
-    \begin{figure}[htp!]
+    \begin{figure}[h!]
         \centering
 
         \subfigure[Vista
@@ -3778,8 +3780,9 @@
 
         \caption[Aspect ratio para malla tipo O con perfil NACA4415]{Aspect
           ratio para malla tipo O con perfil NACA4415}
+        \label{fig:naca4415_aspect_0}
     \end{figure}
-    \begin{figure}[htp!]\ContinuedFloat
+    \begin{figure}[h!]
         \centering
         \subfigure[Vista
           Completa $N=65$]{\label{fig:naca4415_n_65_aspect_far}\includegraphics[keepaspectratio,
@@ -3797,11 +3800,11 @@
 
         \caption[Aspect ratio para malla tipo O con perfil NACA4415]{Aspect
           ratio para malla tipo O con perfil NACA4415}
-        \label{fig:naca4415_aspect}
+        \label{fig:naca4415_aspect_1}
     \end{figure}
 
     % relación (1:1) y (2:1) [x:y]
-    \begin{figure}[htp!]
+    \begin{figure}[h!]
         \centering
 
         \subfigure[Vista
@@ -3820,8 +3823,9 @@
 
         \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
           tipo O con perfil NACA4415}
+        \label{fig:naca4415_skew_0}
     \end{figure}
-    \begin{figure}[htp!]\ContinuedFloat
+    \begin{figure}[h!]
         \centering
         \subfigure[Vista
           Completa $N=65$]{\label{fig:naca4415_n_65_skew_far}\includegraphics[keepaspectratio,
@@ -3839,16 +3843,20 @@
 
         \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
           tipo O con perfil NACA4415}
-        \label{fig:naca4415_skew}
+        \label{fig:naca4415_skew_1}
     \end{figure}
 
     \paragraph*{}
     El siguiente caso corresponde al descrito en la
     tabla~\ref{tabla_o_naca_4415_flap}, al cual se le realizan los mismos
     incrementos, el valor de $M$ cambia de $M=83$ a $M=103$ y el valor de
-    $aa_m$ de $aa_m = 20.5$ a $aa_m = 21.5$.
+    $aa_m$ de $aa_m = 20.5$ a $aa_m = 21.5$. Las
+    figuras~\ref{fig:naca4415_flap_aspect_0} y~\ref{fig:naca4415_flap_aspect_1}
+    muestran el aspect ratio, mientras que las
+    figuras~\ref{fig:naca4415_flap_skew_0} y~\ref{fig:naca4415_flap_skew_1}
+    presentan el skew de la malla.
 
-    \begin{figure}[htp!]
+    \begin{figure}[h!]
         \centering
 
         \subfigure[Vista
@@ -3867,8 +3875,9 @@
 
         \caption[Aspect ratio para malla tipo O con perfil y flap NACA4415]{Aspect
           ratio para malla tipo O con perfil y flap NACA4415}
+        \label{fig:naca4415_flap_aspect_0}
     \end{figure}
-    \begin{figure}[htp!]\ContinuedFloat
+    \begin{figure}[h!]
         \centering
         \subfigure[Vista
           Completa $N=65$]{\label{fig:naca4415_flap_n_65_aspect_far}\includegraphics[keepaspectratio,
@@ -3886,10 +3895,10 @@
 
         \caption[Aspect ratio para malla tipo O con perfil y flap NACA4415]{Aspect
           ratio para malla tipo O con perfil y flap NACA4415}
-        \label{fig:naca4415_flap_aspect}
+        \label{fig:naca4415_flap_aspect_1}
     \end{figure}
 
-    \begin{figure}[htp!]
+    \begin{figure}[h!]
         \centering
 
         \subfigure[Vista
@@ -3906,10 +3915,11 @@
           perfil $M=103$]{\label{fig:naca4415_flap_m_103_skew_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/naca4415_flap_m_103_skew_close}}
 
-        \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
-          tipo O con perfil NACA4415}
+        \caption[Skew para malla tipo O con perfil y flap NACA4415]{Skew para malla
+          tipo O con perfil y flap NACA4415}
+        \label{fig:naca4415_flap_skew_0}
     \end{figure}
-    \begin{figure}[htp!]\ContinuedFloat
+    \begin{figure}[h!]
         \centering
         \subfigure[Vista
           Completa $N=65$]{\label{fig:naca4415_flap_n_65_skew_far}\includegraphics[keepaspectratio,
@@ -3925,9 +3935,155 @@
           perfil $a=21.5$]{\label{fig:naca4415_flap_aa_215_skew_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/naca4415_flap_aa_215_skew_close}}
 
-        \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
-          tipo O con perfil NACA4415}
-        \label{fig:naca4415_skew}
+        \caption[Skew para malla tipo O con perfil y flap NACA4415]{Skew para malla
+          tipo O con perfil y flap NACA4415}
+        \label{fig:naca4415_flap_skew_1}
+    \end{figure}
+
+    \paragraph*{}
+    La tabla~\ref{tabla_c_naca_4415} corresponde a una malla tipo C con un
+    perfil NACA 4415, se analizan de igual manera el aspect ratio y el skew de
+    la misma, haciendo variaciones en los parámetros que la definen. Los cambios
+    realizados son $M$ de $M=99$ a $M=117$, $N$ de $N=45$ a $N=60$ y $aa_{m}$ de
+    $aa_{m} = 37$ a $aa_{m}=38$. Las gráficas de las
+    figuras~\ref{fig:naca4415_c_aspect_0} y~\ref{fig:naca4415_c_aspect_1}
+    corresponden al efecto que tienen los parámetros en el aspect ratio,
+    mientras que las figuras~\ref{fig:naca4415_c_skew_0}
+    y~\ref{fig:naca4415_c_skew_1} corresponde al skew de las celdas.
+
+    \begin{figure}[htp!]
+        \centering
+
+        \subfigure[Vista
+          Completa]{\label{fig:naca4415_c_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_c_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_aspect_close}}
+
+        \subfigure[Vista
+          Completa $M=103$]{\label{fig:naca4415_c_m_117_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_m_117_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $M=103$]{\label{fig:naca4415_c_m_117_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_m_117_aspect_close}}
+
+        \caption[Aspect ratio para malla tipo C con perfil NACA4415]{Aspect
+          ratio para malla tipo C con perfil NACA4415}
+        \label{fig:naca4415_c_aspect_0}
+    \end{figure}
+    \begin{figure}[htp!]
+        \centering
+        \subfigure[Vista
+          Completa $N=65$]{\label{fig:naca4415_c_n_65_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_n_65_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $N=65$]{\label{fig:naca4415_c_n_65_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_n_65_aspect_close}}
+
+        \subfigure[Vista
+          Completa $a=21.5$]{\label{fig:naca4415_c_aa_38_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_aa_38_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $a=21.5$]{\label{fig:naca4415_c_aa_38_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_aa_38_aspect_close}}
+
+        \caption[Aspect ratio para malla tipo C con perfil NACA4415]{Aspect
+          ratio para malla tipo C con perfil NACA4415}
+        \label{fig:naca4415_c_aspect_1}
+    \end{figure}
+
+    \begin{figure}[htp!]
+        \centering
+
+        \subfigure[Vista
+          Completa]{\label{fig:naca4415_c_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_skew_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_c_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_skew_close}}
+
+        \subfigure[Vista
+          Completa $M=103$]{\label{fig:naca4415_c_m_117_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_m_117_skew_far}}
+        \subfigure[Acercamiento a
+          perfil $M=103$]{\label{fig:naca4415_c_m_117_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_m_117_skew_close}}
+
+        \caption[Aspect ratio para malla tipo C con perfil NACA4415]{Aspect
+          ratio para malla tipo C con perfil NACA4415}
+        \label{fig:naca4415_c_skew_0}
+    \end{figure}
+    \begin{figure}[htp!]
+        \centering
+        \subfigure[Vista
+          Completa $N=65$]{\label{fig:naca4415_c_n_65_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_n_65_skew_far}}
+        \subfigure[Acercamiento a
+          perfil $N=65$]{\label{fig:naca4415_c_n_65_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_n_65_skew_close}}
+
+        \subfigure[Vista
+          Completa $a=21.5$]{\label{fig:naca4415_c_aa_38_skew_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_aa_38_skew_far}}
+        \subfigure[Acercamiento a
+          perfil $a=21.5$]{\label{fig:naca4415_c_aa_38_skew_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_aa_38_skew_close}}
+
+        \caption[Aspect ratio para malla tipo C con perfil NACA4415]{Aspect
+          ratio para malla tipo C con perfil NACA4415}
+        \label{fig:naca4415_c_skew_1}
+    \end{figure}
+
+    \paragraph*{}
+    La tabla~\ref{tabla_c_flap_naca_4415} corresponde a una malla tipo C con
+    perfil y flap, ambos NACA 4415, los resultados para el aspect ratio y el skew de
+    ésta para diferentes configuraciones se muestran en las
+    figuras~\ref{fig:naca4415_c_flap_aspect_0},~\ref{fig:naca4415_c_flap_aspect_1}
+    y~\ref{fig:naca4415_c_flap_skew_0},~\ref{fig:naca4415_c_flap_skew_1} respectivamente.
+    Los cambios realizados son $M$ de $M=159$ a $M=183$, $N$ de $N=65$ a $N=85$
+    y $aa_{m}$ de $aa_{m} = 35$ a $aa_{m}=36$.
+
+    \begin{figure}[htp!]
+        \centering
+
+        \subfigure[Vista
+          Completa]{\label{fig:naca4415_c_flap_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil]{\label{fig:naca4415_c_flap_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_aspect_close}}
+
+        \subfigure[Vista
+          Completa $M=183$]{\label{fig:naca4415_c_flap_m_183_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_m_183_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $M=183$]{\label{fig:naca4415_c_flap_m_183_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_m_183_aspect_close}}
+
+        \caption[Aspect ratio para malla tipo C con perfil y flap NACA4415]{Aspect
+          ratio para malla tipo C con perfil NACA4415}
+        \label{fig:naca4415_c_flap_aspect_0}
+    \end{figure}
+    \begin{figure}[htp!]
+        \centering
+        \subfigure[Vista
+          Completa $N=85$]{\label{fig:naca4415_c_flap_n_85_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_n_85_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $N=85$]{\label{fig:naca4415_c_flap_n_85_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_n_85_aspect_close}}
+
+        \subfigure[Vista
+          Completa $a=36$]{\label{fig:naca4415_c_flap_aa_36_aspect_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_aa_36_aspect_far}}
+        \subfigure[Acercamiento a
+          perfil $a=36$]{\label{fig:naca4415_c_flap_aa_36_aspect_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/naca4415_c_flap_aa_36_aspect_close}}
+
+        \caption[Aspect ratio para malla tipo C con perfil y flap NACA4415]{Aspect
+          ratio para malla tipo C con perfil NACA4415}
+        \label{fig:naca4415_c_flap_aspect_1}
     \end{figure}
 
 %
