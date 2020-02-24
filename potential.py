@@ -133,6 +133,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             if theta[i, 0] - alfa > 0:
                 arcotan[i] += (2 * np.pi)
 
+    error = 1e-5
     print('Potential Flow')
     while ddd > error and it < it_max:
         print('it =  ' + str(it), end=' ')
@@ -639,9 +640,9 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
 
     # relaciones isentropicas
-    # p = p0 / (d0 / d) ** gamma
+    p = p0 / (d0 / d) ** gamma
     # p = (p0 - p_inf) * (d / d0) ** gamma
-    p = p0 * (d / d0) ** gamma
+    # p = p0 * (d / d0) ** gamma
     # cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
     # cp = 1 - (u ** 2 + v ** 2) / v_inf ** 2
     cp = (p - p_inf) / (p0 - p_inf)
@@ -698,6 +699,7 @@ def lift_n_drag(mesh, cp, alfa, c):
     N = mesh.N
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
+    cp = np.flip(cp)
     (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
         mesh.tensor()
     mesh.X = np.flip(mesh.X)
@@ -710,9 +712,13 @@ def lift_n_drag(mesh, cp, alfa, c):
     kx = cp[:, -1] * x_xi[:, -1] / c
     kx = cp[:, -1] * y_xi[:, -1] / c
 
+    print("cp[:, -1] = ", cp[:, -1])
     xi = np.linspace(1, M, M)
-    cl_x = np.trapz(xi, kx)
-    cl_y = np.trapz(xi, ky)
+    print("xi = ", xi)
+    cl_x = -np.trapz(kx, xi)
+    cl_y = np.trapz(ky, xi)
+    print("cl_x = ", cl_x)
+    print("cl_y = ", cl_y)
 
     L = -cl_x * np.sin(alfa) + cl_y * np.cos(alfa)
     D = cl_x * np.cos(alfa) + cl_y * np.sin(alfa)

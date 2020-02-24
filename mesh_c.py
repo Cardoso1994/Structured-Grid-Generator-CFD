@@ -319,7 +319,7 @@ class mesh_C(mesh):
                                 * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
 
         it = 0
-        mesh.err_max = 1e-3
+        mesh.err_max = 5e-4
 
         # inicio del método iterativo
         print("Poisson:")

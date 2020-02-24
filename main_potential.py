@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 55
-airfoil_points = 91
+N = 45
+airfoil_points = 45
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -36,9 +36,9 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 2  # combadura
+m = 4  # combadura
 p = 4  # posicion de la combadura
-t = 12  # espesor
+t = 15  # espesor
 c = 1  # cuerda [m]
 
 # radio frontera externa
@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(-4)
+perfil.rotate(0)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -54,7 +54,7 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-mallaNACA.gen_Poisson()
+mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
@@ -93,7 +93,7 @@ t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
 
-alfa = 0
+alfa = 6
 
 gamma = 1.4
 cp_ = 1007
@@ -139,7 +139,7 @@ if flag == 'S':
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-(L, D) = lift_n_drag(mallaNACA, cp, 8, 1)
+(L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
 
 print('L = ' + str(L))
 print('D = ' + str(D))
@@ -153,13 +153,19 @@ plt.axis('equal')
 
 plt.figure('pressure')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 75, cmap='jet')
+plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 45, cmap='jet')
+plt.colorbar()
+plt.axis('equal')
+
+plt.figure('_pressure')
+plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
+plt.contourf(mallaNACA.X, mallaNACA.Y, p - p_inf, 45, cmap='jet')
 plt.colorbar()
 plt.axis('equal')
 
 plt.figure('pressure_')
 plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-plt.contour(mallaNACA.X, mallaNACA.Y, cp, 75, cmap='jet')
+plt.contour(mallaNACA.X, mallaNACA.Y, cp, 45, cmap='jet')
 plt.colorbar()
 plt.axis('equal')
 

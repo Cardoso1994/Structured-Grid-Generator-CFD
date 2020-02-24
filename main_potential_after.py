@@ -50,7 +50,7 @@ mach_inf = v_inf / c_inf
 
 
 path = '/home/desarrollo/'
-direc = 'ten/'
+direc = 'zero'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
@@ -70,6 +70,8 @@ theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
 (L, D) = lift_n_drag(mallaNACA, cp, 8, 1)
+print("L = " + str(L))
+print("D = " + str(D))
 
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap='jet')
