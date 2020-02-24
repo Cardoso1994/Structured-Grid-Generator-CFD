@@ -69,7 +69,7 @@ print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 #
-mallaNACA.to_txt_mesh('/home/cardoso/garbage/mallaNACA.txt_mesh')
+mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mallaNACA.txt_mesh')
 mallaNACA.plot()
 exit()
 
