@@ -29,7 +29,7 @@ N = 455
 union = 6
 
 # points = 11
-airfoil_points = 99# 487
+airfoil_points = 99 # 487
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -60,7 +60,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=409, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=459, cc=7.4, linea_eta=0)
 # mallaNACA.gen_Laplace(metodo='SOR')
 # mallaNACA.gen_TFI()
 print('after mesh generation')
@@ -69,7 +69,7 @@ print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 #
-mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mallaNACA.txt_mesh')
+mallaNACA.to_txt_mesh('/home/cardoso/garbage/mallaNACA.txt_mesh')
 mallaNACA.plot()
 exit()
 
