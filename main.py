@@ -29,7 +29,7 @@ N = 455
 union = 6
 
 # points = 11
-airfoil_points = 99 # 487
+airfoil_points = 499 # 487
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -60,17 +60,41 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=459, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=609, cc=7.4, linea_eta=0)
 # mallaNACA.gen_Laplace(metodo='SOR')
-# mallaNACA.gen_TFI()
+
 print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 #
-mallaNACA.to_txt_mesh('/home/cardoso/garbage/mallaNACA.txt_mesh')
 mallaNACA.plot()
+flag = 'r'
+is_ok = False
+
+while not is_ok:
+    flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
+             + '[n] to exit execution: ')
+    print()
+    if flag == 'S' or flag == 'N' or flag == 'n':
+        is_ok = True
+
+if flag == 'S':
+    path = input('carpeta donde se va a guardar: ')
+    try:
+        mkdir(path)
+    except:
+        pass
+elif flag == 'N':
+    print('Continue without saving')
+    pass
+else:
+    print('Quitting execution...')
+    exit()
+
+mallaNACA.to_txt_mesh(path + '/mallaNACA.txt_mesh')
+
 exit()
 
 
