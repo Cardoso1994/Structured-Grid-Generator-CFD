@@ -109,10 +109,10 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PV = np.zeros((M, N-1))
 
     ddd = 1.0
-    it_max = 20000
+    it_max = 28000
     it = 0
-    error = 1e-6
-    omega = 1.3
+    error = 1e-8
+    omega = 1.5
     IMA = 0
 
     arcotan = np.zeros((M,))
@@ -396,7 +396,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     ddd = 1
     it_max = 20000
     tol = 1.e-7
-    omega = 0.8
+    omega = 1.3
 
     # -------------------------FRONTERA EXTERIOR--------------------------#
     # Para aplicar la fórmula (2.30) primero determinamos el arco tangente
@@ -700,7 +700,7 @@ def lift_n_drag(mesh, cp, alfa, c):
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
     cp = np.flip(cp)
-    (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, _, _, _) = \
+    (_, _, _, _, x_xi, _, y_xi, _, _, _, _) = \
         mesh.tensor()
     mesh.X = np.flip(mesh.X)
     mesh.Y = np.flip(mesh.Y)
@@ -709,8 +709,8 @@ def lift_n_drag(mesh, cp, alfa, c):
     kx = np.zeros((M,))
     ky = np.zeros((M,))
 
-    kx = cp[:, -1] * x_xi[:, -1] / c
     kx = cp[:, -1] * y_xi[:, -1] / c
+    ky = cp[:, -1] * x_xi[:, -1] / c
 
     print("cp[:, -1] = ", cp[:, -1])
     xi = np.linspace(1, M, M)

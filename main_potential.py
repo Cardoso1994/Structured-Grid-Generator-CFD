@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 65
-airfoil_points = 95
+N = 45
+airfoil_points = 45
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(-4)
+perfil.rotate(2)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -54,7 +54,7 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-mallaNACA.gen_Poisson(omega=1.3, aa=32, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
@@ -139,7 +139,8 @@ if flag == 'S':
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-(L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
+# (L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
+(L, D) = lift_n_drag(mallaNACA, cp, 2, c)
 
 print('L = ' + str(L))
 print('D = ' + str(D))

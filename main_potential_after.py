@@ -45,7 +45,7 @@ Re = v_inf * d_inf / mu
 
 
 path = '/home/cardoso/'
-direc = 'ten'
+direc = 'zero'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
@@ -57,13 +57,13 @@ theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-# (L, D) = lift_n_drag(mallaNACA, cp, 8, 1)
-# print("L = " + str(L))
-# print("D = " + str(D))
+(L, D) = lift_n_drag(mallaNACA, cp, 0, 1)
+print("L = " + str(L))
+print("D = " + str(D))
 
 mallaNACA.plot()
 
-map_ = 'jet'
+map_ = 'viridis'
 limits = [[-20.5, 20.5, -20.5, 20.5], [-1.25, 1.25, -0.8, 0.8]]
 for limit in limits:
     fig = plt.figure('malla_aspect')
@@ -78,9 +78,9 @@ for limit in limits:
 
     # for i in range(mallaNACA.M):
     #     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'k', linewidth=0.5)
-    mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 45,
+    mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, psi, 495,
                            cmap=map_)
-    plt.colorbar(mesh_)
+    #plt.colorbar(mesh_)
     plt.show()
     plt.draw()
 
