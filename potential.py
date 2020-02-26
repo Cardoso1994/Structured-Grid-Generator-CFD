@@ -709,13 +709,16 @@ def lift_n_drag(mesh, cp, alfa, c):
     mesh.Y = np.flip(mesh.Y)
 
     alfa = alfa * np.pi / 180
-    kx = np.zeros((M,))
-    ky = np.zeros((M,))
+    kx = np.zeros((M-2,))
+    ky = np.zeros((M-2,))
 
-    kx = cp[:, -1] * y_xi[:, -1] / c
-    ky = cp[:, -1] * x_xi[:, -1] / c
+    print(np.shape(cp[1:-1, -1]))
+    print(np.shape(y_xi[1:-1, -1]))
+    kx = cp[1:-1, -1] * y_xi[1:-1, -1] / c
+    ky = cp[1:-1, -1] * x_xi[1:-1, -1] / c
 
-    xi = np.linspace(1, M, M)
+    print(np.shape(ky))
+    xi = np.linspace(1, M-2, M-2)
     cl_x = -np.trapz(kx, xi)
     cl_y = np.trapz(ky, xi)
 

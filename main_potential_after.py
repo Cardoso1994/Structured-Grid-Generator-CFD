@@ -18,6 +18,15 @@ from potential import potential_flow_o, potential_flow_o_esp, velocity,\
                         pressure, streamlines, lift_n_drag
 import helpers
 
+# datos de perfil NACA
+m = 2  # combadura
+p_ = 4  # posicion de la combadura
+t = 12  # espesor
+c = 1  # cuerda [m]
+
+# radio frontera externa
+R = 20 * c
+
 # variables de flujo
 t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
@@ -45,7 +54,7 @@ Re = v_inf * d_inf / mu
 
 
 path = '/home/cardoso/'
-direc = 'four-'
+direc = 'ten'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
@@ -60,6 +69,24 @@ theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
 (L, D) = lift_n_drag(mallaNACA, cp, 10, 1)
 print("L = " + str(L))
 print("D = " + str(D))
+
+points = mallaNACA.M
+print(points)
+perfil = airfoil.NACA4(m, p_, t, c)
+perfil.create_sin(points)
+perfil.x += 0.25
+x_perf = perfil.x
+y_perf = perfil.y
+cp_perf =cp[:, 0]
+
+plt.figure('perf')
+plt.plot(x_perf, y_perf * 7, 'b')
+plt.plot(x_perf[1:points // 2 + 2], cp_perf[1:points // 2 + 2], 'r', label='intrados')
+plt.plot(x_perf[points // 2 + 1:-1], cp_perf[points // 2 + 1:-1], 'k', label='extrados')
+plt.legend(loc='upper right')
+# plt.axis('equal')
+plt.draw()
+plt.show()
 
 mallaNACA.plot()
 
