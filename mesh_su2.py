@@ -57,7 +57,7 @@ def to_su2_mesh_o_airfoil(mesh, filename):
     # se escriben las fronteras. Primero FE, luego FI
     NMARK = 2
     su2_mesh.write('NMARK= ' + str(NMARK) + '\n')
-    su2_mesh.write('MARKER_TAG= faraways\n')
+    su2_mesh.write('MARKER_TAG= farfield\n')
     su2_mesh.write('MARKER_ELEMS= ' + str(mesh.M - 1) + '\n')
     far1 = (mesh.M - 1) * mesh.N
     far0 = far1 - (mesh.M - 1)
@@ -202,7 +202,7 @@ def to_su2_mesh_o_airfoil_n_flap(mesh, filename):
     # se escriben las fronteras. Primero FE, luego FI
     NMARK = 3
     su2_mesh.write('NMARK= ' + str(NMARK) + '\n')
-    su2_mesh.write('MARKER_TAG= faraways\n')
+    su2_mesh.write('MARKER_TAG= farfield\n')
     su2_mesh.write('MARKER_ELEMS= ' + str(mesh.M - 1) + '\n')
     # far0 = NPOIN - (mesh.M - 1)
     far0 = NPOIN - M_SU2
@@ -328,7 +328,7 @@ def to_su2_mesh_c_airfoil(mesh, filename):
     su2_mesh.write('NMARK= 2\n')
 
     # frontera externa
-    su2_mesh.write('MARKER_TAG= faraways\n')
+    su2_mesh.write('MARKER_TAG= farfield\n')
     MARKER_ELEMS = mesh.M - 1 + (mesh.N - 1) * 2
     su2_mesh.write('MARKER_ELEMS= ' + str(MARKER_ELEMS) + '\n')
 
@@ -503,7 +503,7 @@ def to_su2_mesh_c_airfoil_n_flap(mesh, filename):
     su2_mesh.write('NMARK= 3\n')
 
     # frontera externa
-    su2_mesh.write('MARKER_TAG= faraways\n')
+    su2_mesh.write('MARKER_TAG= farfield\n')
     MARKER_ELEMS = M_SU2 + N_SU2 * 2
     su2_mesh.write('MARKER_ELEMS= ' + str(MARKER_ELEMS) + '\n')
 
