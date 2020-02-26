@@ -108,11 +108,11 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PH = np.zeros((M-1, N))
     PV = np.zeros((M, N-1))
 
-    ddd = 1.0
+    err = 1.0
     it_max = 28000
     it = 0
     error = 1e-8
-    omega = 1.5
+    omega = 1.5 # 1.5
     IMA = 0
 
     arcotan = np.zeros((M,))
@@ -135,17 +135,15 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     error = 1e-5
     print('Potential Flow')
-    while ddd > error and it < it_max:
+    while err > error and it < it_max:
         print('it =  ' + str(it), end=' ')
-        print('ddd = ' + '{0:.4e}'.format(ddd), end=' ')
+        print('err = ' + '{0:.4e}'.format(err), end=' ')
         print('C = ' + '{:.5e}'.format(C), end=' ')
         print('\t', end='\r')
         it += 1
         phi_old = np.copy(phi)
 
-        # Función potencial en la frontera externa
-        # phi[:, -1] = v_inf * (X[:, -1] * np.cos(alfa) + Y[:, -1]
-        #                         * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
+        # Función potencial en la frontera externa ec 4.18
         phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0]
                               * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
 
@@ -161,6 +159,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
         # quizá se le deba restar la circulación
         PV[-1, :] = PV[0, :]
+        # PV[-1, :] = (4 * PV[0, :] - 2 * C) / 4
 
         for j in range(N-1):
             UV[:, j] = g11V[:, j] * PV[:, j] + g12V[:, j] \
@@ -259,23 +258,26 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                         [i, j] + rhoV[i, j-1] * JV[i, j-1] * g22V[i, j-1])
 
         # Aplicamos el método SOR de sobrerelajación, ecuación.
-        phi = omega * phi + (1-omega) * phi_old
+        phi = omega * phi + (1 - omega) * phi_old
 
         # condición en la superficie del perfil
         # for i in range(1, M-1):
         for i in range(M-2, 0, -1):
             phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-2]
                             / g22[i, N-2] * (phi[i+1, N-1] - phi[i-1, N-1]))
+            # phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-1]
+            #                 / g22[i, N-1] * (phi[i+1, N-1] - phi[i-1, N-1]))
 
         phi[0, N-1] = 1 / 3 * (4 * phi[0, N-2] - phi[0, N-3] - g12[0, N-1]
                             / g22[0, N-1] * (phi[1, N-1] - phi[M-2, N-1] + C))
 
         # discontinuidad del potencial
-        for j in range(N):
-            phi[M-1, j] = phi[0, j] + C
+        # for j in range(N):
+        #     phi[M-1, j] = phi[0, j] + C
+        phi[M-1, :] = phi[0, :] + C
 
 
-        ddd = abs(phi - phi_old).max()
+        err = abs(phi - phi_old).max()
 
         # cálculo de la Circulación
         C = phi[M-2, N-1] - phi[1, N-1] - g12[0, N-1] * \
@@ -640,12 +642,12 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
 
     # relaciones isentropicas
-    p = p0 / (d0 / d) ** gamma
+    # p = p0 / (d0 / d) ** gamma
     # p = (p0 - p_inf) * (d / d0) ** gamma
-    # p = p0 * (d / d0) ** gamma
-    # cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
+    p = p0 * (d / d0) ** gamma
+    cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
     # cp = 1 - (u ** 2 + v ** 2) / v_inf ** 2
-    cp = (p - p_inf) / (p0 - p_inf)
+    # cp = (p - p_inf) / (p0 - p_inf)
 
     return (cp, p)
 
@@ -660,6 +662,7 @@ def streamlines(u, v, gamma, h0, d0, p, mesh):
     mesh.Y = np.flip(mesh.Y)
     u = np.flip(u)
     v = np.flip(v)
+    p = np.flip(p)
 
     psi = np.zeros((M, N))
     JU = np.zeros((M, N))
@@ -712,13 +715,9 @@ def lift_n_drag(mesh, cp, alfa, c):
     kx = cp[:, -1] * y_xi[:, -1] / c
     ky = cp[:, -1] * x_xi[:, -1] / c
 
-    print("cp[:, -1] = ", cp[:, -1])
     xi = np.linspace(1, M, M)
-    print("xi = ", xi)
     cl_x = -np.trapz(kx, xi)
     cl_y = np.trapz(ky, xi)
-    print("cl_x = ", cl_x)
-    print("cl_y = ", cl_y)
 
     L = -cl_x * np.sin(alfa) + cl_y * np.cos(alfa)
     D = cl_x * np.cos(alfa) + cl_y * np.sin(alfa)

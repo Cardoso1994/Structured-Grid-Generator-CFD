@@ -46,7 +46,7 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-perfil.rotate(2)
+# perfil.rotate(2)
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
@@ -93,7 +93,7 @@ t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
 
-alfa = 0
+alfa = 6
 
 gamma = 1.4
 cp_ = 1007
@@ -139,8 +139,8 @@ if flag == 'S':
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-# (L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
-(L, D) = lift_n_drag(mallaNACA, cp, 2, c)
+(L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
+# (L, D) = lift_n_drag(mallaNACA, cp, 2, c)
 
 print('L = ' + str(L))
 print('D = ' + str(D))

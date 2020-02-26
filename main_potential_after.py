@@ -45,7 +45,7 @@ Re = v_inf * d_inf / mu
 
 
 path = '/home/cardoso/'
-direc = 'zero'
+direc = 'four-'
 mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
                                   + '/mallaNACA.txt_mesh')
 phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
@@ -57,7 +57,7 @@ theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
 (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-(L, D) = lift_n_drag(mallaNACA, cp, 0, 1)
+(L, D) = lift_n_drag(mallaNACA, cp, 10, 1)
 print("L = " + str(L))
 print("D = " + str(D))
 
