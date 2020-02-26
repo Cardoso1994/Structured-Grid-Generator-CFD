@@ -29,7 +29,7 @@ N = 455
 union = 6
 
 # points = 11
-airfoil_points = 499 # 487
+airfoil_points = 99 # 499
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -60,7 +60,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=609, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=759, cc=7.4, linea_eta=0)
 # mallaNACA.gen_Laplace(metodo='SOR')
 
 print('after mesh generation')
