@@ -93,7 +93,7 @@ t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
 
-alfa = 6
+alfa = 2
 
 gamma = 1.4
 cp_ = 1007
@@ -134,7 +134,6 @@ if flag == 'S':
     f.write(str(C))
     f.close()
     np.savetxt(path + '/theta.csv', theta, delimiter=',')
-
 
 (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
 (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)

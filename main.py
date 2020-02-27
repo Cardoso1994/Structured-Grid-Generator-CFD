@@ -18,18 +18,20 @@ from potential import potential_flow_o, potential_flow_o_esp
 import helpers
 
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 455
+N = 255
+N = 55
 union = 4
 
 # points = 11
-airfoil_points = 299 # 499
+airfoil_points = 139 # 499
+airfoil_points = 79 # 499
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -48,7 +50,7 @@ perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 flap.create_sin(points)
-flap.rotate(15)
+flap.rotate(5)
 perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(30)
 M = np.shape(perfil.x)[0]
@@ -62,14 +64,16 @@ elif malla == 'C':
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=859, cc=7.4, linea_eta=0)
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=959, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=129, cc=7.4, linea_eta=0)
 # mallaNACA.gen_Laplace(metodo='SOR')
 
 print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
-# mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
+mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
+mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
 #
 mallaNACA.plot()
 flag = 'r'

@@ -52,26 +52,50 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 mach_inf = v_inf / c_inf
 Re = v_inf * d_inf / mu
 
+# path = '/home/cardoso/'
+# direc = 'ten'
+# mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
+#                                   + '/mallaNACA.txt_mesh')
+# phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
+# # f = open("./potential_2412/five/C.csv", "r")
+# C = np.genfromtxt('./potential_2412/' + direc + '/C.csv', delimiter=',')
+# theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
+#                       delimiter=',')
+#
+# (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
+# (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
+# (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
+# (L, D) = lift_n_drag(mallaNACA, cp, 10, 1)
+# print("L = " + str(L))
+# print("D = " + str(D))
+
+
+cps = np.zeros((95, 8))
+j = 0
 
 path = '/home/cardoso/'
-direc = 'ten'
-mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
-                                  + '/mallaNACA.txt_mesh')
-phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
-# f = open("./potential_2412/five/C.csv", "r")
-C = np.genfromtxt('./potential_2412/' + direc + '/C.csv', delimiter=',')
-theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
-                      delimiter=',')
+# direcs = ['four-', 'two-', 'zero', 'two', 'four', 'six', 'eight', 'ten']
+direcs = ['four-', 'two', 'ten']
+for direc in direcs:
+    mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
+                                      + '/mallaNACA.txt_mesh')
+    phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
+    # f = open("./potential_2412/five/C.csv", "r")
+    C = np.genfromtxt('./potential_2412/' + direc + '/C.csv', delimiter=',')
+    theta = np.genfromtxt('./potential_2412/' + direc + '/theta.csv',
+                          delimiter=',')
 
-(u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
-(cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
-(psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-(L, D) = lift_n_drag(mallaNACA, cp, 10, 1)
-print("L = " + str(L))
-print("D = " + str(D))
+    (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
+    (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
+    (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
+    (L, D) = lift_n_drag(mallaNACA, cp, 10, 1)
+    cps[:, j] = cp[:, 0]
+    j += 1
+    print("L = " + str(L))
+    print("D = " + str(D))
+
 
 points = mallaNACA.M
-print(points)
 perfil = airfoil.NACA4(m, p_, t, c)
 perfil.create_sin(points)
 perfil.x += 0.25
@@ -80,13 +104,17 @@ y_perf = perfil.y
 cp_perf =cp[:, 0]
 
 plt.figure('perf')
-plt.plot(x_perf, y_perf * 7, 'b')
-plt.plot(x_perf[1:points // 2 + 2], cp_perf[1:points // 2 + 2], 'r', label='intrados')
-plt.plot(x_perf[points // 2 + 1:-1], cp_perf[points // 2 + 1:-1], 'k', label='extrados')
-plt.legend(loc='upper right')
+plt.plot(x_perf, y_perf * 7.5, 'k')
+for j in range(3):
+    plt.plot(x_perf[1:-1], cps[1:-1, j], label=(direcs[j]))
+    # plt.plot(x_perf[1: points // 2 + 1], cps[1: points // 2 + 1, j], label=(direcs[j]))
+    # plt.plot(x_perf[points // 2 + 1 :], cps[points // 2 + 1 :, j], label=(direcs[j]))
+    # plt.plot(x_perf[points // 2 + 1:-1], cp_perf[points // 2 + 1:-1], 'k', label='extrados')
+plt.legend(loc='lower right')
 # plt.axis('equal')
 plt.draw()
 plt.show()
+exit()
 
 mallaNACA.plot()
 

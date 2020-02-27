@@ -263,10 +263,10 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         # condición en la superficie del perfil
         # for i in range(1, M-1):
         for i in range(M-2, 0, -1):
-            phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-2]
-                            / g22[i, N-2] * (phi[i+1, N-1] - phi[i-1, N-1]))
-            # phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-1]
-            #                 / g22[i, N-1] * (phi[i+1, N-1] - phi[i-1, N-1]))
+            # phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-2]
+            #                 / g22[i, N-2] * (phi[i+1, N-1] - phi[i-1, N-1]))
+            phi[i, N-1] = 1 / 3 * (4 * phi[i, N-2] - phi[i, N-3] - g12[i, N-1]
+                            / g22[i, N-1] * (phi[i+1, N-1] - phi[i-1, N-1]))
 
         phi[0, N-1] = 1 / 3 * (4 * phi[0, N-2] - phi[0, N-3] - g12[0, N-1]
                             / g22[0, N-1] * (phi[1, N-1] - phi[M-2, N-1] + C))
@@ -712,12 +712,9 @@ def lift_n_drag(mesh, cp, alfa, c):
     kx = np.zeros((M-2,))
     ky = np.zeros((M-2,))
 
-    print(np.shape(cp[1:-1, -1]))
-    print(np.shape(y_xi[1:-1, -1]))
     kx = cp[1:-1, -1] * y_xi[1:-1, -1] / c
     ky = cp[1:-1, -1] * x_xi[1:-1, -1] / c
 
-    print(np.shape(ky))
     xi = np.linspace(1, M-2, M-2)
     cl_x = -np.trapz(kx, xi)
     cl_y = np.trapz(ky, xi)
