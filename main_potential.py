@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 45
-airfoil_points = 45
+N = 65
+airfoil_points = 165
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -36,8 +36,8 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 2  # combadura
-p = 4  # posicion de la combadura
+m = 0  # combadura
+p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
 
@@ -54,7 +54,8 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
+# mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson(omega=1.3, aa=36, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
@@ -93,7 +94,7 @@ t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
 
-alfa = 2
+alfa = 10
 
 gamma = 1.4
 cp_ = 1007
@@ -126,6 +127,8 @@ if mach_inf > 0.8:
 
 (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
                                              alfa, mallaNACA)
+# (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
+#                                              alfa, mallaNACA)
 
 if flag == 'S':
     mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))

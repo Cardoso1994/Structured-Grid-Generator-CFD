@@ -527,7 +527,7 @@ def potential_flow_o_esp(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         # Aplicamos la fórmula (4.15)
         for i in range(M-2, 0, -1):
             phi[i, N-1] = (1 / 3) * (4 * phi[i, N-2] - phi[i, N-3] \
-                    - g21[i, j] * (phi[i+1, N-1] - phi[i-1, N-1]) / g22[i, j])
+                    - g21[i, N-1] * (phi[i+1, N-1] - phi[i-1, N-1]) / g22[i, N-1])
 
         phi[0, N-1] = (1 / 3) * (4 * phi[0, N-2] - phi[0, N-3] - g21[0, N-1] \
                 * (phi[1, N-1] - phi[M-2, N-1] + C) / g22[0, N-1])
@@ -584,11 +584,18 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
 
     for i in range(M):
         j = 0
+        # u[i, j] = v_inf * np.cos(alfa) + (C / 2 / np.pi)\
+        #             * (1 - mach_inf ** 2) ** 0.5\
+        #             * (1 + np.tan(theta[i, j] - alfa) ** 2)\
+        #             * (1 / (1 + (Y[i, j] / X[i, j]) ** 2))\
+        #             * (-Y[i, j] / (X[i, j]) ** 2)\
+        #             / (1 + (1 - mach_inf ** 2)\
+        #                 * np.tan(theta[i, j] - alfa) ** 2)
         u[i, j] = v_inf * np.cos(alfa) + (C / 2 / np.pi)\
                     * (1 - mach_inf ** 2) ** 0.5\
                     * (1 + np.tan(theta[i, j] - alfa) ** 2)\
                     * (1 / (1 + (Y[i, j] / X[i, j]) ** 2))\
-                    * (-Y[i, j] / (X[i, j]) ** 2)\
+                    * (-Y[i, j] / X[i, j])\
                     / (1 + (1 - mach_inf ** 2)\
                         * np.tan(theta[i, j] - alfa) ** 2)
         v[i, j] = v_inf * np.sin(alfa) + (C / 2 / np.pi)\
@@ -630,7 +637,7 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
 
     u = np.flip(u)
     v = np.flip(v)
-
+   
     return (u, v)
 
 def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
@@ -642,12 +649,12 @@ def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
     d = d0 * (1 - (u ** 2 + v ** 2) / 2 / h0) ** (1 / (gamma - 1))
 
     # relaciones isentropicas
-    # p = p0 / (d0 / d) ** gamma
+    p = p0 / (d0 / d) ** gamma
     # p = (p0 - p_inf) * (d / d0) ** gamma
-    p = p0 * (d / d0) ** gamma
-    cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
+    # p = p0 * (d / d0) ** gamma
+    # cp = np.real(2 * (p - p_inf) / (d_inf * v_inf ** 2))
     # cp = 1 - (u ** 2 + v ** 2) / v_inf ** 2
-    # cp = (p - p_inf) / (p0 - p_inf)
+    cp = (p - p_inf) / (p0 - p_inf)
 
     return (cp, p)
 
@@ -709,13 +716,23 @@ def lift_n_drag(mesh, cp, alfa, c):
     mesh.Y = np.flip(mesh.Y)
 
     alfa = alfa * np.pi / 180
-    kx = np.zeros((M-2,))
-    ky = np.zeros((M-2,))
+    # kx = np.zeros((M-2,))
+    # ky = np.zeros((M-2,))
 
-    kx = cp[1:-1, -1] * y_xi[1:-1, -1] / c
-    ky = cp[1:-1, -1] * x_xi[1:-1, -1] / c
+    # kx = cp[1:-1, -1] * y_xi[1:-1, -1] / c
+    # ky = cp[1:-1, -1] * x_xi[1:-1, -1] / c
 
-    xi = np.linspace(1, M-2, M-2)
+    # xi = np.linspace(1, M-2, M-2)
+    # kx = cp[1:-1, -1] * y_xi[1:-1, -1] / c
+    # ky = cp[1:-1, -1] * x_xi[1:-1, -1] / c
+
+    kx = np.zeros((M,))
+    ky = np.zeros((M,))
+
+    kx = cp[:, -1] * y_xi[:, -1] / c
+    ky = cp[:, -1] * x_xi[:, -1] / c
+
+    xi = np.linspace(1, M, M)
     cl_x = -np.trapz(kx, xi)
     cl_y = np.trapz(ky, xi)
 
