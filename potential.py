@@ -144,8 +144,10 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         phi_old = np.copy(phi)
 
         # Función potencial en la frontera externa ec 4.18
-        phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0]
-                              * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
+        # phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0]
+        #                       * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
+        phi[:, 0] = v_inf * ((X[:, 0] * np.cos(alfa)) ** 2 + (Y[:, 0] * np.sin(alfa)) ** 2) ** 0.5 \
+            + C * arcotan[:] / 2 / np.pi
 
         # Nodos internos de la malla
         # velocidades U y V en mallas intercaladas V y H (vertical, horizontal)

@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 65
-airfoil_points = 165
+N = 55
+airfoil_points = 125
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -55,7 +55,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson(omega=1.3, aa=36, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson(omega=1.3, aa=20, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
