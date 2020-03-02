@@ -4200,7 +4200,12 @@
     muestran el campo de presiones generado alrededor del perfil alar para todos
     los ángulos de ataque estudiados.
 
-    \begin{figure}[htbp!]
+    \paragraph*{}
+    Por su parte, las figuras~\ref{fig:potential_flow_stream_0}
+    y~\ref{fig:potential_flow_stream_0} presentan las líneas de corriente del
+    flujo correspondiente a cada uno de los casos previamente mencionados.
+
+    \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_cp_-4}\includegraphics[keepaspectratio,
             width=95mm]{./Imagenes/potential_flow_cp_-4}}
@@ -4218,7 +4223,7 @@
         \label{fig:potential_flow_cp_0}
     \end{figure}
 
-    \begin{figure}[htbp!]
+    \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_cp_4}\includegraphics[keepaspectratio,
             width=95mm]{./Imagenes/potential_flow_cp_4}}
@@ -4236,12 +4241,7 @@
         \label{fig:potential_flow_cp_1}
     \end{figure}
 
-    \paragraph*{}
-    Por su parte, las figuras~\ref{fig:potential_flow_stream_0}
-    y~\ref{fig:potential_flow_stream_0} presentan las líneas de corriente del
-    flujo correspondiente a cada uno de los casos previamente mencionados.
-
-    \begin{figure}[htbp!]
+    \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_stream_-4}\includegraphics[keepaspectratio,
             width=95mm]{./Imagenes/potential_flow_stream_-4}}
@@ -4259,7 +4259,7 @@
         \label{fig:potential_flow_stream_0}
     \end{figure}
 
-    \begin{figure}[htbp!]
+    \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_stream_4}\includegraphics[keepaspectratio,
             width=95mm]{./Imagenes/potential_flow_stream_4}}
@@ -4278,6 +4278,30 @@
     \end{figure}
 
     \subsection{SU2}
+    \paragraph*{}
+    Para esta sección se ha decidido utilizar como base los tutoriales creados
+    por el equipo de desarrollo del software SU2, los cuales están disponibles
+    al público desde su página web \cite{SU2}.
+
+    \paragraph*{}
+    SU2 es un programa cuyo flujo de trabajo se basa en un archivo de
+    configuración con extensión ``.cfg'', es en este archivo donde se
+    especifican todas las propiedades que caracterizan al problema que se
+    pretende simular. Uno puede por ejemplo, especificar las condiciones del
+    flujo en corriente libre, el ángulo de ataque, el número de Reynolds, el
+    ``solver'' que se va a utilizar, las ecuaciones que se van a resolver,
+    condiciones de frontera, criterios de convergencia, entre muchos otros
+    parámetros más. De entre todos estos parámetros, el de mayor importancia
+    para este trabajo y los resultados presentados a continuación, es el que nos
+    permite especificar un archivo que contenga la descripción de la malla a
+    utilizarse.
+
+    \paragraph*{}
+    En este trabajo, cuyo desarrollo gira alrededor de la generación de mallas,
+    se ha optado por utilizar las mismas condiciones que se utilizan en el
+    tutorial y únicamente cambiar el archivo de la malla, con el fin de
+    comprobar la calidad de las mallas que se puedan generar con este proyecto,
+    y su compatiblidad con software reconocido de dinámica de fluidos computacional.
 
 %
 %
