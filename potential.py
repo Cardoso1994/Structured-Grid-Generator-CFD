@@ -99,7 +99,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     # convierte angulo de ataque a radianes
     alfa = alfa * np.pi / 180
-    C = 0.5
+    C = 0
     phi = np.zeros((M, N))
     UH = np.zeros((M-1, N))
     VH = np.zeros((M-1, N))
@@ -144,10 +144,10 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         phi_old = np.copy(phi)
 
         # Función potencial en la frontera externa ec 4.18
-        # phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0]
-        #                       * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
-        phi[:, 0] = v_inf * ((X[:, 0] * np.cos(alfa)) ** 2 + (Y[:, 0] * np.sin(alfa)) ** 2) ** 0.5 \
-            + C * arcotan[:] / 2 / np.pi
+        phi[:, 0] = v_inf * (X[:, 0] * np.cos(alfa) + Y[:, 0]
+                              * np.sin(alfa)) + C * arcotan[:] / 2 / np.pi
+        # phi[:, 0] = v_inf * ((X[:, 0] * np.cos(alfa)) ** 2 + (Y[:, 0] * np.sin(alfa)) ** 2) ** 0.5 \
+        #     + C * arcotan[:] / 2 / np.pi
 
         # Nodos internos de la malla
         # velocidades U y V en mallas intercaladas V y H (vertical, horizontal)
@@ -172,11 +172,17 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         # malla horizontal
         for i in range(M-1):
             # promedio de diferencia backwards
-            PH[i, -1] = 0.5 * (phi[i+1, -1] - phi[i+1, -2] + phi[i, -1]
-                               - phi[i, -2])
+            # PH[i, -1] = 0.5 * (phi[i+1, -1] - phi[i+1, -2] + phi[i, -1]
+            #                    - phi[i, -2])
+            PH[i, -1] = 0.25 * (3 * phi[i+1, -1] - 4 * phi[i+1, -2]
+                                + phi[i+1, j-3] + 3 * phi[i, -1]
+                                - 4 * phi[i, -2] + phi[i, -3])
             # promedio de diferencia forwards
-            PH[i, 0] = 0.5 * (phi[i+1, 1] - phi[i+1, 0] + phi[i, 1]
-                              - phi[i, 0])
+            # PH[i, 0] = 0.5 * (phi[i+1, 1] - phi[i+1, 0] + phi[i, 1]
+            #                   - phi[i, 0])
+            PH[i, 0] = 0.25 * (-3 * phi[i+1, 0] + 4 * phi[i+1, 1]
+                               - phi[i+1, 2] - 3 * phi[i, 0] + 4 * phi[i, 1]
+                               - phi[i, 2])
             for j in range(1, N-2):
                 PH[i, j] = 0.25 * (phi[i+1, j+1] - phi[i+1, j-1]
                                    + phi[i, j+1] - phi[i, j-1])

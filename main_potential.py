@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 55
-airfoil_points = 125
+N = 89
+airfoil_points = 89
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
