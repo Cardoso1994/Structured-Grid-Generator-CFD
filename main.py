@@ -18,7 +18,7 @@ from potential import potential_flow_o, potential_flow_o_esp
 import helpers
 
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
@@ -26,11 +26,11 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 255
-N = 195
 union = 3
 
 # points = 11
 airfoil_points = 99 # 499
+airfoil_points = 199 # 499
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -63,8 +63,8 @@ elif malla == 'C':
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 # perfil.to_csv(archivo_perfil)
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=959, cc=7.4, linea_eta=0)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=39, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=59, cc=7.4, linea_eta=0)
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=39, cc=7.4, linea_eta=0)
 # mallaNACA.gen_Laplace(metodo='SOR')
 
 print('after mesh generation')
