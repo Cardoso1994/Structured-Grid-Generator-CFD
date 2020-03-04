@@ -4142,17 +4142,17 @@
     \subsection{Flujo Potencial}
     \paragraph*{}
     En el análisis de flujo potencial se analizó el flujo alrededor de un perfil
-    aerodinámico NACA 2412 de la serie de cuatro dígitos, con cuerda unitaria
+    aerodinámico NACA 0012 de la serie de cuatro dígitos, con cuerda unitaria
     $c = 1 m$. La simulación se llevó a cabo mediante la generación de una malla
     tipo O, y para un intervalo de ángulos de ataque desde
     $\alpha = -4\si{\degree}$ hasta $\alpha = 10\si{\degree}$, con incrementos
     de $2\si{\degree}$. La información del flujo se presenta en la
     tabla~\ref{tabla_potencial}. A su vez la figura~\ref{} muestra la malla
     utilizada para el caso en el cual $\alpha = 0\si{\degree}$, la cual es una
-    malla de dimensiones $M = 95$ y $N = 65$. Para el resto de casos se utilizan
-    los mismos parámetros, lo único que cambia es la rotación del perfil alar.
-    Por simplicidad solo se muestra a detalle el caso ya mencionado, ya que las
-    demás mallas son demasiado similares entre si.
+    malla de dimensiones $M = 145$ y $N = 145$. Para el resto de casos se
+    utilizan los mismos parámetros, lo único que cambia es la rotación del
+    perfil alar. Por simplicidad solo se muestra a detalle el caso ya
+    mencionado, ya que las demás mallas son demasiado similares entre si.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -4208,17 +4208,13 @@
     \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_cp_-4}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_-4}}
-
+            width=88mm]{./Imagenes/potential_flow_cp_-4}}
           \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_cp_-2}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_-2}}
-
+            width=88mm]{./Imagenes/potential_flow_cp_-2}}
           \subfigure[$\alpha = 0\si{\degree}$]{\label{fig:potential_flow_cp_0}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_0}}
-
+            width=88mm]{./Imagenes/potential_flow_cp_0}}
           \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_cp_2}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_2}}
-
+            width=88mm]{./Imagenes/potential_flow_cp_2}}
         \caption{Campo de presiones}
         \label{fig:potential_flow_cp_0}
     \end{figure}
@@ -4226,17 +4222,13 @@
     \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_cp_4}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_4}}
-
-          \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_cp_6}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_6}}
-
-          \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_cp_8}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_8}}
-
-          \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_cp_10}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_cp_10}}
-
+            width=88mm]{./Imagenes/potential_flow_cp_4}}
+        \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_cp_6}\includegraphics[keepaspectratio,
+          width=88mm]{./Imagenes/potential_flow_cp_6}}
+        \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_cp_8}\includegraphics[keepaspectratio,
+          width=88mm]{./Imagenes/potential_flow_cp_8}}
+        \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_cp_10}\includegraphics[keepaspectratio,
+          width=88mm]{./Imagenes/potential_flow_cp_10}}
         \caption{Campo de presiones}
         \label{fig:potential_flow_cp_1}
     \end{figure}
@@ -4244,17 +4236,13 @@
     \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_stream_-4}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_-4}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_-4}}
           \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_stream_-2}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_-2}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_-2}}
           \subfigure[$\alpha = 0\si{\degree}$]{\label{fig:potential_flow_stream_0}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_0}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_0}}
           \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_stream_2}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_2}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_2}}
         \caption{Líneas de corriente}
         \label{fig:potential_flow_stream_0}
     \end{figure}
@@ -4262,20 +4250,28 @@
     \begin{figure}[H]%[htbp!]
         \centering
         \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_stream_4}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_4}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_4}}
           \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_stream_6}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_6}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_6}}
           \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_stream_8}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_8}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_8}}
           \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_stream_10}\includegraphics[keepaspectratio,
-            width=95mm]{./Imagenes/potential_flow_stream_10}}
-
+            width=88mm]{./Imagenes/potential_flow_stream_10}}
         \caption{Líneas de corriente}
         \label{fig:potential_flow_stream_1}
     \end{figure}
+
+    \paragraph*{}
+    La figura~\ref{fig:potential_flow_cp_dist} muestra la distribución del
+    coeficiente de presión en el perfil para diferentes ángulos de ataque.
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \includegraphics[keepaspectratio,
+            width=138mm]{./Imagenes/potential_flow_cps}
+        \caption{Líneas de corriente}
+        \label{fig:potential_flow_cp_dist}
+    \end{figure}
+
 
     \subsection{SU2}
     \paragraph*{}
