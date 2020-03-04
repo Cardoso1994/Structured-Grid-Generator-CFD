@@ -27,7 +27,7 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 119
+N = 149
 airfoil_points = 149
 
 if malla == 'C':
@@ -55,7 +55,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson(omega=1.3, aa=47, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson(omega=1.3, aa=105, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
@@ -94,7 +94,7 @@ t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
 
-alfa = 10
+alfa = 5
 
 gamma = 1.4
 cp_ = 1007
@@ -125,27 +125,30 @@ if mach_inf > 0.8:
     print('Las condiciones de flujo son inválidas')
     exit()
 
-(phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
+alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
+
+for alfa_ in alfas:
+    alfa = int(alfa_)
+    (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
                                              alfa, mallaNACA)
-# (phi, C, theta, IMA) = potential_flow_o_esp(d0, h0, gamma, mach_inf, v_inf,
-#                                              alfa, mallaNACA)
 
-if flag == 'S':
-    mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
-    np.savetxt(path + '/phi.csv', phi, delimiter=',')
-    f = open(path + "/C.csv", "w+")
-    f.write(str(C))
-    f.close()
-    np.savetxt(path + '/theta.csv', theta, delimiter=',')
+    if flag == 'S':
+        mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA_' + str(alfa)
+                                        + '.txt_mesh'))
+        np.savetxt(path + '/phi_' + str(alfa) + '.csv', phi, delimiter=',')
+        f = open(path + '/C_' + str(alfa) + '.csv', "w+")
+        f.write(str(C))
+        f.close()
+        np.savetxt(path + '/theta_' + str(alfa) + '.csv', theta, delimiter=',')
 
-(u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
-(cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
-(psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-(L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
-# (L, D) = lift_n_drag(mallaNACA, cp, 2, c)
+        (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
+        (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
+        (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
+        (L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
 
-print('L = ' + str(L))
-print('D = ' + str(D))
+        print('alfa = ' + alfa_)
+        print('L = ' + str(L))
+        print('D = ' + str(D))
 
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap='jet')
