@@ -72,8 +72,8 @@ print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
-mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
-mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
+mallaNACA.to_su2('/home/desarrollo/garbage/mesh_c.su2')
+mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh_c.txt_mesh')
 
 flag = 'r'
 is_ok = False
