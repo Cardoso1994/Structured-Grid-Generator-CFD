@@ -18,19 +18,18 @@ from potential import potential_flow_o, potential_flow_o_esp
 import helpers
 
 # tipo de malla (C, O)
-malla = 'O'
+malla = 'C'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 285
-union = 19
+N = 485
+union = 15
 
 # points = 11
-airfoil_points = 199 # 499
-airfoil_points = 239 # 499
+airfoil_points = 899 # 499
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -47,11 +46,12 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-flap.create_sin(points)
-flap.rotate(5)
-perfil.join(flap, dx=0.055, dy=0.05, union=union)
+# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+# flap.create_sin(points)
+# flap.rotate(5)
+# perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(30)
+
 M = np.shape(perfil.x)[0]
 
 archivo_perfil = 'perfil_final.csv'
