@@ -225,6 +225,7 @@ class mesh_O(mesh):
         Q_[mask] = 0
 
         mesh.err_max = 1e-5
+        mesh.err_max = 5e-3
         it = 0
         print("Poisson:")
         # inicio del método iterativo

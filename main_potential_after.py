@@ -54,7 +54,24 @@ Re = v_inf * d_inf / mu
 
 path = './potential_final/'
 alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
-alfas = ['-4', '0', '4', '8']
+alfas_gr = list(map(int, alfas))
+cl_0012 = [-0.4543, -0.2218, 0.001, 0.2239, 0.4566, 0.6928, 0.9306, 1.1713 ]
+cl_0012_abbott = [-0.44, -0.22, 0, 0.22, 0.44, 0.66, 0.88, 1.1 ]
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(alfas_gr, cl_0012, 'k', label='flujo potencial')
+ax.plot(alfas_gr, cl_0012, '*k')# , label='flujo potencial')
+ax.plot(alfas_gr, cl_0012_abbott, 'r', label='Abbott')
+ax.plot(alfas_gr, cl_0012_abbott, '*r')# , '*r', label='Abbott')
+plt.xlabel('x / c')
+plt.ylabel('cl')
+plt.legend(loc='upper left')
+ax.set_aspect(15)
+ax.grid(True)
+plt.show()
+# alfas = ['-4', '0', '4', '8']
 
 map_ = 'viridis'
 cps = np.zeros((149, 4))
@@ -71,8 +88,8 @@ for alfa in alfas:
     (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
     (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
     (L, D) = lift_n_drag(mallaNACA, cp, int(alfa), 1)
-    cps[:, j] = cp[:, 0]
-    j += 1
+    # cps[:, j] = cp[:, 0]
+    # j += 1
     print('alfa = ' + alfa)
     print("L = " + str(L))
     print("D = " + str(D))
@@ -106,7 +123,7 @@ for alfa in alfas:
     #     ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
     #     ax.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
 
-    #     mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, psi, 295,
+    #     mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, psi, 295, #185
     #                         cmap=map_)
     #     # plt.colorbar(mesh_)
     #     plt.show()
@@ -139,20 +156,23 @@ for alfa in alfas:
 
 points = mallaNACA.M
 perfil = airfoil.NACA4(m, p_, t, c)
+perfil = airfoil.NACA4(2, 4, 12, 1)
 perfil.create_sin(points)
 perfil.x += 0.25
 x_perf = perfil.x
-y_perf = perfil.y
+y_perf = perfil.y * -1
 cp_perf =cp[:, 0]
 
 plt.figure('perf')
-plt.plot(x_perf, y_perf * 8.5, 'k')
+plt.plot(x_perf, y_perf * 8.3, 'k')
+
 for j in range(4):
     plt.plot(x_perf[1:-1], cps[1:-1, j], label=(alfas[j]))
     # plt.plot(x_perf[1: points // 2 + 1], cps[1: points // 2 + 1, j], label=(direcs[j]))
     # plt.plot(x_perf[points // 2 + 1 :], cps[points // 2 + 1 :, j], label=(direcs[j]))
     # plt.plot(x_perf[points // 2 + 1:-1], cp_perf[points // 2 + 1:-1], 'k', label='extrados')
 plt.legend(loc='lower right')
+plt.gca().invert_yaxis()
 # plt.axis('equal')
 plt.draw()
 plt.show()
