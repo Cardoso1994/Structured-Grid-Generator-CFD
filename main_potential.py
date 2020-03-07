@@ -55,7 +55,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson(omega=1.3, aa=90, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson(omega=1.3, aa=85, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')

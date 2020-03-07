@@ -72,7 +72,7 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        weight = 1.08
+        weight = 1.01
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
@@ -105,7 +105,7 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        weight = 1.08
+        # weight = 1.01
         delta_limit = 2.5 * R - perfil_x[0]
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** (npoints - 1))
@@ -319,7 +319,7 @@ class mesh_C(mesh):
                                 * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
 
         it = 0
-        mesh.err_max = 1e-3
+        mesh.err_max = 8e-4
 
         # inicio del método iterativo
         print("Poisson:")
@@ -335,8 +335,8 @@ class mesh_C(mesh):
                 X = Xn
                 Y = Yn
 
-            # for j in range(1, n-1):
-            for j in range(n-2, 0, -1):
+            for j in range(1, n-1):
+            # for j in range(n-2, 0, -1):
                 # for i in range(1, m-1):
                 for i in range(m-2, 0, -1):
                     x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
