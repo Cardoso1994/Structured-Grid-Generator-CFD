@@ -4175,7 +4175,7 @@
           \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_mesh_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/potential_flow_mesh_close}}
 
-        \caption{Malla para análisis de flujo potencial}
+        \caption{Malla para análisis de flujo potencial de perfil NACA 0012}
         \label{fig:potential_flow_mesh}
     \end{figure}
 
@@ -4191,7 +4191,8 @@
             width=87mm]{./Imagenes/potential_flow_potential_far}}
         \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_potential_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/potential_flow_potential_close}}
-        \caption{Lineas equipotenciales para $\alpha = 0\si{\degree}$}
+        \caption{Lineas equipotenciales para $\alpha = 0\si{\degree}$ para
+          perfil NACA 0012}
         \label{fig:potential_flow_potential}
     \end{figure}
 
@@ -4215,7 +4216,7 @@
             width=93mm]{./Imagenes/potential_flow_cp_0}}
           \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_cp_2}\includegraphics[keepaspectratio,
             width=93mm]{./Imagenes/potential_flow_cp_2}}
-        \caption{Campo de presiones}
+        \caption{Campo de presiones alrededor de perfil NACA 0012}
         \label{fig:potential_flow_cp_0}
     \end{figure}
 
@@ -4229,7 +4230,7 @@
           width=93mm]{./Imagenes/potential_flow_cp_8}}
         \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_cp_10}\includegraphics[keepaspectratio,
           width=93mm]{./Imagenes/potential_flow_cp_10}}
-        \caption{Campo de presiones}
+        \caption{Campo de presiones alrededor de perfil NACA 0012}
         \label{fig:potential_flow_cp_1}
     \end{figure}
 
@@ -4243,7 +4244,7 @@
             width=93mm]{./Imagenes/potential_flow_stream_0}}
           \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_stream_2}\includegraphics[keepaspectratio,
             width=93mm]{./Imagenes/potential_flow_stream_2}}
-        \caption{Líneas de corriente}
+        \caption{Líneas de corriente alrededor de perfil NACA 0012}
         \label{fig:potential_flow_stream_0}
     \end{figure}
 
@@ -4257,7 +4258,7 @@
             width=93mm]{./Imagenes/potential_flow_stream_8}}
           \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_stream_10}\includegraphics[keepaspectratio,
             width=93mm]{./Imagenes/potential_flow_stream_10}}
-        \caption{Líneas de corriente}
+        \caption{Líneas de corriente alrededor de perfil NACA 0012}
         \label{fig:potential_flow_stream_1}
     \end{figure}
 
@@ -4290,12 +4291,123 @@
         \centering
         \includegraphics[keepaspectratio,
             width=138mm]{./Imagenes/potential_flow_cl}
-        \caption[Coeficiente de presión a lo largo de la cuerda de perfil NACA 0012]
-        {Coeficiente de presión a lo largo de la cuerda de perfil NACA 0012 para
-            diferentes ángulos de ataque}
+        \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque para
+            perfil NACA 2412}
         \label{fig:potential_flow_cl}
     \end{figure}
 
+    \paragraph*{}
+    Se realizó el mismo estudio para el caso de un perfil NACA 2412, donde las
+    condiciones del flujo en corriente libre se especifican en la
+    tabla~\ref{tabla_potencial} y los parámetros para la generación de la malla
+    no han sido modificado, es decir, lo único que se cambió fue el perfil a
+    analizar, cuyos resultados se muestran a continuación.
+
+    \paragraph*{}
+    En primera instancia la figura~\ref{fig:potential_flow_2412_potential}
+    presenta las líneas equipotenciales obtenidas mediante la solución de la
+    ecuación de flujo potencial, tanto en vista completa del domino, como un
+    acercamiento al perfil alar.
+
+    \paragraph*{}
+    A su vez, las figuras~\ref{fig:potential_flow_2412_cp_0}
+    y~\ref{fig:potential_flow_2412_cp_1} presentan el campo de presiones que se
+    genera alrededor del perfil para diferentes ángulos de ataque. Por otro lado
+    las figuras~\ref{fig:potential_flow_2412_stream_0}
+    y~\ref{fig:potential_flow_2412_stream_1} muestran las líneas de corriente
+    del flujo para los mismos ángulos de ataque.
+
+    \begin{figure}[H]
+        \centering
+        \subfigure[Vista Completa]{\label{fig:potential_flow_2412_potential_far}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/potential_flow_2412_potential_far}}
+        \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_2412_potential_close}\includegraphics[keepaspectratio,
+            width=87mm]{./Imagenes/potential_flow_2412_potential_close}}
+        \caption{Lineas equipotenciales para $\alpha = 0\si{\degree}$ para
+          perfil NACA 2412}
+        \label{fig:potential_flow_2412_potential}
+    \end{figure}
+
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_2412_cp_-4}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_cp_-4}}
+          \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_2412_cp_-2}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_cp_-2}}
+          \subfigure[$\alpha = 0\si{\degree}$]{\label{fig:potential_flow_2412_cp_0}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_cp_0}}
+          \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_2412_cp_2}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_cp_2}}
+        \caption{Campo de presiones alrededor de perfil NACA 2412}
+        \label{fig:potential_flow_2412_cp_0}
+    \end{figure}
+
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_2412_cp_4}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_cp_4}}
+        \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_2412_cp_6}\includegraphics[keepaspectratio,
+          width=93mm]{./Imagenes/potential_flow_2412_cp_6}}
+        \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_2412_cp_8}\includegraphics[keepaspectratio,
+          width=93mm]{./Imagenes/potential_flow_2412_cp_8}}
+        \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_2412_cp_10}\includegraphics[keepaspectratio,
+          width=93mm]{./Imagenes/potential_flow_2412_cp_10}}
+        \caption{Campo de presiones alrededor de perfil NACA 2412}
+        \label{fig:potential_flow_2412_cp_1}
+    \end{figure}
+
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_2412_stream_-4}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_-4}}
+          \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_2412_stream_-2}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_-2}}
+          \subfigure[$\alpha = 0\si{\degree}$]{\label{fig:potential_flow_2412_stream_0}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_0}}
+          \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_2412_stream_2}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_2}}
+        \caption{Líneas de corriente alrededor de perfil NACA 2412}
+        \label{fig:potential_flow_2412_stream_0}
+    \end{figure}
+
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_2412_stream_4}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_4}}
+          \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_2412_stream_6}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_6}}
+          \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_2412_stream_8}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_8}}
+          \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_2412_stream_10}\includegraphics[keepaspectratio,
+            width=93mm]{./Imagenes/potential_flow_2412_stream_10}}
+        \caption{Líneas de corriente alrededor de perfil NACA 2412}
+        \label{fig:potential_flow_2412_stream_1}
+    \end{figure}
+
+    \paragraph*{}
+    Por último, la figura~\ref{fig:potential_flow_2412_cp_dist} presenta la
+    distribución del coeficiente de presión a lo largo de la cuerda del perfil
+    aerodinámico para diferentes ángulos de ataque $\alpha$, y la
+    figura~\ref{fig:potential_flow_2412_cl} muestra la gráfica de la variación
+    del coeficiente de sustentación con el ángulo de ataque del perfil.
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \includegraphics[keepaspectratio,
+            width=138mm]{./Imagenes/potential_flow_2412_cps}
+        \caption[Coeficiente de presión a lo largo de la cuerda de perfil NACA 2412]
+        {Coeficiente de presión a lo largo de la cuerda de perfil NACA 2412 para
+            diferentes ángulos de ataque}
+        \label{fig:potential_flow_2412_cp_dist}
+    \end{figure}
+
+    \begin{figure}[H]%[htbp!]
+        \centering
+        \includegraphics[keepaspectratio,
+            width=138mm]{./Imagenes/potential_flow_2412_cl}
+        \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque para
+            perfil NACA 2412}
+        \label{fig:potential_flow_2412_cl}
+    \end{figure}
 
     \subsection{SU2}
     \paragraph*{}
