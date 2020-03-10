@@ -52,26 +52,29 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 mach_inf = v_inf / c_inf
 Re = v_inf * d_inf / mu
 
-path = './potential_final/'
-alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
+path = './potential_final_2412_2/'
+# alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
+alfas = ['-4', '0', '4', '8']
 alfas_gr = list(map(int, alfas))
 cl_0012 = [-0.4543, -0.2218, 0.001, 0.2239, 0.4566, 0.6928, 0.9306, 1.1713 ]
 cl_0012_abbott = [-0.44, -0.22, 0, 0.22, 0.44, 0.66, 0.88, 1.1 ]
+# cl_2412 = [-0.2238, -0.0217, 0.2673, 0.5126, 0.7574, 1.0014, 1.2445, 1.4863 ]
+cl_2412 = [-0.2138, -0.0017, 0.2573, 0.4926, 0.7174, 0.9414, 1.1445, 1.3463 ]
+cl_2412_abbott = [-0.19, 0.04, 0.25, 0.47, 0.67, 0.89, 1.09, 1.26 ]
 
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.plot(alfas_gr, cl_0012, 'k', label='flujo potencial')
-ax.plot(alfas_gr, cl_0012, '*k')# , label='flujo potencial')
-ax.plot(alfas_gr, cl_0012_abbott, 'r', label='Abbott')
-ax.plot(alfas_gr, cl_0012_abbott, '*r')# , '*r', label='Abbott')
-plt.xlabel('x / c')
-plt.ylabel('cl')
-plt.legend(loc='upper left')
-ax.set_aspect(15)
-ax.grid(True)
-plt.show()
-# alfas = ['-4', '0', '4', '8']
+# fig = plt.figure()
+# ax = fig.add_subplot(111)
+# ax.plot(alfas_gr, cl_0012, 'k', label='flujo potencial')
+# ax.plot(alfas_gr, cl_0012, '*k')# , label='flujo potencial')
+# ax.plot(alfas_gr, cl_0012_abbott, 'r', label='Abbott')
+# ax.plot(alfas_gr, cl_0012_abbott, '*r')# , '*r', label='Abbott')
+# plt.xlabel('alfa')
+# plt.ylabel('cl')
+# plt.legend(loc='upper left')
+# ax.set_aspect(15)
+# ax.grid(True)
+# plt.show()
 
 map_ = 'viridis'
 cps = np.zeros((149, 4))
@@ -88,8 +91,8 @@ for alfa in alfas:
     (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
     (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
     (L, D) = lift_n_drag(mallaNACA, cp, int(alfa), 1)
-    # cps[:, j] = cp[:, 0]
-    # j += 1
+    cps[:, j] = cp[:, 0]
+    j += 1
     print('alfa = ' + alfa)
     print("L = " + str(L))
     print("D = " + str(D))
