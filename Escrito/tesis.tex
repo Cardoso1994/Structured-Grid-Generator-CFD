@@ -53,8 +53,9 @@
 		ESCUELA SUPERIOR DE INGENIERÍA MECÁNICA Y ELÉCTRICA\\
 		UNIDAD PROFESIONAL TICOMÁN\\
 		\vspace{12mm}
-		\textbf{DESARROLLO DE PAQUETERÍA DE SOFTWARE OPEN SOURCE EN LENGUAJE
-          PYTHON PARA LA GENERACIÓN DE MALLAS}\\
+		\textbf{DESARROLLO DE CÓDIGOS PARA EL DISEÑO DE MALLAS PARA EL
+        ANÁLISIS DE PERFILES AERODINÁMICOS CON SUPERFICIES HIPERSUSTENTADORAS
+    TIPO FLAP}\\
 		\vspace*{12mm}
 		TESIS\\
 		Que para obtener el grado de\\
@@ -180,36 +181,94 @@
 	\addcontentsline{toc}{chapter}{Introducción}
 	\paragraph*{}
     En general, para analizar y diseñar sistemas en los cuales interviene el
-    flujo de fluidos se cuenta con dos herramientas: la experimentación y el
-    cálculo. La experimentación implica la construcción de modelos que serán
-    probados en túneles de viento u otras instalaciones. En el caso del cálculo,
-    se puede realizar de manera analítica o mediante el uso de métodos númericos,
+    flujo de fluidos se cuenta con dos herramientas: la experimentación y los
+    métodos analíticos. La experimentación implica la construcción de modelos
+    que serán probados en túneles de viento u otras instalaciones. En el caso
+    del cálculo, se puede realizar de manera analítica o mediante el uso de métodos númericos,
     a esta última técnica se le da el nombre de dinamica de fluidos
     computacional (CFD, por sus siglas en inglés). El uso de la DFC (dinámica
     de fluidos computacional) se ha popularizado gracias al desarrollo de las
-    capaciades de las computadoras, ya que las simulaciones presentan ciertas
+    capaciades computaciones, ya que las simulaciones presentan ciertas
     ventajas frente al enfoque exprimental en términos de velocidad, seguridad
     y en la mayoría de casos, de costo. Gracias a esto la DFC es ampliamente
     usada en la actualidad en sectores de la industria como el aeroespacial,
-    petrolero, entre otros. En el ámbito de la investigación tambien se tiene
+    petrolero, energético, automotriz, entre otros. En el ámbito de la investigación también se tiene
     en la DFC una herramienta importante, pues permite analizar fenomenos
     complejos que pueden resultar dificiles de reproducir en experimentos.
 
-	\paragraph*{}
-	Se realiza el presente trabajo con la finalidad tanto de generar en los
+    \paragraph*{}
+    Se realiza el presente trabajo con la finalidad tanto de generar en los
     estudiantes un interés por la dinámica de fluidos computacional (CFD), como
     de fomentar el desarrollo de este campo mediante la implementación de
     códigos. Por otro lado, se busca fomentar en el lector el uso y desarrollo
     de software libre.
 
-	\paragraph*{}
-	En el capítulo 1\\************añadir descripción breve de los capítulos****************
+    \paragraph*{}
+    En el capítulo 1 de realiza una breve reseña histórica, con el fin de
+    entender los orígenes y etapas por las que ha atravesado la dinámica de
+    fluidos computacional para así comprender la posición actual en la que se
+    encuentra y las posibles direcciones que ésta pueda tomar. También en este
+    primer capítulo se comenta el estado actual tanto de la DFC como tema
+    general, además del estado actual de la generación de mallas como tema
+    particular. Por último se hace mención a diferentes alternivas de software
+    disponible y ampliamente reconocido, tanto programas de licencia como de
+    código abierto, para el análisis de flujos de interes y para la generación
+    de mallas
 
+    \paragraph*{}
+    El capítulo 2 se enfoca en los conceptos de la discretización espacial de un
+    espacio físico determinado, proceso necesario para poder realizar mallas que
+    representen computacionalmente el espacio a analizar. Los métodos de
+    discretización son aplicables también a las ecuaciones que describen los
+    flujos, dicha discretización se hace tomando en cuenta la malla generada
+    para el análisis. Se hace particular enfoque en el desarrollo del método de
+    diferencias finitas, y se muestran las ecuaciones obtenidas mediante este
+    método, las cuales sirven de aproximaciones para sustituir los términos que
+    invilucren ecuaciones diferenciales parciales.
 
+    \paragraph*{}
+    Por su parte, el capítulo 3 centra su atención en las mallas. Se describe el
+    concepto de malla, su razón de ser, así como la necesidad de utilizar un
+    sistema arbitrario de coordenadas en ciertos problemas de interés práctico.
+    También se hace referencia a la clasificación de las mallas, las diferentes
+    tipologías (formas) que pueden tener. De igual manera se mencionan algunas
+    consideraciones a tomar en cuenta previo al desarrollo de la malla. Así
+    mismo se elabora sobre las diferentes técnicas para la creación de mallas
+    estructuradas, explicando las bases matemáticas y las ecuaciones que
+    componen a las diversas técnicas. Por último, se cuenta con una sección
+    dedicada la calidad de las mallas donde se contemplan algunas aspectos que
+    son utilizados de manera amplia para la evaluación de la calidad.
 
+    \paragraph*{}
+    En el capítulo 4 se desarrolla el análisis de flujo potencial y su
+    adaptación para el análisis de flujos externos en los cuales se encuentra
+    inmerso un perfil alar.
 
-	\chapter*{Objetivo}
-	\addcontentsline{toc}{chapter}{Objetivo}
+    \paragraph*{}
+    El capítulo 5 se centra en el desarrollo práctico del proyecto, es en éste
+    donde se muestra la estrcutura y lógica del software desarrollado. Se
+    presentan diagramas de clase para entender la estructura del programa, y
+    diagramas de flujo para los métodos más representativos del mismo.
+
+    \paragraph*{}
+    Por útlimo, en el capítulo 6 se muestran los resultados obtenidos mediante
+    la utilización de los cpodigos desarrollados. Se muestra en primera
+    instancia una sección con los límites y alcance de las mallas generadas,
+    continúa con resultados de calidad de malla para varias configuraciones de
+    malla. Por último se llevaron a cabo análisis tanto de flujo potencial y de
+    flujo tubulento y estacionario.
+
+    %
+    %
+    %
+    %
+
+    %
+    %
+    %
+    %
+    \chapter*{Objetivo}
+    \addcontentsline{toc}{chapter}{Objetivo}
 
     \paragraph*{}
     Diseñar una paquetería de software que permita la generación de mallas a
@@ -759,7 +818,7 @@
     uniforme entre los nodos en la dirección de los ejes del sistema. La mayoría
     de casos prácticos de interés en la DFC, tratan con geometrías complejas,
     lo que hace que sea muy dificil, si no imposible, generar una malla en
-    alguno de los sitemas de cordenadas antes mencionados, que ajuste en su
+    alguno de los sistemas de cordenadas antes mencionados, que ajuste en su
     frontera interna de manera exacta a la forma de la geometría a analizar.
     Esto presenta una limitante que se debe atender, se debe llevar a cabo una
     transofrmación de sistemas de coordenadas, llevando el dominio físico del
@@ -832,13 +891,13 @@
     \paragraph{}
         La transformación de esta malla de un espacio físico a un espacio
         computacional da como resultado una malla conformada por rectangulos.
-        Durante la transformación se debe identificar un segmento, tambien
+        Durante la transformación se debe identificar un segmento, también
         conocido como corte, ya que este proceso implica conceptualemte, una
         separación en dicho corte, para posteriormente deformar el espacio
         físico llevándolo así a convertirse en una malla estructurada uniforme.
         En la figura~\ref{fig:malla-c} se observa que en el dominio físico, el
         segmento $(ab)$ representa la sección del mallado donde se realiza el
-        corte y que tambien se le llama $(a'b')$, y que en el dominio
+        corte y que también se le llama $(a'b')$, y que en el dominio
         computacional este segmento representa dos segmentos diferentes.
             \begin{figure}[htbp!]
                 \centering
@@ -852,7 +911,7 @@
         Este tipo de mallas son principalmente de sección circular, de ahí su
         nombre. Suelen ser utilizadas para el análisis del flujo alrededor de
         algunos componentes de aeronaves, como puede ser el fuselaje o las
-        góndolas, entre otros.\cite{vladimir-grid} Tambien pueden llegar a
+        góndolas, entre otros.\cite{vladimir-grid} También pueden llegar a
         utilizarse en el análisis de perfiles alares, pero presentan la
         dificultad de ofrecer una baja calidad de mallado en el borde de salida.\cite{blazek}\cite{best-practices-grid-generation}
     \paragraph*{}
@@ -874,9 +933,9 @@
     \paragraph*{}
         Este tipo de mallas son utilizadas principalmente en los análisis de
         turbomaquinaria, específicamente en la zona de los alabes.\cite{blazek}\cite{best-practices-grid-generation}
-        Tambien suelen utilizarse en el análisis de alas de aeronaves.\cite{vladimir-grid}
+        También suelen utilizarse en el análisis de alas de aeronaves.\cite{vladimir-grid}
     \paragraph*{}
-        La transformación en este tipo de malla, tambien da como resultado un
+        La transformación en este tipo de malla, también da como resultado un
         dominio computacional cuadrado, que puede tener o no un corte al
         interior el cual corresponde a la frontera interior del dominio físico.
         (Figura\ref*{fig:tipos-de-malla} (H)) La frontera externa del dominio
@@ -1210,7 +1269,7 @@
         otro lado se lleva a cabo la transformación medainte el proyector
         $P_{\eta}$ el mapeo resultante es uno a uno, es decir que la recta
         $\eta = 0$ se mapea con la curva de la frontera $AC$. Por último
-        transformando con el proyector compuesto $P_{\xi}P_{\eta}$ tambien se
+        transformando con el proyector compuesto $P_{\xi}P_{\eta}$ también se
         hace un mapeo con la línea recta $AC$.
     \paragraph*{}
         Desarrollando la misma lógica y consideraciones a las 4 fronteras de la
@@ -1461,7 +1520,7 @@
         Chausse \cite{Hyperbolic-steger1980generation} para la generación de
         mallas bidimensionales ortogonales y con control del área de celda. Se
         inicia el proceso con una frontera única en la que se considera que
-        $\eta = 0$. Se propone tambien un sistema de ecuaciones de primer orden
+        $\eta = 0$. Se propone también un sistema de ecuaciones de primer orden
         para las coordenadas $x, y$ como funciones de $\xi, \eta$:
         \begin{subequations}
             \begin{equation}
@@ -1733,7 +1792,7 @@
         computacional que es requerido para lograr la solución del problema, que
         representa una pequeña fracción del tiempo demandado por el esquema
         elíptico. El segundo es la baja demanda de memoria para llevar a cabo
-        los cálculos requerido, y que además tambien es sustancialmente menor
+        los cálculos requerido, y que además también es sustancialmente menor
         que el requerido por un esquema elíptico.
     \paragraph*{}
         Se propone el siguiente conjunto de ecuaciones
@@ -1809,7 +1868,7 @@
         consideraciones no son estrictamente necesarias sino que representan
         simplificaciones del problema, por lo que la generación de una malla
         cuasi uniforme en el plano computaciones, y que despues se utilice en el
-        anáñlisis de flujos como si de una malla uniforme se tratase, es tambien
+        anáñlisis de flujos como si de una malla uniforme se tratase, es también
         un enfoque válido.
         \begin{figure}[htbp!]
             \centering
@@ -2366,7 +2425,7 @@
                             + g^{22} \phi_{\eta} \right) \frac{\rho}{J} \right]
                     = 0
         \end{equation}
-        ya que tambien se tiene:
+        ya que también se tiene:
         \begin{align}
             \begin{aligned}
             U = g^{11} \phi_{\xi} + g^{12} \phi_{\eta}
@@ -2524,7 +2583,7 @@
     \paragraph*{}
         En un instante inicial, cuando el flujo alrededor del perfil está en
         reposo y su velocidad es igual a cero, la circulación alredor de una
-        curva arbitraria que rodee al perfil tambien será cero, tal como se
+        curva arbitraria que rodee al perfil también será cero, tal como se
         muestra en la figura~\ref{circulacion_reposo}.
 
         \begin{figure}[htbp!]
@@ -2586,7 +2645,7 @@
         subsonico es una ecuación diferencial parcial elíptica. Esto presenta la
         facilidad de utilizar diferencias finitas como método de discretización
         del problema, sin embargo es importante recalcar que este no es el
-        único método válido y que tambien es posible llevar a cabo la
+        único método válido y que también es posible llevar a cabo la
         discretización mediante los métodos de volumenes y elementos finitos.
 
     \paragraph*{}
@@ -3179,7 +3238,7 @@
         \\ \hline
 
         \textbf{tensor()} & Calcula el tensor métrico de la transformación,
-        tanto la transformación directa como indirecta. Tambien calcula el
+        tanto la transformación directa como indirecta. También calcula el
         Jacobiano de dicha transformación y los valores de las derivadas
         parciales $x_\xi$, $x_\eta$, $y_xi$ y $y_\eta$. Los valores que
         regresa el método son matrives de $M$x$N$, ya que todos los términos se
@@ -3446,7 +3505,7 @@
     \subsection{Malla O. Frontera interna múltiple}
     \paragraph*{}
         El segundo caso de análisis presenta una malla tipo O con un perfil
-        NACA 4415 y un flap del tipo perfil externo, el cual tambien es un
+        NACA 4415 y un flap del tipo perfil externo, el cual también es un
         perfil NACA 4415. En el caso de esta configuración, el ángulo de ataque
         del perfil se mantiene constante a 0\si{\degree}, mientras que el ángulo
         de deflexión del flap se va variando. La tabla~\ref{tabla_o_naca_4415_flap}

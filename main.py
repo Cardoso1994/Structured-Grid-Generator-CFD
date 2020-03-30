@@ -25,12 +25,12 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 315
-union = 9
+N = 375
+union = 29
 
 # points = 11
-airfoil_points = 199 # 499
-airfoil_points = 239 # 499
+airfoil_points = 399 # 499
+airfoil_points = 499
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -42,8 +42,9 @@ m = 0  # combadura
 p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
+
 # radio frontera externa
-R = 20 * c
+R = 40 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
@@ -62,18 +63,17 @@ elif malla == 'C':
 
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
-# perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=180, cc=7.4, linea_eta=0)
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=39, cc=7.4, linea_eta=0)
-# mallaNACA.gen_Laplace(metodo='SOR')
+
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=675, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=335, cc=7.4, linea_eta=0)
+
+mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
+mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
 
 mallaNACA.plot()
 print('after mesh generation')
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
-
-mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
-mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
 
 flag = 'r'
 is_ok = False
