@@ -72,7 +72,7 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        weight = 1.01
+        weight = 1.03
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
@@ -282,13 +282,13 @@ class mesh_C(mesh):
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
 
-        Xn = self.X
-        Yn = self.Y
-        m = self.M
-        n = self.N
+        Xn      = self.X
+        Yn      = self.Y
+        m       = self.M
+        n       = self.N
 
-        d_eta = self.d_eta
-        d_xi = self.d_xi
+        d_eta   = self.d_eta
+        d_xi    = self.d_xi
         # omega = np.longdouble(0.3)  # en caso de metodo SOR
         '''
         para métodos de relajación:
@@ -319,7 +319,8 @@ class mesh_C(mesh):
                                 * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
 
         it = 0
-        mesh.err_max = 8e-4
+        # mesh.err_max = 1e-5
+        mesh.it_max = 45e3
 
         # inicio del método iterativo
         print("Poisson:")
@@ -335,10 +336,9 @@ class mesh_C(mesh):
                 X = Xn
                 Y = Yn
 
-            for j in range(1, n-1):
-            # for j in range(n-2, 0, -1):
-                # for i in range(1, m-1):
-                for i in range(m-2, 0, -1):
+            for j in range(n-2, 0, -1):
+                for i in range(1, m-1):
+                # for i in range(m-2, 0, -1):
                     x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
                     y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
                     x_xi = np.longdouble((X[i+1, j] - X[i-1, j]) / 2 / d_xi)

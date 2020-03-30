@@ -224,12 +224,15 @@ class mesh_O(mesh):
         mask = np.isnan(Q_)
         Q_[mask] = 0
 
-        mesh.err_max = 1e-5
-        mesh.err_max = 1e-3
+        mesh.it_max = 45e3
+
         it = 0
         print("Poisson:")
         # inicio del método iterativo
         while it < mesh.it_max:
+            if (it % 10000 == 0):
+                self.plot()
+
             print('it = ' + str(it) + '\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)

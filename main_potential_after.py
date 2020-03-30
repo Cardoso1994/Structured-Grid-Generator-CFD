@@ -18,6 +18,10 @@ from potential import potential_flow_o, potential_flow_o_esp, velocity,\
                         pressure, streamlines, lift_n_drag
 import helpers
 
+mallaNACA = helpers.from_txt_mesh('/home/desarrollo/tesis_su2/malla_C_flap/mesh_c_flap.txt_mesh')
+
+mallaNACA.plot()
+exit()
 # datos de perfil NACA
 m = 0  # combadura
 p_ = 0  # posicion de la combadura

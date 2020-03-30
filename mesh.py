@@ -99,11 +99,11 @@ class mesh(object):
         '''
 
         plt.axis('equal')
-        plt.plot(self.X, self.Y, 'k', linewidth=1.5)
+        plt.plot(self.X, self.Y, 'k', linewidth=0.5)
         plt.plot(self.X[:, 0], self.Y[:, 0], 'k', linewidth=1.9)
 
         for i in range(self.M):
-            plt.plot(self.X[i, :], self.Y[i, :], 'b', linewidth=1.5)
+            plt.plot(self.X[i, :], self.Y[i, :], 'b', linewidth=0.5)
         plt.draw()
         plt.show()
 
