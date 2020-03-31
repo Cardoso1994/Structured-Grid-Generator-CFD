@@ -1,4 +1,5 @@
 \documentclass[letterpaper, openright, 12pt]{book}
+% \documentclass[b5paper, openright, 12pt]{book}
 \usepackage[spanish,es-tabla, es-nodecimaldot]{babel} %es-tabla para nombrar a las tablas en vez de cuadros
 \usepackage[utf8]{inputenc}
 
@@ -69,7 +70,7 @@
 		\vspace{3mm}
 		DIRECTOR DE TESIS: M. {\scriptsize EN} C. RAFAEL MEDINA NOGUERÓN
 		\end{center}
-	\vspace{6cm}
+	\vspace{5cm}
 	\begin{flushleft}
 		Ciudad de México
 	\end{flushleft}
@@ -317,13 +318,13 @@
                 analizando sus ventajas y desventajas, así como una comparación
                 entre las tipologías. Las mallas serán generadas mediante varios
                 enfoques, como pueden ser la generación por ecuaciones
-                algebráicas y por ecuaciones diferenciales parciales (elípticas,
-                parabólicas e hiperbólicas).}
+                algebráicas y por ecuaciones diferenciales parciales.}
             \item{Llevar a cabo diferentes análisis, ya sea en el software de
                 código libre SU2 o mediante el desarrollo de un módulo propio
                 que realice el análisis correspondiente mediante flujo 
-                potencial. Esto con el proposito de probar las mallas y darles
-                una aplicación de interés real.}
+                potencial. Esto con el proposito de probar la aplicabilidad y
+                confiabilidad de las mallas y darles una aplicación de interés
+                real.}
         \end{itemize}
 
 
@@ -351,7 +352,7 @@
         Se desarrolla entonces, este trabajo con la intención de proporcionar
         información sobre la implementación de códigos de generación de mallas,
         para que el lector pueda a su vez, continuar contribuyendo al desarrollo
-        de software libre para la dinámica de fluidos computacionala nivel
+        de software libre para la dinámica de fluidos computacional a nivel
         nacional.
 
     \paragraph*{}
@@ -361,12 +362,17 @@
         beneficio propio, modificarlos, e incluso construir software nuevo a
         partir de éste.
 
-	%
-	%
-	%
-	%
-	\chapter{Estado del Arte}
-	\pagenumbering{arabic}
+%
+%
+%
+%
+
+%
+%
+%
+%
+    \chapter{Estado del Arte}
+    \pagenumbering{arabic}
         \section{Historia de la dinámica de fluidos computacional}
             \paragraph*{}
                 La DFC tiene sus orígenes en el desarrollo de dos métodos
@@ -426,7 +432,7 @@
                 las dos primeras las ramas experimental y la teoría pura.\cite{anderson-yotros}
 
             \paragraph*{}
-                Actualmetne, la DFC se aplica en diversos sectores, como el
+                Actualmente, la DFC se aplica en diversos sectores, como el
                 aeroespacial, diseño de turbomaquinaria, carros y navíos. Además
                 de campos como la meteorología, oceanografía, astrofísica e
                 incluso arquitectura. Algunas técnicas desarrolladas para la DFC
@@ -495,6 +501,29 @@
                 software, lo cual es basicamente, la filosofía del software
                 libre.
 
+            \paragraph*{XFoil}
+            \paragraph*{}
+                Es un programa interactivo para el diseño y análisis de perfiles
+                operando en regímenes subsónicos. Dadas las coordenadas de la
+                nube de puntos que describen la forma de un perfil, un número de
+                Reynolds y el número de Mach, Xfoil puede calcular la
+                distribución de presión a lo largo del perfil, y con esto,
+                las fuerzas de levantamiento y arrastre.
+                    Consiste en una colección de funciones como:
+                    \begin{itemize}
+                        \item Análisis Viscoso de perfiles alares existentes.
+                        \item Diseño y rediseño de perfiles mediante la
+                            modificacion de la distribución de velocidad
+                            superficial
+                        \item Rediseño de perfiles mediante la modificación de
+                            sus parámetros geométricos.
+                    \end{itemize}
+                    \cite{xfoil}
+            \paragraph*{}
+                Xfoil es desarrollado por el MIT (Massachusetts Institute of
+                Technology), escrito en lenguaje FORTRAN y distribuido bajo
+                la licencia GPL.
+
             \paragraph*{XFLR5}
             \paragraph*{}
                 XFLR5 es una herramienta desarrollada para el análisis de
@@ -507,98 +536,79 @@
                 desarrollado con fines profesionales, sino para uso meramente
                 personal y se distribuye bajo la licencias GPL.
 
-            \paragraph*{XFoil}
+            \paragraph*{XFlow}
             \paragraph*{}
-                Es un programa interactivo para el diseño y análisis de perfiles
-                operando en regímenes subsónicos. Dadas las coordenadas de la
-                nube de puntos que describen la forma de un perfil, un número de
-                Reynolds y el número de Mach, Xfoil puede calcular la
-                distribución de presión a lo largo del perfil, y con esto,
-                las fuerzas de levantamiento y arrastre.
-					Consiste en una colección de funciones como:
-					\begin{itemize}
-						\item Análisis Viscoso de perfiles alares existentes.
-						\item Diseño y rediseño de perfiles mediante la modificacion de la distribución de velocidad superficial
-						\item Rediseño de perfiles mediante la modificación de sus parámetros geométricos.
-					\end{itemize}
-				\cite{xfoil}
-				\paragraph*{}
-					Xfoil es desarrollado por el MIT (Massachusetts Institute of
-                    Technology), escrito en lenguaje FORTRAN y distribuido bajo
-                    la licencia GPL.
-
-				\paragraph*{XFlow}
-				\paragraph*{}
-					Es un software privativo desarrollado por la empresa
+            Es un software privativo desarrollado por la empresa
                     Dassault Systèmes, el cual ofrece soluciones mediante el
                     método de Lattice-Boltzman basado en partículas. El usuario
                     puede analizar casos de aerodinámica transitoria, flujos
                     multifase complejos, acústica aérea, geometrías en
                     movimiento e interacciones fluido-estructura. Destaca por
                     sus capacidades de renderizado.\cite{xflow}
-				
-				\paragraph*{ANSYS Fluent}
-				\paragraph*{}
-				Ansys Fluent es un software privativo creado por la empresa
+
+            \paragraph*{ANSYS Fluent}
+            \paragraph*{}
+            Ansys Fluent es un software privativo creado por la empresa
                 ANSYS, Inc.\ dedicado a la simulación de DFC, implementado
                 para dar soluciones mediante el método de volúmenes finitos.
-					
-				\paragraph*{SU2}
-				\paragraph*{}
-				SU2 es una colección de software \textit{``open source"}
-                desarrollado en los lenguajes Python y C++ para el análisis de
-                ecuaciones diferenciales parciales mediante métodos numéricos,
-                del actual estado del arte de la DFC\@. Enfocado principalmente a
-                su aplicación en la industria aeronáutica, así como la industria
-                automotriz, naval y de energías renovables, entre otras.\cite{SU2}
-	%
-	%
-	%
-	%
-	%
 
-	%
-	%
-	%
-	%
-	\chapter{Discretización Espacial} \label{chap:discretizacion-espacial}
-	\paragraph*{}
-	Las soluciones analíticas modeladas mediante ecuaciones diferenciales
+            \paragraph*{SU2}
+            \paragraph*{}
+            SU2 es una colección de software \textit{``open source"}
+            desarrollado en los lenguajes Python y C++ para el análisis de
+            ecuaciones diferenciales parciales mediante métodos numéricos,
+            del actual estado del arte de la DFC\@. Enfocado principalmente a
+            su aplicación en la industria aeronáutica, así como la industria
+            automotriz, naval y de energías renovables, entre otras.\cite{SU2}
+%
+%
+%
+%
+%
+
+%
+%
+%
+%
+\chapter{Discretización Espacial} \label{chap:discretizacion-espacial}
+    \paragraph*{}
+    Las soluciones analíticas modeladas mediante ecuaciones diferenciales
     parciales de las ecuaciones que describen el flujo de fluidos dan resultados
     ``continuos'' a lo largo del dominio que se está estudiando, por otro lado,
     las soluciones numéricas  dan resultados en puntos ``discretos'' del dominio
-    llamados nodos, éstos, unidos mediante líneas, generan la malla del dominio
-    en el que se está trabajando el problema. Para el caso de un análisis en dos
-    dimensiones, la malla se forma por triangulos o cuadriláteros, mientras que
-    en un caso de tridimensional la malla es conformada por tetrahédros o hexaédros.
-	
-	\paragraph*{}
-	En las aplicaciones de DFC se busca que la distribución de los nodos sea
+    llamados nodos, éstos, unidos mediante líneas, conforman la malla del
+    dominio en el que se está trabajando el problema. Para el caso de un
+    análisis en dos dimensiones, la malla se forma por triangulos o
+    cuadriláteros, mientras que en un caso de tridimensional la malla es
+    conformada por tetrahédros o hexaédros.
+
+    \paragraph*{}
+    En las aplicaciones de DFC se busca que la distribución de los nodos sea
     uniforme, dado que esto simplifica los algoritmos de solución a implementar,
     y que se traduce en un ahorro de tiempo en la ejecución de los programas,
     además de un uso considerablemente menor de memoria.
-	
-	\paragraph*{}
-	Existen básicamente dos tipos de mallas:
-	\begin{itemize}
-	\item Estructuradas: los nodos de la malla están alineados entre sí y
+
+    \paragraph*{}
+    Existen básicamente dos tipos de mallas:
+    \begin{itemize}
+    \item Estructuradas: los nodos de la malla están alineados entre sí y
       son identificados mediante ínidices $i, j, k$. Una malla estructurada
       bidimiensional está formada por cuadriláteros, mientras que una malla
       tridimensional se forma por hexahédros. Figura~\ref{fig:malla-estructurada}.
-	\item No estructuradas: los nodos no tienen un orden particular, por lo
+    \item No estructuradas: los nodos no tienen un orden particular, por lo
       que no se pueden identificar mediante índices, por lo que se debe llevar a
       cabo una forma diferente de identificación. Figura~\ref{fig:malla-no-estructurada}
-	\end{itemize}
+    \end{itemize}
 
 
 
     \section{Método de Diferencias Finitas}
     \paragraph*{}
-        El método de diferencias finitas fue de los primero métodos numéricos
-        que se emplearon para la resolución de ecuaciones diferenciales
-        parciales, y ha sido hasta la fecha, uno de los más utilizados en
-        aplicaciones de DFC\@. Este método está basado en las series de expansión
-        de Taylor.
+    El método de diferencias finitas fue de los primero métodos numéricos
+    que se emplearon para la resolución de ecuaciones diferenciales
+    parciales, y ha sido hasta la fecha, uno de los más utilizados en
+    aplicaciones de DFC\@. Este método está basado en las series de expansión
+    de Taylor.
 
     \paragraph*{}
     ``El uso del método de diferencias finitas en la DFC tiene como propósito el
@@ -610,13 +620,16 @@
 
     \subsection{Desarrollo del método}
     \paragraph*{}
-        Supongamos que se tiene el valor de una propiedad de flujo de $f_{i,j}$
-        en un punto $(i,j)$ y se pretende calcular el valor de dicha propiedad
-        en un punto $(i+1,j)$ (Figura~\ref{malla-DF1}) es decir, se quiere
-        conocer el valor de $f_{i+1,j}$, dicho valor se puede expresar mediante
-        una serie de expansión de Taylor, quedando:
+    Supongamos que se tiene el valor de una propiedad de flujo de $f_{i,j}$
+    en un punto $(i,j)$ y se pretende calcular el valor de dicha propiedad
+    en un punto $(i+1,j)$ (Figura~\ref{malla-DF1}) es decir, se quiere
+    conocer el valor de $f_{i+1,j}$, dicho valor se puede expresar mediante
+    una serie de expansión de Taylor, quedando:
     \begin{equation}
-    f_{i+1,j} = f_{i,j} + \left(\pdv{f}{x} \right)_{i,j} \Delta x + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(\Delta x)^2}{2\,!} + \left(\pdv[3]{f}{x} \right)_{i,j} \frac{ (\Delta x)^3 }{3\,!} + \dotsb + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{ (\Delta x)^n }{n\,!}
+    f_{i+1,j} = f_{i,j} + \left(\pdv{f}{x} \right)_{i,j} \Delta x
+    + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(\Delta x)^2}{2\,!}
+    + \left(\pdv[3]{f}{x} \right)_{i,j} \frac{ (\Delta x)^3 }{3\,!}
+    + \dotsb + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{ (\Delta x)^n }{n\,!}
     \label{taylor-forward}
     \end{equation}
 
@@ -686,7 +699,10 @@
 \paragraph*{}
     Para obtener una aproximación tipo ``backward'' se debe generar una serie de Taylor para el punto $(i-1, j)$ expandiendo a partir del punto $(i, j)$
     \begin{equation}
-    f_{i-1, j} = f_{i,j} + \left( \pdv{f}{x}\right)_{i,j} \Delta x + \left( \pdv[2]{f}{x} \right)_{i,j} \frac{(-\Delta x)^2 }{2\,!}  + \left( \pdv[3]{f}{x} \right)_{i,j} \frac{(-\Delta x)^3}{3\,!} + \dotsb + \left( \pdv[n]{f}{x} \right)_{i,j} \frac{(-\Delta x)^n}{n\,!}
+    f_{i-1, j} = f_{i,j} + \left(\pdv{f}{x}\right)_{i,j} (-\Delta x)
+    + \left(\pdv[2]{f}{x} \right)_{i,j} \frac{(-\Delta x)^2 }{2\,!}
+    + \left( \pdv[3]{f}{x} \right)_{i,j} \frac{(-\Delta x)^3}{3\,!}
+    + \dotsb + \left(\pdv[n]{f}{x} \right)_{i,j} \frac{(-\Delta x)^n}{n\,!}
     \label{taylor-backward}
     \end{equation}
 \paragraph{}
@@ -777,7 +793,7 @@
     \paragraph*{}
     Es este último punto, la piedra angular en la importancia del desarrollo de
     métodos de generación de mallas, ya que se busca trabajar con mallas en las
-    cuales, en sus sistema de coordenadas computacional, pueda ser aplciado el
+    cuales, en sus sistema de coordenadas computacional, pueda ser aplicado el
     método de diferencias finitas para la solución de problemas.
     %
     %
@@ -831,21 +847,23 @@
         \caption[Dominios lógico y físico]{Dominios lógico (izquierda) y físico (derecha). \cite{numerical-grid}}
         \label{fig:dominios}
     \end{figure}
+
     \paragraph*{}
-        Una malla es un conjunto de puntos destribuidos a lo largo de un campo
-        dentro del cuál se llevaran a cabo los cálculos para obtener la solución
-        de ecuaciones diferenciales parciales. Existen dos tipos principales de
-        mallas: estructuradas y no estructuradas. (Figura~\ref{fig:malla-estructurada-noestructurada})
-        Las mallas estructuradas se forman mediante la intersección de
-        coordenadas curvilíneas, formando celdas cuadriláteras en dos
-        dimensiones, o hexahedros en tres dimensiones. En contraste, las mallas
-        no estructuradas no tienen relación alguna con las direcciones
-        coordenadas del sistema, éstas consisten generalmente de triángulos y
-        tetahédros en dos y tres dimendiones respectivamente, aunque en realidad
-        se puede hacer uso de calquier forma geométrica. Para este trabajo se
-        considerará el desarrollo  de  mallas estructuradas principalmente, que
-        en principio tendrán una forma curvilinea ajustada a la forma del perfil
-        alar con el que se esté trabajando como frontera interna del dominio.
+    Una malla es un conjunto de puntos distribuidos a lo largo de un campo
+    dentro del cuál se llevarán a cabo los cálculos para obtener la solución
+    de ecuaciones diferenciales parciales. Existen dos tipos principales de
+    mallas: estructuradas y no estructuradas.
+    (Figura~\ref{fig:malla-estructurada-noestructurada})
+    Las mallas estructuradas se forman mediante la intersección de
+    coordenadas curvilíneas, formando celdas cuadriláteras en dos
+    dimensiones, o hexahedros en tres dimensiones. En contraste, las mallas
+    no estructuradas no tienen relación alguna con las direcciones
+    coordenadas del sistema, éstas consisten generalmente de triángulos y
+    tetahédros en dos y tres dimendiones respectivamente, aunque en realidad
+    se puede hacer uso de calquier forma geométrica. Para este trabajo se
+    considerará el desarrollo  de  mallas estructuradas principalmente, que
+    en principio tendrán una forma curvilinea ajustada a la forma del perfil
+    alar con el que se esté trabajando como frontera interna del dominio.
     \begin{figure}[htbp!]
         \centering
         \subfigure[Malla Estructurada]{\label{fig:malla-estructurada}\includegraphics[keepaspectratio, width=50mm]{./Imagenes/malla-estructurada}} \hspace{20mm} %marca separación entre subfiguras
@@ -856,322 +874,343 @@
     \end{figure}
 
     \paragraph*{}
-        La malla debe de generarse bajos ciertas restricciones las cuales suelen
-        ser difíciles de satisfacer por completo. En la actualidad el tiempo que
-        toma generar una malla llega a ser mayor en órdenes de magnitud que el
-        tiempo requerido para la construcción y análisis de la solución del
-        flujo sobre la malla. En especial ahora que hay mayor disponibilidad de
-        software para la solución de flujos.\cite{thompsonhandbook}
+    La malla debe de generarse bajos ciertas restricciones las cuales suelen
+    ser difíciles de satisfacer por completo. En la actualidad el tiempo que
+    toma generar una malla llega a ser mayor en órdenes de magnitud que el
+    tiempo requerido para la construcción y análisis de la solución del
+    flujo sobre la malla. En especial ahora que hay mayor disponibilidad de
+    software para la solución de flujos.\cite{thompsonhandbook}
 
 \section{Tipos de Mallas Estructuradas}
     \paragraph*{}
-        Existen tres tipos base de mallas conocidos como mallas C, H u O
-        respectivamente. El nombre que dichos tipos de mallado reciben se debe
-        a que su estructura asemeja a dichas letras (en mayúsculas) desde una
-        vista de planta.
+    Existen tres tipos base de mallas conocidos como mallas C, H u O
+    respectivamente. El nombre que dichos tipos de mallado reciben se debe
+    a que su estructura asemeja a dichas letras (en mayúsculas) desde una
+    vista de planta.
 
-        \begin{figure}[htbp!]
-            \centering
-            \includegraphics[keepaspectratio, width=170mm]{./Imagenes/tipos-de-malla}
-            \captionsetup{justification=centering, margin=2cm}
-            \caption[Tipología de mallas]{Tipología de malla y sus respectivos espacios computacionales. H(izquierda), O(centro), C(derecha).\cite{vladimir-grid}}
-            \label{fig:tipos-de-malla}
-        \end{figure}
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[keepaspectratio, width=170mm]{./Imagenes/tipos-de-malla}
+        \captionsetup{justification=centering, margin=2cm}
+        \caption[Tipología de mallas]{Tipología de malla y sus respectivos espacios computacionales. H(izquierda), O(centro), C(derecha).\cite{vladimir-grid}}
+        \label{fig:tipos-de-malla}
+    \end{figure}
 
     \subsection{Mallas tipo C}
     \paragraph*{}
-        Las mallas tipos C están compuestas por una sección semicircular y otra
-        rectangular en la frontera exterior, mientras que la frontera interior
-        es de la misma forma del objeto que se analiza.
+    Las mallas tipos C están compuestas por una sección semicircular y otra
+    rectangular en la frontera exterior, mientras que la frontera interior
+    es de la misma forma del objeto que se analiza.
+
     \paragraph*{}
-        Suelen utilizarse para el análisis de flujos alrededor de perfiles
-        alares, pues ofrecen como principal ventaja un buen análisis del flujo
-        en la zona de deflexión de la estela, en especial si se compara contra
-        las mallas tipo O.\cite{best-practices-grid-generation}
+    Suelen utilizarse para el análisis de flujos alrededor de perfiles
+    alares, pues ofrecen como principal ventaja un buen análisis del flujo
+    en la zona de deflexión de la estela, en especial si se compara contra
+    las mallas tipo O.\cite{best-practices-grid-generation}
+
     \paragraph{}
-        La transformación de esta malla de un espacio físico a un espacio
-        computacional da como resultado una malla conformada por rectangulos.
-        Durante la transformación se debe identificar un segmento, también
-        conocido como corte, ya que este proceso implica conceptualemte, una
-        separación en dicho corte, para posteriormente deformar el espacio
-        físico llevándolo así a convertirse en una malla estructurada uniforme.
-        En la figura~\ref{fig:malla-c} se observa que en el dominio físico, el
-        segmento $(ab)$ representa la sección del mallado donde se realiza el
-        corte y que también se le llama $(a'b')$, y que en el dominio
-        computacional este segmento representa dos segmentos diferentes.
-            \begin{figure}[htbp!]
-                \centering
-                \includegraphics[keepaspectratio, width=155mm]{./Imagenes/malla-c}
-                \captionsetup{justification=centering, margin=2cm}
-                \caption[Malla tipo C]{Malla tipo C y su transformación del espacio físico (izquierda) al espacio lógico (derecha). \cite{blazek}}
-                \label{fig:malla-c}
-            \end{figure}
+    La transformación de esta malla de un espacio físico a un espacio
+    computacional da como resultado una malla conformada por rectangulos.
+    Durante la transformación se debe identificar un segmento, también
+    conocido como corte, ya que este proceso implica conceptualmente, una
+    separación en dicho corte, para posteriormente deformar el espacio
+    físico llevándolo así a convertirse en una malla estructurada uniforme.
+    En la figura~\ref{fig:malla-c} se observa que en el dominio físico, el
+    segmento $(ab)$ representa la sección del mallado donde se realiza el
+    corte y que también se le llama $(a'b')$, y que en el dominio
+    computacional este segmento representa dos segmentos diferentes.
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[keepaspectratio, width=155mm]{./Imagenes/malla-c}
+        \captionsetup{justification=centering, margin=2cm}
+        \caption[Malla tipo C]{Malla tipo C y su transformación del espacio
+            físico (izquierda) al espacio lógico (derecha).~\cite{blazek}}
+        \label{fig:malla-c}
+    \end{figure}
+
     \subsection{Mallas tipo O}
     \paragraph*{}
-        Este tipo de mallas son principalmente de sección circular, de ahí su
-        nombre. Suelen ser utilizadas para el análisis del flujo alrededor de
-        algunos componentes de aeronaves, como puede ser el fuselaje o las
-        góndolas, entre otros.\cite{vladimir-grid} También pueden llegar a
-        utilizarse en el análisis de perfiles alares, pero presentan la
-        dificultad de ofrecer una baja calidad de mallado en el borde de salida.\cite{blazek}\cite{best-practices-grid-generation}
+    Este tipo de mallas son principalmente de sección circular, de ahí su
+    nombre. Suelen ser utilizadas para el análisis del flujo alrededor de
+    algunos componentes de aeronaves, como puede ser el fuselaje o las
+    góndolas, entre otros.\cite{vladimir-grid} También pueden llegar a
+    utilizarse en el análisis de perfiles alares, pero presentan la
+    dificultad de ofrecer una baja calidad de mallado en el borde de
+    salida.~\cite{blazek}\cite{best-practices-grid-generation}
+
     \paragraph*{}
-        En este caso, al igual que sucede con las mallas tipo C, el resultado en
-        el dominio lógico es un cuadrado.El proceso de transformación de este
-        tipo de malla se puede conceptualizar como el desdoble del espacio
-        físico a partir de un corte, en la figura~\ref{fig:malla-o} se
-        representa como $(ac)$ o como $(a'c')$, para después deformarlo hasta
-        alcanzar la forma cuadrada esperada.
-            \begin{figure}[htbp!]
-                \centering
-                    \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-o}
-                    \captionsetup{justification=centering, margin=2cm}
-                    \caption[Malla tipo O]{Malla tipo O y su transformación del
-                    espacio físico (izquierda) al espacio lógico (derecha).\cite{blazek}}
-                \label{fig:malla-o}
-            \end{figure}
+    En este caso, al igual que sucede con las mallas tipo C, el resultado en
+    el dominio lógico es un cuadrado. El proceso de transformación de este
+    tipo de malla se puede conceptualizar como el desdoble del espacio
+    físico a partir de un corte, en la figura~\ref{fig:malla-o} se
+    representa como $(ac)$ o como $(a'c')$, para después deformarlo hasta
+    alcanzar la forma cuadrada esperada.
+    \begin{figure}[htbp!]
+        \centering
+            \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-o}
+            \captionsetup{justification=centering, margin=2cm}
+            \caption[Malla tipo O]{Malla tipo O y su transformación del
+            espacio físico (izquierda) al espacio lógico
+            (derecha).~\cite{blazek}}
+        \label{fig:malla-o}
+    \end{figure}
+
     \subsection{Mallas tipo H}
     \paragraph*{}
-        Este tipo de mallas son utilizadas principalmente en los análisis de
-        turbomaquinaria, específicamente en la zona de los alabes.\cite{blazek}\cite{best-practices-grid-generation}
-        También suelen utilizarse en el análisis de alas de aeronaves.\cite{vladimir-grid}
-    \paragraph*{}
-        La transformación en este tipo de malla, también da como resultado un
-        dominio computacional cuadrado, que puede tener o no un corte al
-        interior el cual corresponde a la frontera interior del dominio físico.
-        (Figura\ref*{fig:tipos-de-malla} (H)) La frontera externa del dominio
-        computacional corresponde a la frontera externa del dominio físico.
+    Este tipo de mallas son utilizadas principalmente en los análisis de
+    turbomaquinaria, específicamente en la zona de los
+    alabes.~\cite{blazek}\cite{best-practices-grid-generation}
+    También suelen utilizarse en el análisis de alas de
+    aeronaves.~\cite{vladimir-grid}
 
     \paragraph*{}
-        La figura\ref{fig:malla-h} muestra el uso de una malla tipo H para el
-        análisis del flujo a través de los álabes de una turbina, y su
-        transformación del dominio físico al computacional. En este caso no
-        existe un cuerpo en el centro del mallado, por lo que no hay corte
-        alguno en el dominio lógico.
-            \begin{figure}[htbp!]
-                \centering
-                \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-h}
-                \captionsetup{justification=centering, margin=2cm}
-                \caption[Malla tipo O]{Malla tipo H y su transformación del
-                    espacio físico (izquierda) al espacio lógico (derecha).
-                    \cite{blazek}}
-            \label{fig:malla-h}
-            \end{figure}
+    La transformación en este tipo de malla, también da como resultado un
+    dominio computacional cuadrado, que puede tener o no, un corte al
+    interior el cual corresponde a la frontera interior del dominio físico.
+    (Figura\ref*{fig:tipos-de-malla} (H)) La frontera externa del dominio
+    computacional corresponde a la frontera externa del dominio físico.
 
     \paragraph*{}
-        En el caso de que se quiera ocupar una malla H con un cuerpo a analizar
-        en el interior del dominio, como el caso representado en la figura\ref*{fig:tipos-de-malla} (H)
-        se puede realizar un mallado uniforme, quizás mediante un método de
-        interpolación algeráica, sobre el dominio físico quedando así
-        coincidente con el dominio computacional. Los puntos 5 y 6 requieren de
-        un trato especial al momento de llevar a cabo la solución, un ejemplo de
-        esto puede ser que todos los puntos del mallado que caen dentro del
-        objeto de análisis no sean utilizados durante la solución.
+    La figura\ref{fig:malla-h} muestra el uso de una malla tipo H para el
+    análisis del flujo a través de los álabes de una turbina, y su
+    transformación del dominio físico al computacional. En este caso no
+    existe un cuerpo en el centro del mallado, por lo que no hay corte
+    alguno en el dominio lógico.
+        \begin{figure}[htbp!]
+            \centering
+            \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-h}
+            \captionsetup{justification=centering, margin=2cm}
+            \caption[Malla tipo O]{Malla tipo H y su transformación del
+                espacio físico (izquierda) al espacio lógico (derecha).
+                \cite{blazek}}
+        \label{fig:malla-h}
+        \end{figure}
+
+    \paragraph*{}
+    En el caso de que se quiera ocupar una malla H con un cuerpo a analizar
+    en el interior del dominio, como el caso representado en la
+    figura\ref*{fig:tipos-de-malla} (H) se puede realizar un mallado uniforme,
+    quizás mediante un método de interpolación algebráica, sobre el dominio
+    físico quedando así coincidente con el dominio computacional. Los puntos
+    5 y 6 requieren de un trato especial al momento de llevar a cabo la
+    solución, un ejemplo de esto puede ser que todos los puntos del mallado que
+    caen dentro del objeto de análisis no sean utilizados durante la solución.
 
     \section{Mallas Adaptativas}
     \paragraph*{}
-        A pesar de que existen varios modelos algebráicos y diferenciales para
-        la generación de mallas, aún hay problemas para los cuales estos métodos
-        no generen una malla adecuada, ya sea que la malla se aleje mucho de la
-        ortogonalidad en ciertos puntos, que esté coprimida, e incluso no se
-        llegue a la convergencia. Desde la década de 1960, época en la que la
-        generación de mallas comienza a ser estudiada con mayor seriedad, se han
-        analizado enfoques variables para solucionar los problemas presentados
-        en los enfoques diferenciales.
+    A pesar de que existen varios modelos algebráicos y diferenciales para
+    la generación de mallas, aún hay problemas para los cuales estos métodos
+    no generen una malla adecuada, ya sea que la malla se aleje mucho de la
+    ortogonalidad en ciertos puntos, que esté coprimida, e incluso no se
+    llegue a la convergencia. Desde la década de 1960, época en la que la
+    generación de mallas comienza a ser estudiada con mayor seriedad, se han
+    analizado enfoques variables para solucionar los problemas presentados
+    en los enfoques diferenciales.
 
     \section{Consideraciones preliminares para la generación de mallas}
     \paragraph*{}
-        La densidad de la malla es el primer aspecto que se debe considerar, se
-        debe generar una malla solo sufcientemente densa para que la
-        aproximación numérica sea precisa, sin embargo, se debe tener cuidado en
-        no hacer la malla demasiado densa, tanto que resulte impractico llevar a
-        cabo un análisis y llegar a una eventual solución.
-    \paragraph{}
-        Otro importante aspecto a tener en cuenta durante este proceso, es la
-        eficiencia computacional. Por un lado el uso de memoria podría ser tan
-        grande que resulte impractico llevar a cabo este proceso, por lo que una
-        organización adecuada de la información es de vital importancia. Por
-        otro lado, la generación de mallas debe llevarse a cabo mediante la
-        implementación de códigos lo menos complejos posible.
+    La densidad de la malla es el primer aspecto que se debe considerar, se
+    debe generar una malla solo sufcientemente densa para que la
+    aproximación numérica sea precisa, sin embargo, se debe tener cuidado en
+    no hacer la malla demasiado densa, tanto que resulte impractico llevar a
+    cabo un análisis y llegar a una eventual solución.
+
+    \paragraph*{}
+    Otro importante aspecto a tener en cuenta durante este proceso, es la
+    eficiencia computacional. Por un lado el uso de memoria podría ser tan
+    grande que resulte impractico llevar a cabo este proceso, por lo que una
+    organización adecuada de la información es de vital importancia. Por
+    otro lado, la generación de mallas debe llevarse a cabo mediante la
+    implementación de códigos lo menos complejos posible.
 
     \section{Técnicas de generación del mallado}
     \paragraph*{}
-        La generación de mallas \textit{per se}, es un proceso libre durante su
-        desarrollo, es decir, no se lleva a cabo mediante alguna fórmula o
-        procedimiento estricto, por lo tanto, cualquier desarrollo se puede
-        considerar apto para este propósito siempre y cuando dé como resultado
-        una mallado adecuado para el análisis que se pretende realizar. Sin
-        embargo, si hay ciertas consideraciones a tomar en cuenta, tales como la
-        capacidad de manejar problemas con múltiples variables, las cuales
-        podrían variar en varios órdenes de magnitud. Del mismo modo, se debe
-        considerar la posibilidad de presentar factores de compresión en ciertas
-        áreas de la malla, en contraste con una malla uniforme.
+    La generación de mallas \textit{per se}, es un proceso libre durante su
+    desarrollo, es decir, no se lleva a cabo mediante alguna fórmula o
+    procedimiento estricto, por lo tanto, cualquier desarrollo se puede
+    considerar apto para este propósito siempre y cuando dé como resultado
+    una mallado adecuado para el análisis que se pretende realizar. Sin
+    embargo, si hay ciertas consideraciones a tomar en cuenta, tales como la
+    capacidad de manejar problemas con múltiples variables, las cuales
+    podrían variar en varios órdenes de magnitud. Del mismo modo, se debe
+    considerar la posibilidad de presentar factores de compresión en ciertas
+    áreas de la malla, en contraste con una malla uniforme.
 
     \paragraph*{}
-        Podemos señalar principalmente dos tipos de técnicas para la generación
-        de mallado, de entre el amplio número de técnicas existentes al día de
-        hoy, las cuales son:
-        \begin{itemize}
-            \item Métodos algebráicos: es de todos, el método más sencillo de
-                implementar, una de sus ventajas es la rapidez con la que se
-                genera la malla. Se utiliza un método de interpolación para
-                determinar los nodos del mallado, partiendo de las coordenadas
-                de la frontera externa e interna. Y se realiza la transformación
-                del dominio físico al lógico mediante una ecuación algebráica.
-            \item Metódos mediante  ecuaciones diferenciales parciales (EDP): se
-                resuelve una EDP para obtener la distribución de los nodos,
-                la resolución de las mismas se lleva a cabo mediante
-                aproximaciones por el método de diferencias finitas. La
-                distribución de la malla puede ser uniforme o concentrada
-                dependiendo del tipo de ecuación que se resuelva.
-        \end{itemize}
+    Podemos señalar principalmente dos tipos de técnicas para la generación
+    de mallado, de entre el amplio número de técnicas existentes al día de
+    hoy, las cuales son:
+    \begin{itemize}
+        \item Métodos algebráicos: es de todos, el método más sencillo de
+            implementar, una de sus ventajas es la rapidez con la que se
+            genera la malla. Se utiliza un método de interpolación para
+            determinar los nodos del mallado, partiendo de las coordenadas
+            de la frontera externa e interna. Y se realiza la transformación
+            del dominio físico al lógico mediante una ecuación algebráica.
+        \item Metódos mediante  ecuaciones diferenciales parciales (EDP): se
+            resuelve una EDP para obtener la distribución de los nodos,
+            la resolución de las mismas se lleva a cabo mediante
+            aproximaciones por el método de diferencias finitas. La
+            distribución de la malla puede ser uniforme o concentrada
+            dependiendo del tipo de ecuación que se resuelva.
+    \end{itemize}
 
 \section{Generación de mallas mediante métodos algebráicos}
     \paragraph*{}
-        Como ya se mencionó previamente, los métodos más eficientes para la
-        generación de mallas son los métodos algebráicos. Éstos métodos basados
-        en interpolación son de gran utilidad en la industria, debido a su
-        sencilla implementación, además de la capacidad de control sobre la
-        densidad de la malla respecto a un nodo dentro del dominio. Un aspecto
-        en contra de la generación de mallas mediante estos métodos es que no
-        tienen la capacidad de suavizar las curvas, si no que tienden a mantener
-        la forma de las fronteras, por lo que si se llegara a presentar algún
-        tipo de discontinuidad en la frontera interna (superficie de análisis),
-        esta seguiría presente los nodos internos de la malla. Es por esto que
-        estos métodos son utilizados de manera general, como una primera
-        aproximación, la cual sirve como condición inicial en la generación de
-        mallas mediante la solución de sistemas de ecuaciones diferenciales
-        parciales.\cite{farrashkhalvat}
+     Como ya se mencionó previamente, los métodos más eficientes para la
+     generación de mallas son los métodos algebráicos. Estos métodos basados
+     en interpolación son de gran utilidad en la industria, debido a su
+     sencilla implementación, además de la capacidad de control sobre la
+     densidad de la malla respecto a un nodo dentro del dominio. Un aspecto
+     en contra de la generación de mallas mediante estos métodos es que no
+     tienen la capacidad de suavizar las curvas, si no que tienden a mantener
+     la forma de las fronteras, por lo que si se llegara a presentar algún
+     tipo de discontinuidad en la frontera interna (superficie de análisis),
+     ésta seguiría presente en los nodos internos de la malla. Es por esto que
+     estos métodos son utilizados de manera general, como una primera
+     aproximación, la cual sirve como condición inicial en la generación de
+     mallas mediante la solución de sistemas de ecuaciones diferenciales
+     parciales.\cite{farrashkhalvat}
+
     \paragraph*{}
-        La idea fundamental sobre la cual se desarrollan todos los métodos
-        algebráicos es el uso de funciones de interpolación matemática para
-        interpolar entre algunos puntos conocidos o previamente asignados
-        (fronteras) para así obtener la distribución de puntos que se ubican
-        entre los ya mencionados. El método de interpolación puede variar
-        dependiendo del método algebráico que se esté empleando, pero la idea
-        base permanece.\cite{siladicParabolic}
+    La idea fundamental sobre la cual se desarrollan todos los métodos
+    algebráicos es el uso de funciones de interpolación matemática para
+    interpolar entre algunos puntos conocidos o previamente asignados
+    (fronteras) para así obtener la distribución de puntos que se ubican
+    entre los ya mencionados. El método de interpolación puede variar
+    dependiendo del método algebráico que se esté empleando, pero la idea
+    base permanece.\cite{siladicParabolic}
+
     \paragraph*{}
-        Los métodos algebráicos relacionan un dominio computacional, descrito
-        por un cuadrado en 2D y un cubo en 3D, con un dominio físico de
-        geometría arbitraria.
+    Los métodos algebráicos relacionan un dominio computacional, descrito
+    por un cuadrado en 2D y un cubo en 3D, con un dominio físico de
+    geometría arbitraria.
 
     \subsection{Interpolación unidireccional}
     \paragraph*{}
-        La interpolación unidireccional se lleva a cabo interpolando una línea
-        a la vez, en una dirección del espacio computacional, ya sea $\xi$ o
-        $\eta$. Es decir, para interpolar en la dirrección $\xi$ (desarrollo que
-        se presenta en este trabajo), se deben seleccionar puntos en las
-        frontera tanto interna como externa, que correspondan a la misma línea
-        $\eta = constante$ y a lo largo de la cual se hará la interpolación,
-        haciendo la variación en la coordenada $\xi$, interpolando así, línea
-        por línea hasta terminarse de generar la malla. El mismo procedimiento
-        se puede llevar a cabo interpolando en la dirección de $\eta$.
+    La interpolación unidireccional se lleva a cabo interpolando una línea
+    a la vez, en una dirección del espacio computacional, ya sea $\xi$ o
+    $\eta$. Es decir, para interpolar en la dirrección $\xi$ (desarrollo que
+    se presenta en este trabajo), se deben seleccionar puntos en las
+    frontera tanto interna como externa, que correspondan a la misma línea
+    $\eta = constante$ y a lo largo de la cual se hará la interpolación,
+    haciendo la variación en la coordenada $\xi$, interpolando así, línea
+    por línea hasta terminarse de generar la malla. El mismo procedimiento
+    se puede llevar a cabo interpolando en la dirección de $\eta$.
+
     \subsubsection{Interpolación Polinomial}\label{Lagrange}
     \paragraph*{}
-        En este método se ocupa el polinomio de Lagrange como ecuación de
-        interpolación para generar la malla.
-        \begin{align}
-            L_{i}(x) = \frac{(x - x_{0})(x - x_{1}) \dotsb (x - x_{i-1}) (x - x_{i+1}) \dotsb (x - x_{n})}{(x_{i} - x_{0} )(x_{i} - x_{1}) \dotsb (x_{i} - x_{i-1}) (x_{i} - x_{i+1}) \dotsb (x_{i} - x_{n}) } && i = 0, 1, \dotsc , n
-        \end{align}
-        \\El polinomio resultante será de grado $n$, donde el numerador omite el término $(x - x_{i})$
+    En este método se ocupa el polinomio de Lagrange como ecuación de
+    interpolación para generar la malla.
+    \begin{align}
+        L_{i}(x) = \frac{(x - x_{0})(x - x_{1}) \dotsb (x - x_{i-1}) (x - x_{i+1}) \dotsb (x - x_{n})}{(x_{i} - x_{0} )(x_{i} - x_{1}) \dotsb (x_{i} - x_{i-1}) (x_{i} - x_{i+1}) \dotsb (x_{i} - x_{n}) } && i = 0, 1, \dotsc , n
+    \end{align}
+    \\El polinomio resultante será de grado $n$, donde el numerador omite el
+    término $(x - x_{i})$
 
     \paragraph*{}
-        El caso más sencillo con el que se puede trabajar el polinomio de
-        Lagrange es generando un polinomio de grado 1, que resulta ser una línea
-        recta que pasa a través de dos puntos $(x_{0} , y_{0})$ y $(x_{1}, y_{1})$,
-        los cuales pertenecen a la frontera interna y externa respectivamente.
-        Para este caso, se tienen los siguientes términos:
-        \begin{align*}
-            L_{0} = \frac{( x - x_{1} )}{(x_{0} - x_{1})} && L_{1} = \frac{( x - x_{0} )}{(x_{1} - x_{0} )}
-        \end{align*}
-        dando como resultado la ecuación que describe a una recta
-        \begin{equation}
-            y = y_{0} \frac{( x - x_{1} )}{( x_{0} - x_{1} )}  + y_{1} \frac{(x - x_{0})}{( x_{1} - x_{0} )} = y_{0} (1 - \xi) + y_{1}\xi
-        \end{equation}
-        de donde se sabe que
-        \begin{equation}
-            \xi = \frac{x - x_{0}}{x_{1} - x_{0}}
-            \label{xi}
-        \end{equation}
-        y se observa que $\xi = 0, 1$ cuando $x = x_{0}, x_{1}$ respectivamente.
-    \paragraph*{}
-        Despejando $x$ de la ecuación\ref{xi} se obtiene:
-        \begin{equation}
-            x = (x_{1} - x_{0})\xi - x_{0} = x_{0}(1 - \xi) + x_{1}\xi
-        \end{equation}
-        por lo que la ecuación constitutiva de éste método, para una
-        interpolación en dirección del eje $\xi$ del espacio computacional puede
-        escribirse de la siguiente manera:
-        \begin{equation}
-            r(\xi, \eta_{j}) = (1 - \xi_{i}) r(0, \eta_{j}) + \xi_{i}r(1, \eta_{j})
-        \end{equation}
+    El caso más sencillo con el que se puede trabajar el polinomio de
+    Lagrange es generando un polinomio de grado 1, que resulta ser una línea
+    recta que pasa a través de dos puntos $(x_{0} , y_{0})$ y $(x_{1}, y_{1})$,
+    los cuales pertenecen a la frontera interna y externa respectivamente.
+    Para este caso, se tienen los siguientes términos:
+    \begin{align*}
+        L_{0} = \frac{( x - x_{1} )}{(x_{0} - x_{1})} && L_{1} = \frac{( x - x_{0} )}{(x_{1} - x_{0} )}
+    \end{align*}
+    dando como resultado la ecuación que describe a una recta
+    \begin{equation}
+        y = y_{0} \frac{( x - x_{1} )}{( x_{0} - x_{1} )}  + y_{1} \frac{(x - x_{0})}{( x_{1} - x_{0} )} = y_{0} (1 - \xi) + y_{1}\xi
+    \end{equation}
+    de donde se sabe que
+    \begin{equation}
+        \xi = \frac{x - x_{0}}{x_{1} - x_{0}}
+        \label{xi}
+    \end{equation}
+    y se observa que $\xi = 0, 1$ cuando $x = x_{0}, x_{1}$ respectivamente.
 
     \paragraph*{}
-        Se puede hacer uso de la generación de un polinomio de mayor grado, para
-        lo cual se deben proporcionar más puntos previamente definidos por los
-        cuales tiene que pasar la curva descrita del polinomio. Para generar una
-        ecuación de grado $n$ se deben proporcionar como datos de inicio, al
-        menos $n+1$, es decir, si se quisiera hacer la interpolación mediante un
-        polinomio de grado 2, se debe proporcionar la información de al menos 3
-        puntos. Siempre cabe la posibilidad de que los puntos pertenezcan a una
-        linea recta, en cuyo caso los términos de mayor orden se verán
-        eliminados.
+    Despejando $x$ de la ecuación\ref{xi} se obtiene:
+    \begin{equation}
+        x = (x_{1} - x_{0})\xi - x_{0} = x_{0}(1 - \xi) + x_{1}\xi
+    \end{equation}
+    por lo que la ecuación constitutiva de éste método, para una
+    interpolación en dirección del eje $\xi$ del espacio computacional puede
+    escribirse de la siguiente manera:
+    \begin{equation}
+        r(\xi, \eta_{j}) = (1 - \xi_{i}) r(0, \eta_{j}) + \xi_{i}r(1, \eta_{j})
+    \end{equation}
+
     \paragraph*{}
-        Las figuras\ref{fig:malla-inter} y\ref{fig:malla-inter-cerca}
-        presentan una malla y su vista de detalle generada mediante este método
-        alrededor de un perfil aerodinámico.
-        \begin{figure}[htbp!]
-            \centering
-            \includegraphics[keepaspectratio, width=120mm]{./Imagenes/M-inter_pol}
-            \captionsetup{justification=centering, margin=2cm}
-            \caption[Malla Interpolación Polinomial]{Malla tipo O generada
-            mediante el método de interpolación polinomial alrededor de un
-            perfil NACA 2412. Densidad de malla $49\times15$}
-            \label{fig:malla-inter}
-        \end{figure}
-        \begin{figure}[htbp!]
-            \centering
-            \includegraphics[width=120mm]{./Imagenes/M-inter_pol_cerca}
-            \captionsetup{justification=centering, margin=2cm}
-            \caption[Malla Interpolación Polinomial Acercamiento]{Vista de
-            acercamiento a la malla generada de la figura\ref{fig:malla-inter}}
-            \label{fig:malla-inter-cerca}
-        \end{figure}
+    Se puede hacer uso de la generación de un polinomio de mayor grado, para
+    lo cual se deben proporcionar más puntos previamente definidos por los
+    cuales tiene que pasar la curva descrita del polinomio. Para generar una
+    ecuación de grado $n$ se deben proporcionar como datos de inicio, al
+    menos $n+1$, es decir, si se quisiera hacer la interpolación mediante un
+    polinomio de grado 2, se debe proporcionar la información de al menos 3
+    puntos. Siempre cabe la posibilidad de que los puntos pertenezcan a una
+    linea recta, en cuyo caso los términos de mayor orden se verán
+    eliminados.
+
+    \paragraph*{}
+    Las figuras~\ref{fig:malla-inter} y~\ref{fig:malla-inter-cerca}
+    presentan una malla y su vista de detalle generada mediante este método
+    alrededor de un perfil aerodinámico.
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[keepaspectratio, width=120mm]{./Imagenes/M-inter_pol}
+        \captionsetup{justification=centering, margin=2cm}
+        \caption[Malla Interpolación Polinomial]{Malla tipo O generada
+        mediante el método de interpolación polinomial alrededor de un
+        perfil NACA 2412. Densidad de malla $49\times15$}
+        \label{fig:malla-inter}
+    \end{figure}
+    \begin{figure}[htbp!]
+        \centering
+        \includegraphics[width=120mm]{./Imagenes/M-inter_pol_cerca}
+        \captionsetup{justification=centering, margin=2cm}
+        \caption[Malla Interpolación Polinomial Acercamiento]{Vista de
+        acercamiento a la malla generada de la figura\ref{fig:malla-inter}}
+        \label{fig:malla-inter-cerca}
+    \end{figure}
 
     \subsubsection{Interpolación mediante polinomios de Hermite}
     \paragraph*{}
-        La interpolación mediante el polinomio de Lagrange se realiza mediante
-        el uso de valores conocidos de ciertos puntos, sin embargo, es posible
-        generar una malla partiendo tanto de valores conocidos de una función
-        como de los valores de su primer derivada para ciertos puntos dados.
-        El polinomio que describe este método se escribe como:
-        \begin{equation}
-        p(x) = \sum_{i = 0}^{n} y_{i}H_{i}(x) + \sum_{i = 0}^{n}y_{i}\prime \widetilde{H}_{i}(x)
-        \end{equation}
+    La interpolación mediante el polinomio de Lagrange se realiza mediante
+    el uso de valores conocidos de ciertos puntos, sin embargo, es posible
+    generar una malla partiendo tanto de valores conocidos de una función
+    como de los valores de su primer derivada para ciertos puntos dados.
+    El polinomio que describe este método se escribe como:
+    \begin{equation}
+    p(x) = \sum_{i = 0}^{n} y_{i}H_{i}(x) + \sum_{i = 0}^{n}y_{i}\prime \widetilde{H}_{i}(x)
+    \end{equation}
 
     \paragraph*{}
-        Los siguientes polinomios definen los polinomios de Hermite $H_{i}(x) \widetilde{H}_{i}(x)$
-        en función de polinomios de Lagrange:
-        \begin{equation}
-            H_{i}(x) = \{  1 - 2L\prime_{i}(x_{i})(x - x_{i})  \} \left[L_{i}\right]^2
-        \end{equation}
-        \begin{equation}
-            \widetilde{H}_{i}(x) = (x - x_{i}) \left[L_{i}\right] ^ 2
-        \end{equation}
+    Los siguientes polinomios definen los polinomios de Hermite $H_{i}(x)$
+    y $\widetilde{H}_{i}(x)$
+    en función de polinomios de Lagrange:
+    \begin{equation}
+        H_{i}(x) = \{  1 - 2L\prime_{i}(x_{i})(x - x_{i})\}
+        \left[L_{i}\right]^2
+    \end{equation}
+    \begin{equation}
+        \widetilde{H}_{i}(x) = (x - x_{i}) \left[L_{i}\right] ^ 2
+    \end{equation}
+
     \paragraph*{}
-        Se suele usar polinomios de Hermite cubicos, para los cuales se requiere
-        el uso de polinomios de Lagrange de primer grado, es decir polinomios
-        lineales. La ecuación constitutiva de la interpolación en dirección del
-        eje $\xi$, por polinomios cúbicos de Hermite queda expresada de la
-        siguiente manera:
-        \begin{equation}
-            r(\xi) = \sum_{i = 0}^{n} r_{i}H_{i}(\xi) + \sum_{i = 0}^{n} r\prime_{i}\widetilde{H}_{i}(\xi)
-        \end{equation}
-        que a su vez, desarrollando las operaciones matemáticas, se expresa como:
-        \begin{align}
-            &\begin{aligned}
-                r(\xi, \eta_{j}) =& r(0, \eta_{j})(2\xi^3 - 3\xi^2 +1) + r(1, \eta_{j})(3\xi^2 - 2\xi^3) \\ &+ r\prime(0, \eta_{j})(\xi^3 - 2\xi^2 + \xi) + r\prime(1, \eta_{j})(\xi^3 - \xi^2)
-            \end{aligned}
-        \end{align}
+    Se suele usar polinomios de Hermite cubicos, para los cuales se requiere
+    el uso de polinomios de Lagrange de primer grado, es decir polinomios
+    lineales. La ecuación constitutiva de la interpolación en dirección del
+    eje $\xi$, por polinomios cúbicos de Hermite queda expresada de la
+    siguiente manera:
+    \begin{equation}
+        r(\xi) = \sum_{i = 0}^{n} r_{i}H_{i}(\xi) + \sum_{i = 0}^{n} r\prime_{i}\widetilde{H}_{i}(\xi)
+    \end{equation}
+    que a su vez, desarrollando las operaciones matemáticas, se expresa como:
+    \begin{align}
+        &\begin{aligned}
+            r(\xi, \eta_{j}) =& r(0, \eta_{j})(2\xi^3 - 3\xi^2 +1) + r(1, \eta_{j})(3\xi^2 - 2\xi^3) \\ &+ r\prime(0, \eta_{j})(\xi^3 - 2\xi^2 + \xi) + r\prime(1, \eta_{j})(\xi^3 - \xi^2)
+        \end{aligned}
+    \end{align}
 
     \subsection{Interpolación multidireccional}
     \paragraph*{}
