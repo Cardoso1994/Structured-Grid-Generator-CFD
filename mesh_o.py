@@ -186,12 +186,13 @@ class mesh_O(mesh):
         # se inician variables
         Xn  = self.X
         Yn  = self.Y
+        Xo = np.copy(Xn)
+        Yo = np.copy(Yn)
         m   = self.M
         n   = self.N
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        # omega   = np.longdouble(1.3)  # en caso de metodo SOR
         '''
         para métodos de relajación:
             0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
@@ -200,15 +201,7 @@ class mesh_O(mesh):
         '''
 
         # parámetros de ecuación de Poisson
-        Q           = 0
-        P           = 0
-        I           = 0
-        # a           = np.longdouble(0.0)
-        # c           = np.longdouble(0.0)
-        # aa          = np.longdouble(20.5) # 26.5
-        # cc          = np.longdouble(6.5)  # 6.5
-        # linea_eta   = 0.0
-        # linea_xi    = 0.0
+        # I           = 0
         P_ = np.arange(1, m)
         Q_ = np.arange(1, n)
 
@@ -224,16 +217,23 @@ class mesh_O(mesh):
         mask = np.isnan(Q_)
         Q_[mask] = 0
 
-        mesh.it_max = 45e3
+        mesh.it_max = 55e3
 
         it = 0
         print("Poisson:")
         # inicio del método iterativo
         while it < mesh.it_max:
             if (it % 10000 == 0):
+            # if (it % 5000 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
                 self.plot()
 
-            print('it = ' + str(it) + '\t', end="\r")
+            # printing info
+            print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
             # método iterativo Jacobi
@@ -243,6 +243,7 @@ class mesh_O(mesh):
             else:   # método Gauss-Seidel o SOR
                 X = Xn
                 Y = Yn
+
             for j in range(1, n-1):
                 for i in range(1, m-1):
                     x_eta   = (X[i, j+1] - X[i, j-1]) / 2 / d_eta

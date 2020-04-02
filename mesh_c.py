@@ -289,29 +289,13 @@ class mesh_C(mesh):
 
         Xn      = self.X
         Yn      = self.Y
+        Xo = np.copy(Xn)
+        Yo = np.copy(Yn)
         m       = self.M
         n       = self.N
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        # omega = np.longdouble(0.3)  # en caso de metodo SOR
-        '''
-        para métodos de relajación:
-            0 < omega < 1 ---> bajo-relajación. la solución tiende a diverger
-            omega = 1     ---> método Gauss-Seidel
-            1 < omega < 2 ---> sobre-relajación. acelera la convergencia.
-                        se sabe que la solución converge.
-        '''
-
-        # parámetros de ecuación de Poisson
-        # a = np.longdouble(0)
-        # c = np.longdouble(0)
-        # aa = np.longdouble(279.2) # 489.2 # 231.5 # 105.2
-        # cc = np.longdouble(7.0)  # 8.3 # 12.3 # 8.3
-        # aa = np.longdouble(45)
-        # cc = np.longdouble(7)
-        # linea_xi = 0.0
-        # linea_eta = 0.0
         P_ = np.arange(1, m)
         Q_ = np.arange(1, n)
         P_ = -a * (np.longdouble(P_ / (m-1) - linea_xi))\
@@ -325,12 +309,21 @@ class mesh_C(mesh):
 
         it = 0
         # mesh.err_max = 1e-5
-        mesh.it_max = 45e3
+        mesh.it_max = 55e3
 
         # inicio del método iterativo
         print("Poisson:")
         while it < mesh.it_max:
-            print('it = ' + str(it) + ' \t\t', end="\r")
+            if (it % 10000 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
+                self.plot()
+
+            # printing info
+            print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
             # si el método iterativo es Jacobi
