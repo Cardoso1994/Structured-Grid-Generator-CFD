@@ -1227,13 +1227,13 @@
     que coincida con la fronteras especificadas. Este método consiste en la
     suma de las interpolaciones de una sola variable para cada una de las
     coordenadas computacionales. Existen diversos tipos de interpolación a
-    lo largo de una coordena, por lo que existen práctimanete un número
+    lo largo de una coordenada, por lo que existen práctimanete un número
     ilimitado de variantes de TFI creadas a partir de la combinación de
     diversas interpolaciones de una sola variable.\cite{thompsonhandbook}
 
     \paragraph*{}
     Una de las principales ventajas del método de interpolación transfinita
-    es que asegura una concordancia en las fronters en ambas direcciones.
+    es que asegura una concordancia en las fronteras en ambas direcciones.
     Su escencia es la de la interpolación en cada una de las coordenadas
     computacionales, formando así los productos tensores de las
     interpolaciones, y finalmente, se lleva a cabo una suma ``booleana''.
@@ -1243,12 +1243,12 @@
 
     \paragraph*{}
     A partir de la existencia de una transformación $r = r(\xi, \eta)$
-    ($x = x(\xi, \eta), y = y(\xi, \eta)$ la cual hace un mapeo de un
-    cuadrado de dimensiones $0 < \xi < 1, 0 < \eta < 1$ en el dominio
+    ($x = x(\xi, \eta)$, $y = y(\xi, \eta)$) la cual hace un mapeo de un
+    cuadrado de dimensiones $0 < \xi < 1$, $0 < \eta < 1$ en el dominio
     computacional, con la región del dominio físico, delimitada por una
     frontera externa y una interna, que se pretende analizar.
     De igual modo, se puede escribir otra transformación $P_{\xi}$,
-    la cual recibe el nombre de proyector, la cual relaciona puntos en el
+    la cual recibe el nombre de proyector, y que relaciona puntos en el
     espacio lógico con puntos en el espacio físico, definida como:
     \begin{equation}
         P_{\xi}(\xi, \eta) = (1 - \xi)r(0, \eta) + \xi r(1, \eta)
@@ -1338,7 +1338,7 @@
     \end{align}
 
     \paragraph*{}
-    Esta ecuación es la base del métro de TFI para dos dimensiones. La
+    Esta ecuación es la base del método de TFI para dos dimensiones. La
     malla se genera tomando valores discretos $\xi_{i}, \eta_{j}$ para
     los ejes $\xi$ y $\eta$.
 
@@ -1363,8 +1363,8 @@
 
     \subsubsection{Generación de mallas mediante EDP elípticas}
     \paragraph*{}
-    Para la solución de un sistema de EDP elípticas se necesita cumplir la
-    condición de tener definidas las condiciones de frontera a lo largo de
+    Para la solución de un sistema de EDP elípticas se necesita cumplir con la
+    característica de tener definidas las condiciones de frontera a lo largo de
     todos los puntos pertenecientes a la misma, es decir, que se tengan
     condiciones de frontera de Dirichlet.
     La solución se obtiene mediante diferentes métodos numéricos iterativos
@@ -1418,7 +1418,7 @@
 
     \paragraph*{}
     La distribución de los nodos, obtenidos mediante la solución de la
-    ecuación de Laplace (ecuación~\ref{ec-laplace}), tiende ser uniforme
+    ecuación de Laplace (ecuación~\ref{ec-laplace}), tiende a ser uniforme
     debido al efecto suavizante de dicha ecuación. Para poder manipular esta
     distribución, es necesario agregar funciones de forzado a la
     ecuación~\ref{ec-laplace}, dando como resultado la ecuación de Poisson:
@@ -1456,7 +1456,7 @@
     El uso de las funciones $P$ y $Q$ para manipular la densidad de puntos
     alrededor de ciertas zonas se logra atrayendo las líneas vecinas a una
     línea seleccionada. La misma funciona para los nodos, haciendo la
-    atracción de los nodos colindantes hacie el nodo seleccionado. O bien,
+    atracción de los nodos colindantes hacia el nodo seleccionado. O bien,
     se puede llevar a cabo una combinación de ambos efectos.
 
     \paragraph*{}
@@ -1486,8 +1486,8 @@
     $\xi = \xi_{m}$ como líneas $\eta = \eta_{m}$ y $N$ representa el número
     de nodos ($\xi = \xi_{n}, \eta = \eta_{n}, 0 \leq \xi_{n}, \eta_{n} \leq 1$)
     a los que la malla se verá atraída. Los factores $a_{m}$ y $b_{n}$ son
-    factores de amplificación, mientras que los factores $c_{m}$ y $d_{n}$
-    son factores de decaimiento,estos cuatro parámetros son datos de entrada
+    factores de amplificación, por su parte los factores $c_{m}$ y $d_{n}$
+    son factores de decaimiento. Estos cuatro parámetros son datos de entrada
     para el código, asignados por el usuario, y los cuatro deben ser valores
     positivos.
 
@@ -1557,57 +1557,59 @@
             + Q \left( Y_{i, j+1} - Y_{i, j-1} \right)\right)
         \Biggr]
     \end{align}
-    donde $P=0$ y $Q=0$ si se pretende utilizar la ecuación de Laplace.
+    donde $P=0$ y $Q=0$ si se desea dar solución a la ecuación de Laplace.
 
     \subsubsection{Generación de mallas mediante EDP hiperbólicas}
     \paragraph*{}
-        La generación de mallas mediante EDP elípticas puede ser demasiado
-        costosa en términos de tiempo de cómputo, así como en el uso de memoria
-        en el ordenador. Esto se debe a que dicho esquema intenta hacer
-        coincidir un sistema de coordenadas curvilíneo a cuatro curvas de
-        frontera, seis en mallas tridimensionales. De aquí surge un nuevo
-        enfoque, en el cual solo se requiere iniciar la solución con una sola
-        frontera e ir avanzando hacia afuera en el dominio físico usando EDP
-        hiperbólicas. \cite{farrashkhalvat}
+    La generación de mallas mediante EDP elípticas puede ser demasiado
+    costosa en términos de tiempo de cómputo, así como en el uso de memoria
+    en el ordenador. Esto se debe a que dicho esquema intenta hacer
+    coincidir un sistema de coordenadas curvilíneo a cuatro curvas de
+    frontera, seis en mallas tridimensionales. De aquí surge un nuevo
+    enfoque, en el cual solo se requiere iniciar la solución con una sola
+    frontera e ir avanzando hacia afuera en el dominio físico usando EDP
+    hiperbólicas. \cite{farrashkhalvat}
+
     \paragraph*{}
-        Con este propósito se toma en cuenta el trabajo publicado por Steger y
-        Chausse \cite{Hyperbolic-steger1980generation} para la generación de
-        mallas bidimensionales ortogonales y con control del área de celda. Se
-        inicia el proceso con una frontera única en la que se considera que
-        $\eta = 0$. Se propone también un sistema de ecuaciones de primer orden
-        para las coordenadas $x, y$ como funciones de $\xi, \eta$:
-        \begin{subequations}
-            \begin{equation}
-                g_{12} = g_1  \cdot g_2 = x_{\xi} x_{\eta} + y_{\xi} y_{\eta} = 0
-            \end{equation}
-            \begin{equation}
-                \abs{g_1 \times g_2} = x_\xi y_\eta - x_\eta y_\xi = F
-            \end{equation}
-            \label{ec-hyper-base}
-        \end{subequations}
+    Con este propósito se toma en cuenta el trabajo publicado por Steger y
+    Chausse \cite{Hyperbolic-steger1980generation} para la generación de
+    mallas bidimensionales ortogonales y con control del área de celda. Se
+    inicia el proceso con una frontera única en la que se considera que
+    $\eta = 0$. Se propone también un sistema de ecuaciones de primer orden
+    para las coordenadas $x, y$ como funciones de $\xi, \eta$:
+    \begin{subequations}
+        \begin{equation}
+            g_{12} = g_1  \cdot g_2 = x_{\xi} x_{\eta} + y_{\xi} y_{\eta} = 0
+        \end{equation}
+        \begin{equation}
+            \abs{g_1 \times g_2} = x_\xi y_\eta - x_\eta y_\xi = F
+        \end{equation}
+        \label{ec-hyper-base}
+    \end{subequations}
+
     \paragraph*{}
-        La primera ecuación dota a la malla de ortogonalidad, mientras que la
-        segunda tiene el término $F$ como una medida del área de la celda (si el
-        producto $\delta\xi\delta\eta$ es el mismo para cada celda). Se puede
-        trabajar utilizando $F$ como una función de $\xi, \eta$, lo que
-        permitiría incrementar la densidad de la malla cerca de la frontera
-        donde $\eta = 0$ haciendo que $F$ tenga un valor pequeño en dicha zona.
-        De las ecuaciones~\ref{ec-hyper-base}:
-        \begin{subequations}
-            \begin{equation}
-                x_\eta = - \frac{F}{x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
-            \end{equation}
-            \begin{equation}
-                y_\eta = \frac{F}{x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
-            \end{equation}
-        \end{subequations}
+    La primera ecuación dota a la malla de ortogonalidad, mientras que la
+    segunda tiene el término $F$ como una medida del área de la celda (si el
+    producto $\delta\xi\delta\eta$ es el mismo para cada celda). Se puede
+    trabajar utilizando $F$ como una función de $\xi, \eta$, lo que
+    permitiría incrementar la densidad de la malla cerca de la frontera
+    donde $\eta = 0$ haciendo que $F$ tenga un valor pequeño en dicha zona.
+    De las ecuaciones~\ref{ec-hyper-base}:
+    \begin{subequations}
+        \begin{equation}
+            x_\eta = - \frac{F}{x_\xi ^ 2 + y_\xi ^ 2 } y_\xi
+        \end{equation}
+        \begin{equation}
+            y_\eta = \frac{F}{x_\xi ^ 2 + y_\xi ^ 2 } x_\xi
+        \end{equation}
+    \end{subequations}
 
     \paragraph*{}
     Antes de proceder a la solución del sistema de las
-    ecuaciones~\ref{ec-hyper-base} se deben tomar en cuenta algunas consideraciones. En
-    primera instancia debe tenerse en cuenta que el sistema es un sistema no
-    lineal por lo que un proceso de linearización debe llevarse a cabo, una
-    segunda consideración es que al ser un sistema de ecuaciones
+    ecuaciones~\ref{ec-hyper-base} se deben tomar en cuenta algunas
+    consideraciones. En primera instancia debe tenerse en cuenta que el sistema
+    es un sistema no lineal por lo que un proceso de linearización debe llevarse
+    a cabo, una segunda consideración es que al ser un sistema de ecuaciones
     hiperbólicas se debe llevar a cabo el proceso de solución mediante un
     proceso de marcha, en este trabajo la marcha se realizará en la
     dirección del eje $\eta$. Tercera, para un sistema de ecuaciones
@@ -1631,10 +1633,14 @@
     lineal como:
     \begin{subequations}
         \begin{equation}
-            x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} - x_{\xi}^{k} x_{\eta}^{k} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} - y_{\xi}^{k} y_{\eta}^{k} = 0
+            x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta}
+            - x_{\xi}^{k} x_{\eta}^{k} + y_{\xi} y_{\eta}^{k}
+            + y_{\xi}^{k} y_{\eta} - y_{\xi}^{k} y_{\eta}^{k} = 0
         \end{equation}
         \begin{equation}
-            x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\xi}^{k} y_{\eta}^{k} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} + x_{\eta}^{k} y_{\xi}^{k} = F
+            x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta}
+            - x_{\xi}^{k} y_{\eta}^{k} - x_{\eta} y_{\xi}^{k}
+            - x_{\eta}^{k} y_{\xi} + x_{\eta}^{k} y_{\xi}^{k} = F
         \end{equation}
         \label{ec-hyper-linear}
     \end{subequations}
@@ -1645,10 +1651,12 @@
     quedando como
     \begin{subequations}
         \begin{equation}
-            x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} + y_{\xi} y_{\eta}^{k} + y_{\xi}^{k} y_{\eta} = 0
+            x_{\xi} x_{\eta}^{k} + x_{\xi}^{k} x_{\eta} + y_{\xi} y_{\eta}^{k}
+            + y_{\xi}^{k} y_{\eta} = 0
         \end{equation}
         \begin{equation}
-            x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\eta} y_{\xi}^{k} - x_{\eta}^{k} y_{\xi} = F + F^{k}
+            x_{\xi} y_{\eta}^{k} + x_{\xi}^{k} y_{\eta} - x_{\eta} y_{\xi}^{k}
+            - x_{\eta}^{k} y_{\xi} = F + F^{k}
         \end{equation}
         \label{ec-hyper-reducida}
     \end{subequations}
@@ -1823,7 +1831,7 @@
     actualizar dichos puntos.
 
     \paragraph*{}
-    Un algoritmopara la solución de sistemas de ecuaciones de bloque
+    Un algoritmo para la solución de sistemas de ecuaciones de bloque
     tridiagonal es proporcionado en el apéndice~\ref{appTridiagonal}
 
     \subsubsection{Generación de mallas mediante EDP parabólicas}
@@ -1955,8 +1963,8 @@
     con el objetivo de simplificar las ecuaciones. Sin embargo, estas
     consideraciones no son estrictamente necesarias sino que representan
     simplificaciones del problema, por lo que la generación de una malla
-    cuasi uniforme en el plano computaciones, y que despues se utilice en el
-    anáñlisis de flujos como si de una malla uniforme se tratase, es también
+    cuasi uniforme en el plano computacional, y que despues se utilice en el
+    análisis de flujos como si de una malla uniforme se tratase, es también
     un enfoque válido.
     \begin{figure}[htbp!]
         \centering
@@ -2131,6 +2139,7 @@
         \end{equation}
         \label{parabolic_final}
     \end{subequations}
+
     \paragraph*{}
     Las ecuaciones~\ref{parabolic_final} se resuelven simultaneamente para
     todos los puntos de la malla para el mismo nivel $\eta$ (línea $j$)
