@@ -17,25 +17,29 @@ from mesh import mesh
 import mesh_su2
 
 class mesh_C(mesh):
-    #def __init__(self, R, M, N, airfoil, from_file=False):
-    def __init__(self, R, N, airfoil, from_file=False):
+    def __init__(self, R, N, airfoil, from_file=False, weight=1.055):
         '''
         R = radio de la frontera externa, en función de la cuerda del perfil
             se asigna ese valor desde el sript main.py
         archivo = archivo con la nube de puntos de la frontera interna
         '''
 
-        # M = np.shape(airfoil.x)[0] * 3 // 2 - 1
-        M = np.shape(airfoil.x)[0] * 3
+        m_ = np.shape(airfoil.x)[0] * 3 // 2
+        if m_ % 3 == 1:
+            M = m_
+        else:
+            M = m_ - 1
+        # M = np.shape(airfoil.x)[0] * 3
+        # M = np.shape(airfoil.x)[0] * 2 - 1
         mesh.__init__(self, R, M, N, airfoil)
         self.tipo = 'C'
 
         if not from_file:
-            self.fronteras(airfoil)
+            self.fronteras(airfoil, weight)
 
         return
 
-    def fronteras(self, airfoil):
+    def fronteras(self, airfoil, weight):
         '''
         Genera la frontera externa de la malla así como la interna
         '''
@@ -59,6 +63,7 @@ class mesh_C(mesh):
         theta = np.concatenate((theta, theta2[1:]))
         r = b / (1 - exe ** 2 * np.cos(theta) ** 2) ** 0.5
         del(theta2, points1)
+
         # parte circular de FE
         x = r * np.cos(theta)
         y = r * np.sin(theta)
@@ -72,7 +77,7 @@ class mesh_C(mesh):
         ***
         '''
         npoints = (M - points) // 2 + 1
-        weight = 1.03
+        # weight = 1.055
         delta_limit = 2.5 * R
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))

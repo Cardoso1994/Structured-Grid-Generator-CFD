@@ -27,15 +27,19 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 525
 N = 375
-# N = 505
+N = 25
+
 union = 25
+union = 3
 
 # points = 11
 airfoil_points = 599 # 499
 airfoil_points = 889 # 499
+airfoil_points = 657
 
 if malla == 'C':
-    points = airfoil_points // 3  # * 2
+    # points = airfoil_points // 3  # * 2
+    points = airfoil_points
 elif malla == 'O':
     points = airfoil_points
 
@@ -61,7 +65,13 @@ archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil)
+    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.09)
+
+mallaNACA.gen_TFI()
+mallaNACA.plot()
+exit()
+
+
 
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
