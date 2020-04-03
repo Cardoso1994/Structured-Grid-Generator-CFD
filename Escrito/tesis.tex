@@ -333,34 +333,35 @@
     \chapter*{Motivación}
     \addcontentsline{toc}{chapter}{Motivación}
     \paragraph*{}
-        Existe en la actualidad, una vasta cantidad de software enfocado a la
-        dinámica de fluidos computacional, tanto software privativo (o de
-        licencia) como software libre. Para el caso del software privativo, el
-        usuario paga por la licencia de uso del programa con lo cual puede
-        usarlo, pero no tiene forma de saber la forma en la que el programa
-        funciona ni la implementación del mismo. En cuanto al software libre,
-        el usuario tiene la posibilidad de acceder al código fuente con el cual
-        corre el programa, para analizarlo, comprenderlo e incluso de ser
-        necesario, modificarlo ya sea para mejorar una característica ya
-        implementada, o bien, para agregar una nueva característica al programa.
-        Tanto el uso de software privativo, como la poca implementación de
-        códigos y documentación accesible en México, han conducido a un punto en
-        el que la comunidad académica en el país se limite únicamente a usar los
-        programas sin un entendimiento claro de su funcionamiento, excluyéndose
-        a sí misma del desarrollo de software.
-    \paragraph*{}
-        Se desarrolla entonces, este trabajo con la intención de proporcionar
-        información sobre la implementación de códigos de generación de mallas,
-        para que el lector pueda a su vez, continuar contribuyendo al desarrollo
-        de software libre para la dinámica de fluidos computacional a nivel
-        nacional.
+    Existe en la actualidad, una vasta cantidad de software enfocado a la
+    dinámica de fluidos computacional, tanto software privativo (o de
+    licencia) como software libre. Para el caso del software privativo, el
+    usuario paga por la licencia de uso del programa con lo cual puede
+    usarlo, pero no tiene forma de saber la forma en la que el programa
+    funciona ni la implementación del mismo. En cuanto al software libre,
+    el usuario tiene la posibilidad de acceder al código fuente con el cual
+    corre el programa, para analizarlo, comprenderlo e incluso de ser
+    necesario, modificarlo ya sea para mejorar una característica ya
+    implementada, o bien, para agregar una nueva característica al programa.
+    Tanto el uso de software privativo, como la poca implementación de
+    códigos y documentación accesible en México, han conducido a un punto en
+    el que la comunidad académica en el país se limite únicamente a usar los
+    programas sin un entendimiento claro de su funcionamiento, excluyéndose
+    a sí misma del desarrollo de software.
 
     \paragraph*{}
-        Los códigos aquí presentados quedan abiertos para que cualquier persona,
-        ya sea alumno, profesor, investigador o  simplemente entusiasta de la
-        dinámica de fluidos computacional, pueda revisarlos, utilizarlos en
-        beneficio propio, modificarlos, e incluso construir software nuevo a
-        partir de éste.
+    Se desarrolla entonces, este trabajo con la intención de proporcionar
+    información sobre la implementación de códigos de generación de mallas,
+    para que el lector pueda a su vez, continuar contribuyendo al desarrollo
+    de software libre para la dinámica de fluidos computacional a nivel
+    nacional.
+
+    \paragraph*{}
+    Los códigos aquí presentados quedan abiertos para que cualquier persona,
+    ya sea alumno, profesor, investigador o  simplemente entusiasta de la
+    dinámica de fluidos computacional, pueda revisarlos, utilizarlos en
+    beneficio propio, modificarlos, e incluso construir software nuevo a
+    partir de éste.
 
 %
 %
@@ -371,200 +372,193 @@
 %
 %
 %
-    \chapter{Estado del Arte}
-    \pagenumbering{arabic}
-        \section{Historia de la dinámica de fluidos computacional}
-            \paragraph*{}
-                La DFC tiene sus orígenes en el desarrollo de dos métodos
-                númericos que son las herramientas base de esta disciplina,
-                el método de diferencias finitas y el método de elementos
-                finitos. En 1910, Richardson presentó en la ``Royal Society of
-                London'' un artículo con una solución mediante el método de
-                diferencias finitas para un análisis de la distribución de
-                esfuerzos de una presa de mampostería. Por otro lado, el primer
-                trabajo mediante el método de elementos finitos, fue publicado
-                en 1956 en el Aeronautical Science Journal por Turner, Clough,
-                Martin y Topp, el cual trata aplicaciones del método para el
-                análisis de esfuerzos en aeronaves.\cite{tj-chung}
+\chapter{Estado del Arte}
+\pagenumbering{arabic}
+    \section{Historia de la dinámica de fluidos computacional}
+    \paragraph*{}
+    La DFC tiene sus orígenes en el desarrollo de dos métodos
+    númericos que son las herramientas base de esta disciplina,
+    el método de diferencias finitas y el método de elementos
+    finitos. En 1910, Richardson presentó en la ``Royal Society of
+    London'' un artículo con una solución mediante el método de
+    diferencias finitas para un análisis de la distribución de
+    esfuerzos de una presa de mampostería. Por otro lado, el primer
+    trabajo mediante el método de elementos finitos, fue publicado
+    en 1956 en el Aeronautical Science Journal por Turner, Clough,
+    Martin y Topp, el cual trata aplicaciones del método para el
+    análisis de esfuerzos en aeronaves.\cite{tj-chung}
 
-            \paragraph*{}
-                Durante la segunda guerra mundial, así como los años siguientes
-                a la misma, el profesor John Von Neumann desarrolló un método
-                para determinar la estabilidad numérica para la resolución de
-                problemas dependientes del tiempo. Su trabajo fue publicado por
-                O'brien en 1950. El método de Von Neumann es ampliamente
-                aplicado hoy en día para determinar la estabilidad númerica.\cite{pletcher-CFD-HeatTransfer}
+    \paragraph*{}
+    Durante la segunda guerra mundial, así como los años siguientes
+    a la misma, el profesor John Von Neumann desarrolló un método
+    para determinar la estabilidad numérica para la resolución de
+    problemas dependientes del tiempo. Su trabajo fue publicado por
+    O'brien en 1950. El método de Von Neumann es ampliamente
+    aplicado hoy en día para determinar la estabilidad
+    númerica.\cite{pletcher-CFD-HeatTransfer}
 
-            \paragraph*{}
-                En la década de los años 60s se dan los primeros esfuerzos en el
-                desarrollo de técnicas para la generación de mallas.\cite{liseikin1999grid}
+    \paragraph*{}
+    En la década de los años 60s se dan los primeros esfuerzos en el
+    desarrollo de técnicas para la generación de mallas.\cite{liseikin1999grid}
 
-            \paragraph*{}
-                Al inicio de la década de 1970 se da un auge en la DFC gracias
-                al incremento de las capacidades de procesamiento de las
-                computadoras, incluso hoy en día el avance de la DFC va de la
-                mano con el desarrollo de las computadoras.\cite{blazek} Es en
-                ésta década cuando se desarrollan, gracias a un grupo del
-                ``Imperial College'' de Londres, algoritmos para flujos
-                incompresibles de baja velocidad, así como el algoritmo SIMPLE
-                (Semi-Implicit Method for Pressure-Linked Equations), lo cual
-                sirvió como base para el desarrollo de esquemas de solución para
-                las ecuaciones de Navier-Stokes para flujo incompresible.\cite{pletcher-CFD-HeatTransfer}
+    \paragraph*{}
+    Al inicio de la década de 1970 se da un auge en la DFC gracias
+    al incremento de las capacidades de procesamiento de las
+    computadoras, incluso hoy en día el avance de la DFC va de la
+    mano con el desarrollo de las computadoras.\cite{blazek} Es en
+    ésta década cuando se desarrollan, gracias a un grupo del
+    ``Imperial College'' de Londres, algoritmos para flujos
+    incompresibles de baja velocidad, así como el algoritmo SIMPLE
+    (Semi-Implicit Method for Pressure-Linked Equations), lo cual
+    sirvió como base para el desarrollo de esquemas de solución para
+    las ecuaciones de Navier-Stokes para flujo
+    incompresible.\cite{pletcher-CFD-HeatTransfer}
 
-            \paragraph*{}
-                Para la década de 1980 se comienza a dar solución a las
-                ecuaciones de Euler tanto en dos dimensiones como en tres
-                dimensiones. Para mediados de esta decada, gracias de nuevo,
-                al incremento en la capcidad de cálculo de los ordenadores,
-                se comienza a hacer análisis de flujos viscosos, los cuales son
-                descritos por las ecuaciones de Navier-Stokes.\cite{blazek}
-                Es también en el año 1980 que Steger y Chausee proponen un
-                esquema para la generación de mallas estructuradas mediante el
-                uso de ecuaciones diferenciales parciales hiperbólicas. A lo
-                largo de toda esta década son explorados diferentes algoritmos
-                para la generación mediante ecuaciones hiperbólicas.
+    \paragraph*{}
+    Para la década de 1980 se comienza a dar solución a las ecuaciones de Euler
+    tanto en dos dimensiones como en tres dimensiones. Para mediados de esta
+    década, gracias de nuevo, al incremento en la capcidad de cálculo de los
+    ordenadores, se comienza a hacer análisis de flujos viscosos, los cuales
+    son descritos por las ecuaciones de Navier-Stokes.\cite{blazek} Es también
+    en el año 1980 que Steger y Chausee proponen un esquema para la generación
+    de mallas estructuradas mediante el uso de ecuaciones diferenciales
+    parciales hiperbólicas. A lo largo de toda esta década son explorados
+    diferentes algoritmos para la generación mediante ecuaciones hiperbólicas.
 
-            \paragraph*{}
-                A finales de la década de 1980, comenzó una nueva etapa el el
-                desarrollo de técnicas para la generación de mallas. Dicha etapa
-                se caracteriza por la implementación de códigos de generación de
-                mallas comprehensivas, multi propósito, tridimensionales.\cite{liseikin1999grid}
+    \paragraph*{}
+    A finales de la década de 1980, comenzó una nueva etapa el desarrollo de
+    técnicas para la generación de mallas. Dicha etapa se caracteriza por la
+    implementación de códigos de generación de mallas comprehensivas, multi
+    propósito, tridimensionales.\cite{liseikin1999grid}
 
-        \section{La dinámica de fluidos actualmente}
-            \paragraph*{}
-                La DFC tiene hoy en día, un rol tan importante, que puede
-                considerarse una tercera rama de la dinámica de fluidos, siendo
-                las dos primeras las ramas experimental y la teoría pura.\cite{anderson-yotros}
+    \section{La dinámica de fluidos actualmente}
+    \paragraph*{}
+    La DFC tiene hoy en día, un rol tan importante, que puede considerarse una
+    tercera rama de la dinámica de fluidos, siendo las dos primeras las ramas
+    experimental y la teoría pura.\cite{anderson-yotros}
 
-            \paragraph*{}
-                Actualmente, la DFC se aplica en diversos sectores, como el
-                aeroespacial, diseño de turbomaquinaria, carros y navíos. Además
-                de campos como la meteorología, oceanografía, astrofísica e
-                incluso arquitectura. Algunas técnicas desarrolladas para la DFC
-                ahora se usan también en la solución de las ecuaciones de
-                Maxwell, por lo que demuestra la creciente importancia que tiene
-                la DFC como herramienta en ingeniería.\cite{blazek}
+    \paragraph*{}
+    Actualmente, la DFC se aplica en diversos sectores, como el aeroespacial,
+    diseño de turbomaquinaria, carros y navíos. Además de campos como la
+    meteorología, oceanografía, astrofísica e incluso arquitectura. Algunas
+    técnicas desarrolladas para la DFC ahora se usan también en la solución de
+    las ecuaciones de Maxwell, por lo que demuestra la creciente importancia
+    que tiene la DFC como herramienta en ingeniería.\cite{blazek}
 
-            \paragraph*{}
-                Uno de los ámbitos en los que la DFC ha tenido mayor impacto es
-                en el diseño de aeronaves, gracias al rápido decremento en los
-                costos de computación, ocasionado por una mejora en las
-                capacidades de cálculo y tecnológicas de los ordenares, así como
-                de el fácil acceso a los mismos, aunado a un incremento en el
-                costo de experimentos en túneles de viento. Esto ha dado como
-                resultado que el cálculo de las características aerodinámicas de
-                una aeronave resulte más barato mediante DFC que mediante la
-                experimentación en túnel de viento. De modo que en la industria
-                el diseño preliminar de aeronaves se realiza mediante cálculos
-                en computadoras, mientras que los detalles del diseño final se
-                analizan experimentalmente.\cite{anderson-yotros}
+    \paragraph*{}
+    Uno de los ámbitos en los que la DFC ha tenido mayor impacto es en el
+    diseño de aeronaves, gracias al rápido decremento en los costos de
+    computación, ocasionado por una mejora en las capacidades de cálculo y
+    tecnológicas de los ordenares, así como de el fácil acceso a los mismos,
+    aunado a un incremento en el costo de experimentos en túneles de viento.
+    Esto ha dado como resultado que el cálculo de las características
+    aerodinámicas de una aeronave resulte más barato mediante DFC que mediante
+    la experimentación en túnel de viento. De modo que en la industria el
+    diseño preliminar de aeronaves se realiza mediante cálculos en
+    computadoras, mientras que los detalles del diseño final se analizan
+    experimentalmente.\cite{anderson-yotros}
 
-            \paragraph*{}
-                En la actualidad, la DFC es capaz de analizar flujos laminares
-                sin mayor complicación, sin embargo, aún no es capaz de analizar
-                flujos turbulentos, los cuales se presentan en la mayoría de
-                casos prácticos,  por lo que se debe de recurrir a modelos de
-                turbulencia, los cuales dan buenos resultados, pese a que ningún
-                modelo es universal, y se debe prestar atención al modelo que se
-                desea emplear.\cite{cengel}
+    \paragraph*{}
+    En la actualidad, la DFC es capaz de analizar flujos laminares sin mayor
+    complicación, sin embargo, aún no es capaz de analizar flujos turbulentos,
+    los cuales se presentan en la mayoría de casos prácticos, por lo que se
+    debe de recurrir a modelos de turbulencia, los cuales dan buenos
+    resultados, pese a que ningún modelo es universal, y se debe prestar
+    atención al modelo que se desea emplear.\cite{cengel}
 
-        \section{La generación de mallas actualmente}
-            \paragraph*{}
-                En la actualidad se ha desarrollado un gran número de métodos
-                avanzados para la generación de mallas, entre los que destacan
-                los métodos algebráicos, mediante la solución de ecuaciones
-                diferenciales parciales elípticas, hiperbólicas, parabólicas,
-                mallas variables, etc. La creación y mejora de todas estas
-                técnicas nos ha llevado a un punto en el que se pueden realizar
-                análisis en dominios de geometrías complejas.
+    \section{La generación de mallas actualmente}
+    \paragraph*{}
+    En la actualidad se ha desarrollado un gran número de métodos avanzados
+    para la generación de mallas, entre los que destacan los métodos
+    algebráicos, mediante la solución de ecuaciones diferenciales parciales
+    elípticas, hiperbólicas, parabólicas, mallas variables, etc. La creación y
+    mejora de todas estas técnicas nos ha llevado a un punto en el que se
+    pueden realizar análisis en dominios de geometrías complejas.
 
-            \paragraph*{}
-                Debido al desarrollo exitoso de esta área, el campo de
-                generación numérica de mallas puede ser considerado una nueva
-                disciplina matemática, con su propia metodología, tecnología y
-                su propio enfoque.
+    \paragraph*{}
+    Debido al desarrollo exitoso de esta área, el campo de generación numérica
+    de mallas puede ser considerado una nueva disciplina matemática, con su
+    propia metodología, tecnología y su propio enfoque.
 
-            \paragraph*{}
-                La generación numérica de mallas, al ser una herramienta de
-                amplia utilización tanto en la industria de la ingeniería, como
-                en campos de computación científica, es ahora reconocida como
-                una asignatura en algunas universidades.\cite{liseikin1999grid}
+    \paragraph*{}
+    La generación numérica de mallas, al ser una herramienta de amplia
+    utilización tanto en la industria de la ingeniería, como en campos de
+    computación científica, es ahora reconocida como una asignatura en algunas
+    universidades.\cite{liseikin1999grid}
 
-        \section{Software disponible para DFC}
-            \paragraph*{OpenFOAM}
-            \paragraph*{}
-                OpenFOAM (Open Source Field Operation and Manipulation) es un
-                entorno de trabajo, para el desarrollo de ejecutables de
-                aplicaciones que usa las funciones contenidas en aproximadamente
-                100 librerías escritas en C++. Contiene solvers específicos para
-                cada tipo de problema en mecánica de fluidos, así como de
-                mecánica del medio continuo.\cite{openfoam}
-            \paragraph*{}
-                OpenFOAM se distribuye bajo la licencia GPL (General Public
-                License), la cual garantiza a los usuarios finales la libertad
-                de usar, estudiar, compartir y modificar el código fuente del
-                software, lo cual es basicamente, la filosofía del software
-                libre.
+    \section{Software disponible para DFC}
+    \paragraph*{OpenFOAM}
+    \paragraph*{}
+    OpenFOAM (Open Source Field Operation and Manipulation) es un entorno de
+    trabajo, para el desarrollo de ejecutables de aplicaciones que usa las
+    funciones contenidas en aproximadamente 100 librerías escritas en C++.
+    Contiene solvers específicos para cada tipo de problema en mecánica de
+    fluidos, así como de mecánica del medio continuo.\cite{openfoam}
 
-            \paragraph*{XFoil}
-            \paragraph*{}
-                Es un programa interactivo para el diseño y análisis de perfiles
-                operando en regímenes subsónicos. Dadas las coordenadas de la
-                nube de puntos que describen la forma de un perfil, un número de
-                Reynolds y el número de Mach, Xfoil puede calcular la
-                distribución de presión a lo largo del perfil, y con esto,
-                las fuerzas de levantamiento y arrastre.
-                    Consiste en una colección de funciones como:
-                    \begin{itemize}
-                        \item Análisis Viscoso de perfiles alares existentes.
-                        \item Diseño y rediseño de perfiles mediante la
-                            modificacion de la distribución de velocidad
-                            superficial
-                        \item Rediseño de perfiles mediante la modificación de
-                            sus parámetros geométricos.
-                    \end{itemize}
-                    \cite{xfoil}
-            \paragraph*{}
-                Xfoil es desarrollado por el MIT (Massachusetts Institute of
-                Technology), escrito en lenguaje FORTRAN y distribuido bajo
-                la licencia GPL.
+    \paragraph*{}
+    OpenFOAM se distribuye bajo la licencia GPL (General Public License), la
+    cual garantiza a los usuarios finales la libertad de usar, estudiar,
+    compartir y modificar el código fuente del software, lo cual es
+    basicamente, la filosofía del software libre.
 
-            \paragraph*{XFLR5}
-            \paragraph*{}
-                XFLR5 es una herramienta desarrollada para el análisis de
-                perfiles alares, alas y aviones volando a bajos Números de
-                Reynolds. Fue creado con dos propósitos princiales, dar una
-                interfaz amigable al programa ``XFoil'', y pasar el código
-                fuente original de FORTRAN a lenguaje C / C++, es decir que los
-                algoritmos con los que se desarrolló Xfoil son exactamente los
-                mismos en XFLR5.\cite{xflr5} Este programa no ha sido
-                desarrollado con fines profesionales, sino para uso meramente
-                personal y se distribuye bajo la licencias GPL.
+    \paragraph*{XFoil}
+    \paragraph*{}
+    Es un programa interactivo para el diseño y análisis de perfiles operando
+    en regímenes subsónicos. Dadas las coordenadas de la nube de puntos que
+    describen la forma de un perfil, un número de Reynolds y el número de Mach,
+    Xfoil puede calcular la distribución de presión a lo largo del perfil, y
+    con esto, las fuerzas de levantamiento y arrastre. Consiste en una
+    colección de funciones como:
+    \begin{itemize}
+        \item Análisis Viscoso de perfiles alares existentes.
+        \item Diseño y rediseño de perfiles mediante la
+            modificacion de la distribución de velocidad
+            superficial
+        \item Rediseño de perfiles mediante la modificación de
+            sus parámetros geométricos.
+    \end{itemize}
+    \cite{xfoil}
 
-            \paragraph*{XFlow}
-            \paragraph*{}
-            Es un software privativo desarrollado por la empresa
-                    Dassault Systèmes, el cual ofrece soluciones mediante el
-                    método de Lattice-Boltzman basado en partículas. El usuario
-                    puede analizar casos de aerodinámica transitoria, flujos
-                    multifase complejos, acústica aérea, geometrías en
-                    movimiento e interacciones fluido-estructura. Destaca por
-                    sus capacidades de renderizado.\cite{xflow}
+    \paragraph*{}
+    Xfoil es desarrollado por el MIT (Massachusetts Institute of
+    Technology), escrito en lenguaje FORTRAN y distribuido bajo
+    la licencia GPL.
 
-            \paragraph*{ANSYS Fluent}
-            \paragraph*{}
-            Ansys Fluent es un software privativo creado por la empresa
-                ANSYS, Inc.\ dedicado a la simulación de DFC, implementado
-                para dar soluciones mediante el método de volúmenes finitos.
+    \paragraph*{XFLR5}
+    \paragraph*{}
+    XFLR5 es una herramienta desarrollada para el análisis de perfiles alares,
+    alas y aviones volando a bajos Números de Reynolds. Fue creado con dos
+    propósitos princiales, dar una interfaz amigable al programa ``XFoil'', y
+    pasar el código fuente original de FORTRAN a lenguaje C / C++, es decir que
+    los algoritmos con los que se desarrolló Xfoil son exactamente los mismos
+    en XFLR5.\cite{xflr5} Este programa no ha sido desarrollado con fines
+    profesionales, sino para uso meramente personal y se distribuye bajo la
+    licencias GPL.
 
-            \paragraph*{SU2}
-            \paragraph*{}
-            SU2 es una colección de software \textit{``open source"}
-            desarrollado en los lenguajes Python y C++ para el análisis de
-            ecuaciones diferenciales parciales mediante métodos numéricos,
-            del actual estado del arte de la DFC\@. Enfocado principalmente a
-            su aplicación en la industria aeronáutica, así como la industria
-            automotriz, naval y de energías renovables, entre otras.\cite{SU2}
+    \paragraph*{XFlow}
+    \paragraph*{}
+    Es un software privativo desarrollado por la empresa Dassault Systèmes, el
+    cual ofrece soluciones mediante el método de Lattice-Boltzman basado en
+    partículas. El usuario puede analizar casos de aerodinámica transitoria,
+    flujos multifase complejos, acústica aérea, geometrías en movimiento e
+    interacciones fluido-estructura. Destaca por sus capacidades de
+    renderizado.\cite{xflow}
+
+    \paragraph*{ANSYS Fluent}
+    \paragraph*{}
+    Ansys Fluent es un software privativo creado por la empresa ANSYS, Inc.\
+    dedicado a la simulación de DFC, implementado para dar soluciones mediante
+    el método de volúmenes finitos.
+
+    \paragraph*{SU2}
+    \paragraph*{}
+    SU2 es una colección de software \textit{``open source"} desarrollado en
+    los lenguajes Python y C++ para el análisis de ecuaciones diferenciales
+    parciales mediante métodos numéricos, del actual estado del arte de la
+    DFC\@. Enfocado principalmente a su aplicación en la industria aeronáutica,
+    así como la industria automotriz, naval y de energías renovables, entre
+    otras.\cite{SU2}
+
 %
 %
 %
