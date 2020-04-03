@@ -579,7 +579,7 @@
     dominio en el que se está trabajando el problema. Para el caso de un
     análisis en dos dimensiones, la malla se forma por triangulos o
     cuadriláteros, mientras que en un caso de tridimensional la malla es
-    conformada por tetrahédros o hexaédros.
+    conformada por tetraedros o hexaedros.
 
     \paragraph*{}
     En las aplicaciones de DFC se busca que la distribución de los nodos sea
@@ -1907,26 +1907,26 @@
     mediante el método de diferencias finitas, las derivadas parciales con
     respecto al eje $\eta$ son sustituidas por aproximaciones tipo
     ``backwards'' mientras que las derivadas respecto al eje $\xi$ son
-    reemplazadas por aproximanciones centrales. Dadas las condiciones
-    inciales para $x$  y $y$ en $\eta = 0$, es decir, una vez proporcionada
-    la nuve de puntos que definen la frontera interna, se obtiene un sistema
-    de bloque tridiagonal, el cual debe ser resuelto para cada valor de
-    $\eta$ contemplado.
+    reemplazadas por aproximanciones centrales de segundo orden. Dadas las
+    condiciones inciales para $x$  y $y$ en $\eta = 0$, es decir, una vez
+    proporcionada la nube de puntos que definen la frontera interna, se obtiene
+    un sistema de bloque tridiagonal, el cual debe ser resuelto para cada valor
+    de $\eta$ contemplado.
 
     \paragraph*{}
     Los valores iniciales son especificados como:
     \begin{subequations}
         \begin{equation}
-            x(\eta, 0) = x_0(\xi)
+            x(\xi, 0) = x_0(\xi)
         \end{equation}
         \begin{equation}
-            y(\eta, 0) = y_0(\xi)
+            y(\xi, 0) = y_0(\xi)
         \end{equation}
     \end{subequations}\\
     donde $x_0(\xi)$ y $y_0(\xi)$ las coordenadas de la superficie de la
     frontera, es decir, del perfil aerodinámico a analizar. Para entender el
     efecto de los términos fuente, se asigna un valor cero a las constantes
-    $b$ y $c$, a su vez $a = c = 1$, expresando las ecuaciones resultantes
+    $b$ y $d$, a su vez $a = c = 1$, expresando las ecuaciones resultantes
     en términos de incrementos en lugar de términos diferenciales:
     \begin{subequations}
         \begin{equation}
@@ -2211,10 +2211,10 @@
     de las mismas, ya que representa un indicativo de la confiabilidad y la
     usabilidad de la malla. Por lo tanto es necesario desarrollar métodos
     que permitan analizar dicha característica en las mallas generadas con
-    el fin de poder modificar las anomalías y erroes que se presenten.
+    el fin de poder modificar las anomalías y errores que se presenten.
 
     \paragraph*{}
-    Esto conlleva la necesidad de determinar las características correctas
+    Esto conlleva a la necesidad de determinar las características correctas
     con las cuales se evaluará la calidad, y entender como los resultados
     obtenidos se relacionan con los errores que puedan presentarse durante
     las simulaciones de flujos.
@@ -2222,10 +2222,10 @@
     \paragraph*{}
     Las características que más suelen evaluarse son:
     \begin{itemize}
-        \item \it{Skewness}
+        \item Skewness
         \item Alargamiento
         \item Torsión
-        \item \it{Aspect Ratio}
+        \item Aspect Ratio
         \item Volúmen de Celda
         \item Densidad de Nodos
     \end{itemize}
@@ -2244,7 +2244,7 @@
     la comparación. Para mallas bidimiensionales, las celdas pueden ser
     triangulares o cuadrilaterales, en el caso de celdas triangulares la
     figura base suele ser un triángulo equilátero, mientras que para celdas
-    de 4 lados, algunas fuentes toman como figura base el rombo, mientras
+    de cuatro lados, algunas fuentes toman como figura base el rombo, mientras
     que otras fuentes toman como base el cuadrado.
 
     \paragraph*{}
@@ -2280,7 +2280,7 @@
     Otro método que se debe resaltar es el empleado en la librería ``The
     Verdict Quality Library'', esta librería contiene rutinas para evaluar
     la calidad geométrica de diferentes tipos de celdas como pueden ser
-    triangulos, cuadrilateros, tetahedros y exahedros. Para el cálculo del
+    triangulos, cuadrilateros, tetraedros y hexaedros. Para el cálculo del
     aspect ratio de celdas formadas por cuadrilateros utiliza la siguiente
     fórmula
     \begin{equation}
