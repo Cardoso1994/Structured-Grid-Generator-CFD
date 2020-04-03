@@ -418,6 +418,11 @@
                 al incremento en la capcidad de cálculo de los ordenadores,
                 se comienza a hacer análisis de flujos viscosos, los cuales son
                 descritos por las ecuaciones de Navier-Stokes.\cite{blazek}
+                Es también en el año 1980 que Steger y Chausee proponen un
+                esquema para la generación de mallas estructuradas mediante el
+                uso de ecuaciones diferenciales parciales hiperbólicas. A lo
+                largo de toda esta década son explorados diferentes algoritmos
+                para la generación mediante ecuaciones hiperbólicas.
 
             \paragraph*{}
                 A finales de la década de 1980, comenzó una nueva etapa el el
@@ -1363,21 +1368,20 @@
 
     \subsubsection{Generación de mallas mediante EDP elípticas}
     \paragraph*{}
-    Para la solución de un sistema de EDP elípticas se necesita cumplir con la
-    característica de tener definidas las condiciones de frontera a lo largo de
-    todos los puntos pertenecientes a la misma, es decir, que se tengan
-    condiciones de frontera de Dirichlet.
+    Para la solución de un sistema de EDP elípticas es necesario definir las
+    condiciones de frontera a lo largo de todos los puntos pertenecientes a la
+    misma, es decir, que se tengan condiciones de frontera de Dirichlet.
     La solución se obtiene mediante diferentes métodos numéricos iterativos
     entre los que destacan el método de Jacobi, el método de Gauss-Seidel y
     métodos de sobre relajación. Informacion sobre el procedimiento y
     desarrollo de estos métodos está disponible en el apéndice~\ref{appIter}.
 
     \paragraph*{}
-    La idea es que se calculen las coordenadas $(\xi, \eta)$ y que la
-    solución del sistema de ecuaciones genere las correspondientes
-    coordenadas $(x, y)$ del dominio físico, con un mapeo uno a uno, es
-    decir, que exista una relación adecuada entre el dominio computacional y
-    el lógico.
+    La idea es calcular las coordenadas $(\xi, \eta)$, pertenecientes al
+    dominio computacional, y que la solución del sistema de ecuaciones genere
+    las correspondientes coordenadas $(x, y)$ del dominio físico, con un mapeo
+    uno a uno, es decir, que exista una relación adecuada entre el dominio
+    computacional y el dominio físico.
 
     \paragraph*{}
     Considerando la ecuación de Laplace:
@@ -1390,7 +1394,7 @@
         \end{equation}
         \label{ec-laplace}
     \end{subequations}\\
-    donde como ya se ha mencionado, $\xi$ y $\eta$ representan las
+    donde, como ya se ha mencionado, $\xi$ y $\eta$ representan las
     coordenadas del dominio computacional y además, son variables
     dependientes de $x$ y de $y$. Si se quiere trabajar con la forma
     inversa, es decir, que ahora $x$ y $y$ sean variables dependientes de
@@ -1430,10 +1434,9 @@
             \eta_{xx} + \eta_{yy} = Q(\xi, \eta)
         \end{equation}
         \label{ec-poisson}
-    \end{subequations}
-
-    y transformando la ecuación, haciendo $x$ y $y$ las variables
-    dependientes:
+    \end{subequations}\\
+    si de nuevo, esta ecuación es transformada, volviendo las variable $x$ y
+    $y$ las variables dependientes, queda expresada como
     \begin{subequations}
         \begin{equation}
             \alpha x_{\xi \xi} + \beta x_{\xi \eta}
@@ -1499,7 +1502,7 @@
     término atrae las líneas $\xi$ hacia un punto determinado con una
     amplitud $b_{n}$. Estos parámetros tienen el mismo efecto en la ecuación
     de $Q(\xi, \eta)$, pero la atracción se ve reflejada en las líneas donde
-    se mantiene constante la coordenada $\eta$.
+    la coordenada $\eta$ se mantiene constante.
 
     \paragraph*{}
     Las funciones $(\xi - \xi_{m}) / |\xi - \xi_{m}|$ y
@@ -1611,15 +1614,15 @@
     es un sistema no lineal por lo que un proceso de linearización debe llevarse
     a cabo, una segunda consideración es que al ser un sistema de ecuaciones
     hiperbólicas se debe llevar a cabo el proceso de solución mediante un
-    proceso de marcha, en este trabajo la marcha se realizará en la
-    dirección del eje $\eta$. Tercera, para un sistema de ecuaciones
-    hiperbólicas se debe especificar una condicion inicial así como un
-    condición de frontera y por último, con el objetivo de evitar la
-    presencia de oscilaciones, se puede agregar un término de ``damping'', o
-    viscosidad artificial, al lado derecho de las ecuaciones.
+    proceso de marcha, en este esquema la marcha se realiza en la dirección del
+    eje $\eta$. Tercera, para un sistema de ecuaciones hiperbólicas se debe
+    especificar una condicion inicial así como un condición de frontera y por
+    último, con el objetivo de evitar la presencia de oscilaciones, se puede
+    agregar un término de ``damping'', o viscosidad artificial, al lado derecho
+    de las ecuaciones.
 
     \paragraph*{}
-    Para el proceso de linearización, se utilizará el esquema iterativo de
+    Para el proceso de linearización, se utiliza el esquema iterativo de
     Newton, el cual especifica que un termino no lineal es aproximado
     mediante
     \begin{equation}
