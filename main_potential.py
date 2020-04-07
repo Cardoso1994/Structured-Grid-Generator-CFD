@@ -27,8 +27,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 149
-airfoil_points = 149
+N = 249
+airfoil_points = 249
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -36,13 +36,13 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 2  # combadura
-p = 4  # posicion de la combadura
+m = 0  # combadura
+p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
 
 # radio frontera externa
-R = 20 * c
+R = 35 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
@@ -55,7 +55,7 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson(omega=1.3, aa=85, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson(omega=1.3, aa=40, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')

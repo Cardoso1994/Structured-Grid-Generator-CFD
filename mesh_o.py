@@ -223,11 +223,17 @@ class mesh_O(mesh):
         print("Poisson:")
         # inicio del método iterativo
         while it < mesh.it_max:
-            if (it % 10000 == 0):
-            # if (it % 5000 == 0):
+            # if (it % 10000 == 0):
+            if (it % 5000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
+                save = input("Save current Mesh: [Y/n]")
+                if save == 'Y' or save == 'y':
+                    name = input('name of mesh: ')
+                    mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
+                    mallaNACA.to_txt_mesh(f"/home/desarrollo/garbage/{name}.txt_mesh")
+
 
             # printing info
             print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
@@ -381,16 +387,16 @@ class mesh_O(mesh):
         Y       = self.Y
         d_xi    = self.d_xi
         d_eta   = self.d_eta
-        d_s1    = 0.01
+        d_s1    = 0.00000001
         S       = np.zeros((m - 2, m - 2), dtype=object)
         L       = np.zeros((m - 2, m - 2), dtype=object)
         U       = np.zeros((m - 2, m - 2), dtype=object)
         R       = np.zeros((m - 2, 1), dtype=object)
         Z       = np.zeros((m - 2, 1), dtype=object)
         DD      = np.zeros((m - 2, 1), dtype=object)
-        Fprev   = 0.05
+        Fprev   = 0.000000005
         C = np.zeros((2, 2))
-        self.gen_TFI()
+
         for j in range(1, n):
             # se llena la matriz S y el vector DD
             for i in range(1, m-1):
@@ -544,9 +550,7 @@ class mesh_O(mesh):
         for j in range(1, n - 1):
             Gj      = x_line[-1] - x_line[j]
             gj_1    = x_line[j] - x_line[j - 1]
-            print("j = " + str(i))
-            print("Gj = " + str(Gj))
-            print("gj_1 = " + str(gj_1))
+
             ###############################################################
             #
             #   Se calculan valores XO y YO imponiendo ortogonalidad
@@ -634,6 +638,7 @@ class mesh_O(mesh):
                 #   Se calculan las funciones F como:
                 #       F = sqrt(deltaX ** 2 + deltaY ** 2)
                 #   Siladic página 44 del texto
+                #   Aparentemente solo en j-1
                 #
                 ###############################################################
                 Fi      = ((X[i + 1, j - 1] - X[i, j - 1]) ** 2

@@ -26,16 +26,12 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 525
-N = 375
-N = 25
-
-union = 25
-union = 3
+N = 335
 
 # points = 11
 airfoil_points = 599 # 499
 airfoil_points = 889 # 499
-airfoil_points = 657
+airfoil_points = 633
 
 if malla == 'C':
     # points = airfoil_points // 3  # * 2
@@ -53,11 +49,6 @@ R = 50 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-# flap.create_sin(points)
-# flap.rotate(5)
-# perfil.join(flap, dx=0.055, dy=0.05, union=union)
-# perfil.rotate(30)
 
 M = np.shape(perfil.x)[0]
 
@@ -65,21 +56,13 @@ archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.09)
-
-mallaNACA.gen_TFI()
-mallaNACA.plot()
-exit()
-
-
+    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.08)
 
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=95, cc=7.4, linea_eta=0)
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=35, cc=7.4, linea_eta=0)
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=356, cc=7.4, linea_eta=0)
-# mallaNACA.gen_Laplace(metodo='SOR')
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=80, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=20, cc=3.7, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh_c.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh_c.txt_mesh')

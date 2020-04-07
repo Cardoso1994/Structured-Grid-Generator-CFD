@@ -57,6 +57,8 @@ class mesh(object):
 
         self.X                  = np.zeros((M, N), dtype=np.longdouble)
         self.Y                  = np.zeros((M, N), dtype=np.longdouble)
+        self.X                  = np.zeros((M, N))
+        self.Y                  = np.zeros((M, N))
 
         return
 

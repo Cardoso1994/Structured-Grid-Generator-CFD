@@ -25,6 +25,8 @@ class mesh_C(mesh):
         '''
 
         m_ = np.shape(airfoil.x)[0] * 3 // 2
+        if not airfoil.alone:
+            m_ -= 407
         if m_ % 3 == 1:
             M = m_
         else:
@@ -309,15 +311,22 @@ class mesh_C(mesh):
 
         it = 0
         # mesh.err_max = 1e-5
-        mesh.it_max = 55e3
+        mesh.it_max = 45e3
 
         # inicio del método iterativo
         print("Poisson:")
         while it < mesh.it_max:
-            if (it % 10000 == 0):
+            # if (it % 10000 == 0):
+            if (it % 5000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
+                save = input("Save current Mesh: [Y/n] ")
+                if save == 'Y' or save == 'y':
+                    name = input('name of mesh: ')
+                    mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
+                    mallaNACA.to_txt_mesh(f"/home/desarrollo/garbage/{name}.txt_mesh")
+
 
             # printing info
             print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)

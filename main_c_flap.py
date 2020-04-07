@@ -26,18 +26,19 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 675
-N = 375
+N = 275
 
-union = 15
+union = 25
 
-airfoil_points = 899 # 499
-airfoil_points = 599 # 489
+airfoil_points = 615
 
 if malla == 'C':
-    points = airfoil_points // 3  # * 2
+    # points = airfoil_points // 3 * 2
+    points = airfoil_points
 elif malla == 'O':
     points = airfoil_points
 
+print('airofil points: ' + str(points))
 # datos de perfil NACA
 m = 0  # combadura
 p = 0  # posicion de la combadura
@@ -60,12 +61,13 @@ archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil)
+    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.125)
 
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=90, cc=7.4, linea_eta=0)
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=80, cc=7.4, linea_eta=0)
+mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=20, cc=3.7, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh_c_flap.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh_c_flap.txt_mesh')

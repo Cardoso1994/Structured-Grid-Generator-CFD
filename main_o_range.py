@@ -19,14 +19,14 @@ import mesh_su2
 import helpers
 
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 65 # 60
+N = 5 # 60
 union = 3
 
 airfoil_points = 73 # 45
@@ -46,10 +46,10 @@ R = 20 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
-flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
-flap.create_sin(points)
-flap.rotate(-40)
-perfil.join(flap, dx=0.055, dy=0.05, union=union)
+# flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+# flap.create_sin(points)
+# flap.rotate(-40)
+# perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(-130)
 
 if malla == 'O':
@@ -61,6 +61,9 @@ print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.gen_Laplace(metodo='SOR')
+mallaNACA.gen_parabolic()
+mallaNACA.plot()
+exit()
 mallaNACA.gen_Poisson(metodo='SOR', omega=0.3, aa=32.5, cc=6.5, linea_eta=0)
 print('after mesh generation')
 

@@ -109,7 +109,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PV = np.zeros((M, N-1))
 
     err = 1.0
-    it_max = 28000
+    it_max = 30000
     it = 0
     error = 1e-8
     omega = 1.5 # 1.5
@@ -645,7 +645,7 @@ def velocity(alfa, C, mach_inf, theta, mesh, phi, v_inf):
 
     u = np.flip(u)
     v = np.flip(v)
-   
+
     return (u, v)
 
 def pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0):
