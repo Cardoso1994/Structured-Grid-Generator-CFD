@@ -41,6 +41,7 @@ class mesh_C(mesh):
 
         return
 
+    # importación de métodos de vectorizado y con librería numba
     from mesh_c_ext import gen_Poisson_v_, gen_Poisson_n
 
     def fronteras(self, airfoil_x, airfoil_y, weight):
