@@ -76,7 +76,7 @@ def from_txt_mesh(filename='./garbage/mesh_own.txt_mesh'):
         # mesh = mesh_c.mesh_C(R, M, N, perfil, from_file=True)
         mesh = mesh_c.mesh_C(R, N, perfil, from_file=True)
 
-    # sea asignan atributos a malla
+    # se asignan atributos a malla
     mesh.d_eta = d_eta
     mesh.d_xi = d_xi
     mesh.R = R
