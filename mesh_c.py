@@ -18,6 +18,41 @@ from airfoil import airfoil
 import mesh_su2
 
 class mesh_C(mesh):
+    """
+    Clase para generar mallas tipo C y otros calculos de utilidad sobre
+        las mismas
+    ...
+
+    Atributos
+    ----------
+    R : float64
+        Radio de la frontera externa en la parte circular. La parte rectangular
+            se define en funcion de este parametro
+    N : int
+        Numero de divisiones en el eje eta.
+    airfoil : airfoil
+        Objeto de la clase airfoil que define toda la frontera interna
+    from_file : boolean
+        La malla se crea a partir de una malla almacenada en un archivo con
+            extension ".txt_mesh" o se genera en ejecucion.
+    weight : float
+        Parametro para modificar la distribucion de los puntos (funcion
+            exponencial)en la seccion rectangular de la malla. A mayor valor,
+            mayor cercania a la zona del perfil alar
+
+    Metodos
+    -------
+    fronteras(airfoil_x, airfoil_y, weight):
+        Genera las fronteras interna y externa de la malla
+    gen_Laplace(metodo='SOR', omega=1):
+        Genera la malla mediante la solucion de la ecuacion de Laplace
+    gen_Poisson(metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
+        Genera la malla mediante la solucion de la ecuacion de Poisson
+    to_su2(filename):
+        Convierte la malla a formato de SU2
+    """
+
     def __init__(self, R, N, airfoil, from_file=False, weight=1.055):
         '''
         R = radio de la frontera externa, en función de la cuerda del perfil
@@ -120,7 +155,7 @@ class mesh_C(mesh):
 
         return
 
-    def gen_Laplace(self, metodo='SOR'):
+    def gen_Laplace(self, metodo='SOR', omega=1):
         '''
         Genera malla resolviendo ecuación de Laplace
         metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
@@ -137,13 +172,6 @@ class mesh_C(mesh):
 
         d_eta = self.d_eta
         d_xi = self.d_xi
-        omega = np.longdouble(1.5)  # en caso de metodo SOR
-        '''
-        para métodos de relajación:
-            0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
-            omega = 1     ---> método Gauss-Seidel
-            1 < omega < 2 ---> sobre-relajación. acelera la convergencia.
-        '''
 
         it = 0
         # inicio del método iterativo
@@ -153,11 +181,11 @@ class mesh_C(mesh):
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
 
-            # si el método iterativo es Jacobi
+            # si el método iterativo es Jacobi, GS o SOR
             if metodo == 'J':
                 X = Xo
                 Y = Yo
-            else:   # si el método es Gauss-Seidel o SOR
+            else:
                 X = Xn
                 Y = Yn
 
@@ -413,7 +441,6 @@ class mesh_C(mesh):
         return
 
 
-# función para la generación de mallas mediante EDP hiperbólicas
     def gen_hyperbolic(self):
         """
         función para la generación de mallas mediante EDP hiperbólicas
