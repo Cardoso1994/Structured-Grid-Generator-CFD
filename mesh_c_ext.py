@@ -1,0 +1,377 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Created on Wed Aug 1 13:53:21 2018
+
+@author: cardoso
+
+Define subclase mesh_C.
+Diversos métodos de generación para mallas tipo C
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from numba import jit
+
+from mesh import mesh
+import mesh_su2
+
+def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                aa=0, cc=0, linea_eta=0):
+    '''
+    Genera malla resolviendo ecuación de Poisson
+    metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
+    Parte el dominio en el eje eta en 3 secciones, en el método tradicional
+        se observa que el iterar de fuera hacia dentro mejora mucho los
+        resultados obtenidos, por esto se secciona el dominio, calculando
+        primero los puntos externos
+    Intenta tambien partir el dominio en el eje xi
+    '''
+
+    # se genera malla antes por algún método algebráico
+    self.gen_TFI()
+
+    Xn          = np.flip(self.X)
+    Yn          = np.flip(self.Y)
+    Xo          = np.copy(Xn)
+    Yo          = np.copy(Yn)
+    m           = self.M
+    n           = self.N
+
+    div_eta     = 25
+    lim_        = n // div_eta
+    lim         = [1]
+    for i in range(1, div_eta):
+        lim.append(lim_ * i)
+    lim.append(n-1)
+
+    div_xi      = 8
+    lim_        = m // div_xi
+    lim_xi      = [1]
+    for i in range(1, div_xi):
+        lim_xi.append(lim_ * i)
+    lim_xi.append(m-1)
+
+    linea_eta   = n - linea_eta
+    linea_xi    = m - linea_xi
+
+    x_eta       = np.zeros((m, n))
+    y_eta       = np.zeros((m, n))
+    x_xi        = np.zeros((m, n))
+    y_xi        = np.zeros((m, n))
+
+    alpha       = np.zeros((m, n))
+    beta        = np.zeros((m, n))
+    gamma       = np.zeros((m, n))
+    I           = np.zeros((m, n))
+
+    d_eta       = self.d_eta
+    d_xi        = self.d_xi
+
+    # cálculo de funciones de forzado
+    P_ = np.arange(0, m) * 1.0
+    Q_ = np.arange(0, n) * 1.0
+
+    P_[1:-1] = -a * (P_[1:-1] - linea_xi)\
+        / np.abs(P_[1:-1] - linea_xi)\
+        * np.exp(-c * np.abs(P_[1:-1] - linea_xi))
+    Q_[1:-1] = -aa * (Q_[1:-1] - linea_eta)\
+        / np.abs(Q_[1:-1] - linea_eta)\
+        * np.exp(-cc * np.abs(Q_[1:-1] - linea_eta))
+
+    mask = np.isnan(P_)
+    P_[mask] = 0
+    mask = np.isnan(Q_)
+    Q_[mask] = 0
+
+    it = 0
+    mesh.it_max = 45e3
+    mesh.it_max = 100e3
+
+    # inicio del método iterativo
+    print(f"Generando malla tipo C.\nDimensiones M: {self.M} N: {self.N}")
+    if self.airfoil_alone:
+        print("Perfil")
+    else:
+        print("Perfil con flap")
+
+    print("Poisson Vectorized - 3 sections: ")
+    # while it < mesh.it_max:
+    while True:
+        if (it % 120000 == 0):
+            self.X = np.flip(Xn)
+            self.Y = np.flip(Yn)
+            self.plot()
+            print()
+
+        # printing info
+        print(f"it = {it} aa = {aa} cc = {cc} err_x = "
+              + '{:.3e}'.format(abs(Xn - Xo).max()) + ' err_y = '
+              + '{:.3e}'.format(abs(Yn - Yo).max()) + '\t\t', end="\r")
+
+        Xo = np.copy(Xn)
+        Yo = np.copy(Yn)
+        # si el metodo iterativo es Jacobi ('J') o 'GS' o 'SOR'
+        if metodo == 'J':
+            X = Xo
+            Y = Yo
+        else:
+            X = Xn
+            Y = Yn
+
+        for j_ in range(div_eta):
+            lim_inf = lim[j_]
+            lim_sup = lim[j_ + 1]
+            j = slice(lim_inf, lim_sup)
+            j_p_1 = slice(lim_inf + 1, lim_sup + 1)
+            j_m_1 = slice(lim_inf - 1, lim_sup - 1)
+            for i_ in range(div_xi):
+                lim_inf_xi = lim_xi[i_]
+                lim_sup_xi = lim_xi[i_ + 1]
+                i = slice(lim_inf_xi, lim_sup_xi)
+                i_p_1 = slice(lim_inf_xi + 1, lim_sup_xi + 1)
+                i_m_1 = slice(lim_inf_xi - 1, lim_sup_xi - 1)
+
+                x_eta[i, j] = (X[i, j_p_1] \
+                                        - X[i, j_m_1]) / 2 / d_eta
+                y_eta[i, j] = (Y[i, j_p_1] \
+                                        - Y[i, j_m_1]) / 2 / d_eta
+                x_xi[i, j]  = (X[i_p_1, j] \
+                                        - X[i_m_1, j]) / 2 / d_xi
+                y_xi[i, j]  = (Y[i_p_1, j] \
+                                    - Y[i_m_1, j]) / 2 / d_xi
+
+                alpha[i, j] = x_eta[i, j]** 2 \
+                                             + y_eta[i, j]** 2
+                beta[i, j]  = x_xi[i, j] \
+                                                     * x_eta[i, j] \
+                                                     + y_xi[i, j] \
+                                                     * y_eta[i, j]
+                gamma[i, j] = x_xi[i, j] ** 2 \
+                                                     + y_xi[i, j] ** 2
+                I[i, j]     = x_xi[i, j] \
+                                                 * y_eta[i, j] \
+                                                 - x_eta[i, j] \
+                                                 * y_xi[i, j]
+
+
+                Xn[i, j]      = (d_xi * d_eta) ** 2\
+                    / (2 * (alpha[i, j] * d_eta ** 2 \
+                            + gamma[i, j] * d_xi ** 2))\
+                    * (alpha[i, j] / (d_xi ** 2) * (X[i_p_1, j] \
+                                                             + X[i_m_1, j])
+                       + gamma[i, j] / (d_eta ** 2) \
+                       * (X[i, j_p_1] + X[i, j_m_1]) \
+                       - beta[i, j] / (2 * d_xi * d_eta) \
+                       * (X[i_p_1, j_p_1] - X[i_p_1, j_m_1] \
+                          + X[i_m_1, j_m_1] - X[i_m_1, j_p_1])
+                       + I[i, j] ** 2 * (P_[i, None] \
+                                                  * x_xi[i, j] \
+                                                  + Q_[None, j] \
+                                                  * x_eta[i, j]))
+                Yn[i, j]      = (d_xi * d_eta) ** 2\
+                    / (2 * (alpha[i, j] * d_eta ** 2 \
+                            + gamma[i, j] * d_xi ** 2))\
+                    * (alpha[i, j] / (d_xi ** 2) * (Y[i_p_1, j] \
+                                                             + Y[i_m_1, j])
+                       + gamma[i, j] / (d_eta ** 2) \
+                       * (Y[i, j_p_1] + Y[i, j_m_1]) \
+                       - beta[i, j] / (2 * d_xi * d_eta) \
+                       * (Y[i_p_1, j_p_1] - Y[i_p_1, j_m_1] \
+                          + Y[i_m_1, j_m_1] - Y[i_m_1, j_p_1])
+                       + I[i, j] ** 2 * (P_[i, None] \
+                                                  * y_xi[i, j] \
+                                                  + Q_[None, j] \
+                                                  * y_eta[i, j]))
+
+        Yn[0, 1:-1] = Yn[1, 1:-1]
+        Yn[-1, 1:-1] = Yn[-2, 1:-1]
+
+        # # se aplica sobre-relajacion si el metodo es SOR
+        if metodo == 'SOR':
+            Xn = omega * Xn + (1 - omega) * Xo
+            Yn = omega * Yn + (1 - omega) * Yo
+
+        # criterio de convergencia
+        if abs(Xn - Xo).max() < mesh.err_max\
+                and abs(Yn - Yo).max() < mesh.err_max:
+            print('Poisson: ' + metodo + ': saliendo...')
+            print('it=', it)
+            break
+
+        it += 1
+
+    self.X = np.flip(Xn)
+    self.Y = np.flip(Yn)
+    return
+
+
+def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                aa=0, cc=0, linea_eta=0):
+
+    self.gen_TFI()
+
+    Xn = self.X
+    Yn = self.Y
+    Xo = Xn.copy()
+    Yo = Yn.copy()
+
+    m       = self.M
+    n       = self.N
+
+    d_eta   = self.d_eta
+    d_xi    = self.d_xi
+
+    P_ = np.arange(1, m)
+    Q_ = np.arange(1, n)
+    P_ = -a * (P_ / (m-1) - linea_xi)\
+                            / np.abs(P_ / (m-1) - linea_xi)\
+                            * np.exp(-c * np.abs(P_ /
+                                                     (m-1) - linea_xi))
+    Q_ = -aa * (Q_ / (n-1) - linea_eta)\
+                            / np.abs(Q_ / (n-1) - linea_eta)\
+                            * np.exp(-cc
+                            * np.abs(Q_ / (n-1) - linea_eta))
+
+    it = 0
+    mesh.it_max = 150e3
+    mesh.err_max = 1e-8
+
+    it = 0
+    while it < mesh.it_max:
+        if (it % 25000 == 0):
+            self.X = np.copy(Xn)
+            self.Y = np.copy(Yn)
+            self.plot()
+            print()
+
+        # printing info
+        print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+              + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+              + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+              + '\t\t', end="\r")
+
+        Xo = Xn.copy()
+        Yo = Yn.copy()
+        # si el método iterativo es Jacobi
+        if metodo == 'J':
+            X = Xo
+            Y = Yo
+        else:   # si el método es Gauss-Seidel o SOR
+            X = Xn
+            Y = Yn
+
+        (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_)
+
+        # se aplica sobre-relajacion si el metodo es SOR
+        if metodo == 'SOR':
+            Xn = omega * Xn + (1 - omega) * Xo
+            Yn = omega * Yn + (1 - omega) * Yo
+
+        it += 1
+
+        if abs(Xn -Xo).max() < mesh.err_max\
+                and abs(Yn - Yo).max() < mesh.err_max:
+            print('Poisson: ' + metodo + ': saliendo...')
+            print('it=', it)
+            break
+
+    return (self.X, self.Y)
+
+@jit
+def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
+    '''
+    Genera malla resolviendo ecuación de Poisson
+    metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
+    '''
+    d_eta = 1
+    d_xi = 1
+    m = M
+    n = N
+
+    for j in range(n-2, 0, -1):
+        for i in range(1, m-1):
+            x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+            y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+            x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi
+            y_xi = (Y[i+1, j] - Y[i-1, j]) / 2 / d_xi
+
+            alpha = x_eta ** 2 + y_eta ** 2
+            beta = x_xi * x_eta + y_xi * y_eta
+            gamma = x_xi ** 2 + y_xi ** 2
+            I = x_xi * y_eta - x_eta * y_xi
+
+            X[i, j]    = (d_xi * d_eta) ** 2\
+                / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
+                * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
+                    + gamma / (d_eta ** 2) * (X[i, j+1] + X[i, j-1])
+                    - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
+                            - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])
+                    + I ** 2 * (P_[i-1] * x_xi + Q_[j-1] * x_eta))
+            Y[i, j]    = (d_xi * d_eta) ** 2\
+                / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
+                    + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
+                    - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
+                            - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
+                    + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+        # se calculan los puntos en la sección de salida de la malla
+        # parte inferior a partir del corte
+        # se ocupan diferencias finitas "forward" para derivadas
+        # respecto a "XI"
+        i = 0
+        x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+        y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+        x_xi =  (X[i+1, j] - X[i, j]) / d_xi
+        y_xi =  (Y[i+1, j] - Y[i, j]) / d_xi
+
+        alpha = x_eta ** 2 + y_eta ** 2
+        beta =  x_xi * x_eta + y_xi * y_eta
+        gamma = x_xi ** 2 + y_xi ** 2
+        I = x_xi * y_eta - x_eta * y_xi
+
+        Y[i, j] = (d_xi * d_eta) ** 2\
+            / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+            * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+                - beta / d_xi / d_eta
+                * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+        # se calculan los puntos en la sección de salida de la malla
+        # parte superior a partir del corte
+        # se ocupan diferencias finitas "backward" para derivadas
+        # respecto a "XI"
+        i = m-1
+        x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+        y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+        x_xi =  (X[i, j] - X[i-1, j]) / d_xi
+        y_xi =  (Y[i, j] - Y[i-1, j]) / d_xi
+
+        alpha = x_eta ** 2 + y_eta ** 2
+        beta =  x_xi * x_eta + y_xi * y_eta
+        gamma = x_xi ** 2 + y_xi ** 2
+        I = x_xi * y_eta - x_eta * y_xi
+
+        Y[i, j] = (d_xi * d_eta) ** 2\
+            / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
+            * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+                - beta / d_xi / d_eta
+                * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+    return (X, Y)
+
+@jit
+def _num_copy(src, dst):
+    """
+    makes a copy of src to dst element wise
+    """
+    shape = np.shape(src)
+
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            dst[i, j] = src[i, j]

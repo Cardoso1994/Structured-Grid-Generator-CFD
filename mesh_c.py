@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from mesh import mesh
+from airfoil import airfoil
 import mesh_su2
 
 class mesh_C(mesh):
@@ -31,17 +32,18 @@ class mesh_C(mesh):
             M = m_
         else:
             M = m_ - 1
-        # M = np.shape(airfoil.x)[0] * 3
-        # M = np.shape(airfoil.x)[0] * 2 - 1
         mesh.__init__(self, R, M, N, airfoil)
+
         self.tipo = 'C'
 
         if not from_file:
-            self.fronteras(airfoil, weight)
+            self.fronteras(airfoil.x, airfoil.y, weight)
 
         return
 
-    def fronteras(self, airfoil, weight):
+    from mesh_c_ext import gen_Poisson_v_, gen_Poisson_n
+
+    def fronteras(self, airfoil_x, airfoil_y, weight):
         '''
         Genera la frontera externa de la malla así como la interna
         '''
@@ -50,9 +52,9 @@ class mesh_C(mesh):
         # N = self.N
 
         # cargar datos del perfil
-        perfil = airfoil
-        perfil_x = perfil.x
-        perfil_y = perfil.y
+        # perfil = airfoil
+        perfil_x = airfoil_x
+        perfil_y = airfoil_y
         points = np.shape(perfil_x)[0]
         points1 = (points + 1) // 2
 
@@ -64,37 +66,23 @@ class mesh_C(mesh):
         theta2 = np.linspace(np.pi, np.pi / 2, points1)
         theta = np.concatenate((theta, theta2[1:]))
         r = b / (1 - exe ** 2 * np.cos(theta) ** 2) ** 0.5
-        del(theta2, points1)
 
         # parte circular de FE
         x = r * np.cos(theta)
         y = r * np.sin(theta)
         # se termina FE
 
-        # cambiar variable x_line para que no sea distribución lineal
         x_line = np.linspace(R * 2.5, 0, ((M - points) // 2 + 1))
-        '''
-        ***
-        *** Prueba para quitar distribucion lineal de puntos
-        ***
-        '''
         npoints = (M - points) // 2 + 1
-        # weight = 1.055
         delta_limit = 2.5 * R
-        x_line = np.zeros(npoints, dtype='float64')
+        x_line = np.zeros(npoints) * 1.0
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
-        # x_line[0] = perfil_x[0]
         x_line[-1] = 2.5 * R
         dd = x_line[0]
         for i in range(0, npoints - 1):
             x_line[i] = dd
             dd += h * weight ** i
         x_line = np.flip(x_line, 0)
-        '''
-            Termina prueba
-        '''
-        # dx = (x_line[-2] - x_line[-1]) / 3.5
-        # x_line[1:-1] -= dx
         x = np.concatenate((x_line, x[1:]))
         x_line = np.flip(x_line, 0)
         x = np.concatenate((x, x_line[1:]))
@@ -104,15 +92,8 @@ class mesh_C(mesh):
         y = np.concatenate((y, -y_line[1:]))
 
         # frontera interna
-        # cambiar variable x_line para que no sea distribución lineal
         x_line = np.linspace(R * 2.5, perfil_x[0], (M - points) // 2 + 1)
-        '''
-        ***
-        *** Prueba para quitar distribucion lineal de puntos
-        ***
-        '''
         npoints = (M - points) // 2 + 1
-        # weight = 1.01
         delta_limit = 2.5 * R - perfil_x[0]
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** (npoints - 1))
@@ -123,21 +104,16 @@ class mesh_C(mesh):
             x_line[i] = dd
             dd += h * weight ** i
         x_line = np.flip(x_line, 0)
-        '''
-            Termina prueba
-        '''
-        # dx = (x_line[-2] - x_line[-1]) * 253 / 254
-        # x_line[1:-1] -= dx
         perfil_x = np.concatenate((x_line[:-1], perfil_x[:]))
         x_line = np.flip(x_line, 0)
         perfil_x = np.concatenate((perfil_x, x_line[1:]))
         y_line[:] = 0
         perfil_y = np.concatenate((y_line[:-1], perfil_y[:]))
-        perfil_y = np.concatenate((perfil_y, y_line[1:]))
+        perfil_y = np.concatenate((perfil_y[:], y_line[1:]))
 
         # primera columna FI (perfil), ultima columna FE
-        self.X[:, -1] = x
-        self.Y[:, -1] = y
+        self.X[:, self.N-1] = x
+        self.Y[:, self.N-1] = y
         self.X[:, 0] = perfil_x
         self.Y[:, 0] = perfil_y
 
@@ -289,6 +265,7 @@ class mesh_C(mesh):
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
 
+        return
         Xn      = self.X
         Yn      = self.Y
         Xo = np.copy(Xn)
@@ -437,6 +414,10 @@ class mesh_C(mesh):
 
 # función para la generación de mallas mediante EDP hiperbólicas
     def gen_hyperbolic(self):
+        """
+        función para la generación de mallas mediante EDP hiperbólicas
+
+        """
         # se inician las variables características de la malla
         m = self.M
         n = self.N

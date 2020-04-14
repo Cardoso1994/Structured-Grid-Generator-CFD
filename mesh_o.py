@@ -20,7 +20,6 @@ import sys
 np.set_printoptions(threshold=np.sys.maxsize)
 
 class mesh_O(mesh):
-    #def __init__(self, R, M, N, airfoil):
     def __init__(self, R, N, airfoil):
         '''
         R = radio de la frontera externa, en función de la cuerda del perfil
@@ -416,8 +415,8 @@ class mesh_O(mesh):
         # parámetros de ecuación de Poisson
         P_ = np.arange(0, m) * 1.0
         Q_ = np.arange(0, n) * 1.0
-        P = np.copy(P_)
-        Q = np.copy(Q_)
+        # P = np.copy(P_)
+        # Q = np.copy(Q_)
 
         P_[1:-1] = -a * (np.longdouble(P_[1:-1] / (m-1) - linea_xi))\
             / np.abs(np.longdouble(P_[1:-1] / (m-1) - linea_xi))\
@@ -432,22 +431,19 @@ class mesh_O(mesh):
         mask = np.isnan(Q_)
         Q_[mask] = 0
 
-        mesh.it_max = 45e3
+        mesh.it_max = 105e3
 
         it = 0
+        print(f"Generando malla tipo O.\nDimensiones M: {self.M} N: {self.N}")
         print("Poisson Vectorized:")
         # inicio del método iterativo
-        while it < mesh.it_max:
-            if (it % 15000 == 0):
+        # while it < mesh.it_max:
+        while True:
+            if (it % 50000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
-                save = input("\nSave current Mesh: [Y/n]")
-                if save == 'Y' or save == 'y':
-                    name = input('name of mesh: ')
-                    mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
-                    mallaNACA.to_txt_mesh("/home/desarrollo/garbage/" +
-                                          f"{name}.txt_mesh")
+                print()
 
             # printing info
             print(f"it =  {it} aa = {aa} cc = {cc}"

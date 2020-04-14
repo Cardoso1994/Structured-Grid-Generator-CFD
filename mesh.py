@@ -14,11 +14,22 @@ mismas.
 import numpy as np
 import matplotlib.pyplot as plt
 from sys import maxsize
+from numba import jitclass
+from numba import float32, int8, int16, boolean
 
 np.set_printoptions(threshold=maxsize)
 
 
+# mesh_spec = [
+#     ('R', float32),
+#     ('M', int16),
+#     ('N', int16),
+#     ('airfoil_alone', boolean),
+#     ('airfoil_join', int16),
+#     ('airfoil_boundary', int8[:]),
+# ]
 # clase para la generación de mallas
+# @jitclass(mesh_spec)
 class mesh(object):
 
     # variables de clase, controlan el numero de iteraciones máximo
@@ -44,8 +55,6 @@ class mesh(object):
         '''
 
         self.tipo               = None
-        # self.d_eta              = 1 / (self.N - 1)
-        # self.d_xi               = 1 / (self.M - 1)
         self.d_eta              = 1
         self.d_xi               = 1
         self.R                  = R
@@ -55,8 +64,6 @@ class mesh(object):
         self.airfoil_join       = airfoil.union
         self.airfoil_boundary   = airfoil.is_boundary
 
-        self.X                  = np.zeros((M, N), dtype=np.longdouble)
-        self.Y                  = np.zeros((M, N), dtype=np.longdouble)
         self.X                  = np.zeros((M, N))
         self.Y                  = np.zeros((M, N))
 
