@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-Created on Wed Aug 1 13:53:21 2018
+@author:    Marco Antonio Cardoso Moreno
+@mail:      marcoacardosom@gmail.com
 
-@author: cardoso
+Extiende subclase mesh_C.
 
-Define subclase mesh_C.
-Diversos métodos de generación para mallas tipo C
+Diversos métodos de generación para mallas tipo C, apoyandose de la libreria
+    numba y de métodos de vectorizado
 """
 
 import numpy as np
@@ -38,6 +39,7 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     Yo          = np.copy(Yn)
     m           = self.M
     n           = self.N
+
 
     div_eta     = 25
     lim_        = n // div_eta
