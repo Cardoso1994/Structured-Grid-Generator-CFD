@@ -61,8 +61,8 @@ elif malla == 'C':
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 # perfil.to_csv(archivo_perfil)
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=80, cc=7.4, linea_eta=0)
-mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=20, cc=3.7, linea_eta=0)
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=10, cc=7.7, linea_eta=0)
+mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.7, aa=51, cc=7.7, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh_c.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh_c.txt_mesh')

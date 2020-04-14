@@ -65,7 +65,7 @@ print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=185, cc=3.7, linea_eta=0)
-mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.7, aa=85, cc=3.7, linea_eta=0)
+mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.7, aa=235, cc=7.4, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
