@@ -31,6 +31,9 @@ class mesh_O(mesh):
         self.tipo = 'O'
         self.fronteras(airfoil)
 
+    # importación de métodos de vectorizado y con librería numba
+    from mesh_o_ext import gen_Poisson_v_, gen_Poisson_n
+
     def fronteras(self, airfoil):
         '''
         Genera la frontera externa de la malla así como la interna
@@ -192,15 +195,8 @@ class mesh_O(mesh):
 
         d_eta   = self.d_eta
         d_xi    = self.d_xi
-        '''
-        para métodos de relajación:
-            0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
-            omega = 1     ---> método Gauss-Seidel
-            1 < omega < 2 ---> sobre-relajación. acelera la convergencia.
-        '''
 
         # parámetros de ecuación de Poisson
-        # I           = 0
         P_ = np.arange(1, m)
         Q_ = np.arange(1, n)
 
@@ -231,7 +227,8 @@ class mesh_O(mesh):
                 if save == 'Y' or save == 'y':
                     name = input('name of mesh: ')
                     mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
-                    mallaNACA.to_txt_mesh(f"/home/desarrollo/garbage/{name}.txt_mesh")
+                    mallaNACA.to_txt_mesh(
+                        f"/home/desarrollo/garbage/{name}.txt_mesh")
 
 
             # printing info
@@ -261,37 +258,6 @@ class mesh_O(mesh):
                     gamma   = x_xi ** 2 + y_xi ** 2
                     I       = x_xi * y_eta - x_eta * y_xi
 
-                    # if np.abs(i / (m-1) - linea_xi) == 0:
-                    #     P = np.longdouble(0)
-                    # else:
-                    #     P = -a * (np.longdouble(i / (m-1) - linea_xi))\
-                    #             / np.abs(np.longdouble(i / (m-1) - linea_xi))\
-                    #             * np.exp(-c
-                    #             * np.abs(np.longdouble(i / (m-1) - linea_xi)))
-
-                    # if np.abs(j / (n-1) - linea_eta) == 0:
-                    #     Q = 0
-                    # else:
-                    #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                    #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                    #             * np.exp(-cc
-                    #             * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-
-                    # Xn[i, j]    = (d_xi * d_eta) ** 2\
-                    #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
-                    #     * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
-                    #         + gamma / (d_eta ** 2) * (X[i, j+1] + X[i, j-1])
-                    #         - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
-                    #                 - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                    #         + I ** 2 * (P * x_xi + Q * x_eta))
-                    # Yn[i, j]    = (d_xi * d_eta) ** 2\
-                    #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                    #     * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
-                    #         + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
-                    #         - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
-                    #                 - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
-                    #         + I**2 * (P * y_xi + Q * y_eta))
-
                     Xn[i, j]    = (d_xi * d_eta) ** 2\
                         / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
                         * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
@@ -318,28 +284,6 @@ class mesh_O(mesh):
                 gamma   = x_xi ** 2 + y_xi ** 2
                 I       = x_xi * y_eta - x_eta * y_xi
 
-                # if np.abs(i / (m-1) - linea_xi) == 0:
-                #     P = 0
-                # else:
-                #     P = -a * (i / (m-1) - linea_xi)\
-                #             / np.abs(i / (m-1) - linea_xi)\
-                #             * np.exp(-c * np.abs(i / (m-1) - linea_xi))
-
-                # if np.abs(j / (n-1) - linea_eta) == 0:
-                #     Q = 0
-                # else:
-                #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                #             * np.exp(-cc
-                #                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-
-                # Xn[i, j]    = (d_xi * d_eta) ** 2\
-                #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                #     * (alpha / (d_xi**2) * (X[1, j] + X[i-1, j])
-                #         + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
-                #         - beta / (2 * d_xi * d_eta)
-                #         * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                #         + I**2 * (P * x_xi + Q * x_eta))
                 Xn[i, j]    = (d_xi * d_eta) ** 2\
                     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
                     * (alpha / (d_xi**2) * (X[1, j] + X[i-1, j])
@@ -374,285 +318,6 @@ class mesh_O(mesh):
         self.Y = Yn
         return
 
-    def gen_Poisson_v(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
-                    aa=0, cc=0, linea_eta=0):
-        '''
-        Genera malla resolviendo ecuación de Poisson
-        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
-
-        omega: para métodos de relajación:
-            0 < omega < 1 ---> bajo-relajación. Solución tiende a diverger
-            omega = 1     ---> método Gauss-Seidel
-            1 < omega < 2 ---> sobre-relajación. acelera la convergencia.
-
-        a, c, linea_xi: valores de forzados para lineas xi = constante
-
-        aa, cc, linea_eta: valores de forzados para lineas eta = constante
-        '''
-
-        # se genera malla antes por algún método algebráico
-        self.gen_TFI()
-
-        # se inician variables
-        Xn      = self.X
-        Yn      = self.Y
-        Xo      = np.copy(Xn)
-        Yo      = np.copy(Yn)
-        m       = self.M
-        n       = self.N
-        d_eta   = self.d_eta
-        d_xi    = self.d_xi
-
-        x_xi    = np.zeros((m, n))
-        x_eta   = np.zeros((m, n))
-        y_xi    = np.zeros((m, n))
-        y_eta   = np.zeros((m, n))
-        alpha   = np.zeros((m, n))
-        beta    = np.zeros((m, n))
-        gamma   = np.zeros((m, n))
-        I       = np.zeros((m, n))
-
-        # parámetros de ecuación de Poisson
-        P_ = np.arange(0, m) * 1.0
-        Q_ = np.arange(0, n) * 1.0
-        # P = np.copy(P_)
-        # Q = np.copy(Q_)
-
-        P_[1:-1] = -a * (np.longdouble(P_[1:-1] / (m-1) - linea_xi))\
-            / np.abs(np.longdouble(P_[1:-1] / (m-1) - linea_xi))\
-            * np.exp(-c * np.abs(np.longdouble(P_[1:-1] /
-                                                         (m-1) - linea_xi)))
-        Q_[1:-1] = -aa * (np.longdouble(Q_[1:-1] / (n-1) - linea_eta))\
-            / np.abs(np.longdouble(Q_[1:-1] / (n-1) - linea_eta))\
-            * np.exp(-cc * np.abs(np.longdouble(Q_[1:-1] / (n-1) - linea_eta)))
-
-        mask = np.isnan(P_)
-        P_[mask] = 0
-        mask = np.isnan(Q_)
-        Q_[mask] = 0
-
-        mesh.it_max = 105e3
-
-        it = 0
-        print(f"Generando malla tipo O.\nDimensiones M: {self.M} N: {self.N}")
-        print("Poisson Vectorized:")
-        # inicio del método iterativo
-        # while it < mesh.it_max:
-        while True:
-            if (it % 50000 == 0):
-                self.X = np.copy(Xn)
-                self.Y = np.copy(Yn)
-                self.plot()
-                print()
-
-            # printing info
-            print(f"it =  {it} aa = {aa} cc = {cc}"
-                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
-                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
-                  + '\t\t', end="\r")
-
-            Xo = np.copy(Xn)
-            Yo = np.copy(Yn)
-            # método iterativo Jacobi
-            if metodo == 'J':
-                X = Xo
-                Y = Yo
-            else:   # método Gauss-Seidel o SOR
-                X = Xn
-                Y = Yn
-
-            # derivada con respecto a xi = (i + 1, j) - (i - 1, j)
-            # derivada con respecto a eta = (i, j + 1) - (i, j - 1)
-
-            x_eta[1:-1, 1:-1]   = (X[1:-1, 2:] - X[1:-1, :-2]) / 2 / d_eta
-            y_eta[1:-1, 1:-1]   = (Y[1:-1, 2:] - Y[1:-1, :-2]) / 2 / d_eta
-            x_xi[1:-1, 1:-1]    = (X[2:, 1:-1] - X[:-2, 1:-1]) / 2 / d_xi
-            y_xi[1:-1, 1:-1]    = (Y[2:, 1:-1] - Y[:-2, 1:-1]) / 2 / d_xi
-            alpha[1:-1, 1:-1]   = x_eta[1:-1, 1:-1] ** 2 \
-                                    + y_eta[1:-1, 1:-1] ** 2
-            beta[1:-1, 1:-1]    = x_xi[1:-1, 1:-1] * x_eta[1:-1, 1:-1] \
-                                    + y_xi[1:-1, 1:-1] * y_eta[1:-1, 1:-1]
-            gamma[1:-1, 1:-1]   = x_xi[1:-1, 1:-1] ** 2 + y_xi[1:-1, 1:-1] ** 2
-            I[1:-1, 1:-1]       = x_xi[1:-1, 1:-1] * y_eta[1:-1, 1:-1] \
-                                    - x_eta[1:-1, 1:-1] * y_xi[1:-1, 1:-1]
-
-            # Nodos internos
-            #/*
-            # *
-            # * Added by Cardoso
-            # * Aparentemente I ** 2 se divide entre 2. CHECAR
-            # *
-            # */
-            Xn[1:-1, 1:-1]    = (d_xi * d_eta) ** 2\
-                / (2 * (alpha[1:-1, 1:-1] * d_eta ** 2 \
-                        + gamma[1:-1, 1:-1] * d_xi ** 2))\
-                * (alpha[1:-1, 1:-1] / (d_xi ** 2) \
-                    * (X[2:, 1:-1] + X[:-2, 1:-1])
-                   + gamma[1:-1, 1:-1] / (d_eta ** 2) \
-                   * (X[1:-1, 2:] + X[1:-1, :-2])
-                   - beta[1:-1, 1:-1] / (2 * d_xi * d_eta) \
-                   * (X[2:, 2:] - X[2:, :-2] + X[:-2, :-2] - X[:-2, 2:])
-                   + I[1:-1, 1:-1] ** 2 / 2 * (P_[1:-1, None] * x_xi[1:-1, 1:-1] \
-                                        + Q_[None, 1:-1] * x_eta[1:-1, 1:-1]))
-            Yn[1:-1, 1:-1]    = (d_xi * d_eta) ** 2\
-                / (2 * (alpha[1:-1, 1:-1] * d_eta ** 2 \
-                        + gamma[1:-1, 1:-1] * d_xi ** 2))\
-                * (alpha[1:-1, 1:-1] / (d_xi ** 2) \
-                    * (Y[2:, 1:-1] + Y[:-2, 1:-1])
-                   + gamma[1:-1, 1:-1] / (d_eta ** 2) \
-                   * (Y[1:-1, 2:] + Y[1:-1, :-2])
-                   - beta[1:-1, 1:-1] / (2 * d_xi * d_eta) \
-                   * (Y[2:, 2:] - Y[2:, :-2] + Y[:-2, :-2] - Y[:-2, 2:])
-                   + I[1:-1, 1:-1] ** 2 / 2 * (P_[1:-1, None] * y_xi[1:-1, 1:-1] \
-                                        + Q_[None, 1:-1] * y_eta[1:-1, 1:-1]))
-
-            # Nodos en el corte, i = -1 = 0
-            x_eta[-1, 1:-1]     = (X[-1, 2:] - X[-1, :-2]) / 2 / d_eta
-            y_eta[-1, 1:-1]     = (Y[-1, 2:] - Y[-1, :-2]) / 2 / d_eta
-            x_xi[-1, 1:-1]      = (X[1, 1:-1] - X[-2, 1:-1]) / 2 / d_xi
-            y_xi[-1, 1:-1]      = (Y[1, 1:-1] - Y[-2, 1:-1]) / 2 / d_xi
-
-            alpha[-1, 1:-1]     = x_eta[-1, 1:-1] ** 2 + y_eta[-1, 1:-1] ** 2
-            beta[-1, 1:-1]      = x_xi[-1, 1:-1] * x_eta[-1, 1:-1] \
-                                    + y_xi[-1, 1:-1] * y_eta[-1, 1:-1]
-            gamma[-1, 1:-1]     = x_xi[-1, 1:-1] ** 2 + y_xi[-1, 1:-1] ** 2
-            I[-1, 1:-1]         = x_xi[-1, 1:-1] * y_eta[-1, 1:-1] \
-                                    - x_eta[-1, 1:-1] * y_xi[-1, 1:-1]
-
-            Xn[-1, 1:-1]    = (d_xi * d_eta) ** 2 \
-                / (2 * (alpha[-1, 1:-1] * d_eta**2 \
-                        + gamma[-1, 1:-1] * d_xi**2))\
-                * (alpha[-1, 1:-1] / (d_xi**2) * (X[1, 1:-1] + X[-2, 1:-1])
-                   + gamma[-1, 1:-1] / (d_eta**2) * (X[-1, 2:] + X[-1, :-2])
-                   - beta[-1, 1:-1] / (2 * d_xi * d_eta)
-                   * (X[1, 2:] - X[1, :-2] + X[-2, :-2] - X[-2, 2:])
-                   + I[-1, 1:-1] ** 2 / 2 * (P_[-1, None] * x_xi[-1, 1:-1] \
-                                         + Q_[None, 1:-1] * x_eta[-1, 1:-1]))
-            # Yn[-1, 1:-1]    = (d_xi * d_eta) ** 2 \
-            #     / (2 * (alpha[-1, 1:-1] * d_eta**2 \
-            #             + gamma[-1, 1:-1] * d_xi**2))\
-            #     * (alpha[-1, 1:-1] / (d_xi**2) * (Y[1, 1:-1] + Y[-2, 1:-1])
-            #        + gamma[-1, 1:-1] / (d_eta**2) * (Y[-1, 2:] + Y[-1, :-2])
-            #        - beta[-1, 1:-1] / (2 * d_xi * d_eta)
-            #        * (Y[1, 2:] - Y[1, :-2] + Y[-2, :-2] - Y[-2, 2:])
-            #        + I[-1, 1:-1] ** 2 / 2 * (P_[-1, None] * y_xi[-1, 1:-1] \
-            #                              + Q_[None, 1:-1] * y_eta[-1, 1:-1]))
-
-            Xn[0, :] = Xn[-1, :]
-            Yn[0, :] = Yn[-1, :]
-
-            # se aplica sobre-relajacion si el metodo es SOR
-            if metodo == 'SOR':
-                Xn = omega * Xn + (1 - omega) * Xo
-                Yn = omega * Yn + (1 - omega) * Yo
-
-            it += 1
-
-            if abs(Xn - Xo).max() < mesh.err_max\
-                    and abs(Yn - Yo).max() < mesh.err_max:
-                print(metodo + ': saliendo...')
-                print('it = ', it)
-                break
-
-        self.X = Xn
-        self.Y = Yn
-
-        return
-
-
-
-            # for j in range(1, n-1):
-            #     for i in range(1, m-1):
-                    # x_eta   = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-                    # y_eta   = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-                    # x_xi    = (X[i+1, j] - X[i-1, j]) / 2 / d_xi
-                    # y_xi    = (Y[i+1, j] - Y[i-1, j]) / 2 / d_xi
-
-                    # alpha   = x_eta ** 2 + y_eta ** 2
-                    # beta    = x_xi * x_eta + y_xi * y_eta
-                    # gamma   = x_xi ** 2 + y_xi ** 2
-                    # I       = x_xi * y_eta - x_eta * y_xi
-
-                    # Xn[i, j]    = (d_xi * d_eta) ** 2\
-                    #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
-                    #     * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
-                    #         + gamma / (d_eta ** 2) * (X[i, j+1] + X[i, j-1])
-                    #         - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
-                    #                 - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                    #         + I ** 2 * (P_[i-1] * x_xi + Q_[j-1] * x_eta))
-                    # Yn[i, j]    = (d_xi * d_eta) ** 2\
-                    #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                    #     * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
-                    #         + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
-                    #         - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
-                    #                 - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
-                    #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
-
-                # i       = m-1
-                # x_eta   = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-                # y_eta   = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-                # x_xi    = (X[1, j] - X[i-1, j]) / 2 / d_xi
-                # y_xi    = (Y[1, j] - Y[i-1, j]) / 2 / d_xi
-
-                # alpha   = x_eta ** 2 + y_eta ** 2
-                # beta    = x_xi * x_eta + y_xi * y_eta
-                # gamma   = x_xi ** 2 + y_xi ** 2
-                # I       = x_xi * y_eta - x_eta * y_xi
-
-                # if np.abs(i / (m-1) - linea_xi) == 0:
-                #     P = 0
-                # else:
-                #     P = -a * (i / (m-1) - linea_xi)\
-                #             / np.abs(i / (m-1) - linea_xi)\
-                #             * np.exp(-c * np.abs(i / (m-1) - linea_xi))
-
-                # if np.abs(j / (n-1) - linea_eta) == 0:
-                #     Q = 0
-                # else:
-                #     Q = -aa * (np.longdouble(j / (n-1) - linea_eta))\
-                #             / np.abs(np.longdouble(j / (n-1) - linea_eta))\
-                #             * np.exp(-cc
-                #                 * np.abs(np.longdouble(j / (n-1) - linea_eta)))
-
-                # Xn[i, j]    = (d_xi * d_eta) ** 2\
-                #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                #     * (alpha / (d_xi**2) * (X[1, j] + X[i-1, j])
-                #         + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
-                #         - beta / (2 * d_xi * d_eta)
-                #         * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                #         + I**2 * (P * x_xi + Q * x_eta))
-                # Xn[i, j]    = (d_xi * d_eta) ** 2\
-                #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                #     * (alpha / (d_xi**2) * (X[1, j] + X[i-1, j])
-                #         + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
-                #         - beta / (2 * d_xi * d_eta)
-                #         * (X[1, j+1] - X[1, j-1] + X[i-1, j-1] - X[i-1, j+1])
-                #         + I**2 * (P_[i-1] * x_xi + Q_[j-1] * x_eta))
-                # Yn[i, j]    = (d_xi * d_eta) ** 2\
-                #     / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                #     * (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j])
-                #         + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
-                #         - beta / (2 * d_xi * d_eta)
-                #         * (Y[1, j+1] - Y[1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
-                #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
-            # Xn[0, :] = Xn[-1, :]
-            # Yn[0, :] = Yn[-1, :]
-
-            # se aplica sobre-relajacion si el metodo es SOR
-            # if metodo == 'SOR':
-            #     Xn = omega * Xn + (1 - omega) * Xo
-            #     Yn = omega * Yn + (1 - omega) * Yo
-
-            # it += 1
-
-            # if abs(Xn - Xo).max() < mesh.err_max\
-            #         and abs(Yn - Yo).max() < mesh.err_max:
-            #     print(metodo + ': saliendo...')
-            #     print('it = ', it)
-            #     break
-
-        # self.X = Xn
-        # self.Y = Yn
 
     def gen_hyperbolic(self):
         '''
