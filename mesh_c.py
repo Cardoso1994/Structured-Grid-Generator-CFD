@@ -2,12 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Created on Wed Aug 1 13:53:21 2018
+@author:    Marco Antonio Cardoso Moreno
+@mail:      marcoacardosom@gmail.com
 
-@author: cardoso
-
-Define subclase mesh_C.
-Diversos métodos de generación para mallas tipo C
+Define subclase mesh_C
 """
 
 import numpy as np
@@ -49,16 +47,20 @@ class mesh_C(mesh):
     gen_Poisson(metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                     aa=0, cc=0, linea_eta=0):
         Genera la malla mediante la solucion de la ecuacion de Poisson
+    gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
+        Genera la malla mediante la solucion de la ecuacion de Poisson.
+        Utiliza vectorizacion, divide la malla en secciones, tanto en xi como
+        en eta.
+    gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
+        Genera la malla mediante la solucion de la ecuacion de Poisson
+        Utiliza la libreria numba para acelerar la ejecucion
     to_su2(filename):
         Convierte la malla a formato de SU2
     """
 
     def __init__(self, R, N, airfoil, from_file=False, weight=1.055):
-        '''
-        R = radio de la frontera externa, en función de la cuerda del perfil
-            se asigna ese valor desde el sript main.py
-        archivo = archivo con la nube de puntos de la frontera interna
-        '''
 
         m_ = np.shape(airfoil.x)[0] * 3 // 2
         if not airfoil.alone:
@@ -80,9 +82,26 @@ class mesh_C(mesh):
     from mesh_c_ext import gen_Poisson_v_, gen_Poisson_n
 
     def fronteras(self, airfoil_x, airfoil_y, weight):
-        '''
-        Genera la frontera externa de la malla así como la interna
-        '''
+        """
+        Genera las fronteras interna y externa de la malla
+        ...
+
+        Parametros
+        ----------
+        airfoil_x : numpy.array
+            Coordenadas en el eje X de los puntos que definen al perfil alar
+        airfoil_y : numpy.array
+            Coordenadas en el eje Y de los puntos que definen al perfil alar
+        wieght :     float64
+            Valor para funcion exponencial que afecta a la distribucion de
+            puntos en la zona rectangular. A mayor "wieght", mayor
+            concentracion de puntos en la zona cercana al perfil
+
+        Return
+        -----
+        None
+        """
+
         R = self.R
         M = self.M
         # N = self.N
@@ -156,11 +175,28 @@ class mesh_C(mesh):
         return
 
     def gen_Laplace(self, metodo='SOR', omega=1):
-        '''
-        Genera malla resolviendo ecuación de Laplace
-        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
-        '''
+        """
+        Resuelve la ecuacion de Laplace para generar la malla.
 
+        Metodo clasico, con for loops anidados.
+        ...
+
+        Parametros
+        ----------
+        metodo : str
+            Metodo iterativo de solucion. Jacobi (J), Gauss Seidel (GS) y
+            sobrerelajacion (SOR)
+        omega : float64
+            Valor utilizado para acelerar o suavizar la solucion. Solo se
+            utiliza si metodo == 'SOR'
+            omega < 1 ---> suaviza la solucion
+            omega = 1 ---> metodod Gauss Seidel
+            omega > 1 ---> acelera la solucion
+
+        Return
+        -----
+        None
+        """
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
 
@@ -213,10 +249,10 @@ class mesh_C(mesh):
                             - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
                                     - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1]))
 
-                # se calculan los puntos en la sección de salida de la malla
+                # puntos en la sección de salida de la malla
                 # parte inferior a partir del corte
                 # se ocupan diferencias finitas "forward" para derivadas
-                # respecto a "XI"
+                # respecto a "xi"
                 i = 0
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -233,17 +269,17 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
-                Xn[i, j] = (d_xi * d_eta) ** 2\
-                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-                    * (alpha / d_xi**2 * (X[i+2, j] - 2 * X[i+1, j])
-                        - beta / d_xi / d_eta
-                        * (X[i+1, j+1] - X[i+1, j-1] - X[i, j+1] + X[i, j-1])
-                        + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
+                # Xn[i, j] = (d_xi * d_eta) ** 2\
+                #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                #     * (alpha / d_xi**2 * (X[i+2, j] - 2 * X[i+1, j])
+                #         - beta / d_xi / d_eta
+                #         * (X[i+1, j+1] - X[i+1, j-1] - X[i, j+1] + X[i, j-1])
+                #         + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
 
-                # se calculan los puntos en la sección de salida de la malla
+                # puntos en la sección de salida de la malla
                 # parte superior a partir del corte
                 # se ocupan diferencias finitas "backward" para derivadas
-                # respecto a "XI"
+                # respecto a "xi"
                 i = m-1
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -260,25 +296,26 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
-                Xn[i, j] = (d_xi * d_eta) ** 2\
-                    / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-                    * (alpha / d_xi**2 * (-2 * X[i-1, j] + X[i-2, j])
-                        - beta / d_xi / d_eta
-                        * (X[i, j+1] - X[i, j-1] - X[i-1, j+1] + X[i-1, j-1])
-                        + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
+                # Xn[i, j] = (d_xi * d_eta) ** 2\
+                #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+                #     * (alpha / d_xi**2 * (-2 * X[i-1, j] + X[i-2, j])
+                #         - beta / d_xi / d_eta
+                #         * (X[i, j+1] - X[i, j-1] - X[i-1, j+1] + X[i-1, j-1])
+                #         + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
 
-            it += 1
-
+            # criterio de convergencia
             if abs(Xn - Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
                 print('Laplace: ' + metodo + ': saliendo...')
                 print('it =', it)
                 break
+
+            it += 1
 
         self.X = Xn
         self.Y = Yn
@@ -286,12 +323,40 @@ class mesh_C(mesh):
 
     def gen_Poisson(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                     aa=0, cc=0, linea_eta=0):
-        '''
-        Genera malla resolviendo ecuación de Poisson
-        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
-        '''
+        """
+        Resuelve la ecuacion de Poisson para generar la malla.
 
-        # se genera malla antes por algún método algebráico
+        Metodo clasico, con for loops anidados.
+        ...
+
+        Parametros
+        ----------
+        metodo : str
+            Metodo iterativo de solucion. Jacobi (J), Gauss Seidel (GS) y
+            sobrerelajacion (SOR)
+        omega : float64
+            Valor utilizado para acelerar o suavizar la solucion. Solo se
+            utiliza si metodo == 'SOR'
+            omega < 1 ---> suaviza la solucion
+            omega = 1 ---> metodod Gauss Seidel
+            omega > 1 ---> acelera la solucion
+        a, c : float64
+            valores ocupados para la funcion de forzado P, en el eje xi
+        linea_xi : int
+            linea  en el eje xi hacia la cual se realiza el forzado.
+            0 <= linea_xi <= self.M
+        aa, cc : float64
+            valores ocupados para la funcion de forzado P, en el eje eta
+        linea_eta : int
+            linea  en el eje eta hacia la cual se realiza el forzado.
+            0 <= linea_eta <= self.N
+
+        Return
+        -----
+        None
+        """
+
+        # aproximacion inicial
         self.gen_TFI()
 
         return
@@ -445,6 +510,7 @@ class mesh_C(mesh):
         """
         función para la generación de mallas mediante EDP hiperbólicas
 
+        TODO
         """
         # se inician las variables características de la malla
         m = self.M
@@ -535,9 +601,20 @@ class mesh_C(mesh):
         return
 
     def to_su2(self, filename):
-        '''
-        convierte malla a formato SU2
-        '''
+        """
+        Exporta la malla a un archivo de texto en formato de SU2.
+        ...
+
+        Parametros
+        ----------
+        filename : str
+            nombre del archivo en el cual se exportara la malla.
+            Debe incluir el path (relativo o absoluto)
+
+        Return
+        -----
+        None
+        """
 
         if self.airfoil_alone == True:
             mesh_su2.to_su2_mesh_c_airfoil(self, filename)
