@@ -813,8 +813,8 @@ class mesh_O(mesh):
 
         # cálculo de derivadas parciales
         # nodos internos
-        x_eta[:-1, j] = (X[:-1, 2:] - X[:-1, :-2]) / 2 / d_eta
-        y_eta[:-1, j] = (Y[:-1, 2:] - Y[:-1, :-2]) / 2 / d_eta
+        x_eta[:-1, 1:-1] = (X[:-1, 2:] - X[:-1, :-2]) / 2 / d_eta
+        y_eta[:-1, 1:-1] = (Y[:-1, 2:] - Y[:-1, :-2]) / 2 / d_eta
 
         x_eta[:-1, 0]   = (X[:-1, 1] - X[:-1, 0]) / d_eta
         x_eta[:-1, -1]  = (X[:-1, -1] - X[:-1, -2]) / d_eta
@@ -823,8 +823,8 @@ class mesh_O(mesh):
         y_eta[:-1, -1]  = (Y[:-1, -1] - Y[:-1, -2]) / d_eta
         y_eta[-1, :]    = y_eta[0, :]
 
-        x_xi[i, :] = (X[2:, :] - X[:-2, :]) / 2 / d_xi
-        y_xi[i, :] = (Y[2:, :] - Y[:-2, :]) / 2 / d_xi
+        x_xi[1:-1, :] = (X[2:, :] - X[:-2, :]) / 2 / d_xi
+        y_xi[1:-1, :] = (Y[2:, :] - Y[:-2, :]) / 2 / d_xi
         x_xi[0, :]  = (X[1, :] - X[-2, :]) / 2 / d_xi
         y_xi[0, :]  = (Y[1, :] - Y[-2, :]) / 2 / d_xi
         x_xi[-1, :] = x_xi[0, :]
