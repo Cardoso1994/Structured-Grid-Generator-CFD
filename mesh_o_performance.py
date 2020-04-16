@@ -350,6 +350,9 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
             print('it=', it)
             break
 
+    self.X = Xn
+    self.Y = Yn
+
     return (self.X, self.Y)
 
 @jit
