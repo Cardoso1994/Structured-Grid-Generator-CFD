@@ -15,7 +15,8 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, potential_flow_o_esp, velocity, pressure, lift_n_drag, streamlines
+from potential import potential_flow_o, velocity, pressure, lift_n_drag, streamlines
+from potential_performance import potential_flow_o_n
 import helpers
 
 # tipo de malla (C, O)
@@ -54,8 +55,8 @@ if malla == 'O':
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
-# mallaNACA.gen_Poisson(omega=1.3, aa=26, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson(omega=1.3, aa=40, cc=6.8, linea_eta=0)
+# mallaNACA.gen_Poisson(omega=1.3, aa=40, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=1.3, aa=40, cc=6.8, linea_eta=0)
 # direc = '/four-/'
 # mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
 #                                   + '/mallaNACA.txt_mesh')
@@ -129,7 +130,9 @@ alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
 
 for alfa_ in alfas:
     alfa = int(alfa_)
-    (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
+    # (phi, C, theta, IMA) = potential_flow_o(d0, h0, gamma, mach_inf, v_inf,
+    #                                          alfa, mallaNACA)
+    (phi, C, theta, IMA) = potential_flow_o_n(d0, h0, gamma, mach_inf, v_inf,
                                              alfa, mallaNACA)
 
     if flag == 'S':
