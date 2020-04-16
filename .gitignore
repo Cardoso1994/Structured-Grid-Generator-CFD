@@ -1,6 +1,7 @@
 # ignore garbage directory that is used for tests
 garbage
 test*.py
+*.pyc
 
 perfil_final.csv
 *.odt
