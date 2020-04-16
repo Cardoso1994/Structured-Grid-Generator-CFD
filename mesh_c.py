@@ -79,7 +79,7 @@ class mesh_C(mesh):
         return
 
     # importación de métodos de vectorizado y con librería numba
-    from mesh_c_ext import gen_Poisson_v_, gen_Poisson_n
+    from mesh_c_performance import gen_Poisson_v_, gen_Poisson_n
 
     def fronteras(self, airfoil_x, airfoil_y, weight):
         """
@@ -98,7 +98,7 @@ class mesh_C(mesh):
             concentracion de puntos en la zona cercana al perfil
 
         Return
-        -----
+        ------
         None
         """
 
@@ -194,10 +194,11 @@ class mesh_C(mesh):
             omega > 1 ---> acelera la solucion
 
         Return
-        -----
+        ------
         None
         """
-        # se genera malla antes por algún método algebráico
+
+        # aproximacion inicial
         self.gen_TFI()
 
         # se inician variables
@@ -269,12 +270,6 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
-                # Xn[i, j] = (d_xi * d_eta) ** 2\
-                #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-                #     * (alpha / d_xi**2 * (X[i+2, j] - 2 * X[i+1, j])
-                #         - beta / d_xi / d_eta
-                #         * (X[i+1, j+1] - X[i+1, j-1] - X[i, j+1] + X[i, j-1])
-                #         + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
 
                 # puntos en la sección de salida de la malla
                 # parte superior a partir del corte
@@ -296,12 +291,6 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
-                # Xn[i, j] = (d_xi * d_eta) ** 2\
-                #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-                #     * (alpha / d_xi**2 * (-2 * X[i-1, j] + X[i-2, j])
-                #         - beta / d_xi / d_eta
-                #         * (X[i, j+1] - X[i, j-1] - X[i-1, j+1] + X[i-1, j-1])
-                #         + gamma / d_eta**2 * (X[i, j+1] + X[i, j-1]))
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -346,13 +335,13 @@ class mesh_C(mesh):
             linea  en el eje xi hacia la cual se realiza el forzado.
             0 <= linea_xi <= self.M
         aa, cc : float64
-            valores ocupados para la funcion de forzado P, en el eje eta
+            valores ocupados para la funcion de forzado Q, en el eje eta
         linea_eta : int
             linea  en el eje eta hacia la cual se realiza el forzado.
             0 <= linea_eta <= self.N
 
         Return
-        -----
+        ------
         None
         """
 
@@ -381,7 +370,6 @@ class mesh_C(mesh):
                                 * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
 
         it = 0
-        # mesh.err_max = 1e-5
         mesh.it_max = 45e3
 
         # inicio del método iterativo
@@ -396,8 +384,8 @@ class mesh_C(mesh):
                 if save == 'Y' or save == 'y':
                     name = input('name of mesh: ')
                     mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
-                    mallaNACA.to_txt_mesh(f"/home/desarrollo/garbage/{name}.txt_mesh")
-
+                    mallaNACA.to_txt_mesh(
+                        f"/home/desarrollo/garbage/{name}.txt_mesh")
 
             # printing info
             print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
@@ -416,7 +404,6 @@ class mesh_C(mesh):
 
             for j in range(n-2, 0, -1):
                 for i in range(1, m-1):
-                # for i in range(m-2, 0, -1):
                     x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
                     y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
                     x_xi = np.longdouble((X[i+1, j] - X[i-1, j]) / 2 / d_xi)
@@ -442,10 +429,9 @@ class mesh_C(mesh):
                                     - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
                             + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
-                # se calculan los puntos en la sección de salida de la malla
-                # parte inferior a partir del corte
+                # puntos en la sección de salida de la malla
                 # se ocupan diferencias finitas "forward" para derivadas
-                # respecto a "XI"
+                # respecto a "xi"
                 i = 0
                 x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
                 y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
@@ -465,10 +451,9 @@ class mesh_C(mesh):
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
                         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
-                # se calculan los puntos en la sección de salida de la malla
-                # parte superior a partir del corte
+                # puntos en la sección de salida de la malla
                 # se ocupan diferencias finitas "backward" para derivadas
-                # respecto a "XI"
+                # respecto a "xi"
                 i = m-1
                 x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
                 y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
@@ -493,13 +478,14 @@ class mesh_C(mesh):
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
 
-            it += 1
-
+            # criterio de convergencia
             if abs(Xn - Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
                 print('Poisson: ' + metodo + ': saliendo...')
                 print('it=', it)
                 break
+
+            it += 1
 
         self.X = Xn
         self.Y = Yn
@@ -612,7 +598,7 @@ class mesh_C(mesh):
             Debe incluir el path (relativo o absoluto)
 
         Return
-        -----
+        ------
         None
         """
 

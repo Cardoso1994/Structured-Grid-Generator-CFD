@@ -7,7 +7,6 @@ Created on Wed Aug 1 13:53:21 2018
 @author: cardoso
 
 Define subclase mesh_O.
-Se definen diversos métodos de generación para este tipo de mallas
 """
 
 import numpy as np
@@ -20,30 +19,77 @@ import sys
 np.set_printoptions(threshold=np.sys.maxsize)
 
 class mesh_O(mesh):
-    def __init__(self, R, N, airfoil):
-        '''
-        R = radio de la frontera externa, en función de la cuerda del perfil
-            se asigna ese valor desde el sript main.py
-        airfoil = perfil a analizar
-        '''
+    """
+    Clase para generar mallas tipo O y otros calculos de utilidad sobre
+        las mismas
+    ...
+
+    Atributos
+    ----------
+    R : float64
+        Radio de la frontera externa en la parte circular. La parte rectangular
+            se define en funcion de este parametro
+    N : int
+        Numero de divisiones en el eje eta.
+    airfoil : airfoil
+        Objeto de la clase airfoil que define toda la frontera interna
+    from_file : boolean
+        La malla se crea a partir de una malla almacenada en un archivo con
+            extension ".txt_mesh" o se genera en ejecucion.
+
+    Metodos
+    -------
+    fronteras(airfoil_x, airfoil_y):
+        Genera las fronteras interna y externa de la malla
+    gen_Laplace(metodo='SOR', omega=1):
+        Genera la malla mediante la solucion de la ecuacion de Laplace
+    gen_Poisson(metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
+        Genera la malla mediante la solucion de la ecuacion de Poisson
+    gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
+        Genera la malla mediante la solucion de la ecuacion de Poisson.
+        Utiliza vectorizacion, divide la malla en secciones, tanto en xi como
+        en eta.
+    gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
+                    aa=0, cc=0, linea_eta=0):
+        Genera la malla mediante la solucion de la ecuacion de Poisson
+        Utiliza la libreria numba para acelerar la ejecucion
+    to_su2(filename):
+        Convierte la malla a formato de SU2
+    """
+
+    def __init__(self, R, N, airfoil, from_file=False):
         M = np.shape(airfoil.x)[0]
         mesh.__init__(self, R, M, N, airfoil)
         self.tipo = 'O'
-        self.fronteras(airfoil)
+        self.fronteras(airfoil.x, airfoil.y)
 
     # importación de métodos de vectorizado y con librería numba
-    from mesh_o_ext import gen_Poisson_v_, gen_Poisson_n
+    from mesh_o_performance import gen_Poisson_v_, gen_Poisson_n
 
-    def fronteras(self, airfoil):
-        '''
-        Genera la frontera externa de la malla así como la interna
-        '''
+    def fronteras(self, airfoil_x, airfoil_y):
+        """
+        Genera las fronteras interna y externa de la malla
+        ...
+
+        Parametros
+        ----------
+        airfoil_x : numpy.array
+            Coordenadas en el eje X de los puntos que definen al perfil alar
+        airfoil_y : numpy.array
+            Coordenadas en el eje Y de los puntos que definen al perfil alar
+
+        Return
+        ------
+        None
+        """
+
         R = self.R
 
         # cargar datos del perfil
-        perfil      = airfoil
-        perfil_x    = perfil.x
-        perfil_y    = perfil.y
+        perfil_x    = airfoil_x
+        perfil_y    = airfoil_y
         points      = np.shape(perfil_x)[0]
         points      = (points + 1) // 2
 
@@ -69,10 +115,28 @@ class mesh_O(mesh):
 
     # funcion para generar mallas mediante  ecuación de Laplace.
     def gen_Laplace(self, metodo='SOR'):
-        '''
-        Genera malla resolviendo ecuación de Laplace
-        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
-        '''
+        """
+        Resuelve la ecuacion de Laplace para generar la malla.
+
+        Metodo clasico, con for loops anidados.
+        ...
+
+        Parametros
+        ----------
+        metodo : str
+            Metodo iterativo de solucion. Jacobi (J), Gauss Seidel (GS) y
+            sobrerelajacion (SOR)
+        omega : float64
+            Valor utilizado para acelerar o suavizar la solucion. Solo se
+            utiliza si metodo == 'SOR'
+            omega < 1 ---> suaviza la solucion
+            omega = 1 ---> metodod Gauss Seidel
+            omega > 1 ---> acelera la solucion
+
+        Return
+        ------
+        None
+        """
 
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
@@ -177,10 +241,38 @@ class mesh_O(mesh):
 
     def gen_Poisson(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                     aa=0, cc=0, linea_eta=0):
-        '''
-        Genera malla resolviendo ecuación de Poisson
-        metodo = J (Jacobi), GS (Gauss-Seidel), SOR (Sobre-relajacion)
-        '''
+        """
+        Resuelve la ecuacion de Poisson para generar la malla.
+
+        Metodo clasico, con for loops anidados.
+        ...
+
+        Parametros
+        ----------
+        metodo : str
+            Metodo iterativo de solucion. Jacobi (J), Gauss Seidel (GS) y
+            sobrerelajacion (SOR)
+        omega : float64
+            Valor utilizado para acelerar o suavizar la solucion. Solo se
+            utiliza si metodo == 'SOR'
+            omega < 1 ---> suaviza la solucion
+            omega = 1 ---> metodod Gauss Seidel
+            omega > 1 ---> acelera la solucion
+        a, c : float64
+            valores ocupados para la funcion de forzado P, en el eje xi
+        linea_xi : int
+            linea  en el eje xi hacia la cual se realiza el forzado.
+            0 <= linea_xi <= self.M
+        aa, cc : float64
+            valores ocupados para la funcion de forzado Q, en el eje eta
+        linea_eta : int
+            linea  en el eje eta hacia la cual se realiza el forzado.
+            0 <= linea_eta <= self.N
+
+        Return
+        ------
+        None
+        """
 
         # se genera malla antes por algún método algebráico
         self.gen_TFI()
@@ -322,6 +414,8 @@ class mesh_O(mesh):
     def gen_hyperbolic(self):
         '''
         Genera mallas hiperbólicas. Método de Steger
+
+        TODO
         '''
 
         # se inician las variables características de la malla
@@ -421,6 +515,8 @@ class mesh_O(mesh):
         '''
         Genera malla resolviendo un sistema de ecuaciones parabólicas
         Basado en el reporte técnico de Siladic
+
+        TODO
         '''
 
         m = self.M
@@ -676,6 +772,21 @@ class mesh_O(mesh):
         return
 
     def tensor(self):
+        """
+        Calcula el tensor metrico de la malla
+        ...
+
+        Parametros
+        ----------
+        None
+
+        Return
+        ------
+        (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1) : numpy.array
+            Matrices con los valores de la metrica de la transformacin para
+            todos los nodos de la malla
+        """
+
         '''
             Calcula el tensor métrico de la transformación para ambas
                 transformaciones, directa e indirecta
@@ -702,9 +813,8 @@ class mesh_O(mesh):
 
         # cálculo de derivadas parciales
         # nodos internos
-        for j in range(1, N-1):
-            x_eta[:-1, j] = (X[:-1, j+1] - X[:-1, j-1]) / 2 / d_eta
-            y_eta[:-1, j] = (Y[:-1, j+1] - Y[:-1, j-1]) / 2 / d_eta
+        x_eta[:-1, j] = (X[:-1, 2:] - X[:-1, :-2]) / 2 / d_eta
+        y_eta[:-1, j] = (Y[:-1, 2:] - Y[:-1, :-2]) / 2 / d_eta
 
         x_eta[:-1, 0]   = (X[:-1, 1] - X[:-1, 0]) / d_eta
         x_eta[:-1, -1]  = (X[:-1, -1] - X[:-1, -2]) / d_eta
@@ -713,10 +823,8 @@ class mesh_O(mesh):
         y_eta[:-1, -1]  = (Y[:-1, -1] - Y[:-1, -2]) / d_eta
         y_eta[-1, :]    = y_eta[0, :]
 
-        for i in range(1, M-1):
-            x_xi[i, :] = (X[i+1, :] - X[i-1, :]) / 2 / d_xi
-            y_xi[i, :] = (Y[i+1, :] - Y[i-1, :]) / 2 / d_xi
-
+        x_xi[i, :] = (X[2:, :] - X[:-2, :]) / 2 / d_xi
+        y_xi[i, :] = (Y[2:, :] - Y[:-2, :]) / 2 / d_xi
         x_xi[0, :]  = (X[1, :] - X[-2, :]) / 2 / d_xi
         y_xi[0, :]  = (Y[1, :] - Y[-2, :]) / 2 / d_xi
         x_xi[-1, :] = x_xi[0, :]
@@ -738,9 +846,20 @@ class mesh_O(mesh):
         return (g11, g22, g12, J, x_xi, x_eta, y_xi, y_eta, A, B, C1)
 
     def to_su2(self, filename):
-        '''
-        convierte malla a formato SU2
-        '''
+        """
+        Exporta la malla a un archivo de texto en formato de SU2.
+        ...
+
+        Parametros
+        ----------
+        filename : str
+            nombre del archivo en el cual se exportara la malla.
+            Debe incluir el path (relativo o absoluto)
+
+        Return
+        ------
+        None
+        """
 
         if self.airfoil_alone == True:
             mesh_su2.to_su2_mesh_o_airfoil(self, filename)
