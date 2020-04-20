@@ -490,10 +490,6 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
 
     X[0, 1:-1] = X[m-1, 1:-1]
 
-    # i = 0
-    # while airfoil_boundary[i] != 0:
-    #     i += 1
-
     i = union_start
     while airfoil_boundary[i] == 0:
         x_eta = (X[i, j+1] - X[-i - 1, j+1]) / 2 / d_eta
