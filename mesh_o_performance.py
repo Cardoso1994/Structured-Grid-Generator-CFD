@@ -6,6 +6,7 @@
 @mail:      marcoarcardosom@gmail.com
 
 Extiende subclase mesh_O.
+
 Diversos métodos de generación para mallas tipo O, apoyandose de la libreria
     numba y de métodos de vectorizado
 """
@@ -314,11 +315,11 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     mesh.it_max = 13130e3
     mesh.err_max = 1e-6
 
-    # inicio del método iterativo separa el metodo para perfil con y sin flap
+    # inicio del método iterativo, separa el metodo para perfil con y sin flap
     print(f"Generando malla tipo O.\nDimensiones M: {self.M} N: {self.N}")
     if self.airfoil_alone:
         print("Perfil")
-        print("Poisson numba: ")
+        print("Poisson numba:")
         it = 0
         while it < mesh.it_max:
             if (it % 320e3 == 0):
@@ -359,7 +360,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 break
     else:
         print("Perfil con flap")
-        print("Poisson numba: ")
+        print("Poisson numba:")
         it = 0
         while it < mesh.it_max:
             if (it % 320e3 == 0):
@@ -495,10 +496,11 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
 
     X[0, 1:-1] = X[m-1, 1:-1]
 
+    # seccion de union entre perfiles
     i = union_start
     while airfoil_boundary[i] == 0:
-        x_eta = (X[i, j+1] - X[-i - 1, j+1]) / 2 / d_eta
-        y_eta = (Y[i, j+1] - Y[-i - 1, j+1]) / 2 / d_eta
+        x_eta = (X[i, 1] - X[-i - 1, 1]) / 2 / d_eta
+        y_eta = (Y[i, 1] - Y[-i - 1, 1]) / 2 / d_eta
         x_xi = (X[i+1, 0] - X[i-1, 0]) / 2 / d_xi
         y_xi = (Y[i+1, 0] - Y[i-1, 0]) / 2 / d_xi
 
@@ -507,20 +509,21 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         gamma = x_xi ** 2 + y_xi ** 2
         I = x_xi * y_eta - x_eta * y_xi
 
-        X[i, 0]    = (d_xi * d_eta) ** 2\
+        X[i, 0]    = (d_xi * d_eta) ** 2 \
             / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
             * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
                 + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
                 - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
-                        - X[-i -2, 1] + X[-i, 1] - X[i-1, j]))
+                        - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
         Y[i, 0]    = (d_xi * d_eta) ** 2\
             / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
             * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
                 + gamma / (d_eta ** 2) * (Y[i, 1] + Y[-i -1, 1])
                 - beta / (2 * d_xi * d_eta) * (Y[i+1, 1]
-                        - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, j]))
-        X[-i-1, 0] = X[i, 0]
-        Y[-i-1, 0] = Y[i, 0]
+                        - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, 1]))
+
+        X[-i -1, 0] = X[i, 0]
+        Y[-i -1, 0] = Y[i, 0]
 
         i += 1
 
