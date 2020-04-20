@@ -263,7 +263,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         linea  en el eje xi hacia la cual se realiza el forzado.
         0 <= linea_xi <= self.M
     aa, cc : float64
-        valores ocupados para la funcion de forzado P, en el eje eta
+        valores ocupados para la funcion de forzado Q, en el eje eta
     linea_eta : int
         linea  en el eje eta hacia la cual se realiza el forzado.
         0 <= linea_eta <= self.N
@@ -298,50 +298,267 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                             * np.exp(-cc
                             * np.abs(Q_ / (n-1) - linea_eta))
 
+    mask = np.isnan(P_)
+    P_[mask] = 0
+    mask = np.isnan(Q_)
+    Q_[mask] = 0
+
+    # obteniendo el indice de la union de los perfiles
+    if not self.airfoil_alone:
+        union_start = 0
+        while self.Y[union_start, 0] == 0:
+            union_start += 1
+        i = 0
+        while self.airfoil_boundary[i] != 0:
+            union_start += 1
+            i += 1
+        union_start -= 1
+
     it = 0
-    mesh.it_max = 150e3
+    mesh.it_max = 950e3
     mesh.err_max = 1e-8
 
-    it = 0
-    while it < mesh.it_max:
-        if (it % 25000 == 0):
-            self.X = np.copy(Xn)
-            self.Y = np.copy(Yn)
-            self.plot()
-            print()
+    # inicio del metodo iterativo, separar el metodo para perfl con y sin flap
+    print(f"Generando malla tipo C. \nDimensiones M: {self.M} N: {self.N}")
+    if self.airfoil_alone:
+        print("Perfil")
+        print("Poisson numba:")
 
-        # printing info
-        print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
-              + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
-              + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
-              + '\t\t', end="\r")
+        it = 0
+        while it < mesh.it_max:
+            if (it % 25000 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
+                self.plot()
+                print()
 
-        Xo = Xn.copy()
-        Yo = Yn.copy()
-        # si el método iterativo es Jacobi
-        if metodo == 'J':
-            X = Xo
-            Y = Yo
-        else:   # si el método es Gauss-Seidel o SOR
-            X = Xn
-            Y = Yn
+            # imprime informacion
+            print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
 
-        (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_)
+            Xo = Xn.copy()
+            Yo = Yn.copy()
+            # si el método iterativo es Jacobi
+            if metodo == 'J':
+                X = Xo
+                Y = Yo
+            else:   # si el método es Gauss-Seidel o SOR
+                X = Xn
+                Y = Yn
 
-        # se aplica sobre-relajacion si el metodo es SOR
-        if metodo == 'SOR':
-            Xn = omega * Xn + (1 - omega) * Xo
-            Yn = omega * Yn + (1 - omega) * Yo
+            (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_)
 
-        it += 1
+            # se aplica sobre-relajacion si el metodo es SOR
+            if metodo == 'SOR':
+                Xn = omega * Xn + (1 - omega) * Xo
+                Yn = omega * Yn + (1 - omega) * Yo
 
-        if abs(Xn -Xo).max() < mesh.err_max\
-                and abs(Yn - Yo).max() < mesh.err_max:
-            print('Poisson: ' + metodo + ': saliendo...')
-            print('it=', it)
-            break
+            it += 1
 
+            if abs(Xn -Xo).max() < mesh.err_max\
+                    and abs(Yn - Yo).max() < mesh.err_max:
+                print('Poisson: ' + metodo + ': saliendo...')
+                print('it=', it)
+                break
+        # TODO
+        # metodo iterativo para perfil sin flap
+    else:
+        print("Perfil con flap")
+        print("Poisson numba:")
+
+        # TODO
+        # metodo iterativo para perfil con flap
+        it = 0
+        while it < mesh.it_max:
+            if (it % 125000 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
+                self.plot()
+                print()
+
+            # printing info
+            print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
+
+            Xo = Xn.copy()
+            Yo = Yn.copy()
+            # si el método iterativo es Jacobi
+            if metodo == 'J':
+                X = Xo
+                Y = Yo
+            else:   # si el método es Gauss-Seidel o SOR
+                X = Xn
+                Y = Yn
+
+            (Xn, Yn) = _gen_Poisson_n_flap(X, Y, self.M, self.N, P_, Q_,
+                                      self.airfoil_boundary, union_start)
+
+            # se aplica sobre-relajacion si el metodo es SOR
+            if metodo == 'SOR':
+                Xn = omega * Xn + (1 - omega) * Xo
+                Yn = omega * Yn + (1 - omega) * Yo
+
+            it += 1
+
+            if abs(Xn -Xo).max() < mesh.err_max\
+                    and abs(Yn - Yo).max() < mesh.err_max:
+                print('Poisson: ' + metodo + ': saliendo...')
+                print('it=', it)
+                break
+
+    self.X = Xn
+    self.Y = Yn
     return (self.X, self.Y)
+
+
+@jit
+def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
+    """
+    Resuelve los for loops anidados correspondientes a la solucion de la
+    ecuacion de Poisson para generar la malla.
+
+    Metodo que se apoya en el uso de la libreria Numba.
+    El codigo es el mismo que en el metodo clasico.
+    ...
+
+    Parametros
+    ----------
+    X : numpy.array
+        Matriz que contiene las coordenadas X que describen a la malla
+    Y : numpy.array
+        Matriz que contiene las coordenadas Y que describen a la malla
+    M : int
+        Numero de divisiones en el eje xi.
+    N : int
+        Numero de divisiones en el eje eta.
+    P_ : numpy.array
+        Valores de la funcion de forzado P para el eje xi
+    Q_ : numpy.array
+        Valores de la funcion de forzado Q para el eje eta
+    airfoil_boundary : numpy.array
+        Cada elemento del array indica el punto a que perfil pertenece (numero
+        positivo) o cero si no forma parte de una frontera
+    union_start : int
+        indice "i" en el que inicia la seccion de union entre los perfiles
+
+    Return
+    ------
+    (X, Y) : numpy.array, numpy.array
+        Matrices X y Y que describen la malla. Actualizadas.
+    """
+
+    d_eta = 1
+    d_xi = 1
+    m = M
+    n = N
+
+    for j in range(n-2, 0, -1):
+        for i in range(1, m-1):
+            x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+            y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+            x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi
+            y_xi = (Y[i+1, j] - Y[i-1, j]) / 2 / d_xi
+
+            alpha = x_eta ** 2 + y_eta ** 2
+            beta = x_xi * x_eta + y_xi * y_eta
+            gamma = x_xi ** 2 + y_xi ** 2
+            I = x_xi * y_eta - x_eta * y_xi
+
+            X[i, j]    = (d_xi * d_eta) ** 2\
+                / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
+                * (alpha / (d_xi ** 2) * (X[i+1, j] + X[i-1, j])
+                    + gamma / (d_eta ** 2) * (X[i, j+1] + X[i, j-1])
+                    - beta / (2 * d_xi * d_eta) * (X[i+1, j+1]
+                            - X[i+1, j-1] + X[i-1, j-1] - X[i-1, j+1])
+                    + I ** 2 * (P_[i-1] * x_xi + Q_[j-1] * x_eta))
+            Y[i, j]    = (d_xi * d_eta) ** 2\
+                / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
+                * (alpha / (d_xi**2) * (Y[i+1, j] + Y[i-1, j])
+                    + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
+                    - beta / (2 * d_xi * d_eta) * (Y[i+1, j+1]
+                            - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1])
+                    + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+        # se calculan los puntos en la sección de salida de la malla
+        i = 0
+        x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+        y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+        x_xi =  (X[i+1, j] - X[i, j]) / d_xi
+        y_xi =  (Y[i+1, j] - Y[i, j]) / d_xi
+
+        alpha = x_eta ** 2 + y_eta ** 2
+        beta =  x_xi * x_eta + y_xi * y_eta
+        gamma = x_xi ** 2 + y_xi ** 2
+        I = x_xi * y_eta - x_eta * y_xi
+
+        Y[i, j] = (d_xi * d_eta) ** 2\
+            / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+            * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+                - beta / d_xi / d_eta
+                * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+        i = m-1
+        x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+        y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+        x_xi =  (X[i, j] - X[i-1, j]) / d_xi
+        y_xi =  (Y[i, j] - Y[i-1, j]) / d_xi
+
+        alpha = x_eta ** 2 + y_eta ** 2
+        beta =  x_xi * x_eta + y_xi * y_eta
+        gamma = x_xi ** 2 + y_xi ** 2
+        I = x_xi * y_eta - x_eta * y_xi
+
+        Y[i, j] = (d_xi * d_eta) ** 2\
+            / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
+            * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+                - beta / d_xi / d_eta
+                * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+    # seccion de union entre perfiles
+    i_ = 0
+    while airfoil_boundary[i_] != 0:
+        i_ += 1
+    i = union_start
+
+    while airfoil_boundary[i_] == 0:
+        x_eta = (X[i, 1] - X[-i -1, 1]) / 2 / d_eta
+        y_eta = (Y[i, 1] - Y[-i -1, 1]) / 2 / d_eta
+        x_xi = (X[i+1, 0] - X[i-1, 0]) / 2 / d_xi
+        y_xi = (Y[i+1, 0] - Y[i-1, 0]) / 2 / d_xi
+
+        alpha = x_eta ** 2 + y_eta ** 2
+        beta = x_xi * x_eta + y_xi * y_eta
+        gamma = x_xi ** 2 + y_xi ** 2
+        I = x_xi * y_eta - x_eta * y_xi
+
+        X[i, 0] = (d_xi * d_eta) ** 2 \
+            / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+            * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+               + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+               - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+                        - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+        Y[i, 0] = (d_xi * d_eta) ** 2 \
+            / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+            * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
+               + gamma / (d_eta ** 2) * (Y[i, 1] + Y[-i -1, 1])
+               - beta / (2 * d_xi * d_eta) * (Y[i+1, 1]
+                        - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, 1]))
+
+        X[-i -1, 0] = X[i, 0]
+        Y[-i -1, 0] = Y[i, 0]
+        i += 1
+        i_ += 1
+
+    return (X, Y)
+
 
 @jit
 def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
@@ -407,9 +624,6 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
                     + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
         # se calculan los puntos en la sección de salida de la malla
-        # parte inferior a partir del corte
-        # se ocupan diferencias finitas "forward" para derivadas
-        # respecto a "XI"
         i = 0
         x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
         y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -429,10 +643,6 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
                 + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
                 + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
-        # se calculan los puntos en la sección de salida de la malla
-        # parte superior a partir del corte
-        # se ocupan diferencias finitas "backward" para derivadas
-        # respecto a "XI"
         i = m-1
         x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
         y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
