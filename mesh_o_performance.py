@@ -343,8 +343,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 X = Xn
                 Y = Yn
 
-            (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_,
-                                    self.airfoil_boundary, self.airfoil_alone)
+            (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_)
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -358,7 +357,6 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 print('Poisson: ' + metodo + ': saliendo...')
                 print('it=', it)
                 break
-
     else:
         print("Perfil con flap")
         print("Poisson numba: ")
@@ -387,8 +385,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 Y = Yn
 
             (Xn, Yn) = _gen_Poisson_n_flap(X, Y, self.M, self.N, P_, Q_,
-                                    self.airfoil_boundary, self.airfoil_alone,
-                                               union_start)
+                                    self.airfoil_boundary, union_start)
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
@@ -410,8 +407,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     return (self.X, self.Y)
 
 @jit
-def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, airfoil_alone,
-                            union_start):
+def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
     """
     Resuelve los for loops anidados correspondientes a la solucion de la
     ecuacion de Poisson para generar la malla.
@@ -531,7 +527,7 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, airfoil_alone,
 
 
 @jit
-def _gen_Poisson_n(X, Y, M, N,  P_, Q_, airfoil_boundary, airfoil_alone):
+def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
     """
     Resuelve los for loops anidados correspondientes a la solucion de la
     ecuacion de Poisson para generar la malla.
