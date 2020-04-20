@@ -19,25 +19,10 @@ from numba import float32, int8, int16, boolean
 
 np.set_printoptions(threshold=maxsize)
 
-
-# mesh_spec = [
-#     ('R', float32),
-#     ('M', int16),
-#     ('N', int16),
-#     ('airfoil_alone', boolean),
-#     ('airfoil_join', int16),
-#     ('airfoil_boundary', int8[:]),
-# ]
-# clase para la generación de mallas
-# @jitclass(mesh_spec)
 class mesh(object):
-
-    # variables de clase, controlan el numero de iteraciones máximo
-    # así como el error maximo permisible como criterio de convergencia
     it_max = 8000
     err_max = 1e-6
 
-    # método de inicialización de instancias de clase
     def __init__(self, R, M, N, airfoil):
         '''
         R = radio de la frontera externa, ya está en función de la cuerda del
