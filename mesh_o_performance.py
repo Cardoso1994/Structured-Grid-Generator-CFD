@@ -300,60 +300,109 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                             * np.exp(-cc
                             * np.abs(Q_ / (n-1) - linea_eta))
 
-    mesh.it_max = 400e3
+    mask = np.isnan(P_)
+    P_[mask] = 0
+    mask = np.isnan(Q_)
+    Q_[mask] = 0
+
+    # obteniendo el indice de la union de los perfiles
+    if not self.airfoil_alone:
+        union_start = 0
+        while self.airfoil_boundary[union_start] != 0:
+            union_start += 1
+
+    mesh.it_max = 13130e3
     mesh.err_max = 1e-6
 
-    # inicio del método iterativo
+    # inicio del método iterativo separa el metodo para perfil con y sin flap
     print(f"Generando malla tipo O.\nDimensiones M: {self.M} N: {self.N}")
     if self.airfoil_alone:
         print("Perfil")
+        print("Poisson numba: ")
+        it = 0
+        while it < mesh.it_max:
+            if (it % 320e3 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
+                self.plot()
+                print()
+
+            # imprime informacion
+            print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
+
+            Xo = Xn.copy()
+            Yo = Yn.copy()
+            # si el método iterativo es Jacobi
+            if metodo == 'J':
+                X = Xo
+                Y = Yo
+            else:   # si el método es Gauss-Seidel o SOR
+                X = Xn
+                Y = Yn
+
+            (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_,
+                                    self.airfoil_boundary, self.airfoil_alone)
+
+            # se aplica sobre-relajacion si el metodo es SOR
+            if metodo == 'SOR':
+                Xn = omega * Xn + (1 - omega) * Xo
+                Yn = omega * Yn + (1 - omega) * Yo
+
+            it += 1
+
+            if abs(Xn -Xo).max() < mesh.err_max\
+                    and abs(Yn - Yo).max() < mesh.err_max:
+                print('Poisson: ' + metodo + ': saliendo...')
+                print('it=', it)
+                break
+
     else:
         print("Perfil con flap")
+        print("Poisson numba: ")
+        it = 0
+        while it < mesh.it_max:
+            if (it % 320e3 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
+                self.plot()
+                print()
 
-    print("Poisson numba: ")
-    it = 0
-    while it < mesh.it_max:
-        if (it % 70000 == 0):
-            self.X = np.copy(Xn)
-            self.Y = np.copy(Yn)
-            self.plot()
-            print()
+            # imprime informacion
+            print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
 
-        # printing info
-        print('it = ' + str(it) + ' aa = ' + str(aa) + ' cc = ' + str(cc)
-              + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
-              + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
-              + '\t\t', end="\r")
+            Xo = Xn.copy()
+            Yo = Yn.copy()
+            # si el método iterativo es Jacobi
+            if metodo == 'J':
+                X = Xo
+                Y = Yo
+            else:   # si el método es Gauss-Seidel o SOR
+                X = Xn
+                Y = Yn
 
-        Xo = Xn.copy()
-        Yo = Yn.copy()
-        # si el método iterativo es Jacobi
-        if metodo == 'J':
-            X = Xo
-            Y = Yo
-        else:   # si el método es Gauss-Seidel o SOR
-            X = Xn
-            Y = Yn
-
-        if self.airfoil_alone:
-            (Xn, Yn) = _gen_Poisson_n(X, Y, self.M, self.N, P_, Q_,
-                                  self.airfoil_boundary, self.airfoil_alone)
-        else:
             (Xn, Yn) = _gen_Poisson_n_flap(X, Y, self.M, self.N, P_, Q_,
-                                  self.airfoil_boundary, self.airfoil_alone)
+                                    self.airfoil_boundary, self.airfoil_alone,
+                                               union_start)
 
-        # se aplica sobre-relajacion si el metodo es SOR
-        if metodo == 'SOR':
-            Xn = omega * Xn + (1 - omega) * Xo
-            Yn = omega * Yn + (1 - omega) * Yo
+            # se aplica sobre-relajacion si el metodo es SOR
+            if metodo == 'SOR':
+                Xn = omega * Xn + (1 - omega) * Xo
+                Yn = omega * Yn + (1 - omega) * Yo
 
-        it += 1
+            it += 1
 
-        if abs(Xn -Xo).max() < mesh.err_max\
-                and abs(Yn - Yo).max() < mesh.err_max:
-            print('Poisson: ' + metodo + ': saliendo...')
-            print('it=', it)
-            break
+            if abs(Xn -Xo).max() < mesh.err_max\
+                    and abs(Yn - Yo).max() < mesh.err_max:
+                print('Poisson: ' + metodo + ': saliendo...')
+                print('it=', it)
+                break
+
 
     self.X = Xn
     self.Y = Yn
@@ -361,7 +410,8 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     return (self.X, self.Y)
 
 @jit
-def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, airfoil_alone):
+def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, airfoil_alone,
+                            union_start):
     """
     Resuelve los for loops anidados correspondientes a la solucion de la
     ecuacion de Poisson para generar la malla.
@@ -444,10 +494,11 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, airfoil_alone):
 
     X[0, 1:-1] = X[m-1, 1:-1]
 
-    i = 0
-    while airfoil_boundary[i] != 0:
-        i += 1
+    # i = 0
+    # while airfoil_boundary[i] != 0:
+    #     i += 1
 
+    i = union_start
     while airfoil_boundary[i] == 0:
         x_eta = (X[i, j+1] - X[-i - 1, j+1]) / 2 / d_eta
         y_eta = (Y[i, j+1] - Y[-i - 1, j+1]) / 2 / d_eta
