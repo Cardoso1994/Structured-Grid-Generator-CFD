@@ -430,6 +430,11 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         Valores de la funcion de forzado P para el eje xi
     Q_ : numpy.array
         Valores de la funcion de forzado Q para el eje eta
+    airfoil_boundary : numpy.array
+        Cada elemento del array indica el punto a que perfil pertenece (numero
+        positivo) o cero si no forma parte de una frontera
+    union_start : int
+        indice "i" en el que inicia la seccion de union entre los perfiles
 
     Return
     ------
