@@ -13,27 +13,64 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class airfoil(object):
-    '''
-    Super clase para perfiles
-    '''
+    """
+    Clase para generar perfiles alares (o cualquier frontera interna).
+
+    Genera la nube de puntos que describen a un perfil alar. Pensada
+    inicialmente para importar archivos de texto con informacion de perfiles
+    aerodinamicos.
+    ...
+
+    Atributos
+    ----------
+    c : float64
+        cuerda aerodinamica
+    number : int
+        numero de perfil (de izquierda a derecha). Por default 1, en caso de
+        existir más perfiles o flaps, se enumeran.
+    x : numpy.array
+        coordenadas en el eje X de los puntos del perfil
+    y : numpy.array
+        coordenadas en el eje X de los puntos del perfil
+    alone : boolean
+        True si es un perfil solo, False si hay 2 o mas perfiles
+    is_boundary : [bool, numpy.array]
+        False si es perfil solo. Numpy.array que indica para cada punto a que
+        numero de perfil pertenece o si no es frontera.
+    union : int
+        numero de puntos que unen a los perfiles. Cero si es perfil unico
+
+    Metodos
+    -------
+    create(filename):
+        Almacena en los atributos del perfil la nube de puntos que lo describe
+    size():
+        Regresa el numero de coordenadas del perfil
+    plot():
+        Grafica el perfil generado
+    rotate(degrees):
+        Rota el perfil tomando como eje 0.25c el degrees grados. Positivo en
+        sentido horario.
+    join(other, dx, dy=0, union=4):
+        Une dos perfiles alares.
+    to_csv(filename):
+        Exporta la nube de puntos del perfil a un archivo de valores separados
+        por comas.
+    """
 
     def __init__(self, c, number=1):
-        '''
-        c = cuerda [m]
-        x e y = coordenadas de la nube de puntos que describe el perfil
-        number = numero de perfil si existen varios
-        '''
         self.c              = c
         self.number         = number
         self.x              = None
         self.y              = None
         self.alone          = True
-        self.is_boundary    = None
+        # self.is_boundary    = None
+        self.is_boundary    = False
         self.union          = 0
 
-    '''
-    métodos para acceder a los atributos de la clase
-    '''
+    """
+    Funciones que proporcionan los atributos del objeto
+    """
     def get_chord(self):
         return (self.c)
 
@@ -57,10 +94,21 @@ class airfoil(object):
 
     # se crea un perfil a partir de un archivo con la nube de puntos
     def create(self, filename):
-        '''
-        se crea un perfil a partir de un archivo con la nube de puntos
-        filename = nombre del archivo con los datos del perfil a importar
-        '''
+        """
+        Almacena en self.x y self.y las coordenadas que describen al perfil
+        aerodinamico, proporcionadas en el archivo filename.
+        ...
+
+        Parametros
+        ----------
+        filename : string
+            nombre del archivo del cual se extraen los datos.
+
+        Return
+        ------
+        None
+        """
+
         c       = self.c
         perf    = np.loadtxt(filename)
         x       = perf[:, 0]
@@ -88,19 +136,42 @@ class airfoil(object):
         return np.size(self.x)
 
     def plot(self):
-        '''
-        grafica el perfil aerodinámico
-        '''
+        """
+        Grafica el perfil aerodinamico
+        ...
+
+        Parametros
+        ----------
+        None
+
+        Return
+        ------
+        None
+        """
+
         plt.figure('perfil')
         plt.axis('equal')
         plt.plot(self.x, self.y, 'b')
+        plt.plot(self.x, self.y, '*b')
         plt.show()
 
     def rotate(self, degrees):
-        '''
-            rotación del perfil por 'degrees' grados en sentido horario
-                (rotación positiva de perfiles aerodinámicos)
-        '''
+        """
+        Rota el perfil deegrees grados.
+        Se considera en sentido horario una rotacion positiva.
+        La rotacion se realiza tomando como eje de rotacion 0.25c
+        ...
+
+        Parametros
+        ----------
+        degrees : float64
+            Grados por los cuales se rota el perfil alar.
+
+        Return
+        ------
+        None
+        """
+
         size    = self.size()
         rads    = degrees * np.pi / 180 * -1
 
@@ -114,15 +185,29 @@ class airfoil(object):
         return
 
     def join(self, other, dx, dy=0, union=4):
-        '''
-            une dos perfiles aerodinámicos. Para el análisis de external
-                airfoil flaps
-            self = perfil aerodinámico [airfoil]
-            other = flap [airfoil]
-            dx y dy = distancias en x e y respectivamente entre borde de
-                salida del perfil y borde de ataque del flap
-            union = número de puntos que unen al perfil y al flap
-        '''
+        """
+        Une 2 perfiles aerodinamicos.
+        ...
+
+        Parametros
+        ----------
+        other : airfoil
+            perfil aerodinamico que se va a unir al perfil que invoca al
+            metodo
+        dx : float64
+            distancia de separacion en el eje X entre el borde de salida del
+            primer perfil y el borde de ataque del segundo.
+        dy : float64
+            distancia de separacion en el eje Y entre el borde de salida del
+            primer perfil y el borde de ataque del segundo.
+        union : int
+            numero de puntos mediante los cuales se unen los perfiles
+
+        Return
+        ------
+        None
+        """
+
         self.alone      = False
         self.union      = union
         union           += 2
@@ -141,8 +226,7 @@ class airfoil(object):
         # reajustando en X
         dx_air      = -x_flap[size_flap // 2] + x_airfoil[0]
         dx_total    = dx_air + dx
-        x_flap      += dx_total
-        x_join      = np.linspace(x_flap[size_flap // 2], x_airfoil[0],
+        x_flap      += dx_total x_join      = np.linspace(x_flap[size_flap // 2], x_airfoil[0],
                              num=union)
         y_join      = np.linspace(y_flap[size_flap // 2], y_airfoil[0],
                              num=union)
@@ -180,9 +264,20 @@ class airfoil(object):
         return
 
     def to_csv(self, filename):
-        '''
-        Exporta nube de puntos a archivo CSV
-        '''
+        """
+        Exporta las coordenadas que describen al perfil a un archivo .csv
+        ...
+
+        Parametros
+        ----------
+        filename : string
+            nombre del archivo en donde se guardara la informacion
+
+        Return
+        ------
+        None
+        """
+
         x               = self.x
         y               = self.y
 
@@ -196,18 +291,49 @@ class airfoil(object):
 
 
 class NACA4(airfoil):
-    '''
-        subclase de airfoil.
-        Genera perfiles de la serie NACA de 4 dígitos
-    '''
+    """
+    Clase para generar perfiles alares de la serie NACA de 4 digitos.
+
+    Subclase de airfoil
+    Genera la nube de puntos que describen a un perfil alar de la seria NACA de
+    4 digitos
+    ...
+
+    Atributos
+    ----------
+    def __init__(self, m, p, t, c, number=1):
+    m : int
+        combadura maxima del perfil.
+    p : int
+        posicion de la combadura maxima
+    t : int
+        espesor maximo del perfil
+    c : float64
+        cuerda aerodinamica
+    number : int
+        numero de perfil (de izquierda a derecha). Por default 1, en caso de
+        existir más perfiles o flaps, se enumeran.
+    x : numpy.array
+        coordenadas en el eje X de los puntos del perfil
+    y : numpy.array
+        coordenadas en el eje X de los puntos del perfil
+    alone : boolean
+        True si es un perfil solo, False si hay 2 o mas perfiles
+    is_boundary : [bool, numpy.array]
+        False si es perfil solo. Numpy.array que indica para cada punto a que
+        numero de perfil pertenece o si no es frontera.
+    union : int
+        numero de puntos que unen a los perfiles. Cero si es perfil unico
+
+    Metodos
+    -------
+    create_linear():
+        crea perfil con distribucion lineal en el eje X
+    create_sin():
+        crea perfil con distribucion senoidal en el eje X
+    """
 
     def __init__(self, m, p, t, c, number=1):
-        '''
-            m = combadura máxima, se divide entre 100
-            p = posición de la combadura máxima, se divide entre 10
-            t = espesor máximo del perfil, en porcentaje de la cuerda
-            c = cuerda del perfil [m]
-        '''
         airfoil.__init__(self, c, number=number)
         self.m = m / 100
         self.p = p / 10
@@ -216,10 +342,20 @@ class NACA4(airfoil):
         return
 
     def create_linear(self, points):
-        '''
-        Crea un perfil NACA4 con una distribución lineal
-        points = número de puntos para el perfil
-        '''
+        """
+        crea perfil con una distribucion lineal de los puntos en el eje X
+        ...
+
+        Parametros
+        ----------
+        points : int
+            numero de puntos mediante los cuales se unen los perfiles
+
+        Return
+        ------
+        None
+        """
+
         points  = (points + 1) // 2
         m       = self.m
         p       = self.p
@@ -315,13 +451,23 @@ class NACA4(airfoil):
         return
 
     def create_sin(self, points):
-        '''
-        Crea un perfil NACA4 con una distribución no lineal mediante
-            una función senoidal.
-        Mayor densidad de puntos en bordes de ataque y de salida
+        """
+        crea perfil con una distribucion senoidal de los puntos en el eje X
 
-        points = número de puntos para el perfil
-        '''
+        Proporciona una mayor densidad de puntos en los bordes de ataque y
+        salida
+        ...
+
+        Parametros
+        ----------
+        points : int
+            numero de puntos mediante los cuales se unen los perfiles
+
+        Return
+        ------
+        None
+        """
+
         points  = (points + 1) // 2
         m       = self.m
         p       = self.p
