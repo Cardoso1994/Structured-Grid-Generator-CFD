@@ -226,7 +226,8 @@ class airfoil(object):
         # reajustando en X
         dx_air      = -x_flap[size_flap // 2] + x_airfoil[0]
         dx_total    = dx_air + dx
-        x_flap      += dx_total x_join      = np.linspace(x_flap[size_flap // 2], x_airfoil[0],
+        x_flap      += dx_total
+        x_join      = np.linspace(x_flap[size_flap // 2], x_airfoil[0],
                              num=union)
         y_join      = np.linspace(y_flap[size_flap // 2], y_airfoil[0],
                              num=union)
