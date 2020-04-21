@@ -14,7 +14,7 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, potential_flow_o_esp
+from potential import potential_flow_o
 import helpers
 
 # tipo de malla (C, O)
@@ -26,7 +26,9 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 275
-union = 25
+N = 345
+
+union = 109
 
 # points = 11
 airfoil_points = 399 # 499
@@ -67,7 +69,7 @@ print('N = ' + str(mallaNACA.N))
 # mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=185, cc=3.7, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=650,
 #                                  cc=7, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.7, aa=65, cc=7, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=1150, cc=10, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
@@ -103,8 +105,6 @@ else:
 mallaNACA.to_txt_mesh(path + '/mallaNACA.txt_mesh')
 
 exit()
-
-
 
 # variables de flujo
 t_inf = 273.15

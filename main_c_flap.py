@@ -14,7 +14,7 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, potential_flow_o_esp
+from potential import potential_flow_o
 import helpers
 
 # tipo de malla (C, O)
@@ -26,17 +26,13 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 675
-N = 275
+N = 295
 
 union = 25
 
 airfoil_points = 615
 
-if malla == 'C':
-    # points = airfoil_points // 3 * 2
-    points = airfoil_points
-elif malla == 'O':
-    points = airfoil_points
+points = airfoil_points
 
 print('airofil points: ' + str(points))
 # datos de perfil NACA
@@ -62,9 +58,6 @@ if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.13)
-    # mallaNACA = mesh_c.mesh_C(R, M, N, perfil.x, perfil.y, False, perfil.union,
-    #                           perfil.is_boundary, weight=1.129)
-
 
 # normal
 # mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.5, aa=69.95, cc=7.7, linea_eta=0)
@@ -76,7 +69,7 @@ elif malla == 'C':
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.3, aa=159.95, cc=0.2, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=60500,
 #                                  cc=7, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.7, aa=65, cc=7, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=95, cc=10, linea_eta=0)
 
 
 
