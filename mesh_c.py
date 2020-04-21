@@ -64,7 +64,8 @@ class mesh_C(mesh):
 
         m_ = np.shape(airfoil.x)[0] * 3 // 2
         if not airfoil.alone:
-            m_ -= 505
+            # m_ -= 505
+            pass
         if m_ % 3 == 1:
             M = m_
         else:
@@ -204,17 +205,45 @@ class mesh_C(mesh):
         # se inician variables
         Xn = self.X
         Yn = self.Y
+        Xo = np.copy(Xn)
+        Yo = np.copy(Yn)
         m = self.M
         n = self.N
 
         d_eta = self.d_eta
         d_xi = self.d_xi
 
+        # obteniendo el indice de la union de los perfiles
+        if not self.airfoil_alone:
+            union_start = 0
+            while self.Y[union_start, 0] == 0:
+                union_start += 1
+            i = 0
+            while self.airfoil_boundary[i] != 0:
+                union_start += 1
+                i += 1
+            union_start -= 1
+
         it = 0
         # inicio del método iterativo
         print("Laplace:")
         while it < mesh.it_max:
-            print('it = ' + str(it) + '\t', end='\r')
+            if (it % 100 == 0):
+                self.X = np.copy(Xn)
+                self.Y = np.copy(Yn)
+                self.plot()
+                save = input("Save current Mesh: [Y/n]")
+                if save == 'Y' or save == 'y':
+                    name = input('name of mesh: ')
+                    mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
+                    mallaNACA.to_txt_mesh(
+                        f"/home/desarrollo/garbage/{name}.txt_mesh")
+
+            # printing info
+            print('it = ' + str(it)
+                  + ' err_x = ' + '{:.3e}'.format(abs(Xn - Xo).max())
+                  + ' err_y = ' + '{:.3e}'.format(abs(Yn - Yo).max())
+                  + '\t\t', end="\r")
             Xo = np.copy(Xn)
             Yo = np.copy(Yn)
 
@@ -291,6 +320,42 @@ class mesh_C(mesh):
                         - beta / d_xi / d_eta
                         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
+
+            # seccion de union entre perfiles
+            if not self.airfoil_alone:
+                i_ = 0
+                while self.airfoil_boundary[i_] != 0:
+                    i_ += 1
+                i = union_start
+
+                while self.airfoil_boundary[i_] == 0:
+                    x_eta = (X[i, 1] - X[-i -1, 1]) / 2 / d_eta
+                    y_eta = (Y[i, 1] - Y[-i -1, 1]) / 2 / d_eta
+                    x_xi = (X[i+1, 0] - X[i-1, 0]) / 2 / d_xi
+                    y_xi = (Y[i+1, 0] - Y[i-1, 0]) / 2 / d_xi
+
+                    alpha = x_eta ** 2 + y_eta ** 2
+                    beta = x_xi * x_eta + y_xi * y_eta
+                    gamma = x_xi ** 2 + y_xi ** 2
+                    I = x_xi * y_eta - x_eta * y_xi
+
+                    X[i, 0] = (d_xi * d_eta) ** 2 \
+                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+                        * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+                           + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+                           - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+                                    - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+                    Y[i, 0] = (d_xi * d_eta) ** 2 \
+                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+                        * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
+                           + gamma / (d_eta ** 2) * (Y[i, 1] + Y[-i -1, 1])
+                           - beta / (2 * d_xi * d_eta) * (Y[i+1, 1]
+                                    - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, 1]))
+
+                    X[-i -1, 0] = X[i, 0]
+                    Y[-i -1, 0] = Y[i, 0]
+                    i += 1
+                    i_ += 1
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
