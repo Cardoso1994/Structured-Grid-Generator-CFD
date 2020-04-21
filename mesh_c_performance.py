@@ -362,14 +362,10 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 print('Poisson: ' + metodo + ': saliendo...')
                 print('it=', it)
                 break
-        # TODO
-        # metodo iterativo para perfil sin flap
     else:
         print("Perfil con flap")
         print("Poisson numba:")
 
-        # TODO
-        # metodo iterativo para perfil con flap
         it = 0
         while it < mesh.it_max:
             if (it % 125000 == 0):
