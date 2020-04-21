@@ -312,7 +312,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         while self.airfoil_boundary[union_start] != 0:
             union_start += 1
 
-    mesh.it_max = 13130e3
+    mesh.it_max = 1000e3
     mesh.err_max = 1e-6
 
     # inicio del método iterativo, separa el metodo para perfil con y sin flap
