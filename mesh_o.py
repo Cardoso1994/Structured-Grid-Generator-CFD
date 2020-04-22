@@ -66,7 +66,8 @@ class mesh_O(mesh):
         self.fronteras(airfoil.x, airfoil.y)
 
     # importación de métodos de vectorizado y con librería numba
-    from mesh_o_performance import gen_Poisson_v_, gen_Poisson_n
+    from mesh_o_poisson_performance import gen_Poisson_v_, gen_Poisson_n
+    from mesh_o_laplace_performance import gen_Laplace_v_, gen_Laplace_n
 
     def fronteras(self, airfoil_x, airfoil_y):
         """
@@ -228,14 +229,7 @@ class mesh_O(mesh):
                         + gamma / (d_eta**2) * (X[i, j+1] + X[i, j-1])
                         - beta / (2 * d_xi * d_eta) * (X[1, j+1] - X[1, j-1]
                                                 + X[i-1, j-1] - X[i-1, j+1]))
-                Yn[i, j]    = (d_xi * d_eta) ** 2\
-                    / (2 * (alpha * d_eta**2 + gamma * d_xi**2))\
-                    * (alpha / (d_xi**2) * (Y[1, j] + Y[i-1, j])
-                        + gamma / (d_eta**2) * (Y[i, j+1] + Y[i, j-1])
-                        - beta / (2 * d_xi * d_eta) * (Y[1, j+1] - Y[1, j-1]
-                                                + Y[i-1, j-1] - Y[i-1, j+1]))
             Xn[0, :] = Xn[-1, :]
-            Yn[0, :] = Yn[-1, :]
 
             # seccion de union entre perfiles
             if not self.airfoil_alone:
