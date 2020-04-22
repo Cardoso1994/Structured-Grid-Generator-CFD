@@ -69,7 +69,7 @@ elif malla == 'C':
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.3, aa=159.95, cc=0.2, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=60500,
 #                                  cc=7, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=95, cc=10, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=185, cc=10, linea_eta=0)
 
 
 
