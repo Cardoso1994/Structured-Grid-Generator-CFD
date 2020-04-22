@@ -66,7 +66,6 @@ def gen_Laplace_v_(self, metodo='SOR', omega=1):
     alpha       = np.zeros((m, n))
     beta        = np.zeros((m, n))
     gamma       = np.zeros((m, n))
-    I           = np.zeros((m, n))
 
     # numero de division y asignacion de limites para secciones
     div_eta     = 25
@@ -97,14 +96,14 @@ def gen_Laplace_v_(self, metodo='SOR', omega=1):
     print("Laplace Vectorized:")
     # while it < mesh.it_max:
     while True:
-        if (it % 120000 == 0):
+        if (it % 20000 == 0):
             self.X = np.flip(Xn)
             self.Y = np.flip(Yn)
             self.plot()
             print()
 
         # printing info
-        print(f"it = {it} aa = {aa} cc = {cc} err_x = "
+        print(f"it = {it} err_x = "
               + '{:.3e}'.format(abs(Xn - Xo).max()) + ' err_y = '
               + '{:.3e}'.format(abs(Yn - Yo).max()) + '\t\t', end="\r")
 
@@ -150,11 +149,6 @@ def gen_Laplace_v_(self, metodo='SOR', omega=1):
                                                      * y_eta[i, j]
                 gamma[i, j] = x_xi[i, j] ** 2 \
                                                      + y_xi[i, j] ** 2
-                I[i, j]     = x_xi[i, j] \
-                                                 * y_eta[i, j] \
-                                                 - x_eta[i, j] \
-                                                 * y_xi[i, j]
-
 
                 Xn[i, j]      = (d_xi * d_eta) ** 2\
                     / (2 * (alpha[i, j] * d_eta ** 2 \
@@ -393,7 +387,6 @@ def _gen_Laplace_n_flap(X, Y, M, N, airfoil_boundary, union_start):
             alpha = x_eta ** 2 + y_eta ** 2
             beta = x_xi * x_eta + y_xi * y_eta
             gamma = x_xi ** 2 + y_xi ** 2
-            I = x_xi * y_eta - x_eta * y_xi
 
             X[i, j]    = (d_xi * d_eta) ** 2\
                 / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
@@ -418,7 +411,6 @@ def _gen_Laplace_n_flap(X, Y, M, N, airfoil_boundary, union_start):
         alpha = x_eta ** 2 + y_eta ** 2
         beta =  x_xi * x_eta + y_xi * y_eta
         gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
 
         Y[i, j] = (d_xi * d_eta) ** 2\
             / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
@@ -436,7 +428,6 @@ def _gen_Laplace_n_flap(X, Y, M, N, airfoil_boundary, union_start):
         alpha = x_eta ** 2 + y_eta ** 2
         beta =  x_xi * x_eta + y_xi * y_eta
         gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
 
         Y[i, j] = (d_xi * d_eta) ** 2\
             / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
@@ -460,7 +451,6 @@ def _gen_Laplace_n_flap(X, Y, M, N, airfoil_boundary, union_start):
         alpha = x_eta ** 2 + y_eta ** 2
         beta = x_xi * x_eta + y_xi * y_eta
         gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
 
         X[i, 0] = (d_xi * d_eta) ** 2 \
             / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
@@ -525,7 +515,6 @@ def _gen_Laplace_n(X, Y, M, N):
             alpha = x_eta ** 2 + y_eta ** 2
             beta = x_xi * x_eta + y_xi * y_eta
             gamma = x_xi ** 2 + y_xi ** 2
-            I = x_xi * y_eta - x_eta * y_xi
 
             X[i, j]    = (d_xi * d_eta) ** 2\
                 / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
@@ -550,7 +539,6 @@ def _gen_Laplace_n(X, Y, M, N):
         alpha = x_eta ** 2 + y_eta ** 2
         beta =  x_xi * x_eta + y_xi * y_eta
         gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
 
         Y[i, j] = (d_xi * d_eta) ** 2\
             / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
@@ -568,7 +556,6 @@ def _gen_Laplace_n(X, Y, M, N):
         alpha = x_eta ** 2 + y_eta ** 2
         beta =  x_xi * x_eta + y_xi * y_eta
         gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
 
         Y[i, j] = (d_xi * d_eta) ** 2\
             / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
