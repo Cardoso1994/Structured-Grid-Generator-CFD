@@ -152,7 +152,6 @@ class airfoil(object):
         plt.figure('perfil')
         plt.axis('equal')
         plt.plot(self.x, self.y, 'b')
-        plt.plot(self.x, self.y, '*b')
         plt.show()
 
     def rotate(self, degrees):
