@@ -232,3 +232,114 @@ class mesh(object):
         # self.X = Xn
         # self.Y = Yn
         return (Xn, Yn)
+
+    def get_aspect_ratio(self):
+        '''
+        Calcula el aspect ratio de cada celda. Para cualquier tipo de malla
+        Basado en el método de:
+            The Verdict Geometric Quality Library
+        '''
+        aspect_ratio_ = np.zeros((self.M - 1, self.N - 1))
+
+        # se calculan longitudes de los elementos de la celda
+        for i in range(0, self.M - 1):
+            for j in range(0, self.N -1):
+                # dist = (l0, l1, l2, l3)
+                dist = (((self.X[i, j] - self.X[i+1, j]) ** 2
+                                + (self.Y[i, j] - self.Y[i+1, j]) ** 2) ** 0.5,
+                        ((self.X[i+1, j] - self.X[i+1, j+1]) ** 2
+                                + (self.Y[i+1, j] - self.Y[i+1, j+1]) ** 2) ** 0.5,
+                        ((self.X[i+1, j+1] - self.X[i, j+1]) ** 2
+                                + (self.Y[i+1, j+1] - self.Y[i, j+1]) ** 2) ** 0.5,
+                        ((self.X[i, j+1] - self.X[i, j]) ** 2
+                                + (self.Y[i, j+1] - self.Y[i, j]) ** 2) ** 0.5)
+
+                max_dist = max(dist)
+
+                dist_sum = dist[0] + dist[1] + dist[2] + dist[3]
+
+                # cálculo de productos cruz
+                l0_l1 = np.abs((self.X[i+1, j] - self.X[i, j])
+                                    *  (self.Y[i+1, j+1] - self.Y[i+1, j])
+                                - (self.Y[i+1, j] - self.Y[i, j])
+                                     *  (self.X[i+1, j+1] - self.X[i+1, j]))
+
+                l2_l3 = np.abs((self.X[i, j+1] - self.X[i+1, j+1])
+                                    * (self.Y[i, j] - self.Y[i, j+1])
+                                - (self.Y[i, j+1] - self.Y[i+1, j+1])
+                                    * (self.X[i, j] - self.X[i, j+1]))
+                area = 0.5 * l0_l1 + 0.5 * l2_l3
+                aspect_ratio_[i, j] = max_dist * dist_sum / 4 / area
+
+        aspect_min = np.nanmin(aspect_ratio_)
+        aspect_max = np.nanmax(aspect_ratio_)
+        # cmap_ = cm.get_cmap('jet')
+
+        print('aspect_max')
+        print(aspect_max)
+        print('aspect_min')
+        print(aspect_min)
+        plt.figure('aspect')
+        plt.axis('equal')
+        plt.plot(self.X, self.Y, 'k', linewidth=0.5)
+        plt.plot(self.X[:, 0], self.Y[:, 0], 'k', linewidth=0.5)
+        for i in range(self.M):
+            plt.plot(self.X[i, :], self.Y[i, :], 'k', linewidth=0.5)
+        mesh_ = plt.pcolormesh(self.X, self.Y, aspect_ratio_, cmap='jet',
+                               rasterized=True, vmin=(aspect_min),
+                               vmax=(aspect_max))
+        plt.colorbar(mesh_, extend='both')
+
+        plt.draw()
+        plt.show()
+
+        return (aspect_ratio_)
+
+    def get_skew(self):
+        '''
+        Calcula el aspect ratio de cada celda. Para cualquier tipo de malla
+        Basado en el método de:
+            The Verdict Geometric Quality Library
+        '''
+
+        X = np.copy(self.X)
+        Y = np.copy(self.Y)
+        skew = np.zeros((self.M - 1, self.N - 1))
+
+        for i in range(self.M -1):
+            for j in range(self.N -1):
+                P0 = np.array(([X[i, j], Y[i, j]]))
+                P1 = np.array(([X[i+1, j], Y[i+1, j]]))
+                P2 = np.array(([X[i+1, j+1], Y[i+1, j+1]]))
+                P3 = np.array(([X[i, j+1], Y[i, j+1]]))
+                X1 = (P1 - P0) + (P2 - P3)
+                X2 = (P2 - P1) + (P3 - P0)
+                mag = (X1[0] ** 2 + X1[1] ** 2) ** 0.5
+                X1 /= mag
+                mag = (X2[0] ** 2 + X2[1] ** 2) ** 0.5
+                X2 /= mag
+                skew[i, j] = 1 - np.abs(X1[0] * X2[0] + X1[1] * X2[1])
+
+        skew_min = np.nanmin(skew)
+        skew_max = np.nanmax(skew)
+        # cmap_ = cm.get_cmap('jet')
+
+        print('skew_max')
+        print(skew_max)
+        print('skew_min')
+        print(skew_min)
+        plt.figure('aspect')
+        plt.axis('equal')
+        plt.plot(self.X, self.Y, 'k', linewidth=0.5)
+        plt.plot(self.X[:, 0], self.Y[:, 0], 'k', linewidth=0.5)
+        for i in range(self.M):
+            plt.plot(self.X[i, :], self.Y[i, :], 'k', linewidth=0.5)
+        mesh_ = plt.pcolormesh(self.X, self.Y, skew, cmap='jet', rasterized=True,
+                       vmin=(skew_min),
+                       vmax=(skew_max))
+        plt.colorbar(mesh_)
+
+        plt.draw()
+        plt.show()
+
+        return (skew)
