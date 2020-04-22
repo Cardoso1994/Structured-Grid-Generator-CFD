@@ -7,8 +7,8 @@
 
 Extiende subclase mesh_C.
 
-Diversos métodos de generación para mallas tipo C, apoyandose de la libreria
-    numba y de métodos de vectorizado
+Métodos de generación para mallas tipo C mediante la ecuacion de Poisson,
+    apoyandose de la libreria numba y de métodos de vectorizado
 """
 
 import numpy as np
