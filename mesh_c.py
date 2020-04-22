@@ -80,7 +80,8 @@ class mesh_C(mesh):
         return
 
     # importación de métodos de vectorizado y con librería numba
-    from mesh_c_performance import gen_Poisson_v_, gen_Poisson_n
+    from mesh_c_poisson_performance import gen_Poisson_v_, gen_Poisson_n
+    from mesh_c_laplace_performance import gen_Laplace_v_, gen_Laplace_n
 
     def fronteras(self, airfoil_x, airfoil_y, weight):
         """
@@ -228,7 +229,7 @@ class mesh_C(mesh):
         # inicio del método iterativo
         print("Laplace:")
         while it < mesh.it_max:
-            if (it % 100 == 0):
+            if (it % 1000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -280,9 +281,6 @@ class mesh_C(mesh):
                                     - Y[i+1, j-1] + Y[i-1, j-1] - Y[i-1, j+1]))
 
                 # puntos en la sección de salida de la malla
-                # parte inferior a partir del corte
-                # se ocupan diferencias finitas "forward" para derivadas
-                # respecto a "xi"
                 i = 0
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -300,10 +298,6 @@ class mesh_C(mesh):
                         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1]))
 
-                # puntos en la sección de salida de la malla
-                # parte superior a partir del corte
-                # se ocupan diferencias finitas "backward" para derivadas
-                # respecto a "xi"
                 i = m-1
                 x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
                 y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -413,7 +407,6 @@ class mesh_C(mesh):
         # aproximacion inicial
         self.gen_TFI()
 
-        return
         Xn      = self.X
         Yn      = self.Y
         Xo = np.copy(Xn)
@@ -433,6 +426,17 @@ class mesh_C(mesh):
                                 / np.abs(np.longdouble(Q_ / (n-1) - linea_eta))\
                                 * np.exp(-cc
                                 * np.abs(np.longdouble(Q_ / (n-1) - linea_eta)))
+
+        # obteniendo el indice de la union de los perfiles
+        if not self.airfoil_alone:
+            union_start = 0
+            while self.Y[union_start, 0] == 0:
+                union_start += 1
+            i = 0
+            while self.airfoil_boundary[i] != 0:
+                union_start += 1
+                i += 1
+            union_start -= 1
 
         it = 0
         mesh.it_max = 45e3
@@ -537,6 +541,42 @@ class mesh_C(mesh):
                         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
                         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
                         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+
+            # seccion de union entre perfiles
+            if not self.airfoil_alone:
+                i_ = 0
+                while self.airfoil_boundary[i_] != 0:
+                    i_ += 1
+                i = union_start
+
+                while self.airfoil_boundary[i_] == 0:
+                    x_eta = (X[i, 1] - X[-i -1, 1]) / 2 / d_eta
+                    y_eta = (Y[i, 1] - Y[-i -1, 1]) / 2 / d_eta
+                    x_xi = (X[i+1, 0] - X[i-1, 0]) / 2 / d_xi
+                    y_xi = (Y[i+1, 0] - Y[i-1, 0]) / 2 / d_xi
+
+                    alpha = x_eta ** 2 + y_eta ** 2
+                    beta = x_xi * x_eta + y_xi * y_eta
+                    gamma = x_xi ** 2 + y_xi ** 2
+                    I = x_xi * y_eta - x_eta * y_xi
+
+                    X[i, 0] = (d_xi * d_eta) ** 2 \
+                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+                        * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+                           + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+                           - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+                                    - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+                    Y[i, 0] = (d_xi * d_eta) ** 2 \
+                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+                        * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
+                           + gamma / (d_eta ** 2) * (Y[i, 1] + Y[-i -1, 1])
+                           - beta / (2 * d_xi * d_eta) * (Y[i+1, 1]
+                                    - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, 1]))
+
+                    X[-i -1, 0] = X[i, 0]
+                    Y[-i -1, 0] = Y[i, 0]
+                    i += 1
+                    i_ += 1
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
