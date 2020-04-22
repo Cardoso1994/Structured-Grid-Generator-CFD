@@ -66,8 +66,8 @@ class mesh_O(mesh):
         self.fronteras(airfoil.x, airfoil.y)
 
     # importación de métodos de vectorizado y con librería numba
-    from mesh_o_poisson_performance import gen_Poisson_v_, gen_Poisson_n
-    from mesh_o_laplace_performance import gen_Laplace_v_, gen_Laplace_n
+    from .mesh_o_poisson_performance import gen_Poisson_v_, gen_Poisson_n
+    from .mesh_o_laplace_performance import gen_Laplace_v_, gen_Laplace_n
 
     def fronteras(self, airfoil_x, airfoil_y):
         """
