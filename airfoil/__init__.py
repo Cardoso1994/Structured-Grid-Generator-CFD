@@ -123,6 +123,11 @@ class airfoil(object):
         # se especifica que todos los puntos del perfil son frontera
         is_boundary         = np.ones((np.size(x))) * self.number
 
+        x = np.flip(x)
+        y = np.flip(y)
+        y[-1] = y[0]
+        x[-1] = x[0]
+
         self.x              = x
         self.y              = y
         self.is_boundary    = is_boundary
