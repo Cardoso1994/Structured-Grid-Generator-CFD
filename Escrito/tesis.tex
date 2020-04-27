@@ -9,6 +9,7 @@
 \usepackage{caption}
 \usepackage{rotating}
 \usepackage{layouts}
+\usepackage{multirow}
 
 \usepackage{physics} % para formulas matemáticas
 \usepackage{amsmath}
@@ -3093,52 +3094,70 @@
 
 \chapter{Desarrollo Práctico}
     \paragraph*{}
-        Los códigos de este trabajo fueron implementados en lenguaje Python 3,
-        utilizando el paradigma de programación orientada a objetos, en éste los
-        datos son trabajados como objetos con atributos y métodos pertenecientes
-        a una clase, y que pueden ser heredados y aplicados a objetos o
-        instancias de alguna subclase.
+    Los códigos de este trabajo fueron implementados en lenguaje Python 3,
+    utilizando el paradigma de programación orientada a objetos, en éste los
+    datos son trabajados como objetos con atributos y métodos pertenecientes
+    a una clase, y que pueden ser heredados y aplicados a objetos o
+    instancias de alguna subclase. En esta seccion se describirá a fondo todo
+    el desarrollo del proyecto, lo que brindará una mejor comprensión del
+    trabajo para facilitar el uso del mismo. Por su parte, el código mismo
+    contiene una documentación exhaustiva.
 
     \paragraph*{}
-        En el presente trabajo se implementaron dos superclases: ``airfoil'' y
-        ``mesh'', cada una con sus respectivas subclases. Además se generaron
-        funciones que lleven a cabo análisis de flujo potencial, las cuales
-        no forman parte de ninguna clase, pero que reciben como datos de entrada
-        objetos de las clases mesh.
+    El presente trabajo requiere tener instaladas las siguientes dependencias
+    (módulos)
+    \begin{itemize}
+        \item Python 3
+        \item Matplotlib
+        \item Numpy
+        \item Numba
+    \end{itemize}
+    el primero es el interprete del lenguaje de programación, éste es el
+    encargado de ejecutar el código fuente, matplotlib es un modulo dedicado
+    a la generación de gráficas, numpy es la librería de computación
+    científica del lenguaje y por último numba es una librería desarrollada
+    para computación científica de alto performance.
 
     \paragraph*{}
-        A continuación se enlistan los nombres de los archivos de código que se
-        desarrollaron, así como una breve descripción de su funcionalidad
-        \begin{itemize}
-            \item airfoil.py. Contiene la definición de las clases airfoil y
-                NACA4
-            \item helpers.py. Contiene diversas funciones que se ocupan dentro
-                de los métodos de las clases.
-            \item mesh.py. Contiene la definición de la clase mesh.
-            \item mesh\textunderscore c.py. Contiene la definición de la clase
-                mesh\textunderscore c.
-            \item mesh\textunderscore o.py. Contiene la definición de la clase
-                mesh\textunderscore o.
-            \item mesh\textunderscore su2. Contiene las funciones que permiten
-                exportar las mallas del formato propio, al formato utilizado por
-                el software SU2.
-            \item potential.py. Contiene todas las funciones relacionadas con
-                el análisis de flujo potencial, como es el mismo flujo
-                potencial, el campo de velocidades, el campo de presiones y el
-                coeficiente de presión, la función de corriente, entre otros.
-        \end{itemize}
+    El presente desarrollo se divide en diferente módulos, cada uno de ellos
+    enfocado a una tarea distinta, y que en su conjunto logran el objetivo del
+    proyecto, es decir, la generación de una malla estructurada que sea util
+    para realizar análisis de DFC\@. Los modulos se enlistan a continuacion,
+    junto con una breve descripcion de los mismos.
+
+    \paragraph*{}
+    \begin{itemize}
+        \item \textbf{airfoil}. Contiene la definición de las clases airfoil y
+            NACA4. Genera los perfiles correspondientes a la frontera interna
+            de la malla
+        \item \textbf{mesh}. Continene la definicion general de una malla estructurada.
+        \item \textbf{mesh\textunderscore c}. Contiene la definición de la clase
+            mesh\textunderscore c.
+        \item \textbf{mesh\textunderscore o}. Contiene la definición de la clase
+            mesh\textunderscore o.
+        \item \textbf{mesh\textunderscore su2}. Contiene las funciones que
+            permiten exportar las mallas del formato propio de este proyecto,
+            al formato utilizado por el software SU2.
+        \item \textbf{potential}. Contiene todas las funciones relacionadas con
+            el análisis de flujo potencial, como es el mismo flujo
+            potencial, el campo de velocidades, el campo de presiones y el
+            coeficiente de presión, la función de corriente, entre otros.
+        \item \textbf{util}. Contiene funciones de utilidad para los demás
+            módulos
+    \end{itemize}
 
 
     \section{Estructura de las clases}
     \subsection{Clase Airfoil}
     \paragraph*{}
-        La clase airfoil se desarrolló para la creación de perfiles alares a
-        partir de una archivo de texto que contenga la nube de puntos del perfil
-        deseado, como dato de entrada se requiere el nombre del archivo texto y
-        la dimensión en metros de la cuerda.
+    La clase airfoil se desarrolló para la creación de perfiles alares a partir
+    de una archivo de texto que contenga la nube de puntos del perfil deseado,
+    como dato de entrada se requiere el nombre del archivo texto y la
+    dimensión, en metros de la cuerda aerodinámica.
+
     \paragraph*{}
-        La clase airfoil contiene métodos que son utilizados por las demás
-        subclases.
+    La clase airfoil contiene métodos que son utilizados por las demás
+    subclases.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3203,7 +3222,8 @@
         perfiles aerodinámicos NACA de la serie de 4 dígitos. La creación del
         perfil se hace a partir de la ecuación constitutiva de la serie. Como
         datos de entrada se requieren los valores de m (combudara máxima),
-        p (posición de la combadura máxima), t (espesor máximo) y c (cuerda).
+        p (posición de la combadura máxima), t (espesor máximo) y c (cuerda
+        aerodinámica) característicos de esta serie.
         La subclase NACA4 tiene dos métodos para la creación del perfil, el
         primero de ellos, el método ``create\textunderscore linear'' crea la
         nube de puntos con una distribución equidistante de los puntos en
@@ -3216,10 +3236,10 @@
         Las tablas~\ref{tabla_airfoil} y~\ref{tabla_naca4} presentan los métodos
         pertenecientes a la clase airfoil y a la clase NACA4 respectivamente,
         así como una breve descripción de los mismos. A su vez, la
-        figura\ref{airfoil_class} presenta un diagrama de clase donde se muestran los
-        atributos y métodos de la clase airfoil, así como su herencia con
-        respecto a la clase NACA4, junto con los atributos y  métodos de la
-        misma.
+        figura\ref{airfoil_class} presenta un diagrama de clase donde se
+        muestran los atributos y métodos de la clase airfoil, así como su
+        herencia con respecto a la clase NACA4, junto con los atributos y
+        métodos de la misma.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3248,7 +3268,8 @@
     \end{center}
     \end{table}
 
-    \begin{figure}[htbp!]
+    % \begin{figure}[htbp!]
+    \begin{figure}[H]
         \centering
         \includegraphics[keepaspectratio, width=55mm]{./Imagenes/airfoil_class}
         \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase airfoil y subclase
@@ -3269,7 +3290,8 @@
         La tabla~\ref{tabla_mesh} contiene información con respecto a los
         métodos pertenecientes a esta clase.
 
-    \begin{table}[htbp!]
+    % \begin{table}[htbp!]
+    \begin{table}[H]
     \begin{center}
         \begin{tabular}{| l | p{11cm} |}
         \hline
@@ -3301,6 +3323,12 @@
         \textbf{gen\textunderscore inter\textunderscore Hermite()} & Genera una
         malla mediante el método de interpolación de Hermite.\\ \hline
 
+        \textbf{get\textunderscore aspect\textunderscore ratio()} & Calcula el
+        aspect ratio de cada celda para toda la malla.\\ \hline
+
+        \textbf{get\textunderscore skew()} & Calcula el skew de cada celda para
+        toda la malla.\\ \hline
+
         \end{tabular}
         \caption{Métodos de la clase mesh}
     \label{tabla_mesh}
@@ -3308,17 +3336,55 @@
     \end{table}
 
     \paragraph*{}
-        Como previamente se ha mencionado, la clase mesh sirve de superclase de
-        las subclases mesh\textunderscore c y mesh\textunderscore o. Como el
-        nombre de las mismas lo indica son subclases desarrolladas para la
-        generación de mallas tipo C y tipo O respectivamente. En este trabajo se
-        han desarrollado los mismos métodos para ambas subclases, con lo que se
-        logra la misma funcionalidad en ambos casos. La razón de desarrollar dos
-        clases distintas atiende a la necesidad de manejar las ecuaciones de
-        diferente manera en las fronteras de la malla dependiendo de la
-        tipología de ésta. La tabla~\ref{tabla_mesh_c_o} enlista los métodos
-        disponibles para ambos tipos de malla, así como una breve descripción de
-        ellos.
+    Como previamente se ha mencionado, la clase mesh sirve de superclase de
+    las subclases mesh\textunderscore c y mesh\textunderscore o. Como el
+    nombre de las mismas lo indica son subclases desarrolladas para la
+    generación de mallas tipo C y tipo O respectivamente. En este trabajo se
+    han desarrollado los mismos métodos para ambas subclases, con lo que se
+    logra la misma funcionalidad en ambos casos. La razón de desarrollar dos
+    clases distintas atiende a la necesidad de manejar las ecuaciones de
+    diferente manera en las fronteras de la malla dependiendo de la
+    tipología de ésta.
+
+    \paragraph*{}
+    La tabla~\ref{tabla_mesh_c_o} enlista los métodos
+    disponibles para ambos tipos de malla, así como una breve descripción de
+    ellos. En dicha tabla se puede observar que para la solución de las
+    ecuaciones tanto de Laplace como de Poisson se proporcionan tres
+    diferentes métodos, y que los tres presentan la misma descripción y por
+    lo tanto mismos resultados, esto se hizo con la idea de dotar de
+    versatilidad al programa desarrollado, para ambas ecuaciones el primer
+    metodo no tiene ``sufijo'', esto implica que es el método clásico de
+    solución, el cual implica dos ciclos for anidados para recorrer toda la
+    matriz, sin embargo este enfoque deja de ser asequible si se pretende
+    generar mallas con un numero de nodos grande, dado que el tiempo de
+    ejecucion crece exponencialmente con el numero de nodos, por un lado porque
+    a mayor numero de nodos ya sea en el eje $\xi$, $\eta$ o ambos, mayor
+    número de ejecuciones dentro de los ciclos for, y por otro lado se
+    ha observado que a mayor numero de nodos mayor numero de iteraciones
+    es necesario para lograr el criterio de convergencia. Para
+    contrarrestar dicho efecto se crearon dos metodos adicionales, los
+    cuales buscan entregar los mismos resultados ayudandose de otras
+    herramientas para mejorar el performance. El primer metodo tiene
+    ``sufijo'' \textbf{\textunderscore v}, en este método se utilizan
+    operaciones de vectorizado para agilizar la ejecución del programa, y
+    que significa una reduccion exponencial del tiempo de ejecucion, sin
+    embargo la característica del vectorizado implica realizar todas las
+    operaciones de forma paralela, con lo que se pierde la habilidad de
+    llevar a cabo los metodos de Gauss-Seidel y SOR de manera estricta,
+    para compensar este hecho se divide la malla en submallas y se resuelve
+    cada una a la vez, logrando así que los valores obtenidos en una
+    submalla previamente calculada, tengan efecto en las subsecuentes
+    submallas dentro de la misma iteracion. Por ultimo se proporciona un
+    método con ``sufijo'' \textbf{\textunderscore n}, dicho metodo ejecuta
+    las operaciones de la misma manera que el enfoque clásico, pero además
+    utiliza el módulo \textbf{numba}, el cual es un módulo creado
+    específicamente para computacion científica de alto performance, y que
+    tiene una mejora en la velocidad del ejecucion de aproximadamente el
+    doble cuando se le compara con el método de vectorizado. Es este último
+    metodo el recomendado para utilizar, y solo en caso de no poder
+    utilizarlo, se debe optar en primera instancia por el método de vectorizado
+    y por ultimo el método clásico.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3333,16 +3399,25 @@
         homónima que contiene la información del perfil aerodinámico a analizar.
         \\ \hline
 
-        \textbf{gen\textunderscore Laplace(metodo)} & Genera la malla
-        resolviendo la ecuación de Laplace. La variable metodo se refiere al
-        método iterativo de solución, el usuario puede escoger entre Jacobi,
-        Gauss-Seidel y SOR\@. Por default se utiliza el método SOR\\ \hline
+        \textbf{gen\textunderscore Laplace(metodo)} & \multirow{4}{*}{
+            \shortstack[l]{Genera la malla resolviendo la ecuación de Laplace.
+                \\La variable metodo se refiere al método iterativo de
+                solución,\\el usuario puede escoger entre Jacobi, Gauss-Seidel
+                y SOR\@.\\Por default se utiliza el método SOR}} \\
+        \textbf{gen\textunderscore Laplace\textunderscore v(metodo)} & \\
+        \textbf{gen\textunderscore Laplace\textunderscore n(metodo)} & \\
+        & \\
+        \hline
 
-        \textbf{gen\textunderscore Poisson(metodo)} & Genera la malla
-        resolviendo la ecuación de Poisson. La variable metodo se refiere al
-        método iterativo de solución, el usuario puede escoger entre Jacobi,
-        Gauss-Seidel y SOR\@. Por default se utiliza el método SOR.
-        \\ \hline
+        \textbf{gen\textunderscore Poisson(metodo)} & \multirow{4}{*}{
+            \shortstack[l]{Genera la malla resolviendo la ecuación de Poisson.
+                \\La variable metodo se refiere al método iterativo de
+                solución,\\el usuario puede escoger entre Jacobi, Gauss-Seidel
+                y SOR\@.\\Por default se utiliza el método SOR}} \\
+        \textbf{gen\textunderscore Poisson\textunderscore v(metodo)} & \\
+        \textbf{gen\textunderscore Poisson\textunderscore n(metodo)} & \\
+        & \\
+        \hline
 
         \textbf{tensor()} & Calcula el tensor métrico de la transformación,
         tanto la transformación directa como indirecta. También calcula el
