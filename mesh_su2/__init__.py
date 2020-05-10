@@ -13,7 +13,7 @@ Documentación: https://su2code.github.io/docs/Mesh-File
 import numpy as np
 import matplotlib.pyplot as plt
 
-from helpers import get_size_airfoil, get_size_airfoil_n_flap
+from util.helpers import get_size_airfoil, get_size_airfoil_n_flap
 
 def to_su2_mesh_o_airfoil(mesh, filename):
     '''
