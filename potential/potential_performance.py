@@ -89,44 +89,44 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     # cálculo de términos en mallas intercaladas promediando los valores de los
     # nodos vecinos
     # malla vertical
-    # for j in range(N-1):
-    #     g11V[:, j] = 0.5 * (g11[:, j] + g11[:, j+1])
-    #     g12V[:, j] = 0.5 * (g12[:, j] + g12[:, j+1])
-    #     g22V[:, j] = 0.5 * (g22[:, j] + g22[:, j+1])
-    #     JV[:, j] = 0.5 * (J[:, j] + J[:, j+1])
-    #     x_xiV[:, j] = 0.5 * (x_xi[:, j] + x_xi[:, j+1])
-    #     x_etaV[:, j] = 0.5 * (x_eta[:, j] + x_eta[:, j+1])
-    #     y_xiV[:, j] = 0.5 * (y_xi[:, j] + y_xi[:, j+1])
-    #     y_etaV[:, j] = 0.5 * (y_eta[:, j] + y_eta[:, j+1])
+    for j in range(N-1):
+        g11V[:, j] = 0.5 * (g11[:, j] + g11[:, j+1])
+        g12V[:, j] = 0.5 * (g12[:, j] + g12[:, j+1])
+        g22V[:, j] = 0.5 * (g22[:, j] + g22[:, j+1])
+        JV[:, j] = 0.5 * (J[:, j] + J[:, j+1])
+        x_xiV[:, j] = 0.5 * (x_xi[:, j] + x_xi[:, j+1])
+        x_etaV[:, j] = 0.5 * (x_eta[:, j] + x_eta[:, j+1])
+        y_xiV[:, j] = 0.5 * (y_xi[:, j] + y_xi[:, j+1])
+        y_etaV[:, j] = 0.5 * (y_eta[:, j] + y_eta[:, j+1])
 
-    g11V[:, :]    = 0.5 * (g11[:, :-1] + g11[:, 1:])
-    g12V[:, :]    = 0.5 * (g12[:, :-1] + g12[:, 1:])
-    g22V[:, :]    = 0.5 * (g22[:, :-1] + g22[:, 1:])
-    JV[:, :]      = 0.5 * (J[:, :-1] + J[:, 1:])
-    x_xiV[:, :]   = 0.5 * (x_xi[:, :-1] + x_xi[:, 1:])
-    x_etaV[:, :]  = 0.5 * (x_eta[:, :-1] + x_eta[:, 1:])
-    y_xiV[:, :]   = 0.5 * (y_xi[:, :-1] + y_xi[:, 1:])
-    y_etaV[:, :]  = 0.5 * (y_eta[:, :-1] + y_eta[:, 1:])
+    # g11V[:, :]    = 0.5 * (g11[:, :-1] + g11[:, 1:])
+    # g12V[:, :]    = 0.5 * (g12[:, :-1] + g12[:, 1:])
+    # g22V[:, :]    = 0.5 * (g22[:, :-1] + g22[:, 1:])
+    # JV[:, :]      = 0.5 * (J[:, :-1] + J[:, 1:])
+    # x_xiV[:, :]   = 0.5 * (x_xi[:, :-1] + x_xi[:, 1:])
+    # x_etaV[:, :]  = 0.5 * (x_eta[:, :-1] + x_eta[:, 1:])
+    # y_xiV[:, :]   = 0.5 * (y_xi[:, :-1] + y_xi[:, 1:])
+    # y_etaV[:, :]  = 0.5 * (y_eta[:, :-1] + y_eta[:, 1:])
 
     # malla horizontal
-    # for i in range(M-1):
-    #     g11H[i, :] = 0.5 * (g11[i, :] + g11[i+1, :])
-    #     g12H[i, :] = 0.5 * (g12[i, :] + g12[i+1, :])
-    #     g22H[i, :] = 0.5 * (g22[i, :] + g22[i+1, :])
-    #     JH[i, :] = 0.5 * (J[i, :] + J[i+1, :])
-    #     x_xiH[i, :] = 0.5 * (x_xi[i, :] + x_xi[i+1, :])
-    #     x_etaH[i, :] = 0.5 * (x_eta[i, :] + x_eta[i+1, :])
-    #     y_xiH[i, :] = 0.5 * (y_xi[i, :] + y_xi[i+1, :])
-    #     y_etaH[i, :] = 0.5 * (y_eta[i, :] + y_eta[i+1, :])
+    for i in range(M-1):
+        g11H[i, :] = 0.5 * (g11[i, :] + g11[i+1, :])
+        g12H[i, :] = 0.5 * (g12[i, :] + g12[i+1, :])
+        g22H[i, :] = 0.5 * (g22[i, :] + g22[i+1, :])
+        JH[i, :] = 0.5 * (J[i, :] + J[i+1, :])
+        x_xiH[i, :] = 0.5 * (x_xi[i, :] + x_xi[i+1, :])
+        x_etaH[i, :] = 0.5 * (x_eta[i, :] + x_eta[i+1, :])
+        y_xiH[i, :] = 0.5 * (y_xi[i, :] + y_xi[i+1, :])
+        y_etaH[i, :] = 0.5 * (y_eta[i, :] + y_eta[i+1, :])
 
-    g11H[:, :]    = 0.5 * (g11[:-1, :] + g11[1:, :])
-    g12H[:, :]    = 0.5 * (g12[:-1, :] + g12[1:, :])
-    g22H[:, :]    = 0.5 * (g22[:-1, :] + g22[1:, :])
-    JH[:, :]      = 0.5 * (J[:-1, :] + J[1:, :])
-    x_xiH[:, :]   = 0.5 * (x_xi[:-1, :] + x_xi[1:, :])
-    x_etaH[:, :]  = 0.5 * (x_eta[:-1, :] + x_eta[1:, :])
-    y_xiH[:, :]   = 0.5 * (y_xi[:-1, :] + y_xi[1:, :])
-    y_etaH[:, :]  = 0.5 * (y_eta[:-1, :] + y_eta[1:, :])
+    # g11H[:, :]    = 0.5 * (g11[:-1, :] + g11[1:, :])
+    # g12H[:, :]    = 0.5 * (g12[:-1, :] + g12[1:, :])
+    # g22H[:, :]    = 0.5 * (g22[:-1, :] + g22[1:, :])
+    # JH[:, :]      = 0.5 * (J[:-1, :] + J[1:, :])
+    # x_xiH[:, :]   = 0.5 * (x_xi[:-1, :] + x_xi[1:, :])
+    # x_etaH[:, :]  = 0.5 * (x_eta[:-1, :] + x_eta[1:, :])
+    # y_xiH[:, :]   = 0.5 * (y_xi[:-1, :] + y_xi[1:, :])
+    # y_etaH[:, :]  = 0.5 * (y_eta[:-1, :] + y_eta[1:, :])
 
     # se calcula el ángulo theta de cada nodo, resultado en ángulos absolutos
     # desde 0 hasta 2 * pi
@@ -148,10 +148,11 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PV = np.zeros((M, N-1))
 
     err = 1.0
-    it_max = 30000
+    it_max = 600000
     it = 0
     error = 1e-8
     omega = 1.5 # 1.5
+    omega = 0.9 # 1.5
     IMA = 0
 
     arcotan = np.zeros((M,))
@@ -170,8 +171,8 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             if theta[i, 0] - alfa > 0:
                 arcotan[i] += (2 * np.pi)
 
-    error = 1e-5
-    print('Potential Flow')
+    error = 1e-6
+    print('Potential Flow - Performance')
     while err > error and it < it_max:
         print('it =  ' + str(it), end=' ')
         print('err = ' + '{0:.4e}'.format(err), end=' ')

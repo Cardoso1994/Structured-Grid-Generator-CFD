@@ -11,7 +11,7 @@ Modulo para solucion de flujo potencial
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-
+from .potential_performance import *
 
 def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     """
@@ -147,6 +147,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     it = 0
     error = 1e-8
     omega = 1.5 # 1.5
+    omega = 0.5 # 1.5
     IMA = 0
 
     arcotan = np.zeros((M,))
