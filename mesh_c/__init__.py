@@ -67,6 +67,7 @@ class mesh_C(mesh):
             # m_ -= 505
             pass
         if m_ % 3 == 1:
+            m_ -= 58
             M = m_
         else:
             M = m_ - 1
@@ -106,8 +107,7 @@ class mesh_C(mesh):
 
         R = self.R
         M = self.M
-        # N = self.N
-
+        far_region = 1
         # cargar datos del perfil
         # perfil = airfoil
         perfil_x = airfoil_x
@@ -116,7 +116,7 @@ class mesh_C(mesh):
         points1 = (points + 1) // 2
 
         # frontera externa
-        a = 1.1 * R
+        a = 1.15 * R
         b = R
         exe = (1 - b ** 2 / a ** 2) ** 0.5
         theta = np.linspace(3 * np.pi / 2, np.pi, points1)
@@ -127,14 +127,13 @@ class mesh_C(mesh):
         # parte circular de FE
         x = r * np.cos(theta)
         y = r * np.sin(theta)
-        # se termina FE
 
-        x_line = np.linspace(R * 2.5, 0, ((M - points) // 2 + 1))
+        x_line = np.linspace(R * far_region, 0, ((M - points) // 2 + 1))
         npoints = (M - points) // 2 + 1
-        delta_limit = 2.5 * R
+        delta_limit = far_region * R
         x_line = np.zeros(npoints) * 1.0
         h = delta_limit * (1 - weight) / (1 - weight ** ((npoints - 1)))
-        x_line[-1] = 2.5 * R
+        x_line[-1] = far_region * R
         dd = x_line[0]
         for i in range(0, npoints - 1):
             x_line[i] = dd
@@ -149,13 +148,14 @@ class mesh_C(mesh):
         y = np.concatenate((y, -y_line[1:]))
 
         # frontera interna
-        x_line = np.linspace(R * 2.5, perfil_x[0], (M - points) // 2 + 1)
+        x_line = np.linspace(R * far_region, perfil_x[0], (M - points) // 2 \
+                             + 1)
         npoints = (M - points) // 2 + 1
-        delta_limit = 2.5 * R - perfil_x[0]
+        delta_limit = far_region * R - perfil_x[0]
         x_line = np.zeros(npoints, dtype='float64')
         h = delta_limit * (1 - weight) / (1 - weight ** (npoints - 1))
         x_line[0] = perfil_x[0]
-        x_line[-1] = 2.5 * R
+        x_line[-1] = far_region * R
         dd = x_line[0]
         for i in range(0, npoints - 1):
             x_line[i] = dd
@@ -227,9 +227,10 @@ class mesh_C(mesh):
 
         it = 0
         # inicio del método iterativo
+        mesh.it_max = 3000
         print("Laplace:")
         while it < mesh.it_max:
-            if (it % 1000 == 0):
+            if (it % 1500 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()

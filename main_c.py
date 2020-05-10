@@ -15,7 +15,7 @@ import mesh_c
 import mesh_o
 import mesh_su2
 from potential import potential_flow_o
-import helpers
+import util
 
 # tipo de malla (C, O)
 malla = 'C'
@@ -31,7 +31,8 @@ N = 335
 # points = 11
 airfoil_points = 599 # 499
 airfoil_points = 889 # 499
-airfoil_points = 633
+airfoil_points = 613
+airfoil_points = 13
 
 if malla == 'C':
     # points = airfoil_points // 3  # * 2
@@ -45,10 +46,11 @@ p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
 # radio frontera externa
-R = 50 * c
+R = 35 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
+
 
 M = np.shape(perfil.x)[0]
 
@@ -56,14 +58,16 @@ archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.08)
+    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.15)
 
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
+
 # perfil.to_csv(archivo_perfil)
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.8, aa=10, cc=7.7, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=28, cc=7.7, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=95, cc=10, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=165, cc=10, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=620, cc=40, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=21620, cc=540, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh_c.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh_c.txt_mesh')

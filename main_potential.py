@@ -15,9 +15,11 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, velocity, pressure, lift_n_drag, streamlines
-from potential_performance import potential_flow_o_n
-import helpers
+from potential import potential_flow_o, velocity, pressure, lift_n_drag,\
+    streamlines, potential_flow_o_n
+# from potential_performance import potential_flow_o_n
+# import helpers
+import util
 
 # tipo de malla (C, O)
 malla = 'O'
@@ -28,8 +30,8 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
-N = 249
-airfoil_points = 249
+N = 339
+airfoil_points = 619
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -41,6 +43,8 @@ m = 0  # combadura
 p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
+
+p_ = p
 
 # radio frontera externa
 R = 35 * c
@@ -56,10 +60,10 @@ elif malla == 'C':
     mallaNACA = mesh_c.mesh_C(R, N, perfil)
 
 # mallaNACA.gen_Poisson(omega=1.3, aa=40, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=1.3, aa=40, cc=6.8, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=1.3, aa=40, cc=6.8, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.7, aa=220, cc=8, linea_eta=0)
 # direc = '/four-/'
-# mallaNACA = helpers.from_txt_mesh(filename='./potential_2412/' + direc
-#                                   + '/mallaNACA.txt_mesh')
+# mallaNACA = util.from_txt_mesh(filename='./p_/' + '/mallaNACA.txt_mesh')
 
 mallaNACA.plot()
 
@@ -77,7 +81,9 @@ if flag == 'S':
     path = input('carpeta donde se va a guardar: ')
     try:
         mkdir(path)
+        mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA' + '.txt_mesh'))
     except:
+        mallaNACA.to_txt_mesh(filename=(path + '/mallaNACA' + '.txt_mesh'))
         pass
 elif flag == 'N':
     print('Continue without saving')
@@ -144,14 +150,15 @@ for alfa_ in alfas:
         f.close()
         np.savetxt(path + '/theta_' + str(alfa) + '.csv', theta, delimiter=',')
 
-        (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
-        (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
-        (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-        (L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
+    (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA, phi, v_inf)
+    (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0, d0, h0)
+    (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
+    (L, D) = lift_n_drag(mallaNACA, cp, alfa, c)
 
-        print('alfa = ' + alfa_)
-        print('L = ' + str(L))
-        print('D = ' + str(D))
+    print(f"perfil NACA {m}{p_}{t}")
+    print(f"alfa = {alfa_}")
+    print(f"L = {L}")
+    print(f"D = {D}")
 
 plt.figure('potential')
 plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap='jet')

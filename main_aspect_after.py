@@ -13,10 +13,10 @@ import matplotlib.pyplot as plt
 import airfoil
 import mesh
 import mesh_c
-import mesh_o
+# import mesh_o
 import mesh_su2
 # from analysis import potential_flow_o, potential_flow_o_esp
-import helpers
+import util
 
 # tipo de malla (C, O)
 # malla = 'C'
@@ -91,5 +91,5 @@ import helpers
 
 path = './aspect_ratio/mesh_O_flap/p_45_95/'
 path = './potential_2412/two/'
-mallaNACA = helpers.from_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
-helpers.get_aspect_ratio(mallaNACA)
+mallaNACA = util.from_txt_mesh(filename=(path + '/mallaNACA.txt_mesh'))
+mallaNACA.plot()

@@ -115,7 +115,7 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
     it = 0
     mesh.it_max = 45e3
-    mesh.it_max = 100e3
+    mesh.it_max = 10e3
 
     # inicio del método iterativo
     print(f"Generando malla tipo C.\nDimensiones M: {self.M} N: {self.N}")
@@ -315,8 +315,8 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         union_start -= 1
 
     it = 0
-    mesh.it_max = 950e3
-    mesh.err_max = 1e-8
+    mesh.it_max = 0.75e6
+    mesh.err_max = 1e-6
 
     # inicio del metodo iterativo, separar el metodo para perfl con y sin flap
     print(f"Generando malla tipo C. \nDimensiones M: {self.M} N: {self.N}")
@@ -326,7 +326,8 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
         it = 0
         while it < mesh.it_max:
-            if (it % 25000 == 0):
+            # if it % 15000 == 0:
+            if it % 250000 == 0:
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -368,7 +369,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
         it = 0
         while it < mesh.it_max:
-            if (it % 125000 == 0):
+            if (it % 150000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -453,6 +454,7 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
     n = N
 
     for j in range(n-2, 0, -1):
+    # for j in range(1, n-1):
         for i in range(1, m-1):
             x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
             y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -535,12 +537,12 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         gamma = x_xi ** 2 + y_xi ** 2
         I = x_xi * y_eta - x_eta * y_xi
 
-        X[i, 0] = (d_xi * d_eta) ** 2 \
-            / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
-            * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
-               + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
-               - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
-                        - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+        # X[i, 0] = (d_xi * d_eta) ** 2 \
+        #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+        #     * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+        #        + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+        #        - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+        #                 - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
         Y[i, 0] = (d_xi * d_eta) ** 2 \
             / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
             * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
@@ -548,7 +550,7 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
                - beta / (2 * d_xi * d_eta) * (Y[i+1, 1]
                         - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, 1]))
 
-        X[-i -1, 0] = X[i, 0]
+        # X[-i -1, 0] = X[i, 0]
         Y[-i -1, 0] = Y[i, 0]
         i += 1
         i_ += 1
@@ -593,7 +595,10 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
     n = N
 
     for j in range(n-2, 0, -1):
-        for i in range(1, m-1):
+        # for i in range(1, m-1):
+        Y[1:125, j] = Y[0, j]
+        Y[125 + 617:-1, j] = Y[-1, j]
+        for i in range(125, 125 + 617):
             x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
             y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
             x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi

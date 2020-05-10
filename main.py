@@ -15,7 +15,8 @@ import mesh_c
 import mesh_o
 import mesh_su2
 from potential import potential_flow_o
-import helpers
+# import helpers
+import util
 
 # tipo de malla (C, O)
 malla = 'O'
@@ -26,13 +27,13 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 275
-N = 345
+# N = 300
 
-union = 109
+union = 39
 
 # points = 11
 airfoil_points = 399 # 499
-airfoil_points = 609
+airfoil_points = 549
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -46,13 +47,13 @@ t = 12  # espesor
 c = 1  # cuerda [m]
 
 # radio frontera externa
-R = 40 * c
+R = 70 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 flap.create_sin(points)
-flap.rotate(5)
+flap.rotate(15)
 perfil.join(flap, dx=0.055, dy=0.05, union=union)
 # perfil.rotate(30)
 M = np.shape(perfil.x)[0]
@@ -69,7 +70,8 @@ print('N = ' + str(mallaNACA.N))
 # mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=185, cc=3.7, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=650,
 #                                  cc=7, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=1550, cc=12, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=1500, cc=12, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=21550, cc=21, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
 mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
@@ -83,8 +85,8 @@ flag = 'r'
 is_ok = False
 
 while not is_ok:
-    flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
-             + '[n] to exit execution: ')
+    flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout'  +
+                 'saving,\n\t [n] to exit execution: ')
     print()
     if flag == 'S' or flag == 'N' or flag == 'n':
         is_ok = True

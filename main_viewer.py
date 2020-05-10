@@ -14,11 +14,10 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, potential_flow_o_esp, velocity,\
+from potential import potential_flow_o, velocity,\
                         pressure, streamlines, lift_n_drag
-import helpers
-
+import util
 file_name = '/home/desarrollo/tesis_su2/malla_C_flap/mesh_c_flap.txt_mesh'
-mallaNACA = helpers.from_txt_mesh(filename=file_name)
+mallaNACA = util.from_txt_mesh(filename=file_name)
 mallaNACA.plot()
 exit()
