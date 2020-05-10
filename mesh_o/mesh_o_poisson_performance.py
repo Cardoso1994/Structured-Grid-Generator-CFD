@@ -122,7 +122,7 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
     print("Poisson Vectorized by sections: ")
     while True:
-        if (it % 12000 == 0):
+        if (it % 120000 == 0):
             self.X = np.flip(Xn)
             self.Y = np.flip(Yn)
             self.plot()
@@ -322,7 +322,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         print("Poisson numba:")
         it = 0
         while it < mesh.it_max:
-            if (it % 320e3 == 0):
+            if (it % 150e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -363,7 +363,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         print("Poisson numba:")
         it = 0
         while it < mesh.it_max:
-            if (it % 320e3 == 0):
+            if (it % 150e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -524,7 +524,6 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
 
         X[-i -1, 0] = X[i, 0]
         Y[-i -1, 0] = Y[i, 0]
-
         i += 1
 
     return (X, Y)

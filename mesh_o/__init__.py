@@ -164,7 +164,7 @@ class mesh_O(mesh):
 
         # inicio del método iterativo
         while it < mesh.it_max:
-            if (it % 500 == 0):
+            if (it % 1500 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -351,10 +351,11 @@ class mesh_O(mesh):
                 union_start += 1
 
         mesh.it_max = 55e3
+        mesh.it_max = 3000
         it = 0
         print("Poisson:")
         while it < mesh.it_max:
-            if (it % 100 == 0):
+            if (it % 1500 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
