@@ -600,7 +600,6 @@
     \end{itemize}
 
 
-
     \section{Método de Diferencias Finitas}
     \paragraph*{}
     El método de diferencias finitas fue de los primero métodos numéricos
@@ -4390,10 +4389,9 @@
     tabla~\ref{tabla_potencial}. A su vez la
     figura~\ref{fig:potential_flow_mesh} muestra la malla
     utilizada para el caso en el cual $\alpha = 0\si{\degree}$, la cual es una
-    malla de dimensiones $M = 145$ y $N = 145$. Para el resto de casos se
-    utilizan los mismos parámetros, lo único que cambia es la rotación del
-    perfil alar. Por simplicidad solo se muestra a detalle el caso ya
-    mencionado, ya que las demás mallas son demasiado similares entre si.
+    malla de dimensiones $M = 229$ y $N = 649$. Para el resto de casos se
+    utiliza la misma malla, lo único que cambia es la rotación del vector de
+    velocidad de acuerdo del ángulo de ataque que se analiza.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -4666,16 +4664,61 @@
     ``solver'' que se va a utilizar, las ecuaciones que se van a resolver,
     condiciones de frontera, criterios de convergencia, entre muchos otros
     parámetros más. De entre todos estos parámetros, el de mayor importancia
-    para este trabajo y los resultados presentados a continuación, es el que nos
-    permite especificar un archivo que contenga la descripción de la malla a
-    utilizarse.
+    para este trabajo y los resultados presentados a continuación, es el que
+    nos permite especificar un archivo que contenga la descripción de la malla
+    a utilizarse. SU2 es capaz de leer diferentes tipos de archivo para la
+    importación de la malla SU2 es capaz de leer diferentes tipos de archivo
+    para la importación de la malla, el principal es su formato nativo el cual
+    se asocia a un archivo con extención ``.su2'', es en este formato nativo en
+    el cual el software desarrollado en este proyecto exporta las mallas,
+    además del ya mencionado formato, SU2 tambien es capaz de interpretar
+    archivos que sigan el formato CGNS (CFD General Notation System), el cual
+    es un esfuerzo de la comunidad para estandarizar la representacion de la
+    informacion para la solucion de simulaciones para \@DFC.
 
     \paragraph*{}
     En este trabajo, cuyo desarrollo gira alrededor de la generación de mallas,
-    se ha optado por utilizar las mismas condiciones que se utilizan en el
-    tutorial y únicamente cambiar el archivo de la malla, con el fin de
-    comprobar la calidad de las mallas que se puedan generar con este proyecto,
-    y su compatiblidad con software reconocido de dinámica de fluidos computacional.
+    se ha optado por utilizar las mismas condiciones que se utilizan en los
+    tutoriales y únicamente proporcionar la malla correspiendente al perfil
+    aerodinámico de interés, con el fin de comprobar la calidad de las mallas
+    que se puedan generar con este proyecto, y su compatiblidad con software
+    reconocido de dinámica de fluidos computacional.
+
+    \paragraph*{}
+    El caso de análisis seleccionado implica flujo bidimensional, turbulento y
+    estacionario, los parámetros del flujo se muestran en la
+    tabla~\ref{SU2_simulation}
+    \begin{table}[htbp!]
+    \begin{center}
+        \begin{tabular}{| c | c |}
+        \hline
+        Parámetro & Valor\\
+        \hline
+        $\rho[kg / m^3]$ &  $2.13163$\\
+        \hline
+        \multirow{2}{*}{$V_{\infty}[m / s]$} & $\alpha = \ang{0}.
+        (52.157, 0.0, 0.0)$\\
+        & $\alpha = \ang{10}. (51.365, 9.057, 0.0)$\\
+        \hline
+        $\mu[kg / (m-s)]$ &  $\num{1.853e-5}$\\
+        \hline
+        \end{tabular}
+        \caption{Características del flujo para el análisis en SU2}
+        \label{SU2_simulation}
+    \end{center}
+    \end{table}
+
+    \paragraph*{}
+    Se realizaron varios casos de estudio, un caso con un único perfil alar y
+    otro caso con perfil alar y flap tipo perfil externo, para cada tipo de
+    malla (malla tipo O y C), dando un total de cuatro análisis. Todos los
+    casos simulan el mismo flujo, descrito previamente. En los cuatro casos
+    mencionados, el perfil alar a analizar es el perfil NACA 0012, con cuerda
+    unitaria ($1$m). En los casos donde el perfil cuenta con un flap, se
+    seleccionó la configuración de flap de perfil externo, el perfil
+    correspondiente al flap es tambien un NACA 0012, en este caso su cuerda es
+    $0.2$ de la cuerda del perfil
+
 
 %
 %
