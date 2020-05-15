@@ -92,7 +92,6 @@ class airfoil(object):
     def get_union(self):
         return (self.union)
 
-    # se crea un perfil a partir de un archivo con la nube de puntos
     def create(self, filename):
         """
         Almacena en self.x y self.y las coordenadas que describen al perfil
@@ -176,7 +175,6 @@ class airfoil(object):
         None
         """
 
-        size    = self.size()
         rads    = degrees * np.pi / 180 * -1
 
         x       = np.cos(rads) * self.x - np.sin(rads) * self.y
@@ -222,12 +220,12 @@ class airfoil(object):
         size_airfoil    = self.size()
         size_flap       = other.size()
 
-        #reajustando en Y
+        # Reajustando en Y
         dy_flap         = y_flap[size_flap // 2]
         dy_total        = dy_flap + dy
         y_airfoil       += dy_total
 
-        # reajustando en X
+        # Reajustando en X
         dx_air      = -x_flap[size_flap // 2] + x_airfoil[0]
         dx_total    = dx_air + dx
         x_flap      += dx_total
@@ -282,10 +280,6 @@ class airfoil(object):
         ------
         None
         """
-
-        x               = self.x
-        y               = self.y
-
         airfoil         = np.zeros((self.size(), 2))
         airfoil[:, 0]   = self.x
         airfoil[:, 1]   = self.y
@@ -367,7 +361,7 @@ class NACA4(airfoil):
         t       = self.t
         c       = self.c
 
-        # distribución de los puntos en x a lo largo de la cuerda
+        # Distribucion de los puntos en x a lo largo de la cuerda
         xc      = np.linspace(0, 1, points)
         yt      = np.zeros((points, ))
         yc      = np.zeros((points, ))
@@ -384,11 +378,11 @@ class NACA4(airfoil):
         a4      = -0.1015
         # a4 = -0.1036
 
-        # calculo de la distribución de espesor
+        # Calculo de la distribucion de espesor
         yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
                       + a4 * xc ** 4)
 
-        # si es perfil simétrico
+        # Perfil simétrico
         if m == 0 and p == 0:
             xc *= c
             yt *= c
@@ -398,7 +392,7 @@ class NACA4(airfoil):
             xl = np.copy(xc)
             yl = -yt
         else:
-            # cálculo línea de combadura media
+            # Calculo combadura media
             for i in range(points):
                 if xc[i] <= p:
                     yc[i]   = (m / p**2) * (2 * p * xc[i] - xc[i]**2)
@@ -414,7 +408,7 @@ class NACA4(airfoil):
             yu      = yc + yt * np.cos(theta)
             yl      = yc - yt * np.cos(theta)
 
-            # escalamiento a la dimension de la cuerda
+            # Escalamiento a la dimension de la cuerda
             xu *= c
             yu *= c
             xl *= c
@@ -423,12 +417,12 @@ class NACA4(airfoil):
             yc *= c
             yt *= c
 
-        # ajuste para que el origen del sistema de coordenadas coincida con c/4
+        # Ajuste para que el origen del sistema de coordenadas coincida con c/4
         xu  -= c / 4
         xl  -= c / 4
         xc  -= c / 4
 
-        # exportar los datos a un archivo txt
+        # Exportar los datos a un archivo txt
         xuf = np.copy(xu)
         xuf = np.flip(xuf, 0)
         yuf = np.copy(yu)
@@ -438,7 +432,7 @@ class NACA4(airfoil):
         xp  = np.concatenate((xuf, xlf))
         yp  = np.concatenate((yuf, ylf))
 
-        # se invierten para que comience el perfil por el intrados
+        # Se invierten para que comience el perfil por el intrados
         # pasando al extrados  SENTIDO HORARIO
         xp  = np.flip(xp, 0)
         yp  = np.flip(yp, 0)
@@ -446,7 +440,7 @@ class NACA4(airfoil):
         xp[-1] = xp[0]
         yp[-1] = yp[0]
 
-        # se especifica que todos los puntos del perfil son frontera
+        # Se especifica que todos los puntos del perfil son frontera
         is_boundary         = np.ones((np.size(xp))) * self.number
 
         self.x              = xp
@@ -479,7 +473,7 @@ class NACA4(airfoil):
         t       = self.t
         c       = self.c
 
-        # distribución de los puntos en x a lo largo de la cuerda
+        # Distribucion de los puntos en x a lo largo de la cuerda
         beta    = np.linspace(0, np.pi, points)
         xc      = (1 - np.cos(beta)) / 2
         yt      = np.zeros((points, ))
@@ -497,11 +491,11 @@ class NACA4(airfoil):
         a4      = -0.1015
         a4 = -0.1036
 
-        # calculo de la distribución de espesor
+        # Calculo de la distribución de espesor
         yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
                       + a4 * xc ** 4)
 
-        # si es perfil simétrico
+        # Si es perfil simétrico
         if m == 0 and p == 0:
             xc *= c
             yt *= c
@@ -511,7 +505,7 @@ class NACA4(airfoil):
             xl = np.copy(xc)
             yl = -yt
         else:
-            # cálculo línea de combadura media
+            # Calculo línea de combadura media
             for i in range(points):
                 if xc[i] <= p:
                     yc[i]   = (m / p**2) * (2 * p * xc[i] - xc[i]**2)
@@ -527,7 +521,7 @@ class NACA4(airfoil):
             yu      = yc + yt * np.cos(theta)
             yl      = yc - yt * np.cos(theta)
 
-            # escalamiento a la dimension de la cuerda
+            # Escalamiento a la dimension de la cuerda
             xu *= c
             yu *= c
             xl *= c
@@ -536,12 +530,12 @@ class NACA4(airfoil):
             yc *= c
             yt *= c
 
-        # ajuste para que el origen del sistema de coordenadas coincida con c/4
+        # Ajuste para que el origen del sistema de coordenadas coincida con c/4
         xu  -= c / 4
         xl  -= c / 4
         xc  -= c / 4
 
-        # exportar los datos a un archivo txt
+        # Exportar los datos a un archivo txt
         xuf = np.copy(xu)
         xuf = np.flip(xuf, 0)
         yuf = np.copy(yu)
@@ -551,23 +545,23 @@ class NACA4(airfoil):
         xp  = np.concatenate((xuf, xlf))
         yp  = np.concatenate((yuf, ylf))
 
-        # se invierten para que comience el perfil por el intrados
+        # Se invierten para que comience el perfil por el intrados
         # pasando al extrados  SENTIDO HORARIO
         xp      = np.flip(xp, 0)
         yp      = np.flip(yp, 0)
         perfil  = np.zeros((np.shape(xp)[0], 2))
 
-        # coincidir puntos de borde de salida, perfil cerrado
+        # Coincidir puntos de borde de salida, perfil cerrado
         xp[0] = xp[-1]
         yp[0] = yp[-1]
 
-        # haciendo coincidir el borde de salida con y = 0
+        # Haciendo coincidir el borde de salida con y = 0
         yp -= yp[0]
 
         perfil[:, 0]    = xp
         perfil[:, 1]    = yp
 
-        # se especifica que todos los puntos del perfil son frontera
+        # Se especifica que todos los puntos del perfil son frontera
         is_boundary         = np.ones((np.size(xp))) * self.number
 
         self.x              = perfil[:, 0]
