@@ -41,7 +41,7 @@
 
 \pagestyle{plain} %sin cabeceras en las páginas, numero de pagina centrado abajo
 \begin{document}
-	\begin{titlepage}
+    \begin{titlepage}
 		\begin{center}
 			\begin{figure}
 				\begin{center}
@@ -186,17 +186,18 @@
     flujo de fluidos se cuenta con dos herramientas: la experimentación y los
     métodos analíticos. La experimentación implica la construcción de modelos
     que serán probados en túneles de viento u otras instalaciones. En el caso
-    del cálculo, se puede realizar de manera analítica o mediante el uso de métodos númericos,
-    a esta última técnica se le da el nombre de dinamica de fluidos
-    computacional (CFD, por sus siglas en inglés). El uso de la DFC (dinámica
-    de fluidos computacional) se ha popularizado gracias al desarrollo de las
-    capaciades computaciones, ya que las simulaciones presentan ciertas
-    ventajas frente al enfoque exprimental en términos de velocidad, seguridad
-    y en la mayoría de casos, de costo. Gracias a esto la DFC es ampliamente
-    usada en la actualidad en sectores de la industria como el aeroespacial,
-    petrolero, energético, automotriz, entre otros. En el ámbito de la investigación también se tiene
-    en la DFC una herramienta importante, pues permite analizar fenomenos
-    complejos que pueden resultar dificiles de reproducir en experimentos.
+    del cálculo, se puede realizar de manera analítica o mediante el uso de
+    métodos númericos, a esta última técnica se le da el nombre de dinamica de
+    fluidos computacional (CFD, por sus siglas en inglés). El uso de la DFC
+    (dinámica de fluidos computacional) se ha popularizado gracias al
+    desarrollo de las capaciades computaciones, ya que las simulaciones
+    presentan ciertas ventajas frente al enfoque exprimental en términos de
+    velocidad, seguridad y en la mayoría de casos, de costo. Gracias a esto la
+    DFC es ampliamente usada en la actualidad en sectores de la industria como
+    el aeroespacial, petrolero, energético, automotriz, entre otros. En el
+    ámbito de la investigación científica también se tiene en la DFC una
+    herramienta importante, pues permite analizar fenomenos complejos que
+    pueden resultar dificiles de reproducir en experimentos.
 
     \paragraph*{}
     Se realiza el presente trabajo con la finalidad tanto de generar en los
@@ -206,7 +207,7 @@
     de software libre.
 
     \paragraph*{}
-    En el capítulo 1 de realiza una breve reseña histórica, con el fin de
+    En el capítulo 1 se realiza una breve reseña histórica, con el fin de
     entender los orígenes y etapas por las que ha atravesado la dinámica de
     fluidos computacional para así comprender la posición actual en la que se
     encuentra y las posibles direcciones que ésta pueda tomar. También en este
@@ -226,7 +227,7 @@
     para el análisis. Se hace particular enfoque en el desarrollo del método de
     diferencias finitas, y se muestran las ecuaciones obtenidas mediante este
     método, las cuales sirven de aproximaciones para sustituir los términos que
-    invilucren ecuaciones diferenciales parciales.
+    involucren ecuaciones diferenciales parciales.
 
     \paragraph*{}
     Por su parte, el capítulo 3 centra su atención en las mallas. Se describe el
@@ -254,7 +255,7 @@
 
     \paragraph*{}
     Por útlimo, en el capítulo 6 se muestran los resultados obtenidos mediante
-    la utilización de los cpodigos desarrollados. Se muestra en primera
+    la utilización de los códigos desarrollados. Se muestra en primera
     instancia una sección con los límites y alcance de las mallas generadas,
     continúa con resultados de calidad de malla para varias configuraciones de
     malla. Por último se llevaron a cabo análisis tanto de flujo potencial y de
@@ -389,7 +390,7 @@
     análisis de esfuerzos en aeronaves.\cite{tj-chung}
 
     \paragraph*{}
-    Durante la segunda guerra mundial, así como los años siguientes
+    Durante la segunda guerra mundial, así como en los años siguientes
     a la misma, el profesor John Von Neumann desarrolló un método
     para determinar la estabilidad numérica para la resolución de
     problemas dependientes del tiempo. Su trabajo fue publicado por
@@ -423,7 +424,8 @@
     en el año 1980 que Steger y Chausee proponen un esquema para la generación
     de mallas estructuradas mediante el uso de ecuaciones diferenciales
     parciales hiperbólicas. A lo largo de toda esta década son explorados
-    diferentes algoritmos para la generación mediante ecuaciones hiperbólicas.
+    diferentes algoritmos para la generación de mallas mediante ecuaciones
+    hiperbólicas.
 
     \paragraph*{}
     A finales de la década de 1980, comenzó una nueva etapa el desarrollo de
@@ -442,7 +444,7 @@
     diseño de turbomaquinaria, carros y navíos. Además de campos como la
     meteorología, oceanografía, astrofísica e incluso arquitectura. Algunas
     técnicas desarrolladas para la DFC ahora se usan también en la solución de
-    las ecuaciones de Maxwell, por lo que demuestra la creciente importancia
+    las ecuaciones de Maxwell, lo que demuestra la creciente importancia
     que tiene la DFC como herramienta en ingeniería.\cite{blazek}
 
     \paragraph*{}
@@ -533,7 +535,7 @@
     los algoritmos con los que se desarrolló Xfoil son exactamente los mismos
     en XFLR5.\cite{xflr5} Este programa no ha sido desarrollado con fines
     profesionales, sino para uso meramente personal y se distribuye bajo la
-    licencias GPL.
+    licencia GPL.
 
     \paragraph*{XFlow}
     \paragraph*{}
@@ -593,10 +595,12 @@
     \item Estructuradas: los nodos de la malla están alineados entre sí y
       son identificados mediante ínidices $i, j, k$. Una malla estructurada
       bidimiensional está formada por cuadriláteros, mientras que una malla
-      tridimensional se forma por hexahédros. Figura~\ref{fig:malla-estructurada}.
-    \item No estructuradas: los nodos no tienen un orden particular, por lo
-      que no se pueden identificar mediante índices, por lo que se debe llevar a
-      cabo una forma diferente de identificación. Figura~\ref{fig:malla-no-estructurada}
+      tridimensional se forma por hexahédros.
+            Figura~\ref{fig:malla-estructurada}.
+    \item No estructuradas: los nodos no tienen un orden particular, esto
+      implica que no se puedan identificar mediante índices, por lo que se debe
+      llevar a cabo una forma diferente de identificación.
+            Figura~\ref{fig:malla-no-estructurada}
     \end{itemize}
 
 
@@ -965,11 +969,11 @@
     La transformación en este tipo de malla, también da como resultado un
     dominio computacional cuadrado, que puede tener o no, un corte al
     interior el cual corresponde a la frontera interior del dominio físico.
-    (Figura\ref*{fig:tipos-de-malla} (H)) La frontera externa del dominio
+    (Figura~\ref{fig:tipos-de-malla} (H)) La frontera externa del dominio
     computacional corresponde a la frontera externa del dominio físico.
 
     \paragraph*{}
-    La figura\ref{fig:malla-h} muestra el uso de una malla tipo H para el
+    La figura~\ref{fig:malla-h} muestra el uso de una malla tipo H para el
     análisis del flujo a través de los álabes de una turbina, y su
     transformación del dominio físico al computacional. En este caso no
     existe un cuerpo en el centro del mallado, por lo que no hay corte
@@ -987,7 +991,7 @@
     \paragraph*{}
     En el caso de que se quiera ocupar una malla H con un cuerpo a analizar
     en el interior del dominio, como el caso representado en la
-    figura\ref*{fig:tipos-de-malla} (H) se puede realizar un mallado uniforme,
+    figura~\ref{fig:tipos-de-malla} (H) se puede realizar un mallado uniforme,
     quizás mediante un método de interpolación algebráica, sobre el dominio
     físico quedando así coincidente con el dominio computacional. Los puntos
     5 y 6 requieren de un trato especial al momento de llevar a cabo la
@@ -1280,7 +1284,7 @@
     por líneas rectas.
 
     \paragraph*{}
-    A partir de estas ecuaciones, se uede definir un mapeo compuesto
+    A partir de estas ecuaciones, se puede definir un mapeo compuesto
     $P_{\xi}P_{\eta}$, de tal manera que:
     \begin{align}
         \begin{aligned}
@@ -1446,7 +1450,7 @@
     Las funciones $P$ y $Q$ se seleccionan dependiendo de la necesidad
     específica del problema que se analiza. Dichas necesidades pueden ser,
     por ejemplo, el agrupamiento de nodos alrededor de un punto especifico,
-    o quizás sea la búsqueda de un sistema ortogonal en la superficie.
+    o quizá sea la búsqueda de un sistema ortogonal en la superficie.
 
     \paragraph*{}
     El uso de las funciones $P$ y $Q$ para manipular la densidad de puntos
@@ -4709,8 +4713,8 @@
     \end{table}
 
     \paragraph*{}
-    Se realizaron varios casos de estudio, un caso con un único perfil alar y
-    otro caso con perfil alar y flap tipo perfil externo, para cada tipo de
+    Se realizaron diferentes casos de estudio, un caso con un único perfil alar
+    y otro caso con perfil alar y flap tipo perfil externo, para cada tipo de
     malla (malla tipo O y C), dando un total de cuatro análisis. Todos los
     casos simulan el mismo flujo, descrito previamente. En los cuatro casos
     mencionados, el perfil alar a analizar es el perfil NACA 0012, con cuerda
