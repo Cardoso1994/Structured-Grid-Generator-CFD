@@ -2642,16 +2642,16 @@
 
     \paragraph*{}
         Supongase el flujo sobre un perfil aerodinámico, en el momento en que
-        el flujo ha comenzado y en los primeros instantes, el fluido intentará
-        rodear el borde de salida, desde el lado inferior al superior, esto
-        implica la existencia de un punto de estancamiento en el extrados del
-        perfil. Sin embargo, este comportamiento no es sostenible en un flujo
-        real por mucho tiempo. En realidad conforme el flujo termina de
-        desarrollarse hasta llegar a un estado estacionario, dicho punto de
-        estancamiento va recorriendose hacia la parte posterior hasta llegar al
-        borde de salida, a partir de que se logra esta condición se cumple la
-        condición de Kutta, es decir el fluido deja el borde de salida de
-        manera suave.
+        el flujo ha comenzado así como en los primeros instantes, el fluido
+        intentará rodear el borde de salida, desde el lado inferior al
+        superior, esto implica la existencia de un punto de estancamiento en el
+        extrados del perfil. Sin embargo, este comportamiento no es sostenible
+        en un flujo real por mucho tiempo. En realidad conforme el flujo
+        termina de desarrollarse hasta llegar a un estado estacionario, dicho
+        punto de estancamiento va recorriendose hacia la parte posterior hasta
+        llegar al borde de salida, a partir de que se logra esta condición se
+        cumple la condición de Kutta, es decir el fluido deja el borde de
+        salida de manera suave.
 
     \paragraph*{}
         La figura~\ref{kutta_condition} muestra este comportamiento, en la
@@ -2716,28 +2716,29 @@
         Una vez lograda la condición de Kutta, el vórtice de inicio ya no está
         presente en el perfil sino que continuara alejándose corriente abajo
         conforme el tiempo avanza. Sin embargo, tal como se muestra en la
-        figura~\ref{circulacion_tiempo}, la curva que conformaba en el reposo al fluido
-        alrededor del perfil se ha deformado, y ahora contiene además al
-        vórtice de inicio. Se sabe gracias al teorema de Kelvin que la
+        figura~\ref{circulacion_tiempo}, la curva que conformaba en el reposo
+        al fluido alrededor del perfil se ha deformado, y ahora contiene además
+        al vórtice de inicio. Se sabe gracias al teorema de Kelvin que la
         circulación alrededor de la curva $C_2$ debe ser cero, pero si esta
-        curva la dividimos en $C_3$ y $C_4$ conteniedo al vórtice y al perfil
-        respectivamente, observamos que la circulación alrededor de $C_3$ tendrá
-        un valor finito debido al vórtice y por lo tanto alrededor de la curva
-        $C_4$ debe existir una circulación de igual magnitud en sentido
+        curva la dividimos en $C_3$ y $C_4$ conteniendo al vórtice y al perfil
+        respectivamente, observamos que la circulación alrededor de $C_3$
+        tendrá un valor finito debido al vórtice y por lo tanto alrededor de la
+        curva $C_4$ debe existir una circulación de igual magnitud en sentido
         contrario, con lo que se logra que alrededor de la curva $C_2$ la
         circulación sea cero.
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/circulacion_tiempo}
-            \caption[Flujo alrededor de perfil momentos después]{Flujo alrededor
-                de perfil momentos después\cite{anderson_fundamentals}}
+            \includegraphics[keepaspectratio, 
+                width=115mm]{./Imagenes/circulacion_tiempo}
+            \caption[Flujo alrededor de perfil momentos después]{Flujo
+            alrededor de perfil momentos después\cite{anderson_fundamentals}}
             \label{circulacion_tiempo}
         \end{figure}
 
     \paragraph*{}
-        En simulaciones computacionales un corte debe definirse, a lo largo del cual existirá
-        una discontinuidad del potencial dado por
+        En simulaciones computacionales un corte debe definirse, a lo largo del
+        cual existirá una discontinuidad del potencial dado por
         \begin{equation}
             \phi_{P'} - \phi_{P} = \Gamma_{B} = \phi_{B} - \phi_{A}
         \end{equation}
@@ -2777,7 +2778,8 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/malla_escalonada}
+            \includegraphics[keepaspectratio,
+                width=115mm]{./Imagenes/malla_escalonada}
             \caption[Malla original y mallas escalonadas]{Malla original y
                 mallas escalonadas\cite{potential_flow}}
             \label{malla_escalonada}
@@ -2834,7 +2836,7 @@
         constante, la variación del potencial respecto a $\xi$ se obtiene
         calculando por aproximaciones centrales de dicha variación en los puntos
         adyacentes pertenecientes a la malla original y calculando la media de
-        las mismas. Para la variacióncon con respecto a $\eta$ se calcula
+        las mismas. Para la variación con con respecto a $\eta$ se calcula
         unicamente una aproximación central entre los puntos adyacentes. Esto
         es, para un punto $(i, j + \frac{1}{2})$ las variaciones con respecto a
         $\xi$ se obtienen promediando las aproximaciones centrales con respecto
@@ -2843,16 +2845,16 @@
         $(i, j)$ e $(i, j+1)$.
 
     \paragraph*{}
-        Por otro lado, en la malla intercalada horizontal, donde $\eta=cte$,
-        la variación del potencial respecto a $\xi$ $\phi_\xi$ es simplemente
+        Por otro lado, en la malla intercalada horizontal, donde $\eta$ es 
+        constante, la variación del potencial respecto a $\xi$ es simplemente
         la aproximación central de dicha variación a partir de los puntos
         adyacentes de la malla original. En el caso de la variación del
-        potencial respecto a $\eta$ $\phi_\eta$, primero se debe calcular dicha
-        variación en los puntos adyacentes de la malla y posteriormente obtener
-        la media de las mismas. Es decir, para un punto $(i + \frac{1}{2}, j)$,
-        las variaciones con respecto a $\xi$ son una aproximación central entre
-        los puntos $(i, j)$ e $(i + 1, j)$ y para las variaciones con respecto
-        a $\eta$ se deben calcular las aproximaciones centrales con respecto a
+        potencial respecto a $\eta$, primero se debe calcular dicha variación
+        en los puntos adyacentes de la malla y posteriormente obtener la media
+        de las mismas. Es decir, para un punto $(i + \frac{1}{2}, j)$, las
+        variaciones con respecto a $\xi$ son una aproximación central entre los
+        puntos $(i, j)$ e $(i + 1, j)$ y para las variaciones con respecto a
+        $\eta$ se deben calcular las aproximaciones centrales con respecto a
         $\eta$ en los puntos $(i, j)$ e $(i + 1, j)$ para posteriormente
         calcular la media.
 
@@ -2956,8 +2958,8 @@
 
     \paragraph*{}
         Una vez discretizados los valores de las componentes de la velocidad,
-        se puede despejar el valor del potencial a partir de la ecuación
-        \ref{eq_potencial_3}
+        se puede despejar el valor del potencial a partir de la
+        ecuación~\ref{eq_potencial_3}
         \begin{align}
             \begin{aligned}
             \phi_{i, j} &=
@@ -2987,7 +2989,7 @@
     \paragraph*{}
         Mediante la ecuación~\ref{density} se pueden obtener los valores de la
         densidad, sustituyendo las ecuaciones de la velocidad en ella. Sin
-        embargo dicha ecuación requiere el cuadrado del móodulo de la velocidad
+        embargo dicha ecuación requiere el cuadrado del módulo de la velocidad
         en el sistema de coordenadas del dominio físico $u$ y $v$ las cuales se
         describen como
         \begin{subequations}
@@ -3057,12 +3059,12 @@
         \end{equation}
 
     \paragraph*{}
-        Como ya se comentó, en la simulación se debe especíifcar un corte a lo
+        Como ya se comentó, en la simulación se debe especificar un corte a lo
         largo del cual existirá una discontinuidad en el potencial, dicho corte
         se hace coincidir por conveniencia con el corte ya presente en la malla
         durante su generación.
         \begin{equation}
-            \phi_{1, j} = \phi_{M, j} + \Gamma
+            \phi_{M - 1, j} = \phi_{0, j} + \Gamma
         \end{equation}
 
     \paragraph*{}
@@ -3077,9 +3079,20 @@
             + \frac{\phi_{i, j-2} - 4 \phi_{i, j-1} + 3 \phi_{i, j}}{2 \Delta \eta}
                 g^{12} = 0
         \end{equation}
+
+        la cual en el borde de salida (punto $(M -1, 0)$), y considerando de
+        nuevo $\Delta \xi = \Delta \eta = 1$, se simplifica a
+        \begin{equation}
+            \left(\phi_{M-1, 0} - \phi_{1, 0} - \Gamma \right) g^{11}
+            +  \left( \phi_{M-1, 0} - 4 \phi_{M-1, 1} + 3 \phi_{M-1, 0} \right)
+            = 0
+        \end{equation}
+
         entonces la circulación viene dada por:
         \begin{equation}
-            \Gamma = \phi_{1, 1}
+            \Gamma = \phi_{M-2, 0} - \phi_{1, 0}
+                + \frac{g^{12}}{g^{11}} \left( \phi_{M-1, 2}
+                - 4 \phi_{M-1, 1} + 3 \phi_{M-1, 0} \right)
         \end{equation}
 
 %
@@ -3238,7 +3251,7 @@
         Las tablas~\ref{tabla_airfoil} y~\ref{tabla_naca4} presentan los métodos
         pertenecientes a la clase airfoil y a la clase NACA4 respectivamente,
         así como una breve descripción de los mismos. A su vez, la
-        figura\ref{airfoil_class} presenta un diagrama de clase donde se
+        figura~\ref{airfoil_class} presenta un diagrama de clase donde se
         muestran los atributos y métodos de la clase airfoil, así como su
         herencia con respecto a la clase NACA4, junto con los atributos y
         métodos de la misma.
@@ -3315,7 +3328,7 @@
         \\ \hline
 
         \textbf{gen\textunderscore inter\textunderscore pol(eje)} & Genera una
-        malla mediante el método de interpolación polinamial, la cual se basa en
+        malla mediante el método de interpolación polinomial, la cual se basa en
         el polinomio de Lagrange.\ eje representa el eje a lo largo del cual se
         realiza la interpolación, por default es el eje $\eta$. \\ \hline
 
@@ -3425,7 +3438,7 @@
         tanto la transformación directa como indirecta. También calcula el
         Jacobiano de dicha transformación y los valores de las derivadas
         parciales $x_\xi$, $x_\eta$, $y_xi$ y $y_\eta$. Los valores que
-        regresa el método son matrives de $M$x$N$, ya que todos los términos se
+        regresa el método son matrices de $M$x$N$, ya que todos los términos se
         calculan para cada uno de los puntos de la malla. \\\hline
 
         \textbf{to\textunderscore su2()} & Convierte la malla al formato del
