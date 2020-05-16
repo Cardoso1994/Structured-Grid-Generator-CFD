@@ -418,7 +418,7 @@
     \paragraph*{}
     Para la década de 1980 se comienza a dar solución a las ecuaciones de Euler
     tanto en dos dimensiones como en tres dimensiones. Para mediados de esta
-    década, gracias de nuevo, al incremento en la capcidad de cálculo de los
+    década, gracias de nuevo, al incremento en la capacidad de cálculo de los
     ordenadores, se comienza a hacer análisis de flujos viscosos, los cuales
     son descritos por las ecuaciones de Navier-Stokes.\cite{blazek} Es también
     en el año 1980 que Steger y Chausee proponen un esquema para la generación
@@ -1613,7 +1613,7 @@
     hiperbólicas se debe llevar a cabo el proceso de solución mediante un
     proceso de marcha, en este esquema la marcha se realiza en la dirección del
     eje $\eta$. Tercera, para un sistema de ecuaciones hiperbólicas se debe
-    especificar una condicion inicial así como un condición de frontera y por
+    especificar una condicion inicial así como una condición de frontera y por
     último, con el objetivo de evitar la presencia de oscilaciones, se puede
     agregar un término de ``damping'', o viscosidad artificial, al lado derecho
     de las ecuaciones.
@@ -2307,8 +2307,8 @@
             \centering
             \includegraphics[keepaspectratio, width=110mm]{./Imagenes/aspect_verdict.png}
             \caption[Estrcutura celda cuadrilatera en Verdict]{Estructura de
-            celda cuadrilátera en Verdict. Del lado derecho se muestran los
-            nodos y los elementos que la forman. Del lado izquierdo se muestran
+            celda cuadrilátera en Verdict. Del lado izquierdo se muestran los
+            nodos y los elementos que la forman. Del lado derecho se muestran
             los ejes principales de la misma\cite{verdict_quality}}
             \label{aspect_verdict}
         \end{figure}
@@ -2352,12 +2352,11 @@
     cercanos a la unidad.
 
     \paragraph*{}
-    Por su parte, ``The Verdict Quality Library'' presenta su propio método para
-    evaluar el ``skew'' de una celda. Este método evalua el ángulo existente
-    entre los ejes principales de la celda y de manera más precisa, evalua el
-    valor del coseno de dicho ángulo. La figura~\ref{aspect_verdict} muestra
-    gráficamente los elementos que conforman una celda.
-
+    Por su parte, ``The Verdict Quality Library'' presenta su propio método
+    para evaluar el ``skew'' de una celda. Este método evalúa el ángulo
+    existente entre los ejes principales de la celda y de manera más precisa,
+    evalua el valor del coseno de dicho ángulo. La figura~\ref{aspect_verdict}
+    muestra gráficamente los elementos que conforman una celda.  
     \paragraph*{}
     El método usado por la librería es el siguiente. Primero se deben normalizar
     los ejes principales $\vec{X_1}$ y $\vec{X_2}$, los cuales están definidos
@@ -2409,6 +2408,7 @@
 %
 
 \chapter{Análisis de Flujo Potencial}\label{chap:potential}
+    \nocite{potencial_esp}
     \paragraph*{}
         El modelo de flujo potencial es la más simple consideración de flujo no viscoso en
         tomar en cuenta los efectos de compresibilidad.
@@ -4524,7 +4524,7 @@
     ángulos de ataque del perfil mediante la integración de los valores del
     coeficiente de presión a lo largo de la cuerda del mismo, con los datos
     presentados por Abbott en su libro ``Theory of wing sections''
-    \cite[abbott], hay que recalcar que existen dos principales factores a tomar
+    \cite{abbott}, hay que recalcar que existen dos principales factores a tomar
     en cuenta al hacer esta comparación, el primero es la precisión del modelo
     de flujo potencial, y por otro lado el error de lectura que se pueda
     presentar al momento de obtener los datos proporcionados en el libro
@@ -5044,8 +5044,10 @@
 \cleardoublepage
 \phantomsection % corrige error de hipervinculos que manda a la seccion previa
 \addcontentsline{toc}{chapter}{Referencias}
-\bibliography{referencias.bib}
-\bibliographystyle{unsrt}
+% \bibliography{referencias.bib}
+\bibliography{referencias}
+% \bibliographystyle{unsrt}
+\bibliographystyle{unsrt_esp}
 
 
 \end{document}
