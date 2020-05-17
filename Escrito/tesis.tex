@@ -4389,10 +4389,10 @@
     \section{Análisis de DFC}
     \paragraph*{}
     En este apartado se muestran los resultados obtenidos en diferentes
-    simulaciones para las cuales se ocuparon mallas generadas con el uso del
-    código desarrollado como parte de este proyecto. En primera instancia se
-    llevan a cabo análisis de flujo potencial, tema que se ha desarrollado en el
-    capítulo~\ref{chap:potential}. De igual modo, se llevaron a cabo
+    simulaciones para las cuales se ocuparon mallas generadas mediante el uso
+    del código desarrollado como parte de este proyecto. En primera instancia
+    se llevan a cabo análisis de flujo potencial, tema que se ha desarrollado
+    en el capítulo~\ref{chap:potential}. De igual modo, se llevaron a cabo
     simulaciones para flujos turbulentos en el programa de código abierto SU2.
 
     \subsection{Flujo Potencial}
@@ -4419,7 +4419,8 @@
           48 & $3.1596\times 10^{6}$ & $101 325$ & $293.15$ \\
         \hline
         \end{tabular}
-        \caption{Características de la corriente libre en el análisis de flujo potencial}
+        \caption{Características de la corriente libre en el análisis de flujo
+            potencial}
     \label{tabla_potencial}
     \end{center}
     \end{table}
@@ -4459,7 +4460,7 @@
 
     \paragraph*{}
     Por su parte, las figuras~\ref{fig:potential_flow_stream_0}
-    y~\ref{fig:potential_flow_stream_0} presentan las líneas de corriente del
+    y~\ref{fig:potential_flow_stream_1} presentan las líneas de corriente del
     flujo correspondiente a cada uno de los casos previamente mencionados.
 
     \begin{figure}[H]%[htbp!]
@@ -4684,11 +4685,10 @@
     para este trabajo y los resultados presentados a continuación, es el que
     nos permite especificar un archivo que contenga la descripción de la malla
     a utilizarse. SU2 es capaz de leer diferentes tipos de archivo para la
-    importación de la malla SU2 es capaz de leer diferentes tipos de archivo
-    para la importación de la malla, el principal es su formato nativo el cual
+    importación de la malla, el principal es su formato nativo el cual
     se asocia a un archivo con extención ``.su2'', es en este formato nativo en
     el cual el software desarrollado en este proyecto exporta las mallas,
-    además del ya mencionado formato, SU2 tambien es capaz de interpretar
+    además del ya mencionado formato, SU2 también es capaz de interpretar
     archivos que sigan el formato CGNS (CFD General Notation System), el cual
     es un esfuerzo de la comunidad para estandarizar la representacion de la
     informacion para la solucion de simulaciones para \@DFC.
@@ -4696,7 +4696,7 @@
     \paragraph*{}
     En este trabajo, cuyo desarrollo gira alrededor de la generación de mallas,
     se ha optado por utilizar las mismas condiciones que se utilizan en los
-    tutoriales y únicamente proporcionar la malla correspiendente al perfil
+    tutoriales y únicamente proporcionar la malla correspondiente al perfil
     aerodinámico de interés, con el fin de comprobar la calidad de las mallas
     que se puedan generar con este proyecto, y su compatiblidad con software
     reconocido de dinámica de fluidos computacional.
@@ -4731,12 +4731,136 @@
     malla (malla tipo O y C), dando un total de cuatro análisis. Todos los
     casos simulan el mismo flujo, descrito previamente. En los cuatro casos
     mencionados, el perfil alar a analizar es el perfil NACA 0012, con cuerda
-    unitaria ($1$m). En los casos donde el perfil cuenta con un flap, se
+    unitaria ($1$ m). En los casos donde el perfil cuenta con un flap, se
     seleccionó la configuración de flap de perfil externo, el perfil
-    correspondiente al flap es tambien un NACA 0012, en este caso su cuerda es
+    correspondiente al flap es también un NACA 0012, en este caso su cuerda es
     $0.2$ de la cuerda del perfil
 
+%
+%
+%
+%
+%
 
+%
+%
+%
+%
+%
+\chapter{Conclusiones}
+\paragraph*{}
+    Derivado de este proyecto se cuenta con toda una suite robusta de software
+    para la generación de mallas estructuradas. Se proporcionan como opciones
+    dos diferentes tipologías, mallas tipo C y tipo O, además de la tipología
+    también se tiene la capacidad de analizar diferentes configuraciones de
+    frontera interna, el estado particular del programa permite el análisis de
+    perfiles aerodinámicos con un flap en configuración de perfil externo.
+
+\paragraph*{}
+    Es importante aclarar que el desarrollo del programa se ha hecho
+    considerando cualquier tipo de configuración, por lo que la generación de
+    mallas puede ser extensible a cualquier problema ya sea una configuración
+    diferente de flaps como podría ser un flap simple, ranurado (sencillo,
+    doble o triple), tipo Fowler, así como slats. El usuario puede simplemente
+    importar una nube de puntos que describa la configuración geométrica de su
+    interés. Por otro lado, vale la pena recalcar que queda abierta la
+    posibilidad de agregar nuevos modulos que proporcionen nuevas
+    configuraciones para la frontera interna de manera relativamente sencilla
+    ya que desde el inicio del proyecto se contempló esta posibilidad, por lo
+    que la funcionalidad ya existe en el software, solo habrá que adaptar las
+    particularidades de cada configuración para cada módulo.
+
+\paragraph*{}
+    Las mallas genradas presentan en general buena calidad en la mayoría de sus
+    celdas, siendo normalmente la excepción en las vecindades de la frontera
+    externa, resultado de las funciones de forzado utilizadas para obtener
+    mayor densidad de nodos en la frontera interna. La localización en el
+    dominio físico de estas celdas no tiene un efecto negativo en los
+    resultados dado que es una zona donde los gradientes suelen ser casi nulos.
+    Cabe mencionar que estos resultados no son constantes para todas las
+    mallas, y que obtener una malla de calidad representa un proceso iterativo
+    y exhaustivo dado que cada problema requiere diferentes parámetros.
+
+\paragraph*{}
+    Se realizaron análisis de flujo potencial y de flujo turbulento y
+    estacionario para poner a prueba la calidad y usabilidad de las mallas
+    resultantes. El programa ha probado generar mallas con la calidad necesaria
+    para que sean de utilidad práctica para análisis de flujos bajo diversas
+    condiciones.
+
+\paragraph*{}
+    Aparte de la generación de mallas, se ha desarrollado un código capaz de
+    resolver la ecuación de flujo potencial para mallas tipo O con una única
+    frontera interna. Una vez obtenidad la solución del potencial del velocidad
+    se puede calcular los coeficientes de presión y de sustentación, así como
+    la función del corriente.
+
+\paragraph*{}
+    Los resultados obtenidos a partir del análisis de flujo potencial muestran
+    congruencia con los resultados presentados por Abbott~\cite{abbott} para un
+    rango de ángulos de ataque a los cuales el flujo incidente sobre el perfil
+    puede considerarse no viscoso e irrotacional. Se observa como la
+    comparación diverge conforme aumenta el ángulo de ataque y éste se acerca a
+    valores donde comienza a haber pérdida en la sustentación, dicho efecto no
+    puede ser representado bajo el modelo de flujo potencial.
+
+%
+%
+%
+%
+%
+
+%
+%
+%
+%
+%
+\chapter{Recomendaciones y trabajos futuros}
+\paragraph*{}
+    En general se debe buscar herramientas que su integración resulte en
+    mejoras sustanciales en el performance de la aplicación, entre ellas se
+    pueden destacar
+    \begin{itemize}
+            \item Cython. Extensión del lenguaje Python 3 que permite la
+                ejecución de código escrito en C o C++.
+            \item Numba. Módulo de python enfocado en la computacion
+                científica de alto performance. Convierte el código de Python
+                a código optimizado en lenguaje máquina.  \item C / C++.
+            \item Técnicas de paralelización. Multihilos, vectorización,
+                aceleración mediante GPU (procesadores gráficos), etc.
+    \end{itemize}
+
+\paragraph*{}
+    También debe prestarse especial atención a las técnicas de programación
+    aplicadas sin importar las herramientas sobre las cuales se esté
+    desarrollando. La DFC es una herramienta cuyas características implican una
+    gran demanda de recursos computacionales, lo que la mantiene siempre a la
+    vanguardia tecnológica, sin embargo el estado actual del arte es tal que
+    aún representa procesos largos e iterativos, por lo que una mala
+    implementación puede resultar en crecimientos exponenciales de los tiempos
+    de ejecución. Si se pretende desarrollar programas que cumplan las
+    exigencias y expectativas requeridas en la DFC, este aspecto debe ser de
+    primordial importancia.
+
+\paragraph*{}
+    Se recomienda revisar los múltiples trabajos del Ph.D. Robert A. van de
+    Geijn, profesor del departamento de Ciencias de la Computación en la
+    Universidad de Texas. Dichos trabajos y publicaciones están enfocados al
+    desarrollo de algoritmos y técnicas para la computación cientifica de alto
+    performance.
+
+\paragraph*{}
+    Volviendo a la generación de mallas, se recomienda revisar a fondo las
+    técnicas de generación mediante EDPs hiperbólicas y parabólicas, poniendo
+    particular interés en la estabilidad numérica de los métodos. Tambien se
+    debe extender la generación de mallas a otras técnicas como son mallas
+    adaptativas, no estructuradas, e incluso mediante algoritmos de aprendizaje
+    automatizado.
+
+\paragraph*{}
+    Se propone la extensión hacia otras herramientas de análisis de CFD, es
+    decir, crear métodos que exporten las mallas generadas a formatos
+    reconocibles por otros paquetes, por ejemplo OpenFOAM\@.
 %
 %
 %
