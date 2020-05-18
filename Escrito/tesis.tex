@@ -4518,10 +4518,12 @@
 
     \begin{figure}[H]%[htbp!]
         \centering
-        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_stream_4}\includegraphics[keepaspectratio,
-            width=93mm]{./Imagenes/potential_flow_stream_4}}
-          \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_stream_6}\includegraphics[keepaspectratio,
-            width=93mm]{./Imagenes/potential_flow_stream_6}}
+        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_stream_4}
+            \includegraphics[keepaspectratio, width=93mm]
+            {./Imagenes/potential_flow_stream_4}}
+          \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_stream_6}
+            \includegraphics[keepaspectratio, width=93mm]
+            {./Imagenes/potential_flow_stream_6}}
           \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_stream_8}\includegraphics[keepaspectratio,
             width=93mm]{./Imagenes/potential_flow_stream_8}}
           \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_stream_10}\includegraphics[keepaspectratio,
@@ -4537,10 +4539,10 @@
         \centering
         \includegraphics[keepaspectratio,
             width=138mm]{./Imagenes/potential_flow_cps}
-        \caption[Coeficiente de presión a lo largo de la cuerda de perfil NACA 0012]
-        {Coeficiente de presión a lo largo de la cuerda de perfil NACA 0012 para
-            diferentes ángulos de ataque}
-        \label{fig:potential_flow_cp_dist}
+        \caption[Coeficiente de presión a lo largo de la cuerda de perfil
+        NACA 0012]
+        {Coeficiente de presión a lo largo de la cuerda de perfil NACA 0012
+        para diferentes ángulos de ataque}\label{fig:potential_flow_cp_dist}
     \end{figure}
 
     \paragraph*{}
@@ -4559,9 +4561,8 @@
         \centering
         \includegraphics[keepaspectratio,
             width=138mm]{./Imagenes/potential_flow_cl}
-        \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque para
-            perfil NACA 2412}
-        \label{fig:potential_flow_cl}
+        \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque
+            para perfil NACA 2412}\label{fig:potential_flow_cl}
     \end{figure}
 
     \paragraph*{}
@@ -4581,8 +4582,8 @@
     \paragraph*{}
     A su vez, las figuras~\ref{fig:potential_flow_2412_cp_0}
     y~\ref{fig:potential_flow_2412_cp_1} presentan el campo de presiones que se
-    genera alrededor del perfil para diferentes ángulos de ataque. Por otro lado
-    las figuras~\ref{fig:potential_flow_2412_stream_0}
+    genera alrededor del perfil para diferentes ángulos de ataque. Por otro
+    lado las figuras~\ref{fig:potential_flow_2412_stream_0}
     y~\ref{fig:potential_flow_2412_stream_1} muestran las líneas de corriente
     del flujo para los mismos ángulos de ataque.
 
@@ -4593,8 +4594,7 @@
         \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_2412_potential_close}\includegraphics[keepaspectratio,
             width=87mm]{./Imagenes/potential_flow_2412_potential_close}}
         \caption{Lineas equipotenciales para $\alpha = 0\si{\degree}$ para
-          perfil NACA 2412}
-        \label{fig:potential_flow_2412_potential}
+          perfil NACA 2412}\label{fig:potential_flow_2412_potential}
     \end{figure}
 
     \begin{figure}[H]%[htbp!]
@@ -4605,7 +4605,7 @@
             width=93mm]{./Imagenes/potential_flow_2412_cp_-2}}
           \subfigure[$\alpha =
           0\si{\degree}$]{\label{fig:potential_flow_2412_cp_0_}\includegraphics[keepaspectratio,
-            width=93mm]{./Imagenes/potential_flow_cp_0}}
+            width=93mm]{./Imagenes/potential_flow_2412_cp_0}}
           \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_2412_cp_2}\includegraphics[keepaspectratio,
             width=93mm]{./Imagenes/potential_flow_2412_cp_2}}
         \caption{Campo de presiones alrededor de perfil NACA 2412}
@@ -4748,6 +4748,115 @@
     seleccionó la configuración de flap de perfil externo, el perfil
     correspondiente al flap es también un NACA 0012, en este caso su cuerda es
     $0.2$ de la cuerda del perfil
+
+    \paragraph*{}
+    A continuación se presentan los resultados obtenidos en estos cuatro casos.
+    Para cada caso se muestra las gráficas tanto del campo de presión como del
+    campo de velocidad. En los casos donde se analiza únicamente al perfil NACA
+    0012 se realizaron simulaciones para dos casos diferentes, en el primero de
+    ellos el ángulo de ataque es $\alpha = 0\si{\degree}$, en el segundo caso
+    se cambia su valor a $\alpha = 10\si{\degree}$. Los casos en los que se
+    analiza un perfil con flap, se simularon con el perfil a un ángulo de
+    ataque $\alpha = 0 \si{\degree}$ y el flap con una deflexión $\delta = 15
+    \si{\degree}$.
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Campo de
+        presión]{\label{fig:mc_cp_0}\includegraphics[keepaspectratio,
+        width=150mm]
+        {./Imagenes/su2/mc_cp_alfa_0.png}}
+        % \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Campo de
+        velocidad]{\label{fig:mc_vel_0}\includegraphics[keepaspectratio,
+        width=150mm]{./Imagenes/su2/mc_vel_alfa_0.png}}
+        \caption[Resultados de simulaciones para malla C]{Resultados de la
+        simulación en SU2 con una malla tipo C de un perfil NACA 0012 con
+        ángulo de ataque $\alpha = 0\si{\degree}$}
+        \label{fig:mc_su2_0}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Campo de
+        presión]{\label{fig:mc_cp_10}\includegraphics[keepaspectratio,
+        width=150mm]
+        {./Imagenes/su2/mc_cp_alfa_10.png}}
+        % \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Campo de
+        velocidad]{\label{fig:mc_vel_10}\includegraphics[keepaspectratio,
+        width=150mm]{./Imagenes/su2/mc_vel_alfa_10.png}}
+        \caption[Resultados de simulaciones para malla C]{Resultados de la
+        simulación en SU2 con una malla tipo C de un perfil NACA 0012 con
+        ángulo de ataque $\alpha = 10\si{\degree}$}
+        \label{fig:mc_su2_10}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Campo de
+        presión]{\label{fig:mo_cp_0}\includegraphics[keepaspectratio,
+        width=150mm]
+        {./Imagenes/su2/mo_cp_alfa_0.png}}
+        % \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Campo de
+        velocidad]{\label{fig:mo_vel_0}\includegraphics[keepaspectratio,
+        width=150mm]{./Imagenes/su2/mo_vel_alfa_0.png}}
+        \caption[Resultados de simulaciones para malla C]{Resultados de la
+        simulación en SU2 con una malla tipo O de un perfil NACA 0012 con
+        ángulo de ataque $\alpha = 0\si{\degree}$}
+        \label{fig:mo_su2_0}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Campo de
+        presión]{\label{fig:mo_cp_10}\includegraphics[keepaspectratio,
+        width=150mm]
+        {./Imagenes/su2/mo_cp_alfa_10.png}}
+        % \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Campo de
+        velocidad]{\label{fig:mo_vel_10}\includegraphics[keepaspectratio,
+        width=150mm]{./Imagenes/su2/mo_vel_alfa_10.png}}
+        \caption[Resultados de simulaciones para malla C]{Resultados de la
+        simulación en SU2 con una malla tipo O de un perfil NACA 0012 con
+        ángulo de ataque $\alpha = 10\si{\degree}$}
+        \label{fig:mo_su2_10}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Campo de
+        presión]{\label{fig:mc_flap_cp_0}\includegraphics[keepaspectratio,
+        width=150mm]
+        {./Imagenes/su2/mc_flap_cp_alfa_0.png}}
+        % \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Campo de
+        velocidad]{\label{fig:mc_flap_vel_0}\includegraphics[keepaspectratio,
+        width=150mm]{./Imagenes/su2/mc_flap_vel_alfa_0.png}}
+        \caption[Resultados de simulaciones para malla C]{Resultados de la
+        simulación en SU2 con una malla tipo C de un perfil NACA 0012 con
+        ángulo de ataque $\alpha = 0\si{\degree}$ y un flap con deflexión
+        $\delta = 15\si{\degree}$}
+        \label{fig:mc_flap_su2_0}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \subfigure[Campo de
+        presión]{\label{fig:mo_flap_cp_0}\includegraphics[keepaspectratio,
+        width=150mm]
+        {./Imagenes/su2/mo_flap_cp_alfa_0.png}}
+        % \hspace{20mm} %marca separación entre subfiguras
+        \subfigure[Campo de
+        velocidad]{\label{fig:mo_flap_vel_0}\includegraphics[keepaspectratio,
+        width=150mm]{./Imagenes/su2/mo_flap_vel_alfa_0.png}}
+        \caption[Resultados de simulaciones para malla C]{Resultados de la
+        simulación en SU2 con una malla tipo O de un perfil NACA 0012 con
+        ángulo de ataque $\alpha = 0\si{\degree}$ y un flap con deflexión
+        $\delta = 15\si{\degree}$}
+        \label{fig:mo_flap_su2_0}
+    \end{figure}
 
 %
 %
