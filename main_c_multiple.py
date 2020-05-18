@@ -25,8 +25,8 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 655
-N1 = 140
+N = 665
+N1 = 159
 
 # points = 11
 airfoil_points = 617
@@ -41,7 +41,7 @@ c = 0
 linea_xi = 0.5
 linea_xi = 0
 
-split = 38
+split = 39
 
 if malla == 'C':
     points = airfoil_points
@@ -72,7 +72,7 @@ print(f"shape mesh: {np.shape(mallaNACA.X)[0]}")
 # print('N = ' + str(mallaNACA.N))
 
 mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
-                        aa=158.5, cc=8.5, linea_eta=0)
+                        aa=158.5, cc=8.4, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=95, cc=10, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=620, cc=40, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=21620, cc=540,
@@ -89,7 +89,7 @@ mallaNACA_1.X[:, -1] = mallaNACA.X[:, split]
 mallaNACA_1.Y[:, -1] = mallaNACA.Y[:, split]
 
 mallaNACA_1.gen_Poisson_n(metodo='SOR', omega=0.20, a=a, c=c,
-                          linea_xi=linea_xi, aa=28000, cc=420, linea_eta=0)
+                          linea_xi=linea_xi, aa=28000, cc=120, linea_eta=0)
 
 plt.figure('MALLA NACA 1')
 plt.title('MALLA NACA 1')
