@@ -27,12 +27,13 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 525
 N = 335
+N = 735
 
 # points = 11
 airfoil_points = 599 # 499
 airfoil_points = 889 # 499
 airfoil_points = 613
-airfoil_points = 13
+airfoil_points = 205
 
 if malla == 'C':
     # points = airfoil_points // 3  # * 2
@@ -46,25 +47,26 @@ p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
 # radio frontera externa
-R = 35 * c
+R = 70 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 
 
 M = np.shape(perfil.x)[0]
+print(f"shape perfil: {M}")
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.15)
+    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.35)
 
 print('M = ' + str(mallaNACA.M))
 print('N = ' + str(mallaNACA.N))
 
 # perfil.to_csv(archivo_perfil)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=28, cc=7.7, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=123, cc=8.4, linea_eta=0)
 # mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=95, cc=10, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=620, cc=40, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=21620, cc=540, linea_eta=0)

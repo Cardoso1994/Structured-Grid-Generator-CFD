@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Created on Wed Apr 18 00:33:47 2018
+
 @author: cardoso
 """
 
@@ -13,8 +15,7 @@ import mesh_c
 import mesh_o
 import mesh_su2
 from potential import potential_flow_o
-# import helpers
-import util
+import helpers
 
 # tipo de malla (C, O)
 malla = 'O'
@@ -24,67 +25,67 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 275
-# N = 300
+N = 675
+N = 95
 
-union = 39
+union = 15
 
-# points = 11
-airfoil_points = 399 # 499
-airfoil_points = 549
+airfoil_points = 169
 
-if malla == 'C':
-    points = airfoil_points // 3  # * 2
-elif malla == 'O':
-    points = airfoil_points
+points = airfoil_points
 
+print('airofil points: ' + str(points))
 # datos de perfil NACA
 m = 0  # combadura
 p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
-
 # radio frontera externa
-R = 70 * c
+R = 50 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
 flap.create_sin(points)
 flap.rotate(15)
-perfil.join(flap, dx=0.055, dy=0.05, union=union)
-# perfil.rotate(30)
+perfil.join(flap, dx=0.055, dy=0.51, union=union)
+perfil.rotate(10)
+
 M = np.shape(perfil.x)[0]
 
 archivo_perfil = 'perfil_final.csv'
 if malla == 'O':
     mallaNACA = mesh_o.mesh_O(R, N, perfil)
 elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil)
+    mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=1.13)
 
-print('M = ' + str(mallaNACA.M))
-print('N = ' + str(mallaNACA.N))
+# mallaNACA.gen_Laplace(metodo='SOR', omega=1.4)
+# mallaNACA.gen_Poisson(metodo='SOR', omega=0.5, aa=49.95, cc=17.7, linea_eta=0)
+# normal
+# mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.5, aa=69.95, cc=7.7, linea_eta=0)
+# mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.5, aa=50500, cc=3, linea_eta=0)
 
-# mallaNACA.gen_Poisson(metodo='SOR', omega=0.7, aa=185, cc=3.7, linea_eta=0)
-# mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=650,
+# sectioned in 4
+# mallaNACA.gen_Poisson_v_4(metodo='SOR', omega=0.3, aa=139.95, cc=7.7, linea_eta=0)
+# mallaNACA.gen_Poisson_v_4(metodo='SOR', omega=0.3, aa=0.95, cc=7.7, linea_eta=0)
+# mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.3, aa=159.95, cc=0.2, linea_eta=0)
+# mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=60500,
 #                                  cc=7, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=1500, cc=12, linea_eta=0)
-# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=21550, cc=21, linea_eta=0)
+# mallaNACA.gen_Laplace_v_(metodo='SOR', omega=0.5)
+mallaNACA.gen_Laplace_n(metodo='SOR', omega=1.2)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=15, cc=10, linea_eta=0)
 
-mallaNACA.to_su2('/home/desarrollo/garbage/mesh.su2')
-mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh.txt_mesh')
 
+print('Malla generada')
 mallaNACA.plot()
-print('after mesh generation')
-print('M = ' + str(mallaNACA.M))
-print('N = ' + str(mallaNACA.N))
 
+exit()
 flag = 'r'
 is_ok = False
 
 while not is_ok:
-    flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout'  +
-                 'saving,\n\t [n] to exit execution: ')
+    flag = input('Press \t[S] to save mesh,\n\t[N] to continue wihtout saving,\n\t'
+             + '[n] to exit execution: ')
     print()
     if flag == 'S' or flag == 'N' or flag == 'n':
         is_ok = True
@@ -105,6 +106,8 @@ else:
 mallaNACA.to_txt_mesh(path + '/mallaNACA.txt_mesh')
 
 exit()
+
+
 
 # variables de flujo
 t_inf = 273.15

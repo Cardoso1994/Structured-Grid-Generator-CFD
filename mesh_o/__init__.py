@@ -492,7 +492,7 @@ class mesh_O(mesh):
         Y       = self.Y
         d_xi    = self.d_xi
         d_eta   = self.d_eta
-        d_s1    = 0.00000001
+        d_s1    = 0.001
         S       = np.zeros((m - 2, m - 2), dtype=object)
         L       = np.zeros((m - 2, m - 2), dtype=object)
         U       = np.zeros((m - 2, m - 2), dtype=object)
@@ -509,7 +509,7 @@ class mesh_O(mesh):
                             + (Y[i, j - 1] - Y[i - 1, j - 1]) ** 2) ** 0.5
                            + ((X[i + 1, j - 1] - X[i, j - 1]) ** 2
                               + (Y[i + 1, j - 1] - Y[i, j - 1]) ** 2) ** 0.5)
-                F = F * d_s1 * (1 + 0.05) ** (j - 1)
+                F = F * d_s1 * (1 + 0.001) ** (j - 1)
                 x_xi_k = (X[i + 1, j - 1] - X[i - 1, j - 1]) / 2 / d_xi
                 y_xi_k = (Y[i + 1, j - 1] - Y[i - 1, j - 1]) / 2 / d_xi
                 x_eta_k = - y_xi_k * F / (x_xi_k ** 2 + y_xi_k ** 2)
@@ -802,22 +802,6 @@ class mesh_O(mesh):
                     beta_[i - 1]    = np.linalg.inv(alpha_[i - 1]) @ C_[i - 1]
 
                 R_[i - 1] = np.array([[Dx], [Dy]])
-                ###############################################################
-                #
-                #   Los valores de alpha_ y beta_ parecen tener sentido
-                #
-                ###############################################################
-            ###################################################################
-            #
-            #   A_ = todos son de forma 2x2
-            #   B_ = todos son de forma 2x2
-            #   C_ = todos son de forma 2x2
-            #   alpha_ = todos son de forma 2x2
-            #   beta_ = todos son de forma 2x2
-            #
-            #   R_ = todos son de forma 2x1
-            #
-            ###################################################################
 
             # se resuelve LY_ = R
             #   se obtiene vector Y_

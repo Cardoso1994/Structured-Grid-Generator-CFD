@@ -312,7 +312,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         while self.airfoil_boundary[union_start] != 0:
             union_start += 1
 
-    mesh.it_max = 1000e3
+    mesh.it_max = 750e3
     mesh.err_max = 1e-6
 
     # inicio del método iterativo, separa el metodo para perfil con y sin flap
@@ -363,7 +363,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         print("Poisson numba:")
         it = 0
         while it < mesh.it_max:
-            if (it % 150e3 == 0):
+            if (it % 650e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -509,12 +509,12 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         gamma = x_xi ** 2 + y_xi ** 2
         I = x_xi * y_eta - x_eta * y_xi
 
-        X[i, 0]    = (d_xi * d_eta) ** 2 \
-            / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
-            * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
-                + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
-                - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
-                        - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+        # X[i, 0]    = (d_xi * d_eta) ** 2 \
+        #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
+        #     * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+        #         + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+        #         - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+        #                 - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
         Y[i, 0]    = (d_xi * d_eta) ** 2\
             / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
             * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
@@ -522,7 +522,7 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
                 - beta / (2 * d_xi * d_eta) * (Y[i+1, 1]
                         - Y[-i -2, 1] + Y[-i, 1] - Y[i-1, 1]))
 
-        X[-i -1, 0] = X[i, 0]
+        # X[-i -1, 0] = X[i, 0]
         Y[-i -1, 0] = Y[i, 0]
         i += 1
 

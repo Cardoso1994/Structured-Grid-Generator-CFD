@@ -14,14 +14,10 @@ import mesh
 import mesh_c
 import mesh_o
 import mesh_su2
-from potential import potential_flow_o, potential_flow_o_esp, velocity,\
+from potential import potential_flow_o, velocity,\
                         pressure, streamlines, lift_n_drag
-import helpers
+import util
 
-mallaNACA = helpers.from_txt_mesh('/home/desarrollo/tesis_su2/malla_C_flap/mesh_c_flap.txt_mesh')
-
-mallaNACA.plot()
-exit()
 # datos de perfil NACA
 m = 0  # combadura
 p_ = 0  # posicion de la combadura
@@ -56,35 +52,42 @@ p0 = p_inf * (d0 / d_inf) ** gamma
 mach_inf = v_inf / c_inf
 Re = v_inf * d_inf / mu
 
-path = './potential_final_2412_2/'
-# alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
-alfas = ['-4', '0', '4', '8']
+path = './potential_2412_mayo/'
+alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
+# alfas = ['-4', '0', '4', '8']
+
 alfas_gr = list(map(int, alfas))
 cl_0012 = [-0.4543, -0.2218, 0.001, 0.2239, 0.4566, 0.6928, 0.9306, 1.1713 ]
 cl_0012_abbott = [-0.44, -0.22, 0, 0.22, 0.44, 0.66, 0.88, 1.1 ]
-# cl_2412 = [-0.2238, -0.0217, 0.2673, 0.5126, 0.7574, 1.0014, 1.2445, 1.4863 ]
-cl_2412 = [-0.2138, -0.0017, 0.2573, 0.4926, 0.7174, 0.9414, 1.1445, 1.3463 ]
-cl_2412_abbott = [-0.19, 0.04, 0.25, 0.47, 0.67, 0.89, 1.09, 1.26 ]
+# cl_2412 = [-0.2229, 0.019, 0.2615, 0.5035, 0.7449, 0.9856, 1.2252, 1.4635]
+cl_2412 = [-0.208, 0.01904, 0.2461, 0.4731, 0.7008, 0.9272, 1.154, 1.3816]
+cl_2412_abbott = [-0.19, 0.03, 0.25, 0.47, 0.68, 0.89, 1.09, 1.27 ]
 
 
-# fig = plt.figure()
-# ax = fig.add_subplot(111)
-# ax.plot(alfas_gr, cl_0012, 'k', label='flujo potencial')
-# ax.plot(alfas_gr, cl_0012, '*k')# , label='flujo potencial')
-# ax.plot(alfas_gr, cl_0012_abbott, 'r', label='Abbott')
-# ax.plot(alfas_gr, cl_0012_abbott, '*r')# , '*r', label='Abbott')
-# plt.xlabel('alfa')
-# plt.ylabel('cl')
-# plt.legend(loc='upper left')
-# ax.set_aspect(15)
-# ax.grid(True)
-# plt.show()
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(alfas_gr, cl_2412, 'k', label='flujo potencial')
+ax.plot(alfas_gr, cl_2412, '*k')# , label='flujo potencial')
+ax.plot(alfas_gr, cl_2412_abbott, 'r', label='Abbott')
+ax.plot(alfas_gr, cl_2412_abbott, '*r')# , '*r', label='Abbott')
+plt.xlabel('alfa')
+plt.ylabel('cl')
+plt.legend(loc='upper left')
+ax.set_aspect(15)
+ax.grid(True)
+plt.show()
 
-map_ = 'viridis'
-cps = np.zeros((149, 4))
+mallaNACA = util.from_txt_mesh(filename=path
+                              + '/mallaNACA_' + '8' +'.txt_mesh')
+
+map_ = 'jet'
+# map_ = 'viridis'
+cps = np.zeros((np.shape(mallaNACA.X)[0], len(alfas)))
 j = 0
+
+# creating plots and computing all postprocessing properties
 for alfa in alfas:
-    mallaNACA = helpers.from_txt_mesh(filename=path
+    mallaNACA = util.from_txt_mesh(filename=path
                                   + '/mallaNACA_' + alfa +'.txt_mesh')
     phi = np.genfromtxt(path + '/phi_' + alfa + '.csv', delimiter=',')
     C = np.genfromtxt(path + '/C_' + alfa + '.csv', delimiter=',')
@@ -120,7 +123,7 @@ for alfa in alfas:
 
     # plt.draw()
     # plt.show()
-    # limits = [[-20.5, 20.5, -20.5, 20.5], [-1.25, 1.25, -0.8, 0.8]]
+    limits = [[-55.5, 55.5, -55.5, 55.5], [-1.25, 1.25, -0.8, 0.8]]
     # for limit in limits:
     #     fig = plt.figure('malla_aspect')
     #     ax = fig.add_subplot(1, 1, 1)
@@ -130,9 +133,13 @@ for alfa in alfas:
     #     ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
     #     ax.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
 
-    #     mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, psi, 295, #185
+    #     # ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
+    #     # for i in range(np.shape(mallaNACA.X)[0]):
+    #     #     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
+
+    #     mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 295, #185
     #                         cmap=map_)
-    #     # plt.colorbar(mesh_)
+    #     plt.colorbar(mesh_)
     #     plt.show()
     #     plt.draw()
 
@@ -143,7 +150,7 @@ for alfa in alfas:
 # # direcs = ['four-', 'two-', 'zero', 'two', 'four', 'six', 'eight', 'ten']
 # direcs = ['-4', '0', '4', '8']
 # for direc in direcs:
-#     mallaNACA = helpers.from_txt_mesh(filename=path + direc
+#     mallaNACA = util.from_txt_mesh(filename=path + direc
 #                                       + '/mallaNACA.txt_mesh')
 #     phi = np.genfromtxt('./potential_2412/' + direc + '/phi.csv', delimiter=',')
 #     # f = open("./potential_2412/five/C.csv", "r")
@@ -171,7 +178,7 @@ y_perf = perfil.y * -1
 cp_perf =cp[:, 0]
 
 plt.figure('perf')
-plt.plot(x_perf, y_perf * 8.3, 'k')
+plt.plot(x_perf, y_perf * 8.5, 'k', linewidth=1.5)
 
 for j in range(4):
     plt.plot(x_perf[1:-1], cps[1:-1, j], label=(alfas[j]))

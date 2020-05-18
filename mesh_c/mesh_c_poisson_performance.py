@@ -326,8 +326,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
         it = 0
         while it < mesh.it_max:
-            # if it % 15000 == 0:
-            if it % 250000 == 0:
+            if it % 150000 == 0:
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -369,7 +368,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
         it = 0
         while it < mesh.it_max:
-            if (it % 150000 == 0):
+            if (it % 450e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -453,9 +452,14 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
     m = M
     n = N
 
+    perfil_begin = 87
+    perfil_end = 87 + 549
     for j in range(n-2, 0, -1):
-    # for j in range(1, n-1):
-        for i in range(1, m-1):
+        Y[1:perfil_begin, j] = Y[0, j]
+        Y[perfil_end:-1, j] = Y[-1, j]
+
+        for i in range(perfil_begin, perfil_end):
+        # for i in range(1, m-1):
             x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
             y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
             x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi
@@ -594,11 +598,13 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
     m = M
     n = N
 
+    begin_perfil = 48
+    end_perfil = 48 + 249
     for j in range(n-2, 0, -1):
         # for i in range(1, m-1):
-        Y[1:125, j] = Y[0, j]
-        Y[125 + 617:-1, j] = Y[-1, j]
-        for i in range(125, 125 + 617):
+        Y[1:begin_perfil, j] = Y[0, j]
+        Y[end_perfil:-1, j] = Y[-1, j]
+        for i in range(begin_perfil, end_perfil):
             x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
             y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
             x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi

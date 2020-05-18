@@ -31,7 +31,9 @@ en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 
 N = 339
+N = 649
 airfoil_points = 619
+airfoil_points = 229
 
 if malla == 'C':
     points = airfoil_points // 3 * 2
@@ -39,31 +41,30 @@ elif malla == 'O':
     points = airfoil_points
 
 # datos de perfil NACA
-m = 0  # combadura
-p = 0  # posicion de la combadura
+m = 2  # combadura
+p = 4  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
 
 p_ = p
 
 # radio frontera externa
-R = 35 * c
+R = 55 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
 # perfil.rotate(2)
 
 archivo_perfil = 'perfil_final.csv'
-if malla == 'O':
-    mallaNACA = mesh_o.mesh_O(R, N, perfil)
-elif malla == 'C':
-    mallaNACA = mesh_c.mesh_C(R, N, perfil)
+
+mallaNACA = mesh_o.mesh_O(R, N, perfil)
 
 # mallaNACA.gen_Poisson(omega=1.3, aa=40, cc=6.8, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=1.3, aa=40, cc=6.8, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.7, aa=220, cc=8, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=320, cc=8.9, linea_eta=0)
 # direc = '/four-/'
-# mallaNACA = util.from_txt_mesh(filename='./p_/' + '/mallaNACA.txt_mesh')
+mallaNACA = util.from_txt_mesh(
+        filename='./potential_2412_mayo/mallaNACA_8.txt_mesh')
 
 mallaNACA.plot()
 
@@ -133,6 +134,8 @@ if mach_inf > 0.8:
     exit()
 
 alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
+alfas = ['-4', '-2', '0', '2', '4', '6']
+# alfas = ['8', '10']
 
 for alfa_ in alfas:
     alfa = int(alfa_)

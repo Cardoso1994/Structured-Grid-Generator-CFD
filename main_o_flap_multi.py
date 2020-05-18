@@ -25,15 +25,22 @@ densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 655
-N1 = 140
+N = 525
+N = 635
+N = 780
+N1 = 145
+split = 34
 
 # points = 11
+airfoil_points = 599 # 499
+airfoil_points = 889 # 499
 airfoil_points = 617
-airfoil_points = 249
+airfoil_points = 611
+airfoil_points = 233
 
+union = 47
 
-weight = 1.3
+weight = 1.11
 a = 0.01
 a = 0
 c = 8.7
@@ -41,9 +48,8 @@ c = 0
 linea_xi = 0.5
 linea_xi = 0
 
-split = 38
-
 if malla == 'C':
+    # points = airfoil_points // 3  # * 2
     points = airfoil_points
 elif malla == 'O':
     points = airfoil_points
@@ -53,33 +59,36 @@ m = 0  # combadura
 p = 0  # posicion de la combadura
 t = 12  # espesor
 c = 1  # cuerda [m]
-
 # radio frontera externa
 R = 70 * c
 
 perfil = airfoil.NACA4(m, p, t, c)
 perfil.create_sin(points)
+flap = airfoil.NACA4(m, p, t, 0.2 * c, number=2)
+flap.create_sin(points)
+flap.rotate(15)
+perfil.join(flap, dx=0.055, dy=0.05, union=union)
 
 M = np.shape(perfil.x)[0]
 print(f"shape perfil: {M}")
 
 
-mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=weight)
-mallaNACA_1 = mesh_c.mesh_C(R, N1, perfil, weight=weight)
+mallaNACA = mesh_o.mesh_O(R, N, perfil)
+mallaNACA_1 = mesh_o.mesh_O(R, N1, perfil)
+mallaNACA_2 = mesh_o.mesh_O(1, N + N1 - 1 - split, perfil)
 
 print(f"shape mesh: {np.shape(mallaNACA.X)[0]}")
 # print('M = ' + str(mallaNACA.M))
 # print('N = ' + str(mallaNACA.N))
 
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
-                        aa=158.5, cc=8.5, linea_eta=0)
-# mallaNACA.gen_Poisson_v_(metodo='SOR', omega=0.5, aa=95, cc=10, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.25, a=a, c=c, linea_xi=linea_xi,
+                        aa=165.1, cc=8.6, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=620, cc=40, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=21620, cc=540,
 # linea_eta=0)
 
-mallaNACA.to_su2('/home/desarrollo/garbage/mesh_c.su2')
-mallaNACA.to_txt_mesh('/home/desarrollo/garbage/mesh_c.txt_mesh')
+# mallaNACA = util.from_txt_mesh(
+#     filename='/home/desarrollo/garbage/mesh_c.txt_mesh')
 
 plt.figure('MALLA NACA')
 plt.title('MALLA NACA')
@@ -89,16 +98,16 @@ mallaNACA_1.X[:, -1] = mallaNACA.X[:, split]
 mallaNACA_1.Y[:, -1] = mallaNACA.Y[:, split]
 
 mallaNACA_1.gen_Poisson_n(metodo='SOR', omega=0.20, a=a, c=c,
-                          linea_xi=linea_xi, aa=28000, cc=420, linea_eta=0)
+                          linea_xi=linea_xi, aa=35000, cc=55, linea_eta=0)
 
+mallaNACA_1.to_su2('/home/desarrollo/garbage/mesh_o_flap_m_big.su2')
+mallaNACA_1.to_txt_mesh('/home/desarrollo/garbage/mesh_o_flap_m_big.txt_mesh')
 plt.figure('MALLA NACA 1')
 plt.title('MALLA NACA 1')
 mallaNACA_1.plot()
 
-mallaNACA_2 = mesh_c.mesh_C(1, N + N1 - 1 - split, perfil, weight=weight)
-
 mallaNACA_2.X[:, :] = np.concatenate((mallaNACA_1.X[:, :],
-                                      mallaNACA.X[:, split+1:]), axis=1)
+                                  mallaNACA.X[:, split+1:]), axis=1)
 mallaNACA_2.Y[:, :] = np.concatenate((mallaNACA_1.Y[:, :],
                                       mallaNACA.Y[:, split+1:]), axis=1)
 
@@ -108,8 +117,8 @@ plt.figure('MALLA NACA 2')
 plt.title('MALLA NACA 2')
 mallaNACA_2.plot()
 
-mallaNACA_2.to_su2('/home/desarrollo/garbage/mesh_c_m.su2')
-mallaNACA_2.to_txt_mesh('/home/desarrollo/garbage/mesh_c_m.txt_mesh')
+mallaNACA_2.to_su2('/home/desarrollo/garbage/mesh_o_flap_m.su2')
+mallaNACA_2.to_txt_mesh('/home/desarrollo/garbage/mesh_o_flap_m.txt_mesh')
 
 exit()
 

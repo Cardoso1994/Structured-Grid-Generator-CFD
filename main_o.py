@@ -27,9 +27,11 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N = 385
+N = 750
 
 # points = 11
 airfoil_points = 729
+airfoil_points = 209
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -61,7 +63,7 @@ print('N = ' + str(mallaNACA.N))
 ## MEJOR HASTA AHORA
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=2550, cc=12, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=20550, cc=21, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=21550, cc=21, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=190, cc=8.4, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=10550, cc=17, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.7, aa=14950, cc=20, linea_eta=0)
 
