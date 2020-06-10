@@ -201,7 +201,7 @@
 
     \paragraph*{}
     Se realiza el presente trabajo con la finalidad tanto de generar en los
-    estudiantes un interés por la dinámica de fluidos computacional (CFD), como
+    estudiantes un interés por la dinámica de fluidos computacional, como
     de fomentar el desarrollo de este campo mediante la implementación de
     códigos. Por otro lado, se busca fomentar en el lector el uso y desarrollo
     de software libre.
@@ -219,19 +219,20 @@
     de mallas
 
     \paragraph*{}
-    El capítulo 2 se enfoca en los conceptos de la discretización espacial de un
-    espacio físico determinado, proceso necesario para poder realizar mallas que
-    representen computacionalmente el espacio a analizar. Los métodos de
-    discretización son aplicables también a las ecuaciones que describen los
-    flujos, dicha discretización se hace tomando en cuenta la malla generada
-    para el análisis. Se hace particular enfoque en el desarrollo del método de
-    diferencias finitas, y se muestran las ecuaciones obtenidas mediante este
-    método, las cuales sirven de aproximaciones para sustituir los términos que
-    involucren ecuaciones diferenciales parciales.
+    El capítulo 2 se enfoca en los conceptos de la discretización espacial de
+    un espacio físico determinado, proceso necesario para poder realizar
+    mallas que representen computacionalmente el espacio a analizar. Los
+    métodos de discretización son aplicables también a las ecuaciones que
+    describen el comportamiento de los flujos, dicha discretización se hace
+    tomando en cuenta la malla generada para el análisis. Se hace particular
+    énfasis en el desarrollo del método de diferencias finitas, y se muestran
+    las ecuaciones obtenidas mediante este método, las cuales sirven de
+    aproximaciones para sustituir los términos que involucren ecuaciones
+    diferenciales parciales.
 
     \paragraph*{}
-    Por su parte, el capítulo 3 centra su atención en las mallas. Se describe el
-    concepto de malla, su razón de ser, así como la necesidad de utilizar un
+    Por su parte, el capítulo 3 centra su atención en las mallas. Se describe
+    el concepto de malla, su razón de ser, así como la necesidad de utilizar un
     sistema arbitrario de coordenadas en ciertos problemas de interés práctico.
     También se hace referencia a la clasificación de las mallas, las diferentes
     tipologías (formas) que pueden tener. De igual manera se mencionan algunas
@@ -287,7 +288,7 @@
     El programa debe ser capaz de generar  mallas mediantes diferentes
     métodos, en este trabajo se presta principal atención a las mallas
     generadas por métodos algebráicos, así como por métodos basados en la
-    solución de sistemas de ecuaciones diferenciales parciales,
+    solución de sistemas de ecuaciones diferenciales parciales (EDP),
     más específico, en EDP elípticas. Se debe generar la malla para
     cualquier superficie o forma deseada, en este trabajo se hace la
     generación de mallas alrededor de perfiles aerodinámicos, por lo que se
@@ -324,9 +325,9 @@
             \item{Llevar a cabo diferentes análisis, ya sea en el software de
                 código libre SU2 o mediante el desarrollo de un módulo propio
                 que realice el análisis correspondiente mediante flujo 
-                potencial. Esto con el proposito de probar la aplicabilidad y
-                confiabilidad de las mallas y darles una aplicación de interés
-                real.}
+                potencial. Este último punto con el proposito de probar la
+                aplicabilidad y confiabilidad de las mallas y darles una
+                aplicación de interés real.}
         \end{itemize}
 
 
@@ -342,9 +343,9 @@
     usarlo, pero no tiene forma de saber la forma en la que el programa
     funciona ni la implementación del mismo. En cuanto al software libre,
     el usuario tiene la posibilidad de acceder al código fuente con el cual
-    corre el programa, para analizarlo, comprenderlo e incluso de ser
+    corre el programa, para analizarlo, comprenderlo e incluso, de ser
     necesario, modificarlo ya sea para mejorar una característica ya
-    implementada, o bien, para agregar una nueva característica al programa.
+    implementada, o bien, para agregar una nueva funcionalidad al programa.
     Tanto el uso de software privativo, como la poca implementación de
     códigos y documentación accesible en México, han conducido a un punto en
     el que la comunidad académica en el país se limite únicamente a usar los
@@ -352,7 +353,7 @@
     a sí misma del desarrollo de software.
 
     \paragraph*{}
-    Se desarrolla entonces, este trabajo con la intención de proporcionar
+    Se desarrolla entonces este trabajo, con la intención de proporcionar
     información sobre la implementación de códigos de generación de mallas,
     para que el lector pueda a su vez, continuar contribuyendo al desarrollo
     de software libre para la dinámica de fluidos computacional a nivel
@@ -406,8 +407,8 @@
     Al inicio de la década de 1970 se da un auge en la DFC gracias
     al incremento de las capacidades de procesamiento de las
     computadoras, incluso hoy en día el avance de la DFC va de la
-    mano con el desarrollo de las computadoras.\cite{blazek} Es en
-    ésta década cuando se desarrollan, gracias a un grupo del
+    mano con el desarrollo de las capacidades computacionales.\cite{blazek}
+    Es en ésta década cuando se desarrollan, gracias a un grupo del
     ``Imperial College'' de Londres, algoritmos para flujos
     incompresibles de baja velocidad, así como el algoritmo SIMPLE
     (Semi-Implicit Method for Pressure-Linked Equations), lo cual
@@ -433,7 +434,7 @@
     implementación de códigos de generación de mallas comprehensivas, multi
     propósito, tridimensionales.\cite{liseikin1999grid}
 
-    \section{La dinámica de fluidos actualmente}
+    \section{La dinámica de fluidos en la actualidad}
     \paragraph*{}
     La DFC tiene hoy en día, un rol tan importante, que puede considerarse una
     tercera rama de la dinámica de fluidos, siendo las dos primeras las ramas
@@ -451,7 +452,7 @@
     Uno de los ámbitos en los que la DFC ha tenido mayor impacto es en el
     diseño de aeronaves, gracias al rápido decremento en los costos de
     computación, ocasionado por una mejora en las capacidades de cálculo y
-    tecnológicas de los ordenares, así como de el fácil acceso a los mismos,
+    tecnológicas de los ordenadores, así como de el fácil acceso a los mismos,
     aunado a un incremento en el costo de experimentos en túneles de viento.
     Esto ha dado como resultado que el cálculo de las características
     aerodinámicas de una aeronave resulte más barato mediante DFC que mediante
@@ -464,11 +465,12 @@
     En la actualidad, la DFC es capaz de analizar flujos laminares sin mayor
     complicación, sin embargo, aún no es capaz de analizar flujos turbulentos,
     los cuales se presentan en la mayoría de casos prácticos, por lo que se
-    debe de recurrir a modelos de turbulencia, los cuales dan buenos
-    resultados, pese a que ningún modelo es universal, y se debe prestar
-    atención al modelo que se desea emplear.\cite{cengel}
+    debe de recurrir a modelos de turbulencia, los cuales en general suelen
+    dar buenos resultados. Cabe recalcar que ningún modelo es universal, por
+    lo cual se debe prestar atención al problema que se analizará para así
+    escoger de manera correcta el modelo a emplear.\cite{cengel}
 
-    \section{La generación de mallas actualmente}
+    \section{La generación de mallas en la actualidad}
     \paragraph*{}
     En la actualidad se ha desarrollado un gran número de métodos avanzados
     para la generación de mallas, entre los que destacan los métodos
@@ -517,9 +519,8 @@
             modificacion de la distribución de velocidad
             superficial
         \item Rediseño de perfiles mediante la modificación de
-            sus parámetros geométricos.
+            sus parámetros geométricos.~\cite{xfoil}
     \end{itemize}
-    \cite{xfoil}
 
     \paragraph*{}
     Xfoil es desarrollado por el MIT (Massachusetts Institute of
@@ -562,7 +563,8 @@
     otras.\cite{SU2}
 
     \paragraph*{Helyx}
-    Paquete \textit{``open source''} para análisis de dinámica de fluidos
+    \paragraph*{}
+    Paquete ``open source'' para análisis de dinámica de fluidos
     computacional, desarrollado a partir de OpenFOAM\@. Es compatible con la
     mayoría de sistemas Linux y Windows. Además del sistema base para los
     análisis, presenta diversas herramientas enfocadas en facilitar el
@@ -690,7 +692,7 @@
 
     \paragraph*{}
     El símbolo $O(\Delta x)$ representa el error de truncamiento de la serie de
-    expansión, y para este caso particular se dice que tiene una precisión de
+    expansión, y para este caso particular se dice que tiene una aproximación de
     primer orden, ya que se están despreciando los términos de orden superior.
 
     \paragraph*{}
@@ -798,7 +800,7 @@
     La mayor ventaja que presenta el método de diferencias finitas es su
     simplicidad de implementación, aunque presenta una limitante, el método
     únicamente es aplicable a mallas estructuradas, además de tampoco poderse
-    aplicar a cuerpos de geometría curvilíneas, por lo que es necesario hcer una
+    aplicar a cuerpos de geometría curvilíneas, por lo que es necesario hacer una
     transformación de la malla, de un dominio físico a un dominio lógico, como
     se analiza en el capítulo~\ref{chap:mallas}.
 
@@ -1220,7 +1222,10 @@
     que a su vez, desarrollando las operaciones matemáticas, se expresa como:
     \begin{align}
         &\begin{aligned}
-            r(\xi, \eta_{j}) =& r(0, \eta_{j})(2\xi^3 - 3\xi^2 +1) + r(1, \eta_{j})(3\xi^2 - 2\xi^3) \\ &+ r\prime(0, \eta_{j})(\xi^3 - 2\xi^2 + \xi) + r\prime(1, \eta_{j})(\xi^3 - \xi^2)
+            r(\xi, \eta_{j}) =& r(0, \eta_{j})(2\xi^3 - 3\xi^2 +1)
+                        + r(1, \eta_{j})(3\xi^2 - 2\xi^3) \\
+                        &+ r\prime(0, \eta_{j})(\xi^3 - 2\xi^2 + \xi)
+                        + r\prime(1, \eta_{j})(\xi^3 - \xi^2)
         \end{aligned}
     \end{align}
 
@@ -2627,7 +2632,7 @@
             \phi_{\infty} = \vec{V}_{\infty} \cdot \vec{x}
                             + \frac{\Gamma_B}{2 \pi} \tan^{-1}
                                 \left[ \sqrt{1-M_{\infty}^{2}}
-                                tan(\theta - \alpha_{\infty}) \right] + \phi_{0}
+                                \tan(\theta - \alpha_{\infty}) \right] + \phi_{0}
         \end{equation}
         donde $\theta$ es la posición angular de un punto en la lejanía,
         $\Gamma_B$ es la circulación y $M_\infty$ es el número de Mach
@@ -3126,11 +3131,13 @@
     instancias de alguna subclase. En esta seccion se describirá a fondo todo
     el desarrollo del proyecto, lo que brindará una mejor comprensión del
     trabajo para facilitar el uso del mismo. Por su parte, el código mismo
-    contiene una documentación exhaustiva.
+    contiene una documentación exhaustiva en la definición de cada clase y
+    cada método, en donde se explica a fondo cada uno de los parámetros, así
+    como el resultado obtenido después de la ejecución.
 
     \paragraph*{}
     El presente trabajo requiere tener instaladas las siguientes dependencias
-    (módulos)
+    (módulos y programas)
     \begin{itemize}
         \item Python 3
         \item Matplotlib
@@ -3140,7 +3147,7 @@
     el primero es el interprete del lenguaje de programación, éste es el
     encargado de ejecutar el código fuente, matplotlib es un modulo dedicado
     a la generación de gráficas, numpy es la librería de computación
-    científica del lenguaje y por último numba es una librería desarrollada
+    científica de Python y por último numba es una librería desarrollada
     para computación científica de alto performance.
 
     \paragraph*{}
@@ -3153,38 +3160,79 @@
     \paragraph*{}
     \begin{itemize}
         \item \textbf{airfoil}. Contiene la definición de las clases airfoil y
-            NACA4. Genera los perfiles correspondientes a la frontera interna
-            de la malla
-        \item \textbf{mesh}. Continene la definicion general de una malla estructurada.
-        \item \textbf{mesh\textunderscore c}. Contiene la definición de la clase
-            mesh\textunderscore c.
-        \item \textbf{mesh\textunderscore o}. Contiene la definición de la clase
-            mesh\textunderscore o.
+            NACA4, lo que permite generar los perfiles correspondientes a la
+            frontera interna de la malla. Proporciona métodos para la
+            manipulación del (los) mismo (s) previo al inicio de la generación
+            de la malla.
+        \item \textbf{mesh}. Continene la definicion general de una malla
+            estructurada. Define la estructura interna  y parámetros que la
+            forman. Así como la funcionalidad general de una malla
+            estructurada.
+        \item \textbf{mesh\textunderscore c}. Contiene la definición de la
+            clase mesh\textunderscore c. A su vez cuenta con los métodos
+            exclusivos para la generación de mallas con tipología C.
+        \item \textbf{mesh\textunderscore o}. Contiene la definición de la
+            clase mesh\textunderscore c. A su vez cuenta con los métodos
+            exclusivos para la generación de mallas con tipología O.
         \item \textbf{mesh\textunderscore su2}. Contiene las funciones que
             permiten exportar las mallas del formato propio de este proyecto,
             al formato utilizado por el software SU2.
         \item \textbf{potential}. Contiene todas las funciones relacionadas con
-            el análisis de flujo potencial, como es el mismo flujo
+            el análisis de flujo potencial, como es la misma función de flujo
             potencial, el campo de velocidades, el campo de presiones y el
             coeficiente de presión, la función de corriente, entre otros.
         \item \textbf{util}. Contiene funciones de utilidad para los demás
-            módulos
+            módulos. Proporciona soporte al funcionamiento del resto de los
+            módulos.
     \end{itemize}
 
 
     \section{Estructura de las clases}
     \subsection{Clase Airfoil}
     \paragraph*{}
-    La clase airfoil se desarrolló para la creación de perfiles alares a partir
-    de una archivo de texto que contenga la nube de puntos del perfil deseado,
-    como dato de entrada se requiere el nombre del archivo texto y la
-    dimensión, en metros de la cuerda aerodinámica.
+    La clase airfoil se desarrolló para la creación de perfiles alares a
+    partir de una archivo de texto que contenga la nube de puntos del perfil
+    deseado, como dato de entrada se requiere el nombre del archivo texto y la
+    dimensión, en metros, de la cuerda aerodinámica del perfil. La creación de
+    un perfil aerodinámico a partir de una nube de puntos presenta una
+    restricción, la densidad de la malla en la dirección tangencial al perfil
+    (eje $\xi$) está limitada por el número de puntos proporcionados para su
+    creación.
 
     \paragraph*{}
-    La clase airfoil contiene métodos que son utilizados por las demás
-    subclases.
+        La clase airfoil hereda a sus subclases sus métodos, logrando así que
+        los métodos comunes a todos los perfiles, sin importar el método
+        mediante el cual fueron generados, queden condensados en esta clase,
+        delegando así las paticularidades referentes a la generación de
+        diversos tipos de perfiles a su correspondiente subclase. La clase
+        airfoil tiene una subclase de nombre ``NACA4'' la cual genera
+        perfiles aerodinámicos NACA de la serie de 4 dígitos. La creación del
+        perfil se hace a partir de la ecuación constitutiva de la serie. Como
+        datos de entrada se requieren los valores de m (combudara máxima),
+        p (posición de la combadura máxima), t (espesor máximo) y c (cuerda
+        aerodinámica) característicos de esta serie.
+        La subclase NACA4 tiene dos métodos para la creación del perfil, el
+        primero de ellos, el método ``create\textunderscore linear'' crea la
+        nube de puntos con una distribución equidistante de los puntos en
+        dirección del eje $x$. El segundo método, llamado
+        ``create\textunderscore sin'' genera a partir de una función senoidal
+        una nube de puntos que permite que haya mayor densidad de nodos tanto
+        en el borde de ataque como en el borde de salida del perfil.
 
-    \begin{table}[htbp!]
+    \paragraph*{}
+        Las tablas~\ref{tabla_airfoil} y~\ref{tabla_naca4} presentan los
+        métodos pertenecientes a la clase airfoil y a la clase NACA4
+        respectivamente, así como una breve descripción de la funcionalidad de
+        cada método. A su vez, la figura~\ref{airfoil_class} presenta un
+        diagrama de clase donde se muestran los atributos necesarios para la
+        creación de un perfil y los métodos que pueden ser utilizados sobre el
+        mismo, condensados en la clase airfoil, así como su herencia con
+        respecto a la clase NACA4, para la cual tambien se muestran los
+        atributos requeridos para la generación de un perfil NACA de la serie
+        de 4 dígitos y los métodos que sobre él pueden actuar.
+
+    % \begin{table}[htbp!]
+    \begin{table}[H]
     \begin{center}
         \begin{tabular}{| l | p{11cm} |}
         \hline
@@ -3242,30 +3290,6 @@
     \end{center}
     \end{table}
 
-    \paragraph*{}
-        Esta clase tiene una subclase de nombre ``NACA4'' la cual genera
-        perfiles aerodinámicos NACA de la serie de 4 dígitos. La creación del
-        perfil se hace a partir de la ecuación constitutiva de la serie. Como
-        datos de entrada se requieren los valores de m (combudara máxima),
-        p (posición de la combadura máxima), t (espesor máximo) y c (cuerda
-        aerodinámica) característicos de esta serie.
-        La subclase NACA4 tiene dos métodos para la creación del perfil, el
-        primero de ellos, el método ``create\textunderscore linear'' crea la
-        nube de puntos con una distribución equidistante de los puntos en
-        dirección del eje $x$. El segundo método, llamado
-        ``create\textunderscore sin''genera a partir de una función senoidal una
-        nube de punto que permite que haya mayor densidad de nodos tanto en el
-        borde de ataque como en el borde de salida del perfil.
-
-    \paragraph*{}
-        Las tablas~\ref{tabla_airfoil} y~\ref{tabla_naca4} presentan los métodos
-        pertenecientes a la clase airfoil y a la clase NACA4 respectivamente,
-        así como una breve descripción de los mismos. A su vez, la
-        figura~\ref{airfoil_class} presenta un diagrama de clase donde se
-        muestran los atributos y métodos de la clase airfoil, así como su
-        herencia con respecto a la clase NACA4, junto con los atributos y
-        métodos de la misma.
-
     \begin{table}[htbp!]
     \begin{center}
         \begin{tabular}{| l | p{11cm} |}
@@ -3297,23 +3321,28 @@
     \begin{figure}[H]
         \centering
         \includegraphics[keepaspectratio, width=55mm]{./Imagenes/airfoil_class}
-        \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase airfoil y subclase
-        NACA4}
+        \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase
+        airfoil y subclase NACA4}
         \label{airfoil_class}
     \end{figure}
 
 
     \subsection{Clase Mesh}
     \paragraph*{}
-        La clase mesh se desarrolló para el desarrollo de mallas estructuradas.
+        La clase mesh se desarrolló para la generación de mallas estructuradas.
         Además es la superclase a la que pertenecen las subclases
-        mesh\textunderscore c y mesh\textunderscore o. En esta clase están
+        mesh\textunderscore c y mesh\textunderscore o. Esto resulta en una
+        estructura similar al caso de la clase airfoil, es decir la clase mesh
+        contiene la definición general de los parámetros necesarios para la
+        creación de una malla estructurada, además de también contener los
+        métodos de uso general, delegando así las particularidades de cada
+        tipología a su correspondiente subclase. Es en esta clase donde están
         definidos los métodos de creación de malla mediante ecuaciones
-        algebráicas, los cuales son independientes de la tipología de la malla.
+        algebráicas y los métodos que evalúan la calidad de la malla.
 
     \paragraph*{}
-        La tabla~\ref{tabla_mesh} contiene información con respecto a los
-        métodos pertenecientes a esta clase.
+        La tabla~\ref{tabla_mesh} enlista los métodos correspondientes a la
+        clase mesh dando a su vez una breve descripción de cada uno de ellos.
 
     % \begin{table}[htbp!]
     \begin{table}[H]
@@ -3322,14 +3351,15 @@
         \hline
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
-            \textunderscore(R, M, N, airfoil)} & Crea un objeto mesh donde R es
-        la dimesión de la frontera externa, M es el número de niveles en el eje
-        $\xi$, N es el número de niveles en el eje $\eta$ y airfoil es un objeto
-        de la clase homónima que contiene la información del perfil aerodinámico
-        a analizar.
+            \textunderscore(R, M, N, airfoil)} & Crea un objeto mesh donde R
+            es la dimesión de la frontera externa, M es el número de niveles
+            en el eje $\xi$, N es el número de niveles en el eje $\eta$ y
+            airfoil es un objeto de la clase homónima que contiene la
+            información del perfil aerodinámico a analizar.
         \\ \hline
 
-        \textbf{plot()} & Representación gráfica de la malla generada.\\ \hline
+        \textbf{plot()} & Representación gráfica de la malla
+            generada.\\ \hline
 
         \textbf{to\textunderscore txt\textunderscore mesh(filename)} & Exporta
         la malla a un archivo de texto de extensión \.txt\textunderscore mesh.
@@ -3383,9 +3413,9 @@
     solución, el cual implica dos ciclos for anidados para recorrer toda la
     matriz, sin embargo este enfoque deja de ser asequible si se pretende
     generar mallas con un numero de nodos grande, dado que el tiempo de
-    ejecucion crece exponencialmente con el numero de nodos, por un lado porque
-    a mayor numero de nodos ya sea en el eje $\xi$, $\eta$ o ambos, mayor
-    número de ejecuciones dentro de los ciclos for, y por otro lado se
+    ejecucion crece exponencialmente con el numero de nodos, por un lado
+    porque a mayor numero de nodos ya sea en el eje $\xi$, $\eta$ o ambos,
+    mayor número de ejecuciones dentro de los ciclos for, y por otro lado se
     ha observado que a mayor numero de nodos mayor numero de iteraciones
     es necesario para lograr el criterio de convergencia. Para
     contrarrestar dicho efecto se crearon dos metodos adicionales, los
@@ -3407,9 +3437,9 @@
     específicamente para computacion científica de alto performance, y que
     tiene una mejora en la velocidad del ejecucion de aproximadamente el
     doble cuando se le compara con el método de vectorizado. Es este último
-    metodo el recomendado para utilizar, y solo en caso de no poder
-    utilizarlo, se debe optar en primera instancia por el método de vectorizado
-    y por ultimo el método clásico.
+    método el recomendado para utilizar, y solo en caso de no ser posible su
+    uso, se debe optar en primera instancia por el método de
+    vectorizado y por ultimo el método clásico.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3418,10 +3448,11 @@
         Método & Descripción \\ \hline
         \textbf{\textunderscore\textunderscore init\textunderscore
             \textunderscore(R, M, N, airfoil)} & Crea un objeto
-        mesh\textunderscore c o mesh\textunderscore o, donde R es la dimesión de
-        la frontera externa, M es el número de niveles en el eje $\xi$, N es el
-        número de niveles en el eje $\eta$ y airfoil es un objeto de la clase
-        homónima que contiene la información del perfil aerodinámico a analizar.
+        mesh\textunderscore c o mesh\textunderscore o, donde R es la dimesión
+            de la frontera externa, M es el número de niveles en el eje $\xi$,
+            N es el número de niveles en el eje $\eta$ y airfoil es un objeto
+            de la clase homónima que contiene la información del perfil
+            aerodinámico a analizar.
         \\ \hline
 
         \textbf{gen\textunderscore Laplace(metodo)} & \multirow{4}{*}{
@@ -3447,7 +3478,7 @@
         \textbf{tensor()} & Calcula el tensor métrico de la transformación,
         tanto la transformación directa como indirecta. También calcula el
         Jacobiano de dicha transformación y los valores de las derivadas
-        parciales $x_\xi$, $x_\eta$, $y_xi$ y $y_\eta$. Los valores que
+        parciales $x_\xi$, $x_\eta$, $y_\xi$ y $y_\eta$. Los valores que
         regresa el método son matrices de $M$x$N$, ya que todos los términos se
         calculan para cada uno de los puntos de la malla. \\\hline
 
@@ -3466,7 +3497,10 @@
         La figura~\ref{mesh_class} es una representación de la estructura de la
         clase mesh y su relación (herencia) con respecto a las subclases
         mesh\textunderscore c y mesh\textunderscore o. En este diagrama se
-        enlistan los atributos y métodos pertenecientes a cada clase.
+        enlistan los atributos y métodos generales pertenecientes a la clase
+        mesh, a su vez se muestran los parámetros y métodos que se requieren
+        para la generación de mallas tanto tipo C como tipo O, pertenecientes
+        a su respectiva clase.
     \begin{sidewaysfigure}
         \centering
         \includegraphics[keepaspectratio, width=205mm]{./Imagenes/mesh_class}
@@ -3475,21 +3509,25 @@
         \label{mesh_class}
     \end{sidewaysfigure}
 
-    \section{Diagramas de flujo}
 
+    \section{Diagramas de flujo}
     \subsection{Estructura global del programa}
     \paragraph*{}
         Siguiendo la estructura adoptada por los software de simulación y
         análisis de ingeniería, donde la solución del problema se divide en 3
         procesos generales
         \begin{enumerate}
-            \item Preproceso
-            \item Solver
-            \item Postproceso
+            \item Preproceso. Introducción de los datos de entrada del
+                programa, definición de la geometría, definición de las
+                propiedades del fluido.
+            \item Solver. Parte central del programa de solución. Resuelve de
+                forma iterativa el sistema de ecuaciones.
+            \item Postproceso. Representación gráfica tanto del dominio como de
+                la malla. Mapas de contorno para las variables de importancia.
         \end{enumerate}
         se muestra un diagrama en la figura~\ref{estructura_global} donde se
-        relaciona cada parte de este proyecto con el correspondiente proceso de
-        los arriba mencionados.
+        relaciona cada parte de este proyecto con el correspondiente proceso
+        de los arriba mencionados.
 
     \begin{figure}[htbp!]
         \centering
@@ -3505,13 +3543,14 @@
 
     \paragraph*{}
         La figura~\ref{flujo_malla} presenta el diagrama de flujo que se sigue
-        para generar una malla y poder guardar dichos datos tanto en el formato
-        de este proyecto como en el formato de SU2. Estas acciones corresponden
-        al preproceso del análisis.
+        para generar una malla y poder guardar dichos datos tanto en el
+        formato de este proyecto como en el formato de SU2. Estas acciones
+        corresponden al preproceso del análisis.
 
-    \begin{figure}[htbp!]
+    % \begin{figure}[htbp!]
+    \begin{figure}[H]
         \centering
-        \includegraphics[keepaspectratio, width=80mm]{./Imagenes/flujo_malla}
+        \includegraphics[keepaspectratio, width=70mm]{./Imagenes/flujo_malla}
         \caption{Diagrama de flujo para generación de mallas (preproceso)}
         \label{flujo_malla}
     \end{figure}
@@ -3537,19 +3576,21 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=80mm]{./Imagenes/flujo_potencial_after}
+        \includegraphics[keepaspectratio, width=70mm]
+            {./Imagenes/flujo_potencial_after}
         \caption{Diagrama de flujo para análisis de postproceso}
         \label{flujo_potencial_after}
     \end{figure}
 
     \subsection{Funciones principales}
     \paragraph*{}
-        Hasta ahora, solo se han presentado diagramas de flujo que presentan el
-        funcionamiento general del programa sin entrar en específicos sobre los
-        algoritmos de las funciones y los métodos que lo componen. Se muestran a
-        continuación diagramas de flujo para la generación de mallas mediante la
-        ecuación de Laplace y Poisson, además de solución a la ecuación de
-        potencial, dado que son los algoritmos más complejos en este trabajo.
+        Hasta ahora, solo se han presentado diagramas de flujo que presentan
+        el funcionamiento general del programa sin entrar en específicos
+        sobre los algoritmos de las funciones y los métodos que lo componen.
+        Se muestran a continuación diagramas de flujo para la generación de
+        mallas mediante la ecuación de Laplace y Poisson, además de solución
+        a la ecuación de potencial, dado que son los algoritmos más complejos
+        en este trabajo.
 
     \paragraph*{}
         La figura~\ref{flujo_laplace} presenta el algoritmo utilizado para la
@@ -3561,7 +3602,8 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=90mm]{./Imagenes/flujo_laplace}
+        \includegraphics[keepaspectratio, width=75mm]
+            {./Imagenes/flujo_laplace}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Laplace}
         \label{flujo_laplace}
@@ -3569,7 +3611,8 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=90mm]{./Imagenes/flujo_poisson}
+        \includegraphics[keepaspectratio, width=90mm]
+            {./Imagenes/flujo_poisson}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Poisson}
         \label{flujo_poisson}
@@ -3623,15 +3666,17 @@
     La primera malla que se presenta es una malla tipo O con un solo perfil.
     La tabla~\ref{tabla_o_naca_4415} presenta las características de la
     malla, así como los casos límite de aplicabilidad. La
-    figura~\ref{fig:naca4415} muestra la malla generada para un ángulo de ataque
-    $\alpha = 0 \si{\degree}$. A su vez, la figura~\ref{fig:naca4415_90}
-    muestra un acercamiento al perfil para un ángulo de ataque
-    $\alpha = 90\si{\degree}$, condición en la cual todavía se muestra una
-    malla dentro del rango de usabilidad. Mientras que la
-    figura~\ref{fig:naca4415_90} muestra un acercamiento al perfil con un
-    ángulo de ataque $\alpha = -90\si{\degree}$, e ilustra una malla de mala
-    calidad en el borde de salida.
-
+    figura~\ref{fig:naca4415} muestra la malla generada para un ángulo de
+    ataque $\alpha = 0 \si{\degree}$. A su vez, las
+    figuras~\ref{fig:naca4415_50_far} y~\ref{fig:naca4415_50_close}
+    muestran un acercamiento al perfil para un ángulo de ataque
+    $\alpha = 50\si{\degree}$, condición en la cual todavía se muestra una
+    malla dentro del rango de usabilidad y que corresponde al ángulo máximo
+    recomendado de rotación de la frontera interna. Mientras que la
+    figuras~\ref{fig:naca4415_-50_far} y ~\ref{fig:naca4415_-50_close}
+    muestran un acercamiento al perfil con un
+    ángulo de ataque $\alpha = -50\si{\degree}$, que corresponde al ángulo
+    mínimo recomendado de rotación de la frontera interna.
     \begin{table}[htbp!]
     \begin{center}
         \begin{tabular}{| c | c |}
@@ -3662,16 +3707,16 @@
         Método & SOR
         \\\hline
 
-        Ángulo máximo & 110\si{\degree}
+        Ángulo máximo & 60\si{\degree}
         \\ \hline
 
-        Ángulo máximo recomendado & 90\si{\degree}
+        Ángulo máximo recomendado & 50\si{\degree}
         \\ \hline
 
-        Ángulo mínimo & -50\si{\degree}
+        Ángulo mínimo & -60\si{\degree}
         \\ \hline
 
-        Ángulo mínimo recomendado & -30\si{\degree}
+        Ángulo mínimo recomendado & -50\si{\degree}
         \\ \hline
         \end{tabular}
         \caption{Caracetísticas de malla O con perfil NACA 4415}
@@ -3682,54 +3727,62 @@
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista Completa]{\label{fig:naca4415_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_far}}
-        \subfigure[Acercamiento a perfil]{\label{fig:naca4415_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_close}}
+        \subfigure[Vista
+        Completa]{\label{fig:naca4415_far}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_far}}
+        \hfill
+        \subfigure[Acercamiento a
+        perfil]{\label{fig:naca4415_close}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_close}}
         \caption[Malla tipo O con perfil NACA4415]{Malla tipo O con perfil NACA4415
                         con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415}
     \end{figure}
 
     % relación (1:1.4) [x:y]
+    % malla O perfil unico naca 4415
     \begin{figure}[htbp!]
         \centering
-        \subfigure[90\si{\degree} Vista del perfil]{\label{fig:naca4415_90_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_90_far}}
-        \subfigure[90\si{\degree} Vista del borde de salida]{\label{fig:naca4415_90_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_90_close}}
+        \subfigure[50\si{\degree} Vista del
+        perfil]{\label{fig:naca4415_50_far}\includegraphics[keepaspectratio,
+            width=0.40\textwidth]{./Imagenes/naca4415_50_far}}
+        \hfill
+        \subfigure[50\si{\degree} Vista del borde de
+        salida]{\label{fig:naca4415_50_close}\includegraphics[keepaspectratio,
+            width=0.4\textwidth]{./Imagenes/naca4415_50_close}}
+        \subfigure[-50\si{\degree} Vista del
+        perfil]{\label{fig:naca4415_-50_far}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_-50_far}}
+        \hfill
+        \subfigure[-50\si{\degree} Vista del borde de
+        salida]{\label{fig:naca4415_-50_close}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_-50_close}}
         \caption[Malla tipo O con perfil NACA4415 a 90\si{\degree}]{Malla tipo O con perfil NACA4415
                         con ángulo de ataque 90\si{\degree}. Acercamiento al perfil y al borde de salida}
-        \label{fig:naca4415_90}
-    \end{figure}
-
-    % relación (1:1.4) [x:y]
-    \begin{figure}[htbp!]
-        \centering
-        \subfigure[-90\si{\degree} Vista del perfil]{\label{fig:naca4415_-90_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_-90_far}}
-        \subfigure[-90\si{\degree} Vista del borde de salida]{\label{fig:naca4415_-90_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_-90_close}}
-        \caption[Malla tipo O con perfil NACA4415 a 90\si{\degree}]{Malla tipo O con perfil NACA4415
-                        con ángulo de ataque 90\si{\degree}. Acercamiento al perfil y al borde de salida}
-        \label{fig:naca4415_-90}
+        \label{fig:naca4415_detail}
     \end{figure}
 
     \subsection{Malla O. Frontera interna múltiple}
     \paragraph*{}
-        El segundo caso de análisis presenta una malla tipo O con un perfil
-        NACA 4415 y un flap del tipo perfil externo, el cual también es un
-        perfil NACA 4415. En el caso de esta configuración, el ángulo de ataque
-        del perfil se mantiene constante a 0\si{\degree}, mientras que el ángulo
-        de deflexión del flap se va variando. La tabla~\ref{tabla_o_naca_4415_flap}
-        presenta las  caraterísticas de esta configuración. La
-        figura~\ref{fig:naca4415_flap} presenta la malla generada, tanto una
-        vista completa de la misma, así como un acercamiento en el cual se logra
-        apreciar tanto el perfil como el flap, el cual tiene un ángulo de
-        deflexión igual a 0\si{\degree}. Por su parte la
-        figura~\ref{fig:naca4415_flap_40} muestra una malla generada bajo los
-        mismos parámetros y una deflexión del flap igual a 40\si{\degree}, la
-        cual cumple en términos generales con las características de una malla
-        de calidad. En contraste, la figura~\ref{fig:naca4415_flap_-20} muestra
-        una malla para el caso en el cual el flap tiene un angulo de deflexión
-        igual a $-20\si{\degree}$, dicha malla resulta inservible para el
-        análisis, ya que en la vista de acercamiento al borde de ataque del flap
-        se observa incluso un cruce entre las líneas que unen a los nodos en esa
-        región.
+    El segundo caso de análisis presenta una malla tipo O con un perfil
+    NACA 4415 y un flap del tipo perfil externo, el cual también es un
+    perfil NACA 4415. En el caso de esta configuración, el ángulo de ataque
+    del perfil se mantiene constante a $0\si{\degree}$, mientras que el ángulo
+    de deflexión del flap se va variando. La tabla~\ref{tabla_o_naca_4415_flap}
+    presenta las  caraterísticas de esta configuración. La
+    figura~\ref{fig:naca4415_flap} presenta la malla generada, tanto una
+    vista completa de la misma, así como un acercamiento en el cual se logra
+    apreciar tanto el perfil como el flap, el cual tiene un ángulo de
+    deflexión igual a 0\si{\degree}. Por su parte la
+    figura~\ref{fig:naca4415_flap_50} muestra una malla generada bajo los
+    mismos parámetros y una deflexión del flap igual a 50\si{\degree}, la
+    cual cumple en términos generales con las características de una malla
+    de calidad, y corresponde al ángulo máximo recomendado de deflexión del
+    flap. En contraste, la figura~\ref{fig:naca4415_flap_-10} muestra
+    una malla para un caso en el cual el flap tiene un angulo de deflexión
+    igual a $-10\si{\degree}$, dicha malla corresponde al ángulo mínimo
+    recomendado de deflexión del flap, y como se observa, es una malla todavía
+    de utilidad práctica.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3767,16 +3820,16 @@
         Método & SOR
         \\\hline
 
-        Ángulo máximo & 45\si{\degree}
+        Ángulo máximo & 60\si{\degree}
         \\ \hline
 
-        Ángulo máximo recomendado & 40\si{\degree}
+        Ángulo máximo recomendado & 50\si{\degree}
         \\ \hline
 
-        Ángulo mínimo & -10\si{\degree}
+        Ángulo mínimo & -15\si{\degree}
         \\ \hline
 
-        Ángulo mínimo recomendado & -5\si{\degree}
+        Ángulo mínimo recomendado & -10\si{\degree}
         \\ \hline
         \end{tabular}
         \caption{Caracetísticas de malla O con perfil y flap NACA 4415}
@@ -3787,8 +3840,13 @@
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista completa]{\label{fig:naca4415_flap_far}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_far}}
-        \subfigure[Acercamiento a perfil]{\label{fig:naca4415_flap_close}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_close}}
+        \subfigure[Vista
+        completa]{\label{fig:naca4415_flap_far}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_far}}
+        \hfill
+        \subfigure[Acercamiento a
+        perfil]{\label{fig:naca4415_flap_close}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_close}}
         \caption[Malla tipo O con perfily flap NACA 4415]{Malla tipo O con perfil
              y flap NACA4415, ambos con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_flap}
@@ -3797,43 +3855,70 @@
     % relación (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Flap a 40\si{\degree}]{\label{fig:naca4415_flap_40_both}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40}}
-        \subfigure[Acercamiento a borde de salida de perfil y borde de ataque de
-        flap]{\label{fig:naca4415_flap_40_airfoil}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40_airfoil}}
-        \subfigure[Acercamiento a borde de salida de flap]{\label{fig:naca4415_flap_40_flap}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_40_flap}}
+        \subfigure[Flap a
+        50\si{\degree}]{\label{fig:naca4415_flap_50_both}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_50}}
+        \hfill
+        \subfigure[Acercamiento a borde de salida de perfil y borde de ataque
+                de flap]{\label{fig:naca4415_flap_50_airfoil}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_50_airfoil}}
+        \subfigure[Acercamiento a borde de salida de
+        flap]{\label{fig:naca4415_flap_50_flap}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_50_flap}}
 
-        \caption[Malla tipo O con perfily flap NACA4415]{Malla tipo O con perfil
-             y flap NACA4415. El perfil tiene un ángulo de ataque de
-             0\si{\degree} y el flap un ángulo de deflexión de 40\si{\degree}}
-        \label{fig:naca4415_flap_40}
+        \caption[Malla tipo O con perfily flap NACA4415]{Malla tipo O con
+            perfil y flap NACA4415. El perfil tiene un ángulo de ataque de
+             0\si{\degree} y el flap un ángulo de deflexión de 50\si{\degree}}
+        \label{fig:naca4415_flap_50}
     \end{figure}
 
     % relación (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Acercamiento a perfil y flap]{\label{fig:naca4415_flap_-20_both}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20}}
-        \subfigure[Acercamiento a borde de salida de perfil y borde de ataque de
-        flap]{\label{fig:naca4415_flap_-20_airfoil}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20_airfoil}}
-        \subfigure[Acercamiento a borde de salida de flap]{\label{fig:naca4415_flap_-20_flap}\includegraphics[keepaspectratio, width=87mm]{./Imagenes/naca4415_flap_-20_flap}}
+        \subfigure[Acercamiento a perfil y
+        flap]{\label{fig:naca4415_flap_-10_both}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_-10}}
+        \hfill
+        \subfigure[Acercamiento a borde de salida de perfil y borde de ataque
+        de flap]{\label{fig:naca4415_flap_-10_airfoil}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_-10_airfoil}}
+        \subfigure[Acercamiento a borde de salida de
+        flap]{\label{fig:naca4415_flap_-10_flap}\includegraphics[keepaspectratio,
+        width=0.45\textwidth]{./Imagenes/naca4415_flap_-10_flap}}
 
-        \caption[Malla tipo O con perfil y flap NACA4415 a -20\si{\degree}]{Malla tipo O con perfil
+        \caption[Malla tipo O con perfil y flap NACA4415 a -10\si{\degree}]{Malla tipo O con perfil
              y flap NACA4415. El perfil tiene un ángulo de ataque de
-             0\si{\degree} y el flap un ángulo de deflexión de -20\si{\degree}}
-        \label{fig:naca4415_flap_-20}
+             0\si{\degree} y el flap un ángulo de deflexión de -10\si{\degree}}
+        \label{fig:naca4415_flap_-10}
     \end{figure}
+
+    \paragraph*{}
+    De estos resultados se observa, que para las mallas con tipología tipo O
+    el principal aspecto a tener en cuenta al momento de la generación de las
+    mismas, es el cruce entre las líneas que la definen, ya que al aumentar el
+    ángulo de ataque la tendencia hacia el cruce entre líneas aumenta. La zona
+    donde en su mayoría se presenta la dificultad ya mencionada es la zona
+    cercana al borde de salida, ya sea del perfil o del flap según sea el caso.
+    La explicación a este fenómeno radica en la tipología (tipo O) ya que
+    conforme se aumenta la inclinación de la frontera interna algunas líneas
+    se ven forzadas a ``rodear'' el perfil para lograr la conectividad entre
+    los correspondientes puntos entre las fronteras.
+
 
     \subsection{Malla C. Frontera interna única.}
     \paragraph*{}
-    El tercer caso de análisis es similar al primer caso, es decir se genera una
-    malla alrededor de un perfil aerodinámico NACA 4415, sin embargo la malla
-    resultante es una malla tipo C. En la tabla~\ref{tabla_c_naca_4415} se
-    muestran los valores asignados a cada parámetro con los que esta malla ha
-    sido generada. La figura~\ref{fig:naca4415_c} muestra la vista de la malla,
-    brinda una vista total de la misma así como un acercamiento a la región
-    donde se encuentra el perfil. La figura~\ref{fig:naca4415_c_-80} presenta la
-    malla generada para el caso en el que el perfil tiene un ángulo de ataque
-    $\alpha = -80\si{\degree}$, caso que se mantiene dentro del rango de
-    usabilidad de la malla.
+    El tercer caso de análisis es similar al primer caso, es decir se genera
+    una malla alrededor de un perfil aerodinámico NACA 4415, sin embargo la
+    malla resultante es una malla tipo C. En la tabla~\ref{tabla_c_naca_4415}
+    se muestran los valores asignados a cada parámetro con los que esta malla
+    ha sido generada. La figura~\ref{fig:naca4415_c} muestra la vista de la
+    malla, brinda una vista total de la misma así como un acercamiento a la
+    región donde se encuentra el perfil. La figura~\ref{fig:naca4415_c_detail}
+    presenta la malla generada para los ángulos de ataque, tanto
+    máximo como mínimo sugeridos, los cuales son $\alpha =
+    50\si{\degree}$ (figura~\ref{fig:naca4415_c_50}) y
+    $\alpha = -50\si{\degree}$ (figura~\ref{fig:naca4415_c_-50}) respectivamente. Se observa todavía una buena
+    calidad de la malla.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3847,7 +3932,7 @@
         Perfil & NACA 4415
         \\ \hline
 
-        M & 99
+        M & 73
         \\ \hline
 
         N & 45
@@ -3856,25 +3941,25 @@
         Ecuación & Poisson
         \\\hline
 
-        $aa_m$ & 37
+        $aa_m$ & 20.5
         \\ \hline
 
-        $cc_m$ & 7
+        $cc_m$ & 7.5
         \\ \hline
 
         Método & SOR
         \\\hline
 
-        Ángulo máximo & 90\si{\degree}
+        Ángulo máximo & 70\si{\degree}
         \\ \hline
 
-        Ángulo máximo recomendado & 80\si{\degree}
+        Ángulo máximo recomendado & 50\si{\degree}
         \\ \hline
 
-        Ángulo mínimo & -110\si{\degree}
+        Ángulo mínimo & -70\si{\degree}
         \\ \hline
 
-        Ángulo mínimo recomendado & -90\si{\degree}
+        Ángulo mínimo recomendado & -50\si{\degree}
         \\ \hline
         \end{tabular}
         \caption{Caracetísticas de malla C con perfil NACA 4415}
@@ -3887,10 +3972,10 @@
         \centering
         \subfigure[Vista
           completa]{\label{fig:naca4415_c_far}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_far}}
+            width=0.4\textwidth]{./Imagenes/naca4415_c_far}}
         \subfigure[Acercamiento a
           perfil]{\label{fig:naca4415_c_close}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_close}}
+            width=0.4\textwidth]{./Imagenes/naca4415_c_close}}
         \caption[Malla tipo C con perfil NACA 4415]{Malla tipo C con perfil
              NACA 4415, a un ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_c}
@@ -3899,40 +3984,35 @@
     % relación (1:1.4) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[-80\si{\degree} Vista del
-          perfil]{\label{fig:naca4415_c_-80_far}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_-80_far}}
-        \subfigure[-80\si{\degree} Vista del borde de
-          ataque]{\label{fig:naca4415_c_-80_close}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_-80_close}}
-        \caption[Malla tipo C con perfil NACA4415 a -80\si{\degree}]{Malla tipo
-          C con perfil NACA 4415 con ángulo de ataque -80\si{\degree}.
-          Acercamiento al perfil y al borde de ataque}
-        \label{fig:naca4415_c_-80}
-    \end{figure}
-
-    % relación (1:1.4) [x:y]
-    \begin{figure}[htbp!]
-        \centering
-        \subfigure[-130\si{\degree} Vista del
-          perfil]{\label{fig:naca4415_c_-130_far}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_-130_far}}
-        \subfigure[-130\si{\degree} Vista del borde de
-          ataque]{\label{fig:naca4415_c_-130_close}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_-130_close}}
-        \caption[Malla tipo C con perfil NACA4415 a -130\si{\degree}]{Malla tipo
-          C con perfil NACA 4415 con ángulo de ataque -130\si{\degree}.
-          Acercamiento al perfil y al borde de ataque}
-        \label{fig:naca4415_c_-130}
+        \subfigure[50\si{\degree} Vista del
+          perfil]{\label{fig:naca4415_c_50}\includegraphics[keepaspectratio,
+            width=0.455\textwidth]{./Imagenes/naca4415_c_50}}
+        \subfigure[-50\si{\degree} Vista del perfil]{\label{fig:naca4415_c_-50}\includegraphics[keepaspectratio,
+            width=0.45\textwidth]{./Imagenes/naca4415_c_-50}}
+        \caption[Malla tipo C. Vista de los límites recomendados]{Malla tipo
+          C con perfil NACA 4415 con ángulo de ataque 50\si{\degree} y
+          -50\si{\degree}. Límites recomendados.}
+        \label{fig:naca4415_c_detail}
     \end{figure}
 
    \subsection{Malla C. Frontera interna múltiple}
    \paragraph*{}
-   El último caso de estudio corresponde a una malla tipo C, la cual tiene como
-   frontera interna un perfil NACA 4415 el cual cuenta con un flap con el mismo
-   diseño NACA 4415. El perfil se mantiene constante con un ángulo de ataque
-   $\alpha = 0\si{\degree}$ mientras que el ángulo de deflexión del flap se
-   varía.
+   El último caso de estudio en esta sección corresponde a una malla de
+   tipología C, la cual tiene como frontera interna un perfil NACA 4415 el
+   cual cuenta con un flap con el mismo diseño NACA 4415. El perfil se
+   mantiene constante con un ángulo de ataque $\alpha = 0\si{\degree}$
+   mientras que el ángulo de deflexión del flap se varía. La
+   figura~\ref{fig:naca4415_c_flap} muestra la malla generada de acuerdo a los
+   parámetros establecidos en la tabla~\ref{tabla_c_flap_naca_4415}, en la
+   figura~\ref{fig:naca4415_c_flap_far} se observa una vista completa de la
+   malla, por su parte la figura~\ref{fig:naca4415_c_flap_close} proporciona
+   un acercamiento a la zona donde se encuentran el perfil y el flap. De igual
+   manera la figura~\ref{fig:naca4415_c_flap_20_} muestra la malla resultante
+   para una deflexión de flap de $20\si{\degree}$, caso establecido para la
+   presente configuración como el ángulo de deflexión máximo recomendado. Por
+   último la figura~\ref{fig:naca4415_c_flap_-30_} corresponde al caso del
+   mínimo ángulo sugerido de deflexión del flap, el cual es de
+   $-30\si{\degree}$.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -3946,34 +4026,34 @@
         Perfil & NACA 4415
         \\ \hline
 
-        M & 159
+        M & 163
         \\ \hline
 
-        N & 65
+        N & 45
         \\ \hline
 
         Ecuación & Poisson
         \\\hline
 
-        $aa_m$ & 35
+        $aa_m$ & 20.5
         \\ \hline
 
-        $cc_m$ & 6.5
+        $cc_m$ & 7.5
         \\ \hline
 
         Método & SOR
         \\\hline
 
-        Ángulo máximo & 100\si{\degree}
+        Ángulo máximo & 30\si{\degree}
         \\ \hline
 
-        Ángulo máximo recomendado & 80\si{\degree}
+        Ángulo máximo recomendado & 20\si{\degree}
         \\ \hline
 
-        Ángulo mínimo & -50\si{\degree}
+        Ángulo mínimo & -40\si{\degree}
         \\ \hline
 
-        Ángulo mínimo recomendado & -40\si{\degree}
+        Ángulo mínimo recomendado & -30\si{\degree}
         \\ \hline
         \end{tabular}
         \caption{Caracetísticas de malla C con perfil y flap NACA 4415}
@@ -3986,47 +4066,114 @@
         \centering
         \subfigure[Vista
           completa]{\label{fig:naca4415_c_flap_far}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_flap_far}}
+            width=0.4\textwidth]{./Imagenes/naca4415_c_flap_far}}
         \subfigure[Acercamiento a
           perfil]{\label{fig:naca4415_c_flap_close}\includegraphics[keepaspectratio,
-            width=87mm]{./Imagenes/naca4415_c_flap_close}}
+            width=0.4\textwidth]{./Imagenes/naca4415_c_flap_close}}
         \caption[Malla tipo C con perfily flap NACA 4415]{Malla tipo C con perfil
              y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
         \label{fig:naca4415_c_flap}
     \end{figure}
+
+    \begin{figure}[htpb!]
+        \centering
+        \subfigure[Acercamiento a perfil y
+        flap]{\label{fig:naca4415_c_flap_20}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_20}}
+        \hfill
+        \subfigure[Acercamiento a borde de salida de
+        perfil y borde de ataque de
+        flap]{\label{fig:naca4415_c_flap_20_both}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_20_both}}
+        \subfigure[Acercamiento a borde de salida de
+        flap]{\label{fig:naca4415_c_flap_20_flap}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_20_flap}}
+        \caption[Malla tipo C con perfil y flap NACA4415 a
+        20\si{\degree}]{Malla tipo C con perfil y flap NACA4415. El perfil
+        tiene un ángulo de ataque de 0\si{\degree} y el flap un ángulo de
+        deflexión de 20 \si{\degree}}
+        \label{fig:naca4415_c_flap_20_}
+    \end{figure}
+
+    \begin{figure}[htpb!]
+        \centering
+        \subfigure[Acercamiento a perfil y
+        flap]{\label{fig:naca4415_c_flap_-30}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_-30}}
+        \hfill
+        \subfigure[Acercamiento a borde de salida de
+        perfil y borde de ataque de
+        flap]{\label{fig:naca4415_c_flap_-30_both}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_-30_both}}
+        \subfigure[Acercamiento a borde de salida de
+        flap]{\label{fig:naca4415_c_flap_-30_flap}\includegraphics[keepaspectratio,
+        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_-30_flap}}
+        \caption[Malla tipo C con perfil y flap NACA4415 a
+        -30\si{\degree}]{Malla tipo C con perfil y flap NACA4415. El perfil
+        tiene un ángulo de ataque de 0\si{\degree} y el flap un ángulo de
+        deflexión de -30 \si{\degree}}
+        \label{fig:naca4415_c_flap_-30_}
+    \end{figure}
+
+    \paragraph*{}
+    De los resultados obtenidos se puede observar que el principal aspecto de
+    cuidado durante la generación de mallas tipo C es la posibilidad del cruce
+    entre las líneas que la definen. En contraste con las mallas de tipología
+    O, las mallas tipo C no presentan esta problematica en la zona de los
+    bordes de salida debido a que las líneas continúa con su recorrido de
+    manera horizontal, sin embargo dicho problema se encuentra presente en la
+    sección de unión entre perfil y flap, esto debido a la la distribución de
+    puntos en la frontera externa en la zona que conecta con el perfil.
+    Otro aspecto importante en las mallas tipo C con únicamente un perfil, es
+    el hecho de que al aumentar el ángulo de ataque de éste, las lineas
+    adyacentes al perfil comienzan a separarse de manera brusca, lo cual vuelve
+    a la malla inservible dado que las celdas se deforman cambiando su aspect
+    ratio y dichas celdas estarán localizadas en zonas de grandes gradientes
+    donde lo que se busca es la mejor calidad posible en las celdas.
 
 
     \section{Calidad de la malla}
     \paragraph*{}
     En esta sección se discuten los resultados obtenidos para diferentes
     configuraciones de malla, analizando la calidad de la misma. Este
-    aspecto es evaluado mediante el método utilizado en la librería ``The
+    rubro es evaluado mediante el método utilizado en la librería ``The
     Verdict Geometric Quality Library'', mencionado previamente en el
-    capítulo~\ref{chap:mallas}. Los aspectos que se van a analizar son el
-    ``aspect ratio'' y el ``skewness'' en cada una de las celdas.
+    capítulo~\ref{chap:mallas}. Los aspectos que se analizan son el
+    ``aspect ratio'' y el ``skewness'' en cada una de las celdas de la malla.
 
     \paragraph*{}
-    Para esto se define una configuración inicial, es decir se define la
-    tipología de la malla, el perfil a mallar, las dimensiones de la malla
-    $M$ y $N$, y los valores de entrada para las funciones que afectan la
-    densidad del mallado en la ecuación de Poisson. A partir de dicha
-    configuración se varía un parametro a la vez, de los previamente
-    mencionados, para mostrar el efecto que cada uno tiene sobre la malla.
+    Para esto es necesario que se defina una configuración inicial, es decir
+    se define la tipología de la malla, el perfil que fungirá de frontera
+    interna, las dimensiones de la malla $M$ y $N$, y los valores de entrada
+    para las funciones que afectan la densidad del mallado en la ecuación de
+    Poisson. A partir de dicha configuración se varía un parametro a la vez,
+    de todos los previamente mencionados, con la idea de mostrar el efecto que
+    cada uno de ellos tiene sobre la calidad de la malla resultante.
 
     \paragraph*{}
-    El primer caso corresponde al descrito por la tabla~\ref{tabla_o_naca_4415}
-    y representado por la malla de la figura~\ref{fig:naca4415}. A esta
-    configuración se le realizarán variaciones en sus parámetros con el fin de
-    identificar el efecto de cada uno de ellos en la calidad de la malla. Las
-    figuras~\ref{fig:naca4415_aspect_0} y~\ref{fig:naca4415_aspect_1}  muestran
-    el efecto de las variables en el aspect ratio, y las
+    Buscando la continuidad en los resultados, se opta por hacer el análisis 
+    de calidad de la malla para las mallas generadas en la sección anterior
+    en la configuración inicial, es decir, se analizan los mismos cuatro
+    casos, malla C con un único perfil y con un perfil con flap, lo mismo
+    para la tipología O, un caso con perfl único y otro con perfil y flap.
+    Se hace el análisis a un ángulo de ataque constante
+    $\alpha = 0\si{\degree}$.
+
+    \paragraph*{}
+    El primer caso corresponde al descrito por la
+    tabla~\ref{tabla_o_naca_4415} y representado por la malla de la
+    figura~\ref{fig:naca4415}. A esta configuración se le realizarán
+    variaciones en sus parámetros con el fin de identificar el efecto de cada
+    uno de ellos en la calidad de la malla. Las
+    figuras~\ref{fig:naca4415_aspect_0} y~\ref{fig:naca4415_aspect_1}
+    muestran el efecto de las variables en el aspect ratio, y las
     figuras~\ref{fig:naca4415_skew_0} y~\ref{fig:naca4415_skew_1} el efecto en
-    el skew de las celdas. El primer cambio es
-    el aumento de la dimensión $M$ de la malla desde $M=45$ a $M=65$. El segundo
-    cambio implica un incremento en el número de nodos en la dirección del eje
-    $\eta$, es decir, aumentando el número de nodos desde $N=45$ a $N=65$. Por
-    último se cambia el valor de la variable $aa_m$ correspondiente a la
-    ecuación de Poisson, de $aa_m = 20.5$ a $aa_m=21.5$.
+    el skew de las celdas. El primer cambio es el aumento de la dimensión $M$
+    de la malla desde $M=45$ a $M=65$. El segundo cambio implica un
+    incremento en el número de nodos en la dirección del eje $\eta$, es
+    decir, aumentando el número de nodos desde $N=45$ a $N=65$. Por último se
+    cambia el valor de la variable $aa_m$ correspondiente a la ecuación de
+    Poisson, de $aa_m = 20.5$ a $aa_m=21.5$.
 
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[H]

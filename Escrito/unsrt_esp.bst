@@ -245,7 +245,7 @@ FUNCTION {n.dashify}
     { t #1 #1 substring$ "-" =
         { t #1 #2 substring$ "--" = not
             { "--" *
-              t #2 global.max$ substrig$ 't :=
+              t #2 global.max$ substring$ 't :=
             }
             {   { t #1 #1 substring$ "-" = }
                 { "-" *
@@ -955,4 +955,4 @@ FUNCTION {end.bib}
   "\end{thebibliography}" write$ newline$
 }
 
-EXECUTE {end.bib}n
+EXECUTE {end.bib}
