@@ -722,11 +722,13 @@
             \caption{Aproximación central}
             \label{fig:grafica_central}
         \end{subfigure}
+        \caption{Aproximaciones mediante diferencias finitas}
         \label{fig:grafica_aproximaciones}
     \end{figure}
 
 \paragraph*{}
-    Para obtener una aproximación tipo ``backward'' se debe generar una serie de Taylor para el punto $(i-1, j)$ expandiendo a partir del punto $(i, j)$
+    Para obtener una aproximación tipo ``backward'' se debe generar una serie
+    de Taylor para el punto $(i-1, j)$ expandiendo a partir del punto $(i, j)$
     \begin{equation}
     f_{i-1, j} = f_{i,j} + \left(\pdv{f}{x}\right)_{i,j} (-\Delta x)
     + \left(\pdv[2]{f}{x} \right)_{i,j} \frac{(-\Delta x)^2 }{2\,!}
@@ -760,7 +762,7 @@
     \end{equation}
     se observa en la ecuación~\ref{central-x1} que para obtener un coeficiente
     en el punto $(i,j)$ se está utilizando información proveniente de los nodos
-    $(i-1, j)$ e $(i+1, j)$, adyacentes a dicho punto. (Figura~\ref{fig:grafica-central})
+    $(i-1, j)$ e $(i+1, j)$, adyacentes a dicho punto. (Figura~\ref{fig:grafica_central})
 
     \paragraph*{}
     Para el análisis de flujos viscosos, además de los coeficientes que sustituyen
@@ -3920,6 +3922,7 @@
         \caption[Malla tipo O con perfil y flap NACA 4415]{Malla tipo O con
             perfil y flap NACA 4415, ambos con ángulo de ataque
             $\alpha = 0\si{\degree}$}\label{fig:naca4415_flap}
+        \label{fig:naca4415_flap_50}
     \end{figure}
 
     % relación (2:1) [x:y]
@@ -4098,6 +4101,7 @@
             con perfil NACA 4415 con ángulos de ataque
             $\alpha = 50\si{\degree}$ y $\alpha = -50\si{\degree}$. Límites
             recomendados}
+            \label{fig:naca4415_c_detail}
     \end{figure}
 
     \subsection{Malla C. Frontera interna múltiple}
@@ -4114,9 +4118,9 @@
     un acercamiento a la zona donde se encuentran el perfil y el flap. De igual
     manera la figura~\ref{fig:naca4415_c_flap_20_} muestra la malla resultante
     para una deflexión de flap de $20\si{\degree}$, caso establecido para la
-    presente configuración como el ángulo de deflexión máximo recomendado. Por
-    último la figura~\ref{fig:naca4415_c_flap_-30_} corresponde al caso del
-    mínimo ángulo sugerido de deflexión del flap, el cual es de
+    presente configuración como el ángulo de deflexión máximo recomendado.
+    Por último la figura~\ref{fig:naca4415_c_flap_-30_} corresponde al caso
+    del mínimo ángulo sugerido de deflexión del flap, el cual es de
     $-30\si{\degree}$.
 
     \begin{table}[htbp!]
@@ -4185,6 +4189,7 @@
         \caption[Malla tipo C con perfil y flap NACA4415]{Malla tipo C con
             perfil y flap NACA 4415, ambos con ángulo de ataque y deflexión
             $0\si{\degree}$}
+        \label{fig:naca4415_c_flap}
     \end{figure}
 
     \begin{figure}[htbp!]
@@ -4241,6 +4246,7 @@
             $-30\si{\degree}$]{Malla tipo C con perfil y flap NACA 4415. El
             perfil tiene un ángulo de ataque $\alpha = 0\si{\degree}$ y el
             flap un ángulo de deflexión $\delta = -30\si{\degree}$}
+        \label{fig:naca4415_c_flap_-30_}
     \end{figure}
 
     \paragraph*{}
@@ -4332,6 +4338,8 @@
             \caption{Acercamiento a perfil $M=65$}
             \label{fig:naca4415_m_65_aspect_close}
         \end{subfigure}
+        \caption{Aspect ratio para malla tipo O con perfil NACA 4415}
+        \label{fig:naca4415_aspect_0}
     \end{figure}
 
     \begin{figure}[htbp!]
@@ -4364,6 +4372,7 @@
         \end{subfigure}
         \caption[Aspect ratio para malla tipo O con perfil NACA 4415]{Aspect
             ratio para malla tipo O con perfil NACA 4415}
+            \label{fig:naca4415_aspect_1}
     \end{figure}
 
     % relación (1:1) y (2:1) [x:y]
@@ -4396,6 +4405,7 @@
             \label{fig:naca4415_m_65_skew_close}
         \end{subfigure}
         \caption{Skew pata malla tipo O con perfil NACA 4415}
+        \label{fig:naca4415_skew_0}
     \end{figure}
 
     \begin{figure}[htbp!]
@@ -4427,6 +4437,7 @@
             \label{fig:naca4415_aa_215_skew_close}
         \end{subfigure}
         \caption{Skew para malla tipo O con perfil NACA 4415}
+        \label{fig:naca4415_skew_1}
     \end{figure}
 
     \paragraph*{}
@@ -4467,6 +4478,7 @@
             \caption{Acercamiento a perfil $M = 123$}
         \end{subfigure}
         \caption{Aspect ratio para malla tipo O con perfil y flap NACA 4415}
+        \label{fig:naca4415_flap_aspect_0}
     \end{figure}
 
     \begin{figure}[htbp!]
@@ -4876,8 +4888,8 @@
     Las figuras~\ref{fig:potential_flow_cp__0} y~\ref{fig:potential_flow_cp__1}
     muestran el campo de presiones generado alrededor del perfil alar para
     todos los ángulos de ataque estudiados. Por su parte, las
-    figuras~\ref{fig:potential_flow_stream_0}
-    y~\ref{fig:potential_flow_stream_1} presentan las líneas de corriente del
+    figuras~\ref{fig:potential_flow_stream__0}
+    y~\ref{fig:potential_flow_stream__1} presentan las líneas de corriente del
     flujo correspondiente a cada uno de los casos previamente mencionados.
 
     \begin{table}[htbp!]
