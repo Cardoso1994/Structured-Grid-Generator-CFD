@@ -5,10 +5,9 @@
 
 \usepackage{float}
 \usepackage{graphicx} % para imagenes
-\usepackage{subfigure} % para subfiguras
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage{rotating}
-% \usepackage{layouts}
 \usepackage{multirow}
 
 \usepackage{physics} % para formulas matemáticas
@@ -45,7 +44,7 @@
 		\begin{center}
 			\begin{figure}
 				\begin{center}
-					\includegraphics[keepaspectratio, width=3cm]{./Imagenes/ipn-logo}
+					\includegraphics[keepaspectratio, width=3cm]{./img/ipn-logo}
 				\end{center}
 			\end{figure}
 		\rule{100mm}{0.3mm}\\
@@ -608,11 +607,11 @@
       son identificados mediante ínidices $i, j, k$. Una malla estructurada
       bidimiensional está formada por cuadriláteros, mientras que una malla
       tridimensional se forma por hexahédros.
-            Figura~\ref{fig:malla-estructurada}.
+            Figura~\ref{fig:malla_estructurada}.
     \item No estructuradas: los nodos no tienen un orden particular, esto
       implica que no se puedan identificar mediante índices, por lo que se debe
       llevar a cabo una forma diferente de identificación.
-            Figura~\ref{fig:malla-no-estructurada}
+            Figura~\ref{fig:malla_no_estructurada}
     \end{itemize}
 
 
@@ -665,7 +664,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=95mm]{./Imagenes/malla-DF1}
+        \includegraphics[keepaspectratio, width=95mm]{./img/malla-DF1}
         \caption[Discretización por Diferencias Finitas]{Discretización espacial
           (malla) por el método de diferencias finitas \cite{anderson-yotros}}
         \label{malla-DF1}
@@ -700,14 +699,30 @@
     ``forward'' de primer orden y representa el valor aproximado del valor de la
     derivada parcial $\left( \pdv{f}{x}\right)_{i,j}$ calculada mediante la
     relación lineal del punto $(i,j)$ con el punto $(i+1,j)$.
-    (Figura~\ref{fig:grafica-forward})
+    (Figura~\ref{fig:grafica_forward})
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Aproximación forward]{\label{fig:grafica-forward}\includegraphics[keepaspectratio, width=65mm]{./Imagenes/grafica-forward}}
-        \subfigure[Aproximación backward]{\label{fig:grafica-backward}\includegraphics[keepaspectratio, width=65mm]{./Imagenes/grafica-backward}}
-        \subfigure[Aproximación central]{\label{fig:grafica-central} \includegraphics[keepaspectratio, width=65mm]{./Imagenes/grafica-central}}
-        \caption[Aproximaciones por Diferencias Finitas]{Esquemas de las aproximaciones por el método de diferencias finitas.\cite{chapra}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=\textwidth]{./img/grafica-forward}
+            \caption{Aproximación forward}
+            \label{fig:grafica_forward}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=\textwidth]{./img/grafica-backward}
+            \caption{Aproximación backward}
+            \label{fig:grafica_backward}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=\textwidth]{./img/grafica-central}
+            \caption{Aproximación central}
+            \label{fig:grafica_central}
+        \end{subfigure}
+        \label{fig:grafica_aproximaciones}
     \end{figure}
 
 \paragraph*{}
@@ -726,7 +741,7 @@
     \left( \pdv{f}{x} \right)_{i,j} = \frac{f_{i,j} - f_{i-1,j}}{\Delta x}
     \label{backward-x1}
     \end{equation}
-    \\que es la ecuación de una aproximación ``backward''. (Figura~\ref{fig:grafica-backward})
+    \\que es la ecuación de una aproximación ``backward''. (Figura~\ref{fig:grafica_backward})
 
     \paragraph*{}
     Para diferentes aplicaciones de DFC, no basta con tener aproximaciones con
@@ -857,7 +872,7 @@
     es el dominio continuo para el cual se desea una solución numérica.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=170mm]{./Imagenes/dominios}
+        \includegraphics[keepaspectratio, width=170mm]{./img/dominios}
         \caption[Dominios lógico y físico]{Dominios lógico (izquierda) y físico (derecha). \cite{numerical-grid}}
         \label{fig:dominios}
     \end{figure}
@@ -867,7 +882,7 @@
     dentro del cuál se llevarán a cabo los cálculos para obtener la solución
     de ecuaciones diferenciales parciales. Existen dos tipos principales de
     mallas: estructuradas y no estructuradas.
-    (Figura~\ref{fig:malla-estructurada-noestructurada})
+    (Figura~\ref{fig:malla_estructurada_noestructurada})
     Las mallas estructuradas se forman mediante la intersección de
     coordenadas curvilíneas, formando celdas cuadriláteras en dos
     dimensiones, o hexahedros en tres dimensiones. En contraste, las mallas
@@ -880,11 +895,22 @@
     alar con el que se esté trabajando como frontera interna del dominio.
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Malla Estructurada]{\label{fig:malla-estructurada}\includegraphics[keepaspectratio, width=50mm]{./Imagenes/malla-estructurada}} \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Malla no Estructurada]{\label{fig:malla-no-estructurada}\includegraphics[keepaspectratio, width=50mm]{./Imagenes/malla-no-estructurada}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/malla-estructurada}
+            \caption{Malla estructurada}
+            \label{fig:malla_estructurada}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/malla-no-estructurada}
+            \caption{Malla no estructurada}
+            \label{fig:malla_no_estructurada}
+        \end{subfigure}
         \caption[Mallas estructuradas y no estructuradas]{Mallas estructuradas
         y no estructuradas.\cite{cengel}}
-        \label{fig:malla-estructurada-noestructurada}
+        \label{fig:malla_estructurada_noestructurada}
     \end{figure}
 
     \paragraph*{}
@@ -904,7 +930,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=170mm]{./Imagenes/tipos-de-malla}
+        \includegraphics[keepaspectratio, width=170mm]{./img/tipos-de-malla}
         \captionsetup{justification=centering, margin=2cm}
         \caption[Tipología de mallas]{Tipología de malla y sus respectivos espacios computacionales. H(izquierda), O(centro), C(derecha).\cite{vladimir-grid}}
         \label{fig:tipos-de-malla}
@@ -935,7 +961,7 @@
     computacional este segmento representa dos segmentos diferentes.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=155mm]{./Imagenes/malla-c}
+        \includegraphics[keepaspectratio, width=155mm]{./img/malla-c}
         \captionsetup{justification=centering, margin=2cm}
         \caption[Malla tipo C]{Malla tipo C y su transformación del espacio
             físico (izquierda) al espacio lógico (derecha).~\cite{blazek}}
@@ -961,7 +987,7 @@
     alcanzar la forma cuadrada esperada.
     \begin{figure}[htbp!]
         \centering
-            \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-o}
+            \includegraphics[keepaspectratio, width=170mm]{./img/malla-o}
             \captionsetup{justification=centering, margin=2cm}
             \caption[Malla tipo O]{Malla tipo O y su transformación del
             espacio físico (izquierda) al espacio lógico
@@ -992,7 +1018,7 @@
     alguno en el dominio lógico.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=170mm]{./Imagenes/malla-h}
+            \includegraphics[keepaspectratio, width=170mm]{./img/malla-h}
             \captionsetup{justification=centering, margin=2cm}
             \caption[Malla tipo O]{Malla tipo H y su transformación del
                 espacio físico (izquierda) al espacio lógico (derecha).
@@ -1171,7 +1197,7 @@
     alrededor de un perfil aerodinámico.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=120mm]{./Imagenes/M-inter_pol}
+        \includegraphics[keepaspectratio, width=120mm]{./img/M-inter_pol}
         \captionsetup{justification=centering, margin=2cm}
         \caption[Malla Interpolación Polinomial]{Malla tipo O generada
         mediante el método de interpolación polinomial alrededor de un
@@ -1180,7 +1206,7 @@
     \end{figure}
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[width=120mm]{./Imagenes/M-inter_pol_cerca}
+        \includegraphics[width=120mm]{./img/M-inter_pol_cerca}
         \captionsetup{justification=centering, margin=2cm}
         \caption[Malla Interpolación Polinomial Acercamiento]{Vista de
         acercamiento a la malla generada de la figura\ref{fig:malla-inter}}
@@ -1284,7 +1310,7 @@
     reemplazan las fronteras en $\xi$ por líneas rectas.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=120mm]{./Imagenes/mapeo_eta}
+        \includegraphics[keepaspectratio, width=120mm]{./img/mapeo_eta}
         \caption[Transformación de malla por $P_{\eta}$]{Transormación de
         una malla a través del proyector $P_{\eta}$ \cite{farrashkhalvat}}
         \label{fig:mapeo_eta}
@@ -1318,7 +1344,7 @@
     en la figura\ref{fig:mapeo_xieta}.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=120mm]{./Imagenes/mapeo_xieta}
+        \includegraphics[keepaspectratio, width=120mm]{./img/mapeo_xieta}
         \caption[Transformación de malla por $P_{\xi}P_{\eta}$]{Transormación
         de una malla a través del proyector compuesto
         $P_{\xi}P_{\eta}$\cite{farrashkhalvat}}
@@ -1526,24 +1552,44 @@
     $(\xi_{n}, \eta_{n})$. Asignar un valor negativo a los factores de
     amplitud da como resultado un efecto contrario, es decir, se crea un
     efecto de repulsión.
-    \begin{figure}[htbp!]
-        \centering
-        \subfigure[Efecto de atracción a la línea $\xi = \xi_{m}$]{\label{fig:densidad-xi-linea}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-xi-linea}}
-        \hspace{1cm}
-        \subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-xi-punto}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-xi-punto}}
-        \caption[Efecto de atracción por función $P(\xi,\eta)$]{Efecto de
-        atracción en el eje $\xi$ por la función $P(\xi, \eta)$}
-        \label{fig:densidad-xi}
-        \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Efecto de atracción a la línea $\eta = \eta_{m}$]{\label{fig:densidad-eta-linea}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-eta-linea}}
-        \hspace{1cm}
-        \subfigure[Efecto de atracción al punto $(\xi_{n}, \eta_{n})$]{\label{fig:densidad-eta-punto}\includegraphics[keepaspectratio, width=80mm]{./Imagenes/densidad-eta-punto}}
-        \caption[Efecto de atracción por función $Q(\xi,\eta)$]{Efecto de
-        atracción en el eje $\eta$ por la función $Q(\xi, \eta)$}
-        \label{fig:densidad-eta}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/densidad-xi-linea}
+            \caption{Efecto de atracción a la línea $\xi = \xi_m$}
+            \label{fig:densidad-xi-linea}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio, 
+                width=0.99\textwidth]{./img/densidad-xi-punto}
+            \caption{Efecto de atracción por función al punto
+                $(\xi_n, \eta_n)$}
+            \label{fig:densidad-xi-punto}
+        \end{subfigure}
+        \caption[Efecto de atracción por función $P(\xi, \eta)$]{Efecto de
+            atracción en el eje $\xi$ por la función $P(\xi, \eta)$}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/densidad-eta-linea}
+            \caption{Efecto de atracción a la línea $\eta = \eta_m$}
+            \label{fig:densidad-eta-linea}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/densidad-eta-punto}
+            \caption{Efecto de atracción al punto $(\xi_n, \eta_n)$}
+            \label{fig:densidad-eta-punto}
+        \end{subfigure}
+        \caption[Efecto de atracción por función $Q(\xi, \eta)$]{Efecto de
+            atracción en el eje $\eta$ por la función $Q(\xi, \eta)$}
     \end{figure}
 
     \paragraph*{}
@@ -1983,7 +2029,7 @@
     un enfoque válido.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=100mm]{./Imagenes/parabolic_non_uniform.png}
+        \includegraphics[keepaspectratio, width=100mm]{./img/parabolic_non_uniform.png}
         \caption[Generación de malla cuasi uniforme por ecuaciones
         parabólicas]{Generación de malla estructurada cuasi uniforme
         desarrollada mediante ecuaciones parabólicas \cite{siladicParabolic}}
@@ -2036,7 +2082,7 @@
     dirección $\eta$.\\
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=110mm]{./Imagenes/eliptic_non_uniform.png}
+        \includegraphics[keepaspectratio, width=110mm]{./img/eliptic_non_uniform.png}
         \caption[Generación de malla por ecuaciones elípticas]{Generación de
         malla estructurada no uniforme desarrollada mediante ecuaciones
         elípticas \cite{siladicParabolic}}
@@ -2204,7 +2250,7 @@
     \ref{fig:parabolic_modified}.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=110mm]{./Imagenes/parabolic_modified_boundary.png}
+        \includegraphics[keepaspectratio, width=110mm]{./img/parabolic_modified_boundary.png}
         \caption[Control de ortogonalidad]{Control de ortogonalidad en la
         generación de mallas por ecuaciones parabólicas \cite{siladicParabolic}}
         \label{fig:parabolic_modified}
@@ -2288,7 +2334,7 @@
     figura~\ref{aspect_ansys} es una representación gráfica de este método.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=110mm]{./Imagenes/aspect_ansys.png}
+        \includegraphics[keepaspectratio, width=110mm]{./img/aspect_ansys.png}
         \caption[Cálculo de aspect ratio en ANSYS]{Cálculo de aspect ratio
         para una celda tridimensional en ANSYS}
         \label{aspect_ansys}
@@ -2320,7 +2366,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=110mm]{./Imagenes/aspect_verdict.png}
+            \includegraphics[keepaspectratio, width=110mm]{./img/aspect_verdict.png}
             \caption[Estrcutura celda cuadrilatera en Verdict]{Estructura de
             celda cuadrilátera en Verdict. Del lado izquierdo se muestran los
             nodos y los elementos que la forman. Del lado derecho se muestran
@@ -2641,7 +2687,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/circulacion_phi}
+            \includegraphics[keepaspectratio, width=115mm]{./img/circulacion_phi}
             \caption[Condiciones de frontera de flujo potencial]{Condiciones de
                 frontera de flujo potencial para perfil aerodinámico
                 bidimensional\cite{potential_flow}}
@@ -2680,7 +2726,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/kutta_condition}
+            \includegraphics[keepaspectratio, width=115mm]{./img/kutta_condition}
             \caption[Desarrollo de flujo estacionario sobre un perfil
             aerodinámico]{Desarrollo de flujo estacionario sobre un perfil
             aerodinámico, desde el reposo hasta una velocidad estacionaria.}
@@ -2713,7 +2759,7 @@
 
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=115mm]{./Imagenes/circulacion_reposo}
+            \includegraphics[keepaspectratio, width=115mm]{./img/circulacion_reposo}
             \caption[Fluido en reposo relativo a un perfil alar]{Fluido en
                 reposo relativo a un perfil alar\cite{anderson_fundamentals}}
             \label{circulacion_reposo}
@@ -2745,7 +2791,7 @@
         \begin{figure}[htbp!]
             \centering
             \includegraphics[keepaspectratio, 
-                width=115mm]{./Imagenes/circulacion_tiempo}
+                width=115mm]{./img/circulacion_tiempo}
             \caption[Flujo alrededor de perfil momentos después]{Flujo
             alrededor de perfil momentos después\cite{anderson_fundamentals}}
             \label{circulacion_tiempo}
@@ -2794,7 +2840,7 @@
         \begin{figure}[htbp!]
             \centering
             \includegraphics[keepaspectratio,
-                width=115mm]{./Imagenes/malla_escalonada}
+                width=115mm]{./img/malla_escalonada}
             \caption[Malla original y mallas escalonadas]{Malla original y
                 mallas escalonadas\cite{potential_flow}}
             \label{malla_escalonada}
@@ -3320,7 +3366,7 @@
     % \begin{figure}[htbp!]
     \begin{figure}[H]
         \centering
-        \includegraphics[keepaspectratio, width=55mm]{./Imagenes/airfoil_class}
+        \includegraphics[keepaspectratio, width=55mm]{./img/airfoil_class}
         \caption[Diagrama de clase airfoil y subclase NACA4]{Diagrama de clase
         airfoil y subclase NACA4}
         \label{airfoil_class}
@@ -3503,7 +3549,7 @@
         a su respectiva clase.
     \begin{sidewaysfigure}
         \centering
-        \includegraphics[keepaspectratio, width=205mm]{./Imagenes/mesh_class}
+        \includegraphics[keepaspectratio, width=205mm]{./img/mesh_class}
         \caption{Diagrama de clase mesh y subclases mesh\textunderscore c y
             mesh\textunderscore o}
         \label{mesh_class}
@@ -3531,7 +3577,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=110mm]{./Imagenes/estructura_global}
+        \includegraphics[keepaspectratio, width=110mm]{./img/estructura_global}
         \caption[Estructura global del programa]{Estructura global del programa,
         dividido en preproceso, solver y postproceso}
         \label{estructura_global}
@@ -3550,7 +3596,7 @@
     % \begin{figure}[htbp!]
     \begin{figure}[H]
         \centering
-        \includegraphics[keepaspectratio, width=70mm]{./Imagenes/flujo_malla}
+        \includegraphics[keepaspectratio, width=70mm]{./img/flujo_malla}
         \caption{Diagrama de flujo para generación de mallas (preproceso)}
         \label{flujo_malla}
     \end{figure}
@@ -3562,7 +3608,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=80mm]{./Imagenes/flujo_potencial}
+        \includegraphics[keepaspectratio, width=80mm]{./img/flujo_potencial}
         \caption{Diagrama de flujo para análisis de flujo potencial(solver)}
         \label{flujo_potencial}
     \end{figure}
@@ -3577,7 +3623,7 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=70mm]
-            {./Imagenes/flujo_potencial_after}
+            {./img/flujo_potencial_after}
         \caption{Diagrama de flujo para análisis de postproceso}
         \label{flujo_potencial_after}
     \end{figure}
@@ -3603,7 +3649,7 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=75mm]
-            {./Imagenes/flujo_laplace}
+            {./img/flujo_laplace}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Laplace}
         \label{flujo_laplace}
@@ -3612,7 +3658,7 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=90mm]
-            {./Imagenes/flujo_poisson}
+            {./img/flujo_poisson}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Poisson}
         \label{flujo_poisson}
@@ -3620,7 +3666,7 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=90mm]{./Imagenes/flujo_potencial_funcion}
+        \includegraphics[keepaspectratio, width=90mm]{./img/flujo_potencial_funcion}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Poisson}
         \label{flujo_potencial_funcion}
@@ -3727,40 +3773,60 @@
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-        Completa]{\label{fig:naca4415_far}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_far}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_far}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a
-        perfil]{\label{fig:naca4415_close}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_close}}
-        \caption[Malla tipo O con perfil NACA4415]{Malla tipo O con perfil NACA4415
-                        con ángulo de ataque 0\si{\degree}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_close}
+        \end{subfigure}
+        \caption[Malla tipo O con perfil NACA 4415]{Malla tipo O con perfil
+            NACA 4415 con ángulo de ataque $0\si{\degree}$}
         \label{fig:naca4415}
     \end{figure}
 
     % relación (1:1.4) [x:y]
-    % malla O perfil unico naca 4415
     \begin{figure}[htbp!]
         \centering
-        \subfigure[50\si{\degree} Vista del
-        perfil]{\label{fig:naca4415_50_far}\includegraphics[keepaspectratio,
-            width=0.40\textwidth]{./Imagenes/naca4415_50_far}}
+        \begin{subfigure}[b]{0.40\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.95\textwidth]{./img/naca4415_50_far}
+            \caption{$50\si{\degree}$ Vista del perfil}
+            \label{fig:naca4415_50_far}
+        \end{subfigure}
         \hfill
-        \subfigure[50\si{\degree} Vista del borde de
-        salida]{\label{fig:naca4415_50_close}\includegraphics[keepaspectratio,
-            width=0.4\textwidth]{./Imagenes/naca4415_50_close}}
-        \subfigure[-50\si{\degree} Vista del
-        perfil]{\label{fig:naca4415_-50_far}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_-50_far}}
+        \begin{subfigure}[b]{0.40\textwidth}
+            \includegraphics[keepaspectratio,
+                width=1.02\textwidth]{./img/naca4415_50_close}
+            \caption{$50\si{\degree}$ Vista del borde de salida}
+            \label{fig:naca4415_50_close}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.40\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.95\textwidth]{./img/naca4415_-50_far}
+            \caption{$-50\si{\degree}$ Vista del perfil}
+            \label{fig:naca4415_-50_far}
+        \end{subfigure}
         \hfill
-        \subfigure[-50\si{\degree} Vista del borde de
-        salida]{\label{fig:naca4415_-50_close}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_-50_close}}
-        \caption[Malla tipo O con perfil NACA4415 a 90\si{\degree}]{Malla tipo O con perfil NACA4415
-                        con ángulo de ataque 90\si{\degree}. Acercamiento al perfil y al borde de salida}
-        \label{fig:naca4415_detail}
+        \begin{subfigure}[b]{0.40\textwidth}
+            \includegraphics[keepaspectratio,
+                width=1.02\textwidth]{./img/naca4415_-50_close}
+            \caption{$-50\si{\degree}$ Vista del borde de salida}
+            \label{fig:naca4415_-50_close}
+        \end{subfigure}
+        \caption[Malla tipo O con perfil NACA 4415 con
+            $\alpha = 50\si{\degree}$ y $\alpha = -50\si{\degree}$]{Malla tipo
+            O con perfil NACA 4415 con ángulos de ataque
+            $\alpha = 50\si{\degree}$ y $\alpha = -50\si{\degree}$.
+            Acercamiento al perfil y al borde de salida}
     \end{figure}
+
 
     \subsection{Malla O. Frontera interna múltiple}
     \paragraph*{}
@@ -3840,55 +3906,79 @@
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-        completa]{\label{fig:naca4415_flap_far}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_far}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_far}
+            \caption{Vista Completa}\label{fig:naca4415_flap_far}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a
-        perfil]{\label{fig:naca4415_flap_close}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_close}}
-        \caption[Malla tipo O con perfily flap NACA 4415]{Malla tipo O con perfil
-             y flap NACA4415, ambos con ángulo de ataque 0\si{\degree}}
-        \label{fig:naca4415_flap}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_close}
+            \caption{Acercamiento a perfil}\label{fig:naca4415_flap_close}
+        \end{subfigure}
+        \caption[Malla tipo O con perfil y flap NACA 4415]{Malla tipo O con
+            perfil y flap NACA 4415, ambos con ángulo de ataque
+            $\alpha = 0\si{\degree}$}\label{fig:naca4415_flap}
     \end{figure}
 
     % relación (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Flap a
-        50\si{\degree}]{\label{fig:naca4415_flap_50_both}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_50}}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=\textwidth]{./img/naca4415_flap_50}
+            \caption{Flap a $50\si{\degree}$}
+            \label{fig:naca4415_flap_50_both}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a borde de salida de perfil y borde de ataque
-                de flap]{\label{fig:naca4415_flap_50_airfoil}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_50_airfoil}}
-        \subfigure[Acercamiento a borde de salida de
-        flap]{\label{fig:naca4415_flap_50_flap}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_50_flap}}
-
-        \caption[Malla tipo O con perfily flap NACA4415]{Malla tipo O con
-            perfil y flap NACA4415. El perfil tiene un ángulo de ataque de
-             0\si{\degree} y el flap un ángulo de deflexión de 50\si{\degree}}
-        \label{fig:naca4415_flap_50}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.97\textwidth]{./img/naca4415_flap_50_airfoil}
+            \caption{Acercamiento a borde de salida de perfil y borde de
+                ataque de flap}
+            \label{fig:naca4415_flap_50_airfoil}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_50_flap}
+            \caption{Acercamiento a borde de salida de flap}
+            \label{fig:naca4415_flap_50_flap}
+        \end{subfigure}
+        \caption[Malla tjipo O con perfil y flap NACA 4415 a
+            $50\si{\degree}$] {Malla tipo O con perfil y flap NACA 4415. El
+            perfil tiene un ángulo de ataque $\alpha = 0\si{\degree}$ y el flap
+            un ángulo de deflexión $\delta = 50\si{\degree}$}
     \end{figure}
+
 
     % relación (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Acercamiento a perfil y
-        flap]{\label{fig:naca4415_flap_-10_both}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_-10}}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_-10}
+            \caption{Acercamiento a perfil y flap}
+            \label{fig:naca4415_flap_-10_both}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a borde de salida de perfil y borde de ataque
-        de flap]{\label{fig:naca4415_flap_-10_airfoil}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_-10_airfoil}}
-        \subfigure[Acercamiento a borde de salida de
-        flap]{\label{fig:naca4415_flap_-10_flap}\includegraphics[keepaspectratio,
-        width=0.45\textwidth]{./Imagenes/naca4415_flap_-10_flap}}
-
-        \caption[Malla tipo O con perfil y flap NACA4415 a -10\si{\degree}]{Malla tipo O con perfil
-             y flap NACA4415. El perfil tiene un ángulo de ataque de
-             0\si{\degree} y el flap un ángulo de deflexión de -10\si{\degree}}
+        \begin{subfigure}[t]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_-10_airfoil}
+            \caption{Acercamiento a borde de salida de perfil y borde de
+                ataque de flap}
+            \label{fig:naca4415_flap_-10_airfoil}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_-10_flap}
+            \caption{Acercamiento a borde de salida de flap}
+            \label{fig:naca4415_flap_-10_flap}
+        \end{subfigure}
+        \caption[Malla tipo O con perfil y flap NACA 4415 a
+            $-10\si{\degree}$]{Malla tipo O con perfil y flap NACA 4415. El
+            perfil tiene un ángulo de ataque $\alpha = 0\si{\degree}$ y el flap
+            un ángulo de deflexión de $\delta = -10\si{\degree}$}
         \label{fig:naca4415_flap_-10}
     \end{figure}
 
@@ -3970,49 +4060,64 @@
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          completa]{\label{fig:naca4415_c_far}\includegraphics[keepaspectratio,
-            width=0.4\textwidth]{./Imagenes/naca4415_c_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_c_close}\includegraphics[keepaspectratio,
-            width=0.4\textwidth]{./Imagenes/naca4415_c_close}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_c_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_c_close}
+        \end{subfigure}
         \caption[Malla tipo C con perfil NACA 4415]{Malla tipo C con perfil
-             NACA 4415, a un ángulo de ataque 0\si{\degree}}
+            NACA 4415, a un ángulo de ataque $\alpha = 0\si{\degree}$}
         \label{fig:naca4415_c}
     \end{figure}
 
     % relación (1:1.4) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[50\si{\degree} Vista del
-          perfil]{\label{fig:naca4415_c_50}\includegraphics[keepaspectratio,
-            width=0.455\textwidth]{./Imagenes/naca4415_c_50}}
-        \subfigure[-50\si{\degree} Vista del perfil]{\label{fig:naca4415_c_-50}\includegraphics[keepaspectratio,
-            width=0.45\textwidth]{./Imagenes/naca4415_c_-50}}
-        \caption[Malla tipo C. Vista de los límites recomendados]{Malla tipo
-          C con perfil NACA 4415 con ángulo de ataque 50\si{\degree} y
-          -50\si{\degree}. Límites recomendados.}
-        \label{fig:naca4415_c_detail}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_50}
+            \caption{$50\si{\degree}$ Vista del perfil}
+            \label{fig:naca4415_c_50}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_-50}
+            \caption{$-50\si{\degree}$ Vista del perfil}
+            \label{fig:naca4415_c_-50}
+        \end{subfigure}
+        \caption[Malla tipo C. Vista de los límites recomendados]{Malla tipo C
+            con perfil NACA 4415 con ángulos de ataque
+            $\alpha = 50\si{\degree}$ y $\alpha = -50\si{\degree}$. Límites
+            recomendados}
     \end{figure}
 
-   \subsection{Malla C. Frontera interna múltiple}
-   \paragraph*{}
-   El último caso de estudio en esta sección corresponde a una malla de
-   tipología C, la cual tiene como frontera interna un perfil NACA 4415 el
-   cual cuenta con un flap con el mismo diseño NACA 4415. El perfil se
-   mantiene constante con un ángulo de ataque $\alpha = 0\si{\degree}$
-   mientras que el ángulo de deflexión del flap se varía. La
-   figura~\ref{fig:naca4415_c_flap} muestra la malla generada de acuerdo a los
-   parámetros establecidos en la tabla~\ref{tabla_c_flap_naca_4415}, en la
-   figura~\ref{fig:naca4415_c_flap_far} se observa una vista completa de la
-   malla, por su parte la figura~\ref{fig:naca4415_c_flap_close} proporciona
-   un acercamiento a la zona donde se encuentran el perfil y el flap. De igual
-   manera la figura~\ref{fig:naca4415_c_flap_20_} muestra la malla resultante
-   para una deflexión de flap de $20\si{\degree}$, caso establecido para la
-   presente configuración como el ángulo de deflexión máximo recomendado. Por
-   último la figura~\ref{fig:naca4415_c_flap_-30_} corresponde al caso del
-   mínimo ángulo sugerido de deflexión del flap, el cual es de
-   $-30\si{\degree}$.
+    \subsection{Malla C. Frontera interna múltiple}
+    \paragraph*{}
+    El último caso de estudio en esta sección corresponde a una malla de
+    tipología C, la cual tiene como frontera interna un perfil NACA 4415 el
+    cual cuenta con un flap con el mismo diseño NACA 4415. El perfil se
+    mantiene constante con un ángulo de ataque $\alpha = 0\si{\degree}$
+    mientras que el ángulo de deflexión del flap se varía. La
+    figura~\ref{fig:naca4415_c_flap} muestra la malla generada de acuerdo a los
+    parámetros establecidos en la tabla~\ref{tabla_c_flap_naca_4415}, en la
+    figura~\ref{fig:naca4415_c_flap_far} se observa una vista completa de la
+    malla, por su parte la figura~\ref{fig:naca4415_c_flap_close} proporciona
+    un acercamiento a la zona donde se encuentran el perfil y el flap. De igual
+    manera la figura~\ref{fig:naca4415_c_flap_20_} muestra la malla resultante
+    para una deflexión de flap de $20\si{\degree}$, caso establecido para la
+    presente configuración como el ángulo de deflexión máximo recomendado. Por
+    último la figura~\ref{fig:naca4415_c_flap_-30_} corresponde al caso del
+    mínimo ángulo sugerido de deflexión del flap, el cual es de
+    $-30\si{\degree}$.
 
     \begin{table}[htbp!]
     \begin{center}
@@ -4064,55 +4169,78 @@
     % relación (1:1) y (2:1) [x:y]
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          completa]{\label{fig:naca4415_c_flap_far}\includegraphics[keepaspectratio,
-            width=0.4\textwidth]{./Imagenes/naca4415_c_flap_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_c_flap_close}\includegraphics[keepaspectratio,
-            width=0.4\textwidth]{./Imagenes/naca4415_c_flap_close}}
-        \caption[Malla tipo C con perfily flap NACA 4415]{Malla tipo C con perfil
-             y flap NACA 4415, ambos con ángulo de ataque 0\si{\degree}}
-        \label{fig:naca4415_c_flap}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_c_flap_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_c_flap_close}
+        \end{subfigure}
+        \caption[Malla tipo C con perfil y flap NACA4415]{Malla tipo C con
+            perfil y flap NACA 4415, ambos con ángulo de ataque y deflexión
+            $0\si{\degree}$}
     \end{figure}
 
-    \begin{figure}[htpb!]
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Acercamiento a perfil y
-        flap]{\label{fig:naca4415_c_flap_20}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_20}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_20}
+            \caption{Acercamiento a perfil y flap}
+            \label{fig:naca4415_c_flap_20}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a borde de salida de
-        perfil y borde de ataque de
-        flap]{\label{fig:naca4415_c_flap_20_both}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_20_both}}
-        \subfigure[Acercamiento a borde de salida de
-        flap]{\label{fig:naca4415_c_flap_20_flap}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_20_flap}}
-        \caption[Malla tipo C con perfil y flap NACA4415 a
-        20\si{\degree}]{Malla tipo C con perfil y flap NACA4415. El perfil
-        tiene un ángulo de ataque de 0\si{\degree} y el flap un ángulo de
-        deflexión de 20 \si{\degree}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_20_both}
+            \caption{Acercamiento a borde de salida de perfil}
+            \label{fig:naca4415_c_flap_20_both}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_20_flap}
+            \caption{Acercamiento a borde de salida de flap}
+            \label{fig:naca4415_c_flap_20_flap}
+        \end{subfigure}
+        \caption[Malla tipo C con perfil y flap NACA 4415 a
+            $20\si{\degree}$]{Malla tipo C con perfil y flap NACA 4415. El
+            perfil tiene un ángulo de ataque $\alpha = 0\si{\degree}$ y el flap
+            un ángulo de deflexión $\delta = 20\si{\degree}$}
         \label{fig:naca4415_c_flap_20_}
     \end{figure}
 
-    \begin{figure}[htpb!]
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Acercamiento a perfil y
-        flap]{\label{fig:naca4415_c_flap_-30}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_-30}}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_-30}
+            \caption{Acercamiento a perfil y flap}
+            \label{fig:naca4415_c_flap_-30}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a borde de salida de
-        perfil y borde de ataque de
-        flap]{\label{fig:naca4415_c_flap_-30_both}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_-30_both}}
-        \subfigure[Acercamiento a borde de salida de
-        flap]{\label{fig:naca4415_c_flap_-30_flap}\includegraphics[keepaspectratio,
-        width=0.4\textwidth]{./Imagenes/naca4415_c_flap_-30_flap}}
-        \caption[Malla tipo C con perfil y flap NACA4415 a
-        -30\si{\degree}]{Malla tipo C con perfil y flap NACA4415. El perfil
-        tiene un ángulo de ataque de 0\si{\degree} y el flap un ángulo de
-        deflexión de -30 \si{\degree}}
-        \label{fig:naca4415_c_flap_-30_}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_-30_both}
+            \caption{Acercamiento a borde de salida de perfil y borde de
+                ataque de flap}
+            \label{fig:naca4415_c_flap_-30_both}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_c_flap_-30_flap}
+            \caption{Acercamiento a borde de salida de flap}
+            \label{fig:naca4415_c_flap_-30_flap}
+        \end{subfigure}
+        \caption[Malla tipo C con perfil y flap NACA 4415 a
+            $-30\si{\degree}$]{Malla tipo C con perfil y flap NACA 4415. El
+            perfil tiene un ángulo de ataque $\alpha = 0\si{\degree}$ y el
+            flap un ángulo de deflexión $\delta = -30\si{\degree}$}
     \end{figure}
 
     \paragraph*{}
@@ -4176,90 +4304,129 @@
     Poisson, de $aa_m = 20.5$ a $aa_m=21.5$.
 
     % relación (1:1) y (2:1) [x:y]
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_aspect_close}}
-
-        \subfigure[Vista
-          Completa $M=65$]{\label{fig:naca4415_m_65_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_m_65_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $M=65$]{\label{fig:naca4415_m_65_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_m_65_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo O con perfil NACA4415]{Aspect
-          ratio para malla tipo O con perfil NACA4415}
-        \label{fig:naca4415_aspect_0}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_n_65_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_n_65_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_n_65_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_n_65_aspect_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_aa_215_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_aa_215_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_aa_215_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_aa_215_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo O con perfil NACA4415]{Aspect
-          ratio para malla tipo O con perfil NACA4415}
-        \label{fig:naca4415_aspect_1}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_aspect_far}
+            \caption{Vista Completa}
+            \label{fig:naca4415_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_aspect_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_m_65_aspect_far}
+            \caption{Vista comprela $M=65$}
+            \label{fig:naca4415_m_65_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_m_65_aspect_close}
+            \caption{Acercamiento a perfil $M=65$}
+            \label{fig:naca4415_m_65_aspect_close}
+        \end{subfigure}
     \end{figure}
 
+    \begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_n_65_aspect_far}
+            \caption{Vista completa $N=65$}
+            \label{fig:naca4415_n_65_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_n_65_aspect_close}
+            \caption{Acercamiento a perfil $N=65$}
+            \label{fig:naca4415_n65_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_aa_215_aspect_far}
+            \caption{Vista completa $a=21.5$}
+            \label{fig:naca4415_aa_215_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_aa_215_aspect_close}
+            \caption{Acercamiento a perfil $a=21.5$}
+            \label{fig:naca4415_aa_215_aspect_close}
+        \end{subfigure}
+        \caption[Aspect ratio para malla tipo O con perfil NACA 4415]{Aspect
+            ratio para malla tipo O con perfil NACA 4415}
+    \end{figure}
 
     % relación (1:1) y (2:1) [x:y]
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_skew_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_skew_close}}
-
-        \subfigure[Vista
-          Completa $M=65$]{\label{fig:naca4415_m_65_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_m_65_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $M=65$]{\label{fig:naca4415_m_65_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_m_65_skew_close}}
-
-        \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
-          tipo O con perfil NACA4415}
-        \label{fig:naca4415_skew_0}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_skew_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_skew_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_skew_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_m_65_skew_far}
+            \caption{Vista completa $M=65$}
+            \label{fig:naca4415_m_65_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_m_65_skew_close}
+            \caption{Acercamiento a perfil $M=65$}
+            \label{fig:naca4415_m_65_skew_close}
+        \end{subfigure}
+        \caption{Skew pata malla tipo O con perfil NACA 4415}
     \end{figure}
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_n_65_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_n_65_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_n_65_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_n_65_skew_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_aa_215_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_aa_215_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_aa_215_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_aa_215_skew_close}}
-
-        \caption[Skew para malla tipo O con perfil NACA4415]{Skew para malla
-          tipo O con perfil NACA4415}
-        \label{fig:naca4415_skew_1}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_n_65_skew_far}
+            \caption{Vista completa $N=65$}
+            \label{fig:naca4415_n_65_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_n_65_skew_close}
+            \caption{Acercamiento a perfil $N=65$}
+            \label{fig:naca4415_n_65_skew_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_aa_215_skew_far}
+            \caption{Vista completa $a=21.5$}
+            \label{fig:naca4415_aa_215_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_aa_215_skew_close}
+            \caption{Acercamiento a perfil $a = 21.5$}
+            \label{fig:naca4415_aa_215_skew_close}
+        \end{subfigure}
+        \caption{Skew para malla tipo O con perfil NACA 4415}
     \end{figure}
 
     \paragraph*{}
@@ -4272,87 +4439,128 @@
     figuras~\ref{fig:naca4415_flap_skew_0} y~\ref{fig:naca4415_flap_skew_1}
     presentan el skew de la malla.
 
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_flap_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_flap_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_aspect_close}}
-
-        \subfigure[Vista
-          Completa $M=123$]{\label{fig:naca4415_flap_m_123_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_m_123_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $M=123$]{\label{fig:naca4415_flap_m_123_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_m_123_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo O con perfil y flap NACA4415]{Aspect
-          ratio para malla tipo O con perfil y flap NACA4415}
-        \label{fig:naca4415_flap_aspect_0}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/naca4415_flap_aspect_far}
+            \caption{Vista Completa}
+            \label{fig:naca4415_flap_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_aspect_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_flap_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_m_123_aspect_far}
+            \caption{Vista completa $M = 123$}
+            \label{fig:naca4415_flap_m_123_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_m_123_aspect_close}
+            \caption{Acercamiento a perfil $M = 123$}
+        \end{subfigure}
+        \caption{Aspect ratio para malla tipo O con perfil y flap NACA 4415}
     \end{figure}
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_flap_n_65_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_n_65_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_flap_n_65_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_n_65_aspect_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_flap_aa_215_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_aa_215_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_flap_aa_215_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_aa_215_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo O con perfil y flap NACA4415]{Aspect
-          ratio para malla tipo O con perfil y flap NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_n_65_aspect_far}
+            \caption{Vista completa $N = 65$}
+            \label{fig:naca4415_flap_n_65_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_n_65_aspect_close}
+            \caption{Acercamiento a perfil $N = 65$}
+            \label{fig:naca4415_flap_n_65_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_aa_215_aspect_far}
+            \caption{Vista completa $a=21.5$}
+            \label{fig:naca4415_flap_aa_215_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_aa_215_aspect_close}
+            \caption{Acercamiento a perfil $a = 21.5$}
+            \label{fig:naca4415_flap_aa_215_aspect_close}
+        \end{subfigure}
+        \caption{Aspect ratio para malla tipo O con perfil y flap NACA 4415}
         \label{fig:naca4415_flap_aspect_1}
     \end{figure}
 
-    \begin{figure}[H]
-        \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_flap_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_skew_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_flap_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_skew_close}}
-
-        \subfigure[Vista
-          Completa $M=123$]{\label{fig:naca4415_flap_m_123_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_m_123_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $M=123$]{\label{fig:naca4415_flap_m_123_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_m_123_skew_close}}
-
-        \caption[Skew para malla tipo O con perfil y flap NACA4415]{Skew para malla
-          tipo O con perfil y flap NACA4415}
+    \begin{figure}[htbp!]
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_skew_far}
+            \caption{Vista Completa}
+            \label{fig:naca4415_flap_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_skew_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_flap_skew_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_m_123_skew_far}
+            \caption{Vista completa $M = 123$}
+            \label{fig:naca4415_flap_m_123_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_m_123_skew_close}
+            \caption{Acercamiento a perfil $M = 123$}
+            \label{fig:naca4415_flap_m_123_skew_close}
+        \end{subfigure}
+        \caption{Skew para malla tipo O con perfil y flap NACA 4415}
         \label{fig:naca4415_flap_skew_0}
     \end{figure}
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_flap_n_65_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_n_65_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_flap_n_65_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_n_65_skew_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_flap_aa_215_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_aa_215_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_flap_aa_215_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_flap_aa_215_skew_close}}
-
-        \caption[Skew para malla tipo O con perfil y flap NACA4415]{Skew para malla
-          tipo O con perfil y flap NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_n_65_skew_far}
+            \caption{Vista completa $N=65$}
+            \label{fig:naca4415_flap_n_65_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_n_65_skew_close}
+            \caption{Acercamiento a perfil $N=65$}
+            \label{fig:naca4415_flap_n_65_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_aa_215_skew_far}
+            \caption{Vista completa $a=21.5$}
+            \label{fig:naca4415_flap_aa_215_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_flap_aa_215_skew_close}
+            \caption{Acercamiento a perfil $a=21.5$}
+            \label{fig:naca4415_flap_aa_215_skew_close}
+        \end{subfigure}
+        \caption{Skew para malla tipo O con perfil y flap NACA 4415}
         \label{fig:naca4415_flap_skew_1}
     \end{figure}
 
@@ -4360,94 +4568,136 @@
     La tabla~\ref{tabla_c_naca_4415} corresponde a una malla tipo C con un
     perfil NACA 4415, se analizan el aspect ratio y el skew de
     la misma, haciendo variaciones en los parámetros que la definen. Los cambios
-    realizados son $M$ de $M=73$ a $M=93$, $N$ de $N=45$ a $N=65$ y $aa_{m}$ de
+    realizados son $M$ de $M=73$ a $M=91$, $N$ de $N=45$ a $N=65$ y $aa_{m}$ de
     $aa_{m} = 20.5$ a $aa_{m}=21.5$. Las gráficas de las
     figuras~\ref{fig:naca4415_c_aspect_0} y~\ref{fig:naca4415_c_aspect_1}
     corresponden al efecto que tienen los parámetros en el aspect ratio,
     mientras que las figuras~\ref{fig:naca4415_c_skew_0}
     y~\ref{fig:naca4415_c_skew_1} corresponde al skew de las celdas.
 
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_c_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_c_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_aspect_close}}
-
-        \subfigure[Vista
-          Completa $M=91$]{\label{fig:naca4415_c_m_91}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_m_91_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $M=91$]{\label{fig:naca4415_c_m_91}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_m_91_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo C con perfil NACA4415]{Aspect
-          ratio para malla tipo C con perfil NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_aspect_far}
+            \caption{Vista Completa}
+            \label{fig:naca4415_c_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_aspect_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_c_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_m_91_aspect_far}
+            \caption{Vista completa $M=91$}
+            \label{fig:naca4415_c_m_91_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_m_91_aspect_close}
+            \caption{Acercamiento a perfil $M=91$}
+            \label{fig:naca4415_c_m_91_aspect_close}
+        \end{subfigure}
+        \caption{Aspect ratio para malla tipo C con perfil NACA 4415}
         \label{fig:naca4415_c_aspect_0}
     \end{figure}
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_c_n_65_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_n_65_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_c_n_65_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_n_65_aspect_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_c_aa_215_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_aa_215_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_c_aa_215_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_aa_215_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo C con perfil NACA4415]{Aspect
-          ratio para malla tipo C con perfil NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_n_65_aspect_far}
+            \caption{Vista completa $N=65$}
+            \label{fig:naca4415_c_n_65_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_n_65_aspect_close}
+            \caption{Acercamiento a perfil $N=65$}
+            \label{fig:naca4415_c_n_65_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_aa_215_aspect_far}
+            \caption{Vista completa $a=21.5$}
+            \label{fig:naca4415_c_aa_215_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_aa_215_aspect_close}
+            \caption{Acercamiento a perfil $a=21.5$}
+            \label{fig:naca4415_c_aa_215_aspect_close}
+        \end{subfigure}
+        \caption{Aspect ratio para malla tipo C con perfil NACA 4415}
         \label{fig:naca4415_c_aspect_1}
     \end{figure}
 
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_c_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_skew_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_c_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_skew_close}}
-
-        \subfigure[Vista
-          Completa $M=91$]{\label{fig:naca4415_c_m_91_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_m_91_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $M=91$]{\label{fig:naca4415_c_m_91_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_m_91_skew_close}}
-
-        \caption[Skew para malla tipo C con perfil NACA4415]{Skew para malla
-          tipo C con perfil NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_skew_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_c_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_skew_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_c_skew_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_m_91_skew_far}
+            \caption{Vista completa $M = 91$}
+            \label{fig:naca4415_c_m_91_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_m_91_skew_close}
+            \caption{Acercamiento a perfil $M = 91$}
+            \label{fig:naca4415_c_m_91_skew_close}
+        \end{subfigure}
+        \caption{Skew para malla tipo C con perfil NACA 4415}
         \label{fig:naca4415_c_skew_0}
     \end{figure}
-    \begin{figure}[H]
-        \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_c_n_65_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_n_65_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_c_n_65_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_n_65_skew_close}}
 
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_c_aa_215_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_aa_215_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_c_aa_215_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_aa_215_skew_close}}
-
-        \caption[Skew para malla tipo C con perfil NACA4415]{Skew para malla
-          tipo C con perfil NACA4415}
+    \begin{figure}[htbp!]
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width = 0.99\textwidth]
+                {./img/naca4415_c_n_65_skew_far}
+            \caption{Vista completa $N=65$}
+            \label{fig:naca4415_c_n_65_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_n_65_skew_close}
+            \caption{Acercamiento a perfil $N = 65$}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_aa_215_skew_far}
+            \caption{Vista completa $a = 21.5$}
+            \label{fig:naca4415_c_aa_215_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_aa_215_skew_close}
+            \caption{Acercamiento a perfil $a = 21.5$}
+            \label{fig:naca4415_c_aa_215_skew_close}
+        \end{subfigure}
+        \caption{Skew para malla tipo C con perfil NACA 4415}
         \label{fig:naca4415_c_skew_1}
     \end{figure}
 
@@ -4460,91 +4710,132 @@
     respectivamente. Los cambios realizados son $M$ de $M=163$ a $M=193$, $N$
     de $N=45$ a $N=65$ y $aa_{m}$ de $aa_{m} = 20.5$ a $aa_{m}=21.5$.
 
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_c_flap_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_c_flap_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_aspect_close}}
-
-        \subfigure[Vista
-          Completa $M=193$]{\label{fig:naca4415_c_flap_m_193_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_m_193_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $M=193$]{\label{fig:naca4415_c_flap_m_193_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_m_193_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo C con perfil y flap NACA4415]{Aspect
-          ratio para malla tipo C con perfil y flap NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_aspect_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_c_flap_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_aspect_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_c_flap_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_m_193_aspect_far}
+            \caption{Vista Completa $M = 193$}
+            \label{fig:naca4415_c_flap_m_193_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_m_193_aspect_close}
+            \caption{Acercamiento a perfil $M = 193$}
+            \label{fig:naca4415_c_flap_m_193_aspect_close}
+        \end{subfigure}
+        \caption{Aspect ratio para malla tipo C con perfil y flap NACA 4415}
         \label{fig:naca4415_c_flap_aspect_0}
     \end{figure}
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_c_flap_n_65_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_n_65_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_c_flap_n_65_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_n_65_aspect_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_c_flap_aa_215_aspect_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_aa_215_aspect_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_c_flap_aa_215_aspect_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_aa_215_aspect_close}}
-
-        \caption[Aspect ratio para malla tipo C con perfil y flap NACA4415]{Aspect
-          ratio para malla tipo C con perfil y flap NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_n_65_aspect_far}
+            \caption{Vista completa $N = 65$}
+            \label{fig:naca4415_c_flap_n_65_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_n_65_aspect_close}
+            \caption{Acercamiento a perfil $N = 65$}
+            \label{fig:naca4415_c_flap_n_65_aspect_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_aa_215_aspect_far}
+            \caption{Vista completa $a = 21.5$}
+            \label{fig:naca4415_c_flap_aa_215_aspect_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_aa_215_aspect_close}
+            \caption{Acercamiento a perfil $a = 21.5$}
+            \label{fig:naca4415_c_flap_aa_215_aspect_close}
+        \end{subfigure}
+        \caption{Aspect ratio para mallat tipo C con perfil y flap NACA 4415}
         \label{fig:naca4415_c_flap_aspect_1}
     \end{figure}
 
-    \begin{figure}[H]
+    \begin{figure}[htbp!]
         \centering
-
-        \subfigure[Vista
-          Completa]{\label{fig:naca4415_c_flap_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_skew_far}}
-        \subfigure[Acercamiento a
-          perfil]{\label{fig:naca4415_c_flap_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_skew_close}}
-
-        \subfigure[Vista
-          Completa $M=193$]{\label{fig:naca4415_c_flap_m_193_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_m_193_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $M=193$]{\label{fig:naca4415_c_flap_m_193_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_m_193_skew_close}}
-
-        \caption[Skew para malla tipo C con perfil y flap NACA4415]{Skew para
-          malla tipo C con perfil y flap NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_skew_far}
+            \caption{Vista completa}
+            \label{fig:naca4415_c_flap_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_skew_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:naca4415_c_flap_skew_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_m_193_skew_far}
+            \caption{Vista completa $M = 193$}
+            \label{fig:naca4415_c_flap_m_193_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_m_193_skew_close}
+            \caption{Acercamiento a perfil $M = 193$}
+        \end{subfigure}
+        \caption{Skew para malla tipo C con perfil y flap NACA 4415}
         \label{fig:naca4415_c_flap_skew_0}
     \end{figure}
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista
-          Completa $N=65$]{\label{fig:naca4415_c_flap_n_65_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_n_65_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $N=65$]{\label{fig:naca4415_c_flap_n_65_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_n_65_skew_close}}
-
-        \subfigure[Vista
-          Completa $a=21.5$]{\label{fig:naca4415_c_flap_aa_215_skew_far}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_aa_215_skew_far}}
-        \subfigure[Acercamiento a
-          perfil $a=21.5$]{\label{fig:naca4415_c_flap_aa_215_skew_close}\includegraphics[keepaspectratio,
-            width=0.49\textwidth]{./Imagenes/naca4415_c_flap_aa_215_skew_close}}
-
-        \caption[Skew para malla tipo C con perfil y flap NACA4415]{Skew para
-          malla tipo C con perfil y flap NACA4415}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_n_65_skew_far}
+            \caption{Vista completa $N = 65$}
+            \label{fig:naca4415_c_flap_n_65_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_n_65_skew_close}
+            \caption{Acercamiento a perfil $N = 65$}
+            \label{fig:naca4415_c_flap_n_65_skew_close}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_aa_215_skew_far}
+            \caption{Vista completa $a = 21.5$}
+            \label{fig:naca4415_c_flap_aa_215_skew_far}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/naca4415_c_flap_aa_215_skew_close}
+            \caption{Acercamiento a perfil $a = 21.5$}
+            \label{fig:naca4415_c_flap_aa_215_skew_close}
+        \end{subfigure}
+        \caption{Skew para malla tipo C con perfil y flap NACA 4415}
         \label{fig:naca4415_c_flap_skew_1}
     \end{figure}
-
-
 
     \goodbreak\pagebreak
     \section{Análisis de DFC}
@@ -4582,7 +4873,7 @@
     acercamiento a la zona del perfil aerodinámico.
 
     \paragraph*{}
-    Las figuras~\ref{fig:potential_flow_cp_0} y~\ref{fig:potential_flow_cp_1}
+    Las figuras~\ref{fig:potential_flow_cp__0} y~\ref{fig:potential_flow_cp__1}
     muestran el campo de presiones generado alrededor del perfil alar para
     todos los ángulos de ataque estudiados. Por su parte, las
     figuras~\ref{fig:potential_flow_stream_0}
@@ -4606,105 +4897,168 @@
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista Completa]{\label{fig:potential_flow_mesh_far}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_mesh_far}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_mesh_far}
+            \caption{Vista completa}
+            \label{fig:potential_flow_mesh_far}
+        \end{subfigure}
         \hfill
-          \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_mesh_close}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_mesh_close}}
-        \caption{Malla generada para el análisis de flujo potencial de perfil
-        NACA 0012}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_mesh_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:potential_flow_mesh_close}
+        \end{subfigure}
+        \caption{Malla generada para el análisis de flujo potencial. Perfil
+            NACA 0012}
         \label{fig:potential_flow_mesh}
     \end{figure}
 
-    \begin{figure}[H]
-        \subfigure[Vista Completa]{\label{fig:potential_flow_potential_far}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_potential_far}}
+    \begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_potential_far}
+            \caption{Vista Completa}
+            \label{fig:potential_flow_potential_far}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_potential_close}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_potential_close}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_potential_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:potential_flow_potential}
+        \end{subfigure}
         \caption{Líneas equipotenciales para $\alpha = 0\si{\degree}$
-        del análisis de flujo potencial de perfil NACA 0012}
+            del análisis de flujo potencial de perfil NACA 0012}
         \label{fig:potential_flow_potential}
     \end{figure}
 
-    \begin{figure}[H]%[htbp!]
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_cp_-4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_-4}}
-      \hfill
-      \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_cp_-2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_-2}}
-      \subfigure[$\alpha = 0\si{\degree}$]{\label{fig:potential_flow_cp_0_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_0}}
-      \hfill
-      \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_cp_2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_2}}
-    \end{figure}
-
-    \begin{figure}[H]%[htbp!]
-        \centering
-        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_cp_-4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_-4}}
-      \hfill
-      \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_cp_-2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_-2}}
-      \subfigure[$\alpha = 0\si{\degree}$]{\label{fig:potential_flow_cp_0_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_0}}
-      \hfill
-      \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_cp_2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_2}}
-        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_cp_4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_cp_4}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_-4}
+            \caption{$\alpha = -4\si{\degree}$}
+            \label{fig:potential_flow_cp-4}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_cp_6}\includegraphics[keepaspectratio,
-          width=0.48\textwidth]{./Imagenes/potential_flow_cp_6}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_-2}
+            \caption{$\alpha = -2\si{\degree}$}
+            \label{fig:potential_flow_cp_-2}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_0}
+            \caption{$\alpha = 0\si{\degree}$}
+            \label{fig:potential_flow_cp_0}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_2}
+            \caption{$\alpha = 2\si{\degree}$}
+            \label{fig:potential_flow_cp_2}
+        \end{subfigure}
         \caption{Campo de presiones alrededor de perfil NACA 0012}
-        \label{fig:potential_flow_cp_0}
-    \end{figure}
-    \begin{figure}[htpb!]
-        \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_cp_8}\includegraphics[keepaspectratio,
-          width=0.48\textwidth]{./Imagenes/potential_flow_cp_8}}
-        \hfill
-        \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_cp_10}\includegraphics[keepaspectratio,
-          width=0.48\textwidth]{./Imagenes/potential_flow_cp_10}}
-      \caption{Campo de presiones alrededor de perfil NACA 0012}
-        \label{fig:potential_flow_cp_1}
+        \label{fig:potential_flow_cp__0}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_stream_-4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_-4_}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_4}
+            \caption{$\alpha = 4\si{\degree}$}
+            \label{fig:potential_flow_cp_4}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_stream_-2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_-2_}}
-        \subfigure[$\alpha =
-          0\si{\degree}$]{\label{fig:potential_flow_stream_0_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_0_}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_6}
+            \caption{$\alpha = 6\si{\degree}$}
+            \label{fig:potential_flow_cp_6}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_8}
+            \caption{$\alpha = 8\si{\degree}$}
+            \label{fig:potential_flow_cp_8}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_stream_2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_2_}}
-        \subfigure[$\alpha =
-          4\si{\degree}$]{\label{fig:potential_flow_stream_4_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_4_}}
-        \hfill
-        \subfigure[$\alpha =
-          6\si{\degree}$]{\label{fig:potential_flow_stream_6_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_6_}}
-        \caption{Líneas de corriente alrededor de perfil NACA 0012}
-        \label{fig:potential_flow_stream_0}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_cp_10}
+            \caption{$\alpha = 10\si{\degree}$}
+        \end{subfigure}
+        \caption{Campo de presiones alrededor de perfil NACA 0012}
+        \label{fig:potential_flow_cp__1}
     \end{figure}
 
     \begin{figure}[htbp!]
-        \subfigure[$\alpha =
-          8\si{\degree}$]{\label{fig:potential_flow_stream_8_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_8_}}
+        \centering
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_-4}
+            \caption{$\alpha = -4\si{\degree}$}
+            \label{fig:potential_flow_cp-4}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha =
-          10\si{\degree}$]{\label{fig:potential_flow_stream_10}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_stream_10_}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_-2}
+            \caption{$\alpha = -2\si{\degree}$}
+            \label{fig:potential_flow_stream_-2}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_0}
+            \caption{$\alpha = 0\si{\degree}$}
+            \label{fig:potential_flow_stream_0}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_2}
+            \caption{$\alpha = 2\si{\degree}$}
+            \label{fig:potential_flow_stream_2}
+        \end{subfigure}
         \caption{Líneas de corriente alrededor de perfil NACA 0012}
-        \label{fig:potential_flow_stream_1}
+        \label{fig:potential_flow_stream__0}
+    \end{figure}
+
+    \begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_4}
+            \caption{$\alpha = 4\si{\degree}$}
+            \label{fig:potential_flow_stream_4}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_6}
+            \caption{$\alpha = 6\si{\degree}$}
+            \label{fig:potential_flow_stream_6}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_8}
+            \caption{$\alpha = 8\si{\degree}$}
+            \label{fig:potential_flow_stream_8}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_stream_10}
+            \caption{$\alpha = 10\si{\degree}$}
+        \end{subfigure}
+        \caption{Líneas de corriente alrededor de perfil NACA 0012}
+        \label{fig:potential_flow_stream__1}
     \end{figure}
 
     \paragraph*{}
@@ -4713,7 +5067,7 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio,
-            width=0.8\textwidth]{./Imagenes/potential_flow_cps}
+            width=0.8\textwidth]{./img/potential_flow_cps}
         \caption[Coeficiente de presión a lo largo de la cuerda de perfil
         NACA 0012]
         {Coeficiente de presión a lo largo de la cuerda de perfil NACA 0012
@@ -4735,7 +5089,7 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio,
-            width=0.55\textwidth]{./Imagenes/potential_flow_cl}
+            width=0.48\textwidth]{./img/potential_flow_cl}
         \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque
             para perfil NACA 0012}\label{fig:potential_flow_cl}
     \end{figure}
@@ -4759,84 +5113,159 @@
     por la teoría.
 
     \paragraph*{}
-    A su vez, las figuras~\ref{fig:potential_flow_2412_cp_0}
-    y~\ref{fig:potential_flow_2412_cp_1} presentan el campo de presiones que se
-    genera alrededor del perfil para diferentes ángulos de ataque. Por otro
-    lado las figuras~\ref{fig:potential_flow_2412_stream_0}
-    y~\ref{fig:potential_flow_2412_stream_1} muestran las líneas de corriente
+    A su vez, las figuras~\ref{fig:potential_flow_2412_cp__0}
+    y~\ref{fig:potential_flow_2412_cp__1} presentan el campo de presiones que
+    se genera alrededor del perfil para diferentes ángulos de ataque. Por otro
+    lado las figuras~\ref{fig:potential_flow_2412_stream__0}
+    y~\ref{fig:potential_flow_2412_stream__1} muestran las líneas de corriente
     del flujo para los mismos ángulos de ataque.
 
-    \begin{figure}[H]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[Vista Completa]{\label{fig:potential_flow_2412_potential_far}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_potential_far}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_potential_far}
+            \caption{Vista Completa}
+            \label{fig:potential_flow_2412_potential_far}
+        \end{subfigure}
         \hfill
-        \subfigure[Acercamiento a perfil]{\label{fig:potential_flow_2412_potential_close}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_potential_close}}
-        \caption{Lineas equipotenciales para $\alpha = 0\si{\degree}$ para
-          perfil NACA 2412}\label{fig:potential_flow_2412_potential}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_potential_close}
+            \caption{Acercamiento a perfil}
+            \label{fig:potential_flow_2412_potential}
+        \end{subfigure}
+        \caption{Líneas equipotenciales para $\alpha = 0\si{\degree}$
+            del análisis de flujo potencial de perfil NACA 2412}
+        \label{fig:potential_flow_2412_potential}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_2412_cp_-4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_-4}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_-4}
+            \caption{$\alpha = -4\si{\degree}$}
+            \label{fig:potential_flow_2412_cp-4}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_2412_cp_-2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_-2}}
-        \subfigure[$\alpha =
-          0\si{\degree}$]{\label{fig:potential_flow_2412_cp_0_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_0}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_-2}
+            \caption{$\alpha = -2\si{\degree}$}
+            \label{fig:potential_flow_2412_cp_-2}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_0}
+            \caption{$\alpha = 0\si{\degree}$}
+            \label{fig:potential_flow_2412_cp_0}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_2412_cp_2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_2}}
-        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_2412_cp_4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_4}}
-        \hfill
-        \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_2412_cp_6}\includegraphics[keepaspectratio,
-          width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_6}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_2}
+            \caption{$\alpha = 2\si{\degree}$}
+            \label{fig:potential_flow_2412_cp_2}
+        \end{subfigure}
         \caption{Campo de presiones alrededor de perfil NACA 2412}
-        \label{fig:potential_flow_2412_cp_0}
+        \label{fig:potential_flow_2412_cp__0}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_2412_cp_8}\includegraphics[keepaspectratio,
-          width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_8}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_4}
+            \caption{$\alpha = 4\si{\degree}$}
+            \label{fig:potential_flow_2412_cp_4}
+        \end{subfigure}
         \hfill
-        \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_2412_cp_10}\includegraphics[keepaspectratio,
-          width=0.48\textwidth]{./Imagenes/potential_flow_2412_cp_10}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_6}
+            \caption{$\alpha = 6\si{\degree}$}
+            \label{fig:potential_flow_2412_cp_6}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_8}
+            \caption{$\alpha = 8\si{\degree}$}
+            \label{fig:potential_flow_2412_cp_8}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_cp_10}
+            \caption{$\alpha = 10\si{\degree}$}
+        \end{subfigure}
         \caption{Campo de presiones alrededor de perfil NACA 2412}
-        \label{fig:potential_flow_2412_cp_1}
+        \label{fig:potential_flow_2412_cp__1}
     \end{figure}
 
-    \begin{figure}[H]%[htbp!]
+
+    \begin{figure}[htbp!]
         \centering
-        \subfigure[$\alpha = -4\si{\degree}$]{\label{fig:potential_flow_2412_stream_-4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_-4}}
-          \subfigure[$\alpha = -2\si{\degree}$]{\label{fig:potential_flow_2412_stream_-2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_-2}}
-          \subfigure[$\alpha =
-          0\si{\degree}$]{\label{fig:potential_flow_2412_stream_0_}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_0}}
-          \subfigure[$\alpha = 2\si{\degree}$]{\label{fig:potential_flow_2412_stream_2}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_2}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_-4}
+            \caption{$\alpha = -4\si{\degree}$}
+            \label{fig:potential_flow_2412_cp-4}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_-2}
+            \caption{$\alpha = -2\si{\degree}$}
+            \label{fig:potential_flow_2412_stream_-2}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_0}
+            \caption{$\alpha = 0\si{\degree}$}
+            \label{fig:potential_flow_2412_stream_0}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_2}
+            \caption{$\alpha = 2\si{\degree}$}
+            \label{fig:potential_flow_2412_stream_2}
+        \end{subfigure}
         \caption{Líneas de corriente alrededor de perfil NACA 2412}
-        \label{fig:potential_flow_2412_stream_0}
+        \label{fig:potential_flow_2412_stream__0}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[$\alpha = 4\si{\degree}$]{\label{fig:potential_flow_2412_stream_4}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_4}}
-          \subfigure[$\alpha = 6\si{\degree}$]{\label{fig:potential_flow_2412_stream_6}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_6}}
-          \subfigure[$\alpha = 8\si{\degree}$]{\label{fig:potential_flow_2412_stream_8}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_8}}
-          \subfigure[$\alpha = 10\si{\degree}$]{\label{fig:potential_flow_2412_stream_10}\includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./Imagenes/potential_flow_2412_stream_10}}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_4}
+            \caption{$\alpha = 4\si{\degree}$}
+            \label{fig:potential_flow_2412_stream_4}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_6}
+            \caption{$\alpha = 6\si{\degree}$}
+            \label{fig:potential_flow_2412_stream_6}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_8}
+            \caption{$\alpha = 8\si{\degree}$}
+            \label{fig:potential_flow_2412_stream_8}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/potential_flow_2412_stream_10}
+            \caption{$\alpha = 10\si{\degree}$}
+        \end{subfigure}
         \caption{Líneas de corriente alrededor de perfil NACA 2412}
-        \label{fig:potential_flow_2412_stream_1}
+        \label{fig:potential_flow_2412_stream__1}
     \end{figure}
 
     \paragraph*{}
@@ -4848,19 +5277,19 @@
     \begin{figure}[H]%[htbp!]
         \centering
         \includegraphics[keepaspectratio,
-            width=0.55\textwidth]{./Imagenes/potential_flow_2412_cps}
-        \caption[Coeficiente de presión a lo largo de la cuerda de perfil NACA 2412]
-        {Coeficiente de presión a lo largo de la cuerda de perfil NACA 2412 para
-            diferentes ángulos de ataque}
+            width=0.55\textwidth]{./img/potential_flow_2412_cps}
+        \caption[Coeficiente de presión a lo largo de la cuerda de perfil NACA
+            2412]{Coeficiente de presión a lo largo de la cuerda de perfil
+            NACA 2412 para diferentes ángulos de ataque}
         \label{fig:potential_flow_2412_cp_dist}
     \end{figure}
 
     \begin{figure}[H]%[htbp!]
         \centering
         \includegraphics[keepaspectratio,
-            width=0.55\textwidth]{./Imagenes/potential_flow_2412_cl}
-        \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque para
-            perfil NACA 2412}
+            width=0.48\textwidth]{./img/potential_flow_2412_cl}
+        \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque
+            para perfil NACA 2412}
         \label{fig:potential_flow_2412_cl}
     \end{figure}
 
@@ -4946,99 +5375,123 @@
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Campo de
-        presión]{\label{fig:mc_cp_0}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]
-        {./Imagenes/su2/mc_cp_alfa_0.png}}
-        % \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Campo de
-        velocidad]{\label{fig:mc_vel_0}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]{./Imagenes/su2/mc_vel_alfa_0.png}}
-        \caption[Resultados de simulaciones para malla C]{Resultados de la
-        simulación en SU2 con una malla tipo C de un perfil NACA 0012 con
-        ángulo de ataque $\alpha = 0\si{\degree}$}
-        \label{fig:mc_su2_0}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mc_cp_alfa_0}
+            \caption{Campo de presión}
+            \label{fig:mc_cp_o}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mc_vel_alfa_0}
+            \caption{Campo de velocidad}
+            \label{fig:mc_vel_0}
+        \end{subfigure}
+        \caption[Resultados de simulaciones para malla C en SU2]{Resultados
+            de la simulación en SU2 con una malla tipo C de un perfil NACA 0012
+            con ángulo de ataque $\alpha = 0\si{\degree}$}
+        \label{fig:mc_su2_o}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Campo de
-        presión]{\label{fig:mc_cp_10}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]
-        {./Imagenes/su2/mc_cp_alfa_10.png}}
-        % \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Campo de
-        velocidad]{\label{fig:mc_vel_10}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]{./Imagenes/su2/mc_vel_alfa_10.png}}
-        \caption[Resultados de simulaciones para malla C]{Resultados de la
-        simulación en SU2 con una malla tipo C de un perfil NACA 0012 con
-        ángulo de ataque $\alpha = 10\si{\degree}$}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mc_cp_alfa_10}
+            \caption{Campo de presión}
+            \label{fig:mc_cp_10}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mc_vel_alfa_10}
+            \caption{Campo de velocidad}
+            \label{fig:mc_vel_10}
+        \end{subfigure}
+        \caption[Resultados de simulaciones para malla tipo C en
+            SU2]{Resultados de la simulación en SU2 con una malla tipo C de un
+            perfil NACA 0012 con ángulo de ataque $\alpha = 10\si{\degree}$}
         \label{fig:mc_su2_10}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Campo de
-        presión]{\label{fig:mo_cp_0}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]
-        {./Imagenes/su2/mo_cp_alfa_0.png}}
-        % \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Campo de
-        velocidad]{\label{fig:mo_vel_0}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]{./Imagenes/su2/mo_vel_alfa_0.png}}
-        \caption[Resultados de simulaciones para malla C]{Resultados de la
-        simulación en SU2 con una malla tipo O de un perfil NACA 0012 con
-        ángulo de ataque $\alpha = 0\si{\degree}$}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mo_cp_alfa_0}
+            \caption{Campo de presión}
+            \label{fig:mo_cp_0}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mo_vel_alfa_0}
+            \caption{Campo de velocidad}
+            \label{fig:mo_vel_0}
+        \end{subfigure}
+        \caption[Resultados de simulaciones para malla O en SU2]{Resultados
+            de la simulación en SU2 con una malla tipo O de un perfil NACA 0012
+            con ángulo de ataque $\alpha = 0\si{\degree}$}
         \label{fig:mo_su2_0}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Campo de
-        presión]{\label{fig:mo_cp_10}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]
-        {./Imagenes/su2/mo_cp_alfa_10.png}}
-        % \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Campo de
-        velocidad]{\label{fig:mo_vel_10}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]{./Imagenes/su2/mo_vel_alfa_10.png}}
-        \caption[Resultados de simulaciones para malla C]{Resultados de la
-        simulación en SU2 con una malla tipo O de un perfil NACA 0012 con
-        ángulo de ataque $\alpha = 10\si{\degree}$}
-        \label{fig:mo_su2_10}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mo_cp_alfa_10}
+            \caption{Campo de presión}
+            \label{fig:mo_cp_10}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mo_vel_alfa_10}
+            \caption{Campo de velocidad}
+            \label{fig:mo_vel_10}
+        \end{subfigure}
+        \caption[Resultados de simulaciones para malla O en SU2]{Resultados de
+            la simulación en SU2 con una malla tipo O de un perfil NACA 0012
+            con ángulo de ataque $\alpha = 10\si{\degree}$}
+            \label{fig:mo_su2_10}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Campo de
-        presión]{\label{fig:mc_flap_cp_0}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]
-        {./Imagenes/su2/mc_flap_cp_alfa_0.png}}
-        % \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Campo de
-        velocidad]{\label{fig:mc_flap_vel_0}\includegraphics[keepaspectratio,
-        width=0.75\textwidth]{./Imagenes/su2/mc_flap_vel_alfa_0.png}}
-        \caption[Resultados de simulaciones para malla C]{Resultados de la
-        simulación en SU2 con una malla tipo C de un perfil NACA 0012 con
-        ángulo de ataque $\alpha = 0\si{\degree}$ y un flap con deflexión
-        $\delta = 15\si{\degree}$}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mc_flap_cp_alfa_0}
+            \caption{Campo de presión}
+            \label{fig:mc_flap_cp_0}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mc_flap_vel_alfa_0}
+            \caption{Campo de velocidad}
+            \label{fig:mc_flap_vel_0}
+        \end{subfigure}
+        \caption[Resultados de simulaciones para malla C con perfil y
+            flap]{Resultados de la simulación en SU2 con una malla tipo C de
+            un perfil NACA 0012 con ángulo de ataque $\alpha = 0\si{\degree}$ y
+            un flap con deflexión $\delta = 15\si{\degree}$}
         \label{fig:mc_flap_su2_0}
     \end{figure}
 
     \begin{figure}[htbp!]
         \centering
-        \subfigure[Campo de
-        presión]{\label{fig:mo_flap_cp_0}\includegraphics[keepaspectratio,
-        width=150mm]
-        {./Imagenes/su2/mo_flap_cp_alfa_0.png}}
-        % \hspace{20mm} %marca separación entre subfiguras
-        \subfigure[Campo de
-        velocidad]{\label{fig:mo_flap_vel_0}\includegraphics[keepaspectratio,
-        width=150mm]{./Imagenes/su2/mo_flap_vel_alfa_0.png}}
-        \caption[Resultados de simulaciones para malla C]{Resultados de la
-        simulación en SU2 con una malla tipo O de un perfil NACA 0012 con
-        ángulo de ataque $\alpha = 0\si{\degree}$ y un flap con deflexión
-        $\delta = 15\si{\degree}$}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mo_flap_cp_alfa_0}
+            \caption{Campo de presión}
+            \label{fig:mo_flap_cp_0}
+        \end{subfigure}
+        \begin{subfigure}[c]{0.48\textwidth}
+            \includegraphics[keepaspectratio, width=0.99\textwidth]
+                {./img/su2/mo_flap_vel_alfa_0}
+            \caption{Campo de velocidad}
+            \label{fig:mo_flap_vel_0}
+        \end{subfigure}
+        \caption[Resultados de simaluciones para malla O con perfil y
+            flap]{Resultados de la simulación en SU2 con una malla tipo O de un
+            perfil NACA 0012 con ángulo de ataque $\alpha = 0\si{\degree}$ y un
+            flap con deflexión $\delta = 15\si{\degree}$}
         \label{fig:mo_flap_su2_0}
     \end{figure}
 
