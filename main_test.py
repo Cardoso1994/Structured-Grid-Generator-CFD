@@ -9,21 +9,21 @@ from mesh_c import mesh_C
 
 import mesh_su2
 from potential import potential_flow_o
-import helpers
+import util
 # tipo de malla (C, O)
-malla = 'C'
+malla = 'O'
 
 '''
 densidad de puntos para la malla
 eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
-N = 75
+N = 45
 union = 25
 
 # points = 11
 airfoil_points = 399 # 499
-airfoil_points = 109
+airfoil_points = 79
 
 if malla == 'C':
     points = airfoil_points // 3  # * 2
@@ -52,7 +52,8 @@ if malla == 'C':
 elif malla == 'O':
     mallaNACA = mesh_O(R, N, perfil)
 
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=18, cc=27, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.3, aa=18, cc=27, linea_eta=0)
+mallaNACA.gen_hyperbolic()
 mallaNACA.plot()
 
 mallaNACA.to_su2('/home/desarrollo/garbage/mesh_o.su2')

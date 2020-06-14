@@ -64,10 +64,12 @@ class mesh_C(mesh):
 
         m_ = np.shape(airfoil.x)[0] * 3 // 2
         if not airfoil.alone:
-            m_ -= 72
+            #m_ -= 72
+            m_ -= 2
             pass
         if m_ % 3 == 1:
-            m_ -= 28
+            # m_ -= 48
+            # m_ -= 18
             M = m_
         else:
             M = m_ - 1
@@ -225,11 +227,10 @@ class mesh_C(mesh):
                 i += 1
             union_start -= 1
 
-        it = 0
         # inicio del método iterativo
         mesh.it_max = 3000
         print("Laplace:")
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 1500 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -364,8 +365,6 @@ class mesh_C(mesh):
                 print('it =', it)
                 break
 
-            it += 1
-
         self.X = Xn
         self.Y = Yn
         return
@@ -439,12 +438,11 @@ class mesh_C(mesh):
                 i += 1
             union_start -= 1
 
-        it = 0
-        mesh.it_max = 45e3
+        mesh.it_max = 45000
 
         # inicio del método iterativo
         print("Poisson:")
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             # if (it % 10000 == 0):
             if (it % 5000 == 0):
                 self.X = np.copy(Xn)
@@ -591,7 +589,6 @@ class mesh_C(mesh):
                 print('it=', it)
                 break
 
-            it += 1
 
         self.X = Xn
         self.Y = Yn

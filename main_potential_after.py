@@ -75,13 +75,15 @@ plt.ylabel('cl')
 plt.legend(loc='upper left')
 ax.set_aspect(15)
 ax.grid(True)
+plt.savefig('/home/desarrollo/garbage/img_tst.png',
+            bbox_inches='tight', pad_inches=0.05)
 plt.show()
 
 mallaNACA = util.from_txt_mesh(filename=path
                               + '/mallaNACA_' + '8' +'.txt_mesh')
 
-map_ = 'jet'
-# map_ = 'viridis'
+# map_ = 'jet'
+map_ = 'viridis'
 cps = np.zeros((np.shape(mallaNACA.X)[0], len(alfas)))
 j = 0
 
@@ -103,26 +105,6 @@ for alfa in alfas:
     print('alfa = ' + alfa)
     print("L = " + str(L))
     print("D = " + str(D))
-
-    # plt.figure('potential')
-    # plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap=map_)
-    # plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-    # plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k')
-    # plt.axis('equal')
-
-    # plt.figure('pressure')
-    # plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-    # plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 180, cmap=map_)
-    # plt.colorbar()
-    # plt.axis('equal')
-
-    # plt.figure('streamlines')
-    # plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k')
-    # plt.contour(mallaNACA.X, mallaNACA.Y, np.real(psi), 195, cmap=map_)
-    # plt.axis('equal')
-
-    # plt.draw()
-    # plt.show()
     limits = [[-55.5, 55.5, -55.5, 55.5], [-1.25, 1.25, -0.8, 0.8]]
     # for limit in limits:
     #     fig = plt.figure('malla_aspect')
@@ -136,12 +118,14 @@ for alfa in alfas:
     #     # ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
     #     # for i in range(np.shape(mallaNACA.X)[0]):
     #     #     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
-
-    #     mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 295, #185
+    #     mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, psi, 695, #185 #295 # 695
     #                         cmap=map_)
-    #     plt.colorbar(mesh_)
+        # plt.colorbar(mesh_)
+    #     # ax.axes.get_xaxis().set_ticks([])
+    #     # ax.axes.get_yaxis().set_ticks([])
+    #     plt.savefig('/home/desarrollo/garbage/img_tst.png',
+    #                 bbox_inches='tight', pad_inches=0.05)
     #     plt.show()
-    #     plt.draw()
 
 
 
@@ -178,16 +162,22 @@ y_perf = perfil.y * -1
 cp_perf =cp[:, 0]
 
 plt.figure('perf')
-plt.plot(x_perf, y_perf * 8.5, 'k', linewidth=1.5)
+plt.plot(x_perf, y_perf * 6.5, 'k', linewidth=1.5)
 
-for j in range(4):
-    plt.plot(x_perf[1:-1], cps[1:-1, j], label=(alfas[j]))
+alfas = ['-4', '0', '4', '8']
+cps_alfa = [0, 2, 4, 6]
+i = 0
+for j in cps_alfa:
+    plt.plot(x_perf[1:-1], cps[1:-1, j], linewidth=0.9, label=(alfas[i]))
+    i += 1
     # plt.plot(x_perf[1: points // 2 + 1], cps[1: points // 2 + 1, j], label=(direcs[j]))
     # plt.plot(x_perf[points // 2 + 1 :], cps[points // 2 + 1 :, j], label=(direcs[j]))
     # plt.plot(x_perf[points // 2 + 1:-1], cp_perf[points // 2 + 1:-1], 'k', label='extrados')
 plt.legend(loc='lower right')
 plt.gca().invert_yaxis()
 # plt.axis('equal')
+plt.savefig('/home/desarrollo/garbage/img_tst.png',
+         bbox_inches='tight', pad_inches=0.05)
 plt.draw()
 plt.show()
 exit()

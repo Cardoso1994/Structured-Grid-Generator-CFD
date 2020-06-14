@@ -142,10 +142,7 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PH = np.zeros((M-1, N))
     PV = np.zeros((M, N-1))
 
-    err = 1.0
-    it_max = 30000
     it = 0
-    error = 1e-8
     omega = 1.5 # 1.5
     omega = 0.5 # 1.5
     IMA = 0
@@ -166,9 +163,11 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             if theta[i, 0] - alfa > 0:
                 arcotan[i] += (2 * np.pi)
 
+    err = 1.0
+    it_max = 30000
     error = 1e-5
     print('Potential Flow')
-    while err > error and it < it_max:
+    for it in range(it_max):
         print('it =  ' + str(it), end=' ')
         print('err = ' + '{0:.4e}'.format(err), end=' ')
         print('C = ' + '{:.5e}'.format(C), end=' ')
@@ -297,6 +296,8 @@ def potential_flow_o(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         # cálculo de la Circulación
         C = phi[M-2, N-1] - phi[1, N-1] - g12[0, N-1] * \
             (phi[0, N-3] - 4 * phi[0, N-2] + 3 * phi[0, N-1]) / g11[0, N-1]
+        if err < error:
+            break
 
     print('\noutside while. it = ' + str(it))
     print('IMA = ' + str(IMA))

@@ -109,10 +109,6 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     mask = np.isnan(Q_)
     Q_[mask] = 0
 
-    it = 0
-    mesh.it_max = 100e3
-    mesh.err_max = 1e-7
-
     # inicio del método iterativo
     print(f"Generando malla tipo O.\nDimensiones M: {self.M} N: {self.N}")
     if self.airfoil_alone:
@@ -120,8 +116,10 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     else:
         print("Perfil con flap")
 
+    mesh.it_max = 100000
+    mesh.err_max = 1e-7
     print("Poisson Vectorized by sections: ")
-    while True:
+    for it in range(mesh.it_max):
         if (it % 120000 == 0):
             self.X = np.flip(Xn)
             self.Y = np.flip(Yn)
@@ -231,8 +229,6 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
             print('it=', it)
             break
 
-        it += 1
-
     self.X = Xn
     self.Y = Yn
 
@@ -312,16 +308,14 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
         while self.airfoil_boundary[union_start] != 0:
             union_start += 1
 
-    mesh.it_max = 750e3
+    mesh.it_max = 750000
     mesh.err_max = 1e-6
-
     # inicio del método iterativo, separa el metodo para perfil con y sin flap
     print(f"Generando malla tipo O.\nDimensiones M: {self.M} N: {self.N}")
     if self.airfoil_alone:
         print("Perfil")
         print("Poisson numba:")
-        it = 0
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 150e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -351,8 +345,6 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
 
-            it += 1
-
             if abs(Xn -Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
                 print('Poisson: ' + metodo + ': saliendo...')
@@ -361,8 +353,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     else:
         print("Perfil con flap")
         print("Poisson numba:")
-        it = 0
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 650e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -393,7 +384,6 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
 
-            it += 1
 
             if abs(Xn -Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:

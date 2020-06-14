@@ -159,11 +159,9 @@ class mesh_O(mesh):
             while self.airfoil_boundary[union_start] != 0:
                 union_start += 1
 
-        it = 0
         print("Laplace:")
-
         # inicio del método iterativo
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 1500 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -267,8 +265,6 @@ class mesh_O(mesh):
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
 
-            it += 1
-
             if abs(Xn - Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
                 print(metodo + ': saliendo...')
@@ -350,11 +346,9 @@ class mesh_O(mesh):
             while self.airfoil_boundary[union_start] != 0:
                 union_start += 1
 
-        mesh.it_max = 55e3
-        mesh.it_max = 3000
-        it = 0
+        mesh.it_max = 55000
         print("Poisson:")
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 1500 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -464,8 +458,6 @@ class mesh_O(mesh):
             if metodo == 'SOR':
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
-
-            it += 1
 
             if abs(Xn - Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:

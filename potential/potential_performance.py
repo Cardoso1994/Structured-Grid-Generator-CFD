@@ -147,9 +147,6 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
     PH = np.zeros((M-1, N))
     PV = np.zeros((M, N-1))
 
-    err = 1.0
-    it_max = 600000
-    it = 0
     error = 1e-8
     omega = 1.5 # 1.5
     omega = 0.9 # 1.5
@@ -171,9 +168,10 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
             if theta[i, 0] - alfa > 0:
                 arcotan[i] += (2 * np.pi)
 
+    it_max = 600000
     error = 1e-6
     print('Potential Flow - Performance')
-    while err > error and it < it_max:
+    for it in range(it_max):
         print('it =  ' + str(it), end=' ')
         print('err = ' + '{0:.4e}'.format(err), end=' ')
         print('C = ' + '{:.5e}'.format(C), end=' ')
@@ -193,6 +191,8 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
         # Aplicamos el método SOR de sobrerelajación, ecuación.
         phi = omega * phi + (1 - omega) * phi_old
         err = abs(phi - phi_old).max()
+        if err < error:
+            break
 
     print('\noutside while. it = ' + str(it))
     print('IMA = ' + str(IMA))

@@ -82,9 +82,7 @@ def gen_Laplace_v_(self, metodo='SOR', omega=1):
         lim_xi.append(lim_ * i)
     lim_xi.append(m-1)
 
-    it = 0
-    mesh.it_max = 45e3
-    mesh.it_max = 100e3
+    mesh.it_max = 45000
 
     # inicio del método iterativo
     print(f"Generando malla tipo C.\nDimensiones M: {self.M} N: {self.N}")
@@ -94,8 +92,7 @@ def gen_Laplace_v_(self, metodo='SOR', omega=1):
         print("Perfil con flap")
 
     print("Laplace Vectorized:")
-    # while it < mesh.it_max:
-    while True:
+    for it in range(mesh.it_max):
         if (it % 20000 == 0):
             self.X = np.flip(Xn)
             self.Y = np.flip(Yn)
@@ -186,8 +183,6 @@ def gen_Laplace_v_(self, metodo='SOR', omega=1):
             print('it=', it)
             break
 
-        it += 1
-
     self.X = np.flip(Xn)
     self.Y = np.flip(Yn)
     return
@@ -243,7 +238,6 @@ def gen_Laplace_n(self, metodo='SOR', omega=1):
             i += 1
         union_start -= 1
 
-    it = 0
     mesh.it_max = 950e3
     mesh.err_max = 1e-8
 
@@ -253,8 +247,7 @@ def gen_Laplace_n(self, metodo='SOR', omega=1):
         print("Perfil")
         print("Laplace numba:")
 
-        it = 0
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 25000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -284,8 +277,6 @@ def gen_Laplace_n(self, metodo='SOR', omega=1):
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
 
-            it += 1
-
             if abs(Xn -Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
                 print('Laplace: ' + metodo + ': saliendo...')
@@ -295,8 +286,7 @@ def gen_Laplace_n(self, metodo='SOR', omega=1):
         print("Perfil con flap")
         print("Laplace numba:")
 
-        it = 0
-        while it < mesh.it_max:
+        for it in range(mesh.it_max):
             if (it % 25000 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
@@ -326,8 +316,6 @@ def gen_Laplace_n(self, metodo='SOR', omega=1):
             if metodo == 'SOR':
                 Xn = omega * Xn + (1 - omega) * Xo
                 Yn = omega * Yn + (1 - omega) * Yo
-
-            it += 1
 
             if abs(Xn -Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
