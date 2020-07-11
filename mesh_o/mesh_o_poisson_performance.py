@@ -346,7 +346,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 Yn = omega * Yn + (1 - omega) * Yo
 
             if abs(Xn -Xo).max() < mesh.err_max\
-                    and abs(Yn - Yo).max() < mesh.err_max:
+                    and abs(Yn - Yo).max() < mesh.err_max and it > 10:
                 print('Poisson: ' + metodo + ': saliendo...')
                 print('it=', it)
                 break

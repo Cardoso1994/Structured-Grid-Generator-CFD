@@ -65,7 +65,7 @@ class mesh_C(mesh):
         m_ = np.shape(airfoil.x)[0] * 3 // 2
         if not airfoil.alone:
             #m_ -= 72
-            m_ -= 2
+            m_ -= 304
             pass
         if m_ % 3 == 1:
             # m_ -= 48

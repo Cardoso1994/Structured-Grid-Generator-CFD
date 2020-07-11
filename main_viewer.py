@@ -18,7 +18,8 @@ from potential import potential_flow_o, velocity,\
                         pressure, streamlines, lift_n_drag
 import util
 file_name='/home/desarrollo/' \
-    + 'tesis_su2_BADLY/malla_C_multi_biggest/mesh_c_m.txt_mesh'
+    + 'tesis_su2_BADLY/malla_C_multi_better/mesh_c_m.txt_mesh'
+file_name='/home/desarrollo/tesis_su2_BADLY/mesh_o_m.txt_mesh'
 mallaNACA = util.from_txt_mesh(filename=file_name)
 mallaNACA.plot()
 mallaNACA.to_su2('/home/desarrollo/mesh_c_flap_m__.su2')

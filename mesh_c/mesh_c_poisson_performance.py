@@ -364,7 +364,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
         # while it < mesh.it_max:
         for it in range(mesh.it_max):
-            if (it % 450e3 == 0):
+            if (it % 150e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -397,8 +397,8 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
             if abs(Xn -Xo).max() < mesh.err_max\
                     and abs(Yn - Yo).max() < mesh.err_max:
-                print('Poisson: ' + metodo + ': saliendo...')
-                print('it=', it)
+                print('\nPoisson: ' + metodo + ': saliendo...')
+                print('it:', it)
                 break
 
     self.X = Xn
@@ -447,15 +447,13 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
     m = M
     n = N
 
-    # perfil_begin = 87
-    # perfil_end = 87 + 549
-    perfil_begin = 31
-    perfil_end = 31 + 135
+    begin_perfil = 118
+    end_perfil = begin_perfil + 1083
+    limit = 0
     for j in range(n-2, 0, -1):
-        Y[1:perfil_begin, j] = Y[0, j]
-        Y[perfil_end:-1, j] = Y[-1, j]
-
-        for i in range(perfil_begin, perfil_end):
+        Y[0 : begin_perfil - limit, j] = Y[begin_perfil - limit, j]
+        Y[end_perfil + limit :, j] = Y[end_perfil + limit - 1, j]
+        for i in range(begin_perfil - limit, end_perfil + limit):
         # for i in range(1, m-1):
             x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
             y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
@@ -483,44 +481,45 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
                     + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
         # se calculan los puntos en la sección de salida de la malla
-        i = 0
-        x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-        y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-        x_xi =  (X[i+1, j] - X[i, j]) / d_xi
-        y_xi =  (Y[i+1, j] - Y[i, j]) / d_xi
+        # i = 0
+        # x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+        # y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+        # x_xi =  (X[i+1, j] - X[i, j]) / d_xi
+        # y_xi =  (Y[i+1, j] - Y[i, j]) / d_xi
 
-        alpha = x_eta ** 2 + y_eta ** 2
-        beta =  x_xi * x_eta + y_xi * y_eta
-        gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
+        # alpha = x_eta ** 2 + y_eta ** 2
+        # beta =  x_xi * x_eta + y_xi * y_eta
+        # gamma = x_xi ** 2 + y_xi ** 2
+        # I = x_xi * y_eta - x_eta * y_xi
 
-        Y[i, j] = (d_xi * d_eta) ** 2\
-            / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-            * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
-                - beta / d_xi / d_eta
-                * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
-                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
-                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+        # Y[i, j] = (d_xi * d_eta) ** 2\
+        #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+        #     * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+        #         - beta / d_xi / d_eta
+        #         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+        #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+        #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
-        i = m-1
-        x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
-        y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
-        x_xi =  (X[i, j] - X[i-1, j]) / d_xi
-        y_xi =  (Y[i, j] - Y[i-1, j]) / d_xi
+        # i = m-1
+        # x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
+        # y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
+        # x_xi =  (X[i, j] - X[i-1, j]) / d_xi
+        # y_xi =  (Y[i, j] - Y[i-1, j]) / d_xi
 
-        alpha = x_eta ** 2 + y_eta ** 2
-        beta =  x_xi * x_eta + y_xi * y_eta
-        gamma = x_xi ** 2 + y_xi ** 2
-        I = x_xi * y_eta - x_eta * y_xi
+        # alpha = x_eta ** 2 + y_eta ** 2
+        # beta =  x_xi * x_eta + y_xi * y_eta
+        # gamma = x_xi ** 2 + y_xi ** 2
+        # I = x_xi * y_eta - x_eta * y_xi
 
-        Y[i, j] = (d_xi * d_eta) ** 2\
-            / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
-            * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
-                - beta / d_xi / d_eta
-                * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
-                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
-                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+        # Y[i, j] = (d_xi * d_eta) ** 2\
+        #     / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
+        #     * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+        #         - beta / d_xi / d_eta
+        #         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+        #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+        #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
+    """
     # seccion de union entre perfiles
     i_ = 0
     while airfoil_boundary[i_] != 0:
@@ -555,6 +554,7 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         Y[-i -1, 0] = Y[i, 0]
         i += 1
         i_ += 1
+    """
 
     return (X, Y)
 
@@ -595,15 +595,19 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
     m = M
     n = N
 
-    begin_perfil = 12
-    end_perfil = 12 + 49
-    # begin_perfil = 12
-    # end_perfil = 12 + 49
+    begin_perfil = 118
+    end_perfil = begin_perfil + 1083
+    limit = 0
     for j in range(n-2, 0, -1):
         # for i in range(1, m-1):
-        Y[1:begin_perfil, j] = Y[0, j]
-        Y[end_perfil:-1, j] = Y[-1, j]
-        for i in range(begin_perfil, end_perfil):
+        # Y[1:begin_perfil, j] = Y[0, j]
+        # Y[end_perfil:-1, j] = Y[-1, j]
+        # Y[1 : begin_perfil - 3, j] = Y[0, j]
+        # Y[end_perfil + 4 : -1, j] = Y[-1, j]
+        Y[0 : begin_perfil - limit, j] = Y[begin_perfil - limit, j]
+        Y[end_perfil + limit: , j] = Y[end_perfil + limit - 1, j]
+        # for i in range(begin_perfil, end_perfil):
+        for i in range(begin_perfil - limit, end_perfil + limit):
             x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
             y_eta = (Y[i, j+1] - Y[i, j-1]) / 2 / d_eta
             x_xi = (X[i+1, j] - X[i-1, j]) / 2 / d_xi
@@ -641,13 +645,13 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
         gamma = x_xi ** 2 + y_xi ** 2
         I = x_xi * y_eta - x_eta * y_xi
 
-        Y[i, j] = (d_xi * d_eta) ** 2\
-            / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
-            * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
-                - beta / d_xi / d_eta
-                * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
-                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
-                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+        # Y[i, j] = (d_xi * d_eta) ** 2\
+        #     / (2 * gamma * d_xi ** 2 - alpha * d_eta ** 2)\
+        #     * (alpha / d_xi**2 * (Y[i+2, j] - 2 * Y[i+1, j])
+        #         - beta / d_xi / d_eta
+        #         * (Y[i+1, j+1] - Y[i+1, j-1] - Y[i, j+1] + Y[i, j-1])
+        #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+        #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
         i = m-1
         x_eta = (X[i, j+1] - X[i, j-1]) / 2 / d_eta
@@ -660,12 +664,12 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
         gamma = x_xi ** 2 + y_xi ** 2
         I = x_xi * y_eta - x_eta * y_xi
 
-        Y[i, j] = (d_xi * d_eta) ** 2\
-            / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
-            * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
-                - beta / d_xi / d_eta
-                * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
-                + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
-                + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
+        # Y[i, j] = (d_xi * d_eta) ** 2\
+        #     / (2 * gamma * d_xi ** 2 - alpha * d_eta**2)\
+        #     * (alpha / d_xi**2 * (-2 * Y[i-1, j] + Y[i-2, j])
+        #         - beta / d_xi / d_eta
+        #         * (Y[i, j+1] - Y[i, j-1] - Y[i-1, j+1] + Y[i-1, j-1])
+        #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
+        #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
     return (X, Y)

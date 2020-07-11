@@ -1,6 +1,7 @@
 \documentclass[letterpaper, openright, 12pt]{book}
 % \documentclass[b5paper, openright, 12pt]{book}
-\usepackage[spanish,es-tabla, es-nodecimaldot]{babel} %es-tabla para nombrar a las tablas en vez de cuadros
+\usepackage[spanish,es-tabla, es-nodecimaldot]{babel} %es-tabla para nombrar a
+% las tablas en vez de cuadros
 \usepackage[utf8]{inputenc}
 
 \usepackage{float}
@@ -859,23 +860,25 @@
     necesario discretizar el campo de análisis mediante el uso de una malla.\cite{thompsonhandbook}
     \paragraph*{}
     La utilización del método de diferencias finitas es directa si el problema
-    se puede expresar en un sistema de coordenadas cartesianas, aunque el mismo
-    puede aplicarse a sistemas de coordenadas polares, cilindricas o esféricas,
-    dando como resultado una malla rectangular estructurada, con espaciamiento
-    uniforme entre los nodos en la dirección de los ejes del sistema. La mayoría
-    de casos prácticos de interés en la DFC, tratan con geometrías complejas,
-    lo que hace que sea muy dificil, si no imposible, generar una malla en
-    alguno de los sistemas de cordenadas antes mencionados, que ajuste en su
-    frontera interna de manera exacta a la forma de la geometría a analizar.
-    Esto presenta una limitante que se debe atender, se debe llevar a cabo una
-    transofrmación de sistemas de coordenadas, llevando el dominio físico del
-    problema a un dominio computacional. (Figura~\ref{fig:dominios}) El dominio
-    computacional es una abstración matemática, mientras que el dominio físico
-    es el dominio continuo para el cual se desea una solución numérica.
+    se puede expresar en un sistema de coordenadas cartesianas, aunque el
+    mismo puede aplicarse a sistemas de coordenadas polares, cilindricas o
+    esféricas, dando como resultado una malla rectangular estructurada, con
+    espaciamiento uniforme entre los nodos en la dirección de los ejes del
+    sistema. La mayoría de casos prácticos de interés en la DFC, tratan con
+    geometrías complejas, lo que hace que sea muy dificil, si no imposible
+    generar una malla en alguno de los sistemas de cordenadas antes
+    mencionados, que ajuste en su frontera interna de manera exacta a la
+    forma de la geometría a analizar. Esto presenta una limitante que se debe
+    atender, se debe llevar a cabo una transofrmación de sistemas de
+    coordenadas, llevando el dominio físico del problema a un dominio
+    computacional. (Figura~\ref{fig:dominios}) El dominio computacional es
+    una abstración matemática, mientras que el dominio físico es el dominio
+    continuo para el cual se desea una solución numérica.
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=170mm]{./img/dominios}
-        \caption[Dominios lógico y físico]{Dominios lógico (izquierda) y físico (derecha). \cite{numerical-grid}}
+        \caption[Dominios lógico y físico]{Dominios lógico (izquierda) y
+        físico (derecha). \cite{numerical-grid}}
         \label{fig:dominios}
     \end{figure}
 
@@ -5101,7 +5104,7 @@
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio,
-            width=0.48\textwidth]{./img/potential_flow_cl}
+            width=0.5\textwidth]{./img/potential_flow_cl}
         \caption{Gráfica de coeficiente de sustentación vs. ángulo de ataque
             para perfil NACA 0012}\label{fig:potential_flow_cl}
     \end{figure}
@@ -5507,6 +5510,26 @@
         \label{fig:mo_flap_su2_0}
     \end{figure}
 
+    \paragraph*{}
+    Por último se muestra en la figura~\ref{fig:cp_comparison_10} una
+    comparación del valor del coeficiente de presión para el perfil NACA 0012 a
+    un ángulo de ataque $\alpha = 10\si{\degree}$ para tres casos diferentes,
+    dos de ellos son los resultados presentados en este trabajo, tanto malla
+    tipo C como tipo O, además de éstos se presentan los resultados de la
+    simulación del mismo problema utilizando una malla estructurada tipo C
+    creada en el Centro de Investigación Langley de la
+    NASA~\cite{malla_C_NASA}, dicha malla es proporcionada como parte del
+    tutorial del programa SU2.
+
+    \begin{figure}
+        \centering
+        \includegraphics[keepaspectratio,
+        width=0.7\textwidth]{./img/cp_comparison_10.png}
+        \caption[Comparación del coeficiente de presión a $\alpha =
+        10\si{\degree}$]{Comparación del coeficiente de presión a lo largo de
+        un perfil NACA 0012 para un ángulo de ataque $\alpha = 10\si{\degree}$}
+        \label{fig:cp_comparison_10}
+    \end{figure}
 %
 %
 %
@@ -5660,22 +5683,24 @@
 \chapter{Métodos Numéricos Iterativos}\label{appIter}
     \paragraph*{}
         Existen en general, dos métodos de solución de sistemas de ecuaciones
-        algebráicas lineales simultáneas: métodos directos y métodos iterativos.
+        algebráicas lineales simultáneas: métodos directos y métodos
+        iterativos.
 
     \paragraph*{}
-        Dentro de los métodos directos podemos encontrar los métodos de Cramer y
-        de Gauss. La principal desventaja que presentan estos metodos es el gran
-        número de opraciones aritméticas necesarias para obtener una solución
-        del sistema. Desde el punto de vista computacional otras desventajas que
-        presentan son el uso de memoria y cierta dificultad para ser programados.
-        Los métodos iterativos son simples y fáciles de programar, por lo que se
-        presentan como una mejor herramienta para llevar a cabo la solcuión del
-        sistema. La idea de estos métodos, tal y como su nombre lo indica, es
-        obtener la solución mediante un proceso iterativo, por lo general se
-        asume una primera solución y con dichos valores propuestos se calculan
-        nuevos valores de las incógnitas, con base en lo nuevos valores
-        calculados se obtienen nuevos valores. Este proceso se repite hasta
-        satisfacer el criterio de convergencia establecido.
+        Dentro de los métodos directos podemos encontrar los métodos de Cramer
+        y de Gauss. La principal desventaja que presentan estos metodos es el
+        gran número de opraciones aritméticas necesarias para obtener una
+        solución del sistema. Desde el punto de vista computacional otras
+        desventajas que presentan son el uso de memoria y cierta dificultad para
+        ser programados. Los métodos iterativos son simples y fáciles de
+        programar, por lo que se presentan como una mejor herramienta para
+        llevar a cabo la solcuión del sistema. La idea de estos métodos, tal y
+        como su nombre lo indica, es obtener la solución mediante un proceso
+        iterativo, por lo general se asume una primera solución y con dichos
+        valores propuestos se calculan nuevos valores de las incógnitas, con
+        base en lo nuevos valores calculados se obtienen nuevos valores. Este
+        proceso se repite hasta satisfacer el criterio de convergencia
+        establecido.
 
     \section{Métodos iterativos: Jacobi, Gauss-Seidel, SOR}
     \subsection{Método de Jacobi}
@@ -5687,16 +5712,20 @@
         igual a $0$) de la siguiente manera
         \begin{subequations}
             \begin{equation*}
-                u_{1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2} + a_{13}u_{3} + \dotsb + a_{1n}u_{n} \right) \right]
+                u_{1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2}
+                    + a_{13}u_{3} + \dotsb + a_{1n}u_{n} \right) \right]
             \end{equation*}
             \begin{equation*}
-                u_{2} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1} + a_{23}u_{3} + \dotsb + a_{2n}u_{n} \right) \right]
+                u_{2} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1}
+                    + a_{23}u_{3} + \dotsb + a_{2n}u_{n} \right) \right]
             \end{equation*}
             \begin{equation*}
             \dotsb
             \end{equation*}
             \begin{equation*}
-                u_{n} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1} + a_{n2}u_{2} + \dotsb + a_{n\left( n-1 \right)}u_{n-1} \right) \right]
+                u_{n} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1}
+                    + a_{n2}u_{2} + \dotsb
+                    + a_{n\left( n-1 \right)}u_{n-1} \right) \right]
             \end{equation*}
         \end{subequations}
     \paragraph*{}
@@ -5710,14 +5739,18 @@
                 u_{1}^{k+1} = \frac{1}{a_{11}} \left[ d_{1} - \left( a_{12}u_{2}^{k} + a_{13}u_{3}^{k} + \dotsb + a_{1n}u_{n}^k \right) \right]
             \end{equation*}
             \begin{equation*}
-                u_{2}^{k+1} = \frac{1}{a_{22}} \left[ d_{2} - \left( a_{21}u_{1}^{k} + a_{23}u_{3}^{k} + \dotsb + a_{2n}u_{n}^{k} \right) \right]
+                u_{2}^{k+1} = \frac{1}{a_{22}} \left[ d_{2}
+                - \left( a_{21}u_{1}^{k} + a_{23}u_{3}^{k}
+                + \dotsb + a_{2n}u_{n}^{k} \right) \right]
             \end{equation*}
             \begin{equation*}
                 \dotsb
             \end{equation*}
         \end{subequations}
         \begin{equation}
-            u_{n}^{k+1} = \frac{1}{a_{nn}} \left[ d_{n} - \left( a_{n1}u_{1}^{k} + a_{n2}u_{2}^{k} + \dotsb + a_{n\left( n-1 \right)}u_{n-1}^{k} \right) \right]
+            u_{n}^{k+1} = \frac{1}{a_{nn}} \left[ d_{n}
+                - \left( a_{n1}u_{1}^{k} + a_{n2}u_{2}^{k}
+                + \dotsb + a_{n\left( n-1 \right)}u_{n-1}^{k} \right) \right]
             \label{ec-jacobi}
         \end{equation}
     \paragraph*{}

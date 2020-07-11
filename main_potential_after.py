@@ -53,6 +53,7 @@ mach_inf = v_inf / c_inf
 Re = v_inf * d_inf / mu
 
 path = './potential_2412_mayo/'
+path = './potential_0012_mayo/'
 alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
 # alfas = ['-4', '0', '4', '8']
 
@@ -82,8 +83,8 @@ plt.show()
 mallaNACA = util.from_txt_mesh(filename=path
                               + '/mallaNACA_' + '8' +'.txt_mesh')
 
-# map_ = 'jet'
-map_ = 'viridis'
+map_ = 'inferno'
+# map_ = 'viridis'
 cps = np.zeros((np.shape(mallaNACA.X)[0], len(alfas)))
 j = 0
 
@@ -105,6 +106,19 @@ for alfa in alfas:
     print('alfa = ' + alfa)
     print("L = " + str(L))
     print("D = " + str(D))
+    plt.figure('1')
+    plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
+    plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
+    mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, (u**2 + v **2) ** 0.5, 495, #185 #295 # 695
+                        cmap=map_)
+    plt.axis('equal')
+    plt.figure('')
+    plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
+    plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
+    mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 495, #185 #295 # 695
+                        cmap=map_)
+    plt.axis('equal')
+    plt.show()
     limits = [[-55.5, 55.5, -55.5, 55.5], [-1.25, 1.25, -0.8, 0.8]]
     # for limit in limits:
     #     fig = plt.figure('malla_aspect')

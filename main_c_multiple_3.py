@@ -26,9 +26,9 @@ eje "XI"
 en el caso de malla tipo O, coincide con el número de puntos del perfil
 '''
 N_1 = 20
-N = 50
-N1 = 300
-split = 12
+N = 230
+N1 = 160
+split = 4
 
 
 # points = 11
@@ -36,7 +36,7 @@ airfoil_points = 617
 airfoil_points = 517
 
 
-weight = 1.17
+weight = 1.15
 a = 0.01
 a = 0
 c = 8.7
@@ -70,24 +70,25 @@ mallaNACA_1 = mesh_c.mesh_C(R, N_1, perfil, weight=weight)
 mallaNACA_1.gen_TFI()
 
 mallaNACA = mesh_c.mesh_C(R, N, perfil, weight=weight)
-mallaNACA.X[:, -1] = mallaNACA_1.X[:, -16]
-mallaNACA.Y[:, -1] = mallaNACA_1.Y[:, -16]
+mallaNACA.X[:, -1] = mallaNACA_1.X[:, -19]
+mallaNACA.Y[:, -1] = mallaNACA_1.Y[:, -19]
 mallaNACA1 = mesh_c.mesh_C(R, N1, perfil, weight=weight)
 
 print(f"shape mesh: {np.shape(mallaNACA.X)[0]}")
 # print('M = ' + str(mallaNACA.M))
 # print('N = ' + str(mallaNACA.N))
 
-# mallaNACA = util.from_txt_mesh(
-#         filename='/home/desarrollo/tesis_su2_BADLY/mesh_c.txt_mesh')
+mallaNACA = util.from_txt_mesh(
+        filename='/home/desarrollo/tesis_su2_BADLY/mesh_c.txt_mesh')
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
 #                         aa=58.5, cc=8.4, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
 #                         aa=108.5, cc=13.4, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
-                        aa=33.5, cc=19.4, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
+#                         aa=700.1, cc=9.1, linea_eta=0)
 
 mallaNACA.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_c.su2')
+
 mallaNACA.to_txt_mesh('/home/desarrollo/tesis_su2_BADLY/mesh_c.txt_mesh')
 
 plt.figure('MALLA NACA')
@@ -98,7 +99,7 @@ mallaNACA.plot()
 mallaNACA_1.X[:, 0] = mallaNACA.X[:, -1]
 mallaNACA_1.Y[:, 0] = mallaNACA.Y[:, -1]
 mallaNACA_1.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c,
-                          linea_xi=linea_xi, aa=0.005, cc=4.7, linea_eta=0)
+                          linea_xi=linea_xi, aa=0.005, cc=6.7, linea_eta=0)
 
 plt.figure('MALLA NACA 1')
 plt.title('MALLA NACA 1')
@@ -109,7 +110,11 @@ mallaNACA1.X[:, -1] = mallaNACA.X[:, split]
 mallaNACA1.Y[:, -1] = mallaNACA.Y[:, split]
 
 mallaNACA1.gen_Poisson_n(metodo='SOR', omega=0.05, a=a, c=c,
-                          linea_xi=linea_xi, aa=156000, cc=12.8, linea_eta=0)
+                         linea_xi=linea_xi, aa= 100 * 19597000,
+                         cc=23.0, linea_eta=0)
+# mallaNACA1.gen_Poisson_n(metodo='SOR', omega=0.05, a=a, c=c,
+#                          linea_xi=linea_xi, aa= 200 * 19597000,
+#                          cc=23.0, linea_eta=0)
 
 plt.figure('MALLA NACA_1')
 plt.title('MALLA NACA_1')
