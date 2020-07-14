@@ -9,8 +9,6 @@ perfil_final.csv
 
 
 ## Core latex/pdflatex auxiliary files:
-# Escrito/tesis.pdf
-# *.pdf
 *.aux
 *.lof
 *.log
@@ -23,6 +21,13 @@ perfil_final.csv
 *.cb
 *.cb2
 .*.lb
+
+## arara (compiling tool)auxiliary files
+*.sub
+*.suc
+*.syc
+*.sym
+
 
 *.txt
 # *.csv
