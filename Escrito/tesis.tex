@@ -1,3 +1,9 @@
+% arara: pdflatex
+% arara: nomencl
+% arara: bibtex
+% arara: pdflatex
+% arara: pdflatex
+
 \documentclass[letterpaper, openright, 12pt]{book}
 % \documentclass[b5paper, openright, 12pt]{book}
 \usepackage[spanish,es-tabla, es-nodecimaldot]{babel} %es-tabla para nombrar a
@@ -16,6 +22,9 @@
 \usepackage{gensymb}
 \usepackage{siunitx}
 \usepackage{pgf}
+
+\usepackage[spanish]{nomencl}
+\makenomenclature
 \newcommand\inputpgf[2]{{
 \let\pgfimageWithoutPath\pgfimage
 \renewcommand{\pgfimage}[2][]{\pgfimageWithoutPath[##1]{#1/##2}}
@@ -154,7 +163,6 @@
 	\phantomsection % corrige error de hipervinculos que manda a la seccion previa
 	\addcontentsline{toc}{chapter}{Indice de Tablas}
 	\listoftables
-	\cleardoublepage
 	%
 	%
 	%
@@ -166,8 +174,102 @@
 	%
 	%
 	%
-	\chapter*{Nomenclatura}
+	% \chapter*{Nomenclatura}
+    \nomenclature[]{DFC}{Dinámica de Fluidos Computacional}
+    \nomenclature[]{EDP}{Ecuaciones Diferenciales Parciales}
+
+    \nomenclature[]{$i$}{Indice i de malla estructurada}
+    \nomenclature[]{$j$}{Indice j de malla estructurada}
+    \nomenclature[]{$k$}{Indice k de malla estructurada}
+
+    \nomenclature[]{$x$}{Eje de las ordenadas en el dominio físico}
+    \nomenclature[]{$y$}{Eje de las abscisas en el dominio físico}
+    \nomenclature[]{$\xi$}{Eje de las ordenadas en el dominio computacional}
+    \nomenclature[]{$\eta$}{Eje de las abscisas en el dominio computacional}
+
+    \nomenclature[]{$f$}{Función de una propiedad del flujo}
+
+    \nomenclature[]{$\pdv{f}{x}$}{Derivada parcial de la propiedad del flujo
+                    $f$ con respecto al eje $x$}
+    \nomenclature[]{$\pdv[2]{f}{x}$}{Segunda derivada parcial de la propiedad
+                    del flujo $f$ con respecto al eje $x$}
+    \nomenclature[]{$\pdv[3]{f}{x}$}{Tercera derivada parcial de la propiedad
+                    del flujo $f$ con respecto al eje $x$}
+    \nomenclature[]{$\pdv[n]{f}{x}$}{N derivada parcial de la propiedad del
+                    flujo $f$ con respecto al eje $x$}
+    \nomenclature[]{$\pdv{f}{y}$}{Derivada parcial de la propiedad del flujo
+                    $f$ con respecto al eje $y$}
+    \nomenclature[]{$\pdv[2]{f}{y}$}{Segunda derivada parcial de la propiedad
+                    del flujo $f$ con respecto al eje $y$}
+    \nomenclature[]{$\pdv[3]{f}{y}$}{Tercera derivada parcial de la propiedad
+                    del flujo $f$ con respecto al eje $y$}
+    \nomenclature[]{$\pdv[n]{f}{y}$}{N derivada parcial de la propiedad del
+                    flujo $f$ con respecto al eje $y$}
+    \nomenclature[]{$\pdv{f}{x}{y}$}{Derivada parcial mixta de la propiedad del
+                    flujo $f$ con respecto a los ejes $x$ y $y$}
+
+    \nomenclature[]{$f_{i, j}$}{Aproximación del valor de la propiedad $f$
+                    del flujo en un punto $i, j$ de la malla}
+    \nomenclature[]{$\Delta x$}{Intervalo entre puntos en dirección del eje
+                    $x$}
+    \nomenclature[]{$\Delta y$}{Intervalo entre puntos en dirección del eje
+                    $y$}
+    \nomenclature[]{$O()$}{Error de truncamiento de la serie de Taylor}
+
+    \nomenclature[]{$L(x)$}{Polinomio de Lagrange en función de $x$}
+    \nomenclature[]{$L$}{Base polinómica de Lagrange}
+    \nomenclature[]{$H(x)$}{Polinomio de Hermite en función de $x$}
+    \nomenclature[]{$x_0$}{Coordenada x de un punto en la frontera interna de
+                    la malla}
+    \nomenclature[]{$y_0$}{Coordenada x de un punto en la frontera interna de
+                    la malla}
+    \nomenclature[]{$x_1$}{Coordenada x de un punto en la frontera externa de
+                    la malla}
+    \nomenclature[]{$y_1$}{Coordenada x de un punto en la frontera externa de
+                    la malla}
+    \nomenclature[]{$r$}{Punto arbitrario de la malla expresado en coordenadas
+                    del dominio computacional $\xi, \eta$}
+    \nomenclature[]{$P_\xi$}{Proyector del dominio computacional al dominio
+                    físico mapeando las coordenadas en el eje $\xi$}
+    \nomenclature[]{$P_\eta$}{Proyector del dominio computacional al dominio
+                    físico mapeando las coordenadas en el eje $\eta$}
+
+    \nomenclature[]{$\xi_{xx}$}{Segunda derivada parcial de $\xi$ con respecto
+                    a $x$}
+    \nomenclature[]{$\xi_{yy}$}{Segunda derivada parcial de $\xi$ con respecto
+                    a $y$}
+    \nomenclature[]{$\eta_{xx}$}{Segunda derivada parcial de $\eta$ con
+                    respecto a $x$}
+    \nomenclature[]{$\eta_{yy}$}{Segunda derivada parcial de $\eta$ con
+                    respecto a $y$}
+    \nomenclature[]{$x_{\xi\xi}$}{Segunda derivada parcial de $x$ con respecto
+                    a $\xi$}
+    \nomenclature[]{$x_{\xi\eta}$}{Derivada parcial mixta de $x$ con respecto
+                    a $\xi$ y $\eta$}
+    \nomenclature[]{$x_{\eta\eta}$}{Segunda derivada parcial de $x$ con
+                    respecto a $\eta$}
+    \nomenclature[]{$y_{\xi\xi}$}{Segunda derivada parcial de $y$ con respecto
+                    a $\xi$}
+    \nomenclature[]{$y_{\xi\eta}$}{Derivada parcial mixta de $y$ con respecto
+                    a $\xi$ y $\eta$}
+    \nomenclature[]{$y_{\eta\eta}$}{Segunda derivada parcial de $y$ con
+                    respecto a $\eta$}
+
+    \nomenclature[]{$P$}{Función de forzado en dirección del eje $\xi$ para la
+                    solución de la ecuación de Poisson}
+    \nomenclature[]{$Q$}{Función de forzado en dirección del eje $\eta$ para la
+                    solución de la ecuación de Poisson}
+    \nomenclature[]{$J$}{Jacobiano de la transformación}
+    \nomenclature[]{$I$}{Inverso del Jacobiano de la transformación}
+
+    \nomenclature[]{$X$}{Coordenada en el eje $x$ del dominio computacional de
+                    un punto perteneciente a la malla}
+    \nomenclature[]{$Y$}{Coordenada en el eje $y$ del dominio computacional de
+                    un punto perteneciente a la malla}
+
+	\cleardoublepage
 	\addcontentsline{toc}{chapter}{Nomenclatura} % para agregar al índice
+    \printnomenclature
 	%
 	%
 	%
@@ -190,13 +292,13 @@
     métodos númericos, a esta última técnica se le da el nombre de dinamica de
     fluidos computacional (CFD, por sus siglas en inglés). El uso de la DFC
     (dinámica de fluidos computacional) se ha popularizado gracias al
-    desarrollo de las capaciades computaciones, ya que las simulaciones
+    desarrollo de las capacidades computaciones, ya que las simulaciones
     presentan ciertas ventajas frente al enfoque exprimental en términos de
     velocidad, seguridad y en la mayoría de casos, de costo. Gracias a esto la
     DFC es ampliamente usada en la actualidad en sectores de la industria como
     el aeroespacial, petrolero, energético, automotriz, entre otros. En el
     ámbito de la investigación científica también se tiene en la DFC una
-    herramienta importante, pues permite analizar fenomenos complejos que
+    herramienta importante, pues permite analizar fenómenos complejos que
     pueden resultar dificiles de reproducir en experimentos.
 
     \paragraph*{}
@@ -214,16 +316,16 @@
     primer capítulo se comenta el estado actual tanto de la DFC como tema
     general, además del estado actual de la generación de mallas como tema
     particular. Por último se hace mención a diferentes alternivas de software
-    disponible y ampliamente reconocido, tanto programas de licencia como de
-    código abierto, para el análisis de flujos de interes y para la generación
-    de mallas
+    disponible y ampliamente reconocido, tanto programas de licencia privativa
+    como de código abierto, para el análisis de flujos de interes y para la
+    generación de mallas.
 
     \paragraph*{}
     El capítulo 2 se enfoca en los conceptos de la discretización espacial de
     un espacio físico determinado, proceso necesario para poder realizar
     mallas que representen computacionalmente el espacio a analizar. Los
     métodos de discretización son aplicables también a las ecuaciones que
-    describen el comportamiento de los flujos, dicha discretización se hace
+    escriben el comportamiento de los flujos, dicha discretización se hace
     tomando en cuenta la malla generada para el análisis. Se hace particular
     énfasis en el desarrollo del método de diferencias finitas, y se muestran
     las ecuaciones obtenidas mediante este método, las cuales sirven de
@@ -295,13 +397,13 @@
     debe desarrollar un módulo que genere la nube de puntos que describe un
     perfil NACA de la serie 4, pudiendo ser ajustable la densidad de puntos
     de la misma. También se da la opción de importar la nube de puntos de
-    cualquier otro perfil, con la restricción de que la densidad de la
-    misma, depende de los datos de entrada que recibe el código.
+    cualquier otro perfil, con la restricción de que la densidad de la malla a
+    generar, depende de los datos de entrada que recibe el código.
 
     \paragraph*{}
     Una vez generado el mallado del dominio, se creará un archivo que
-    contenga toda la información de la misma, el cual podrá ser importado a
-    cualquier software \textit{``solver''}, para poder llevar a cabo el
+    contenga toda la información del mismo, el cual podrá ser importado a
+    algún SU2, software \textit{``solver''}, para poder llevar a cabo el
     análisis de flujo deseado.
 
     \paragraph*{}
@@ -494,7 +596,7 @@
     \paragraph*{OpenFOAM}
     \paragraph*{}
     OpenFOAM (Open Source Field Operation and Manipulation) es un entorno de
-    trabajo, para el desarrollo de ejecutables de aplicaciones que usa las
+    trabajo para el desarrollo de ejecutables de aplicaciones que usa las
     funciones contenidas en aproximadamente 100 librerías escritas en C++.
     Contiene solvers específicos para cada tipo de problema en mecánica de
     fluidos, así como de mecánica del medio continuo.\cite{openfoam}
@@ -525,7 +627,7 @@
     \paragraph*{}
     Xfoil es desarrollado por el MIT (Massachusetts Institute of
     Technology), escrito en lenguaje FORTRAN y distribuido bajo
-    la licencia GPL.
+    la licencia GPL\@.
 
     \paragraph*{XFLR5}
     \paragraph*{}
@@ -557,7 +659,7 @@
     \paragraph*{}
     SU2 es una colección de software \textit{``open source''} desarrollado en
     los lenguajes Python y C++ para el análisis de ecuaciones diferenciales
-    parciales mediante métodos numéricos, del actual estado del arte de la
+    parciales mediante métodos numéricos del actual estado del arte de la
     DFC\@. Enfocado principalmente a su aplicación en la industria aeronáutica,
     así como la industria automotriz, naval y de energías renovables, entre
     otras.\cite{SU2}
@@ -569,9 +671,9 @@
     mayoría de sistemas Linux y Windows. Además del sistema base para los
     análisis, presenta diversas herramientas enfocadas en facilitar el
     despliegue del software. Proporciona una interfaz gráfica, a diferencia de
-    OpenFOAM y SU2 con los cuales la interacción se lleva a cabo mediante la
-    línea de comandos. También proporciona servicios en la nube. A pesar de ser
-    software de código abierto, es de paga.\cite{helyx}
+    OpenFOAM y SU2 con los cuales la interacción se interacciona con el
+    programa mediante la línea de comandos. También proporciona servicios en la
+    nube. A pesar de ser software de código abierto, es de paga.\cite{helyx}
 
 %
 %
@@ -586,20 +688,20 @@
 \chapter{Discretización Espacial}\label{chap:discretizacion-espacial}
     \paragraph*{}
     Las soluciones analíticas modeladas mediante ecuaciones diferenciales
-    parciales de las ecuaciones que describen el flujo de fluidos dan resultados
-    ``continuos'' a lo largo del dominio que se está estudiando, por otro lado,
-    las soluciones numéricas  dan resultados en puntos ``discretos'' del dominio
-    llamados nodos, éstos, unidos mediante líneas, conforman la malla del
-    dominio en el que se está trabajando el problema. Para el caso de un
-    análisis en dos dimensiones, la malla se forma por triangulos o
+    parciales de las ecuaciones que describen el flujo de fluidos dan
+    resultados ``continuos'' a lo largo del dominio que se está estudiando, por
+    otro lado, las soluciones numéricas  dan resultados en puntos ``discretos''
+    del dominio llamados nodos, éstos, unidos mediante líneas, conforman la
+    malla del dominio en el que se está trabajando el problema. Para el caso de
+    un análisis en dos dimensiones, la malla se forma por triangulos o
     cuadriláteros, mientras que en un caso de tridimensional la malla es
     conformada por tetraedros o hexaedros.
 
     \paragraph*{}
     En las aplicaciones de DFC se busca que la distribución de los nodos sea
-    uniforme, dado que esto simplifica los algoritmos de solución a implementar,
-    y que se traduce en un ahorro de tiempo en la ejecución de los programas,
-    además de un uso considerablemente menor de memoria.
+    uniforme, dado que esto simplifica los algoritmos de solución a
+    implementar, y que se traduce en un ahorro de tiempo en la ejecución de los
+    programas, además de un uso considerablemente menor de memoria.
 
     \paragraph*{}
     Existen básicamente dos tipos de mallas:
@@ -625,10 +727,10 @@
     de Taylor.
 
     \paragraph*{}
-    ``El uso del método de diferencias finitas en la DFC tiene como propósito el
-    reemplazar las derivadas parciales que aparecen en las ecuaciones que
-    gobiernan el flujo, por coeficientes diferenciales que dan como resultado un
-    sistema de ecuaciones algebráicas, el cual se resuelve para obtener las
+    ``El uso del método de diferencias finitas en la DFC tiene como propósito
+    el reemplazar las derivadas parciales que aparecen en las ecuaciones que
+    gobiernan el flujo, por coeficientes diferenciales que dan como resultado
+    un sistema de ecuaciones algebráicas, el cual se resuelve para obtener las
     propiedades del campo de flujo en puntos discretos, es decir, en los nodos
     de la malla.'' \cite{anderson-yotros}
 
@@ -818,9 +920,9 @@
     La mayor ventaja que presenta el método de diferencias finitas es su
     simplicidad de implementación, aunque presenta una limitante, el método
     únicamente es aplicable a mallas estructuradas, además de tampoco poderse
-    aplicar a cuerpos de geometría curvilíneas, por lo que es necesario hacer una
-    transformación de la malla, de un dominio físico a un dominio lógico, como
-    se analiza en el capítulo~\ref{chap:mallas}.
+    aplicar a cuerpos de geometría curvilíneas, por lo que es necesario hacer
+    una transformación de la malla, de un dominio físico a un dominio lógico,
+    como se analiza en el capítulo~\ref{chap:mallas}.
 
     \paragraph*{}
     Es este último punto, la piedra angular en la importancia del desarrollo de
@@ -848,16 +950,19 @@
     último, aplicando un algoritmo numérico de solución a la discretización de
     las ecuaciones. Este proceso resulta ser una evaluación de la solución en
     los nodos de la malla.
+
     \paragraph*{}
     La mecánica de fluidos trabaja con ecuaciones no lineales, las cuales
     describen los flujos de fluidos, dichas ecuaciones en la mayoría de los
-    casos prácticos de análisis no pueden ser resueltas de una manera analítica,
-    por lo que se ha optado por la solución de dichas ecuaciones mediante
-    métodos de aproximaciones entre los cuales encontramos los métodos de
-    expansión y perturbación, método de diferencias finitas, método de volúmenes
-    finitos e incluso el método de elementos finitos. En general los de mayor
-    aplicación práctica son los tres últimos, pero para poder usarlos es
-    necesario discretizar el campo de análisis mediante el uso de una malla.\cite{thompsonhandbook}
+    casos prácticos de análisis no pueden ser resueltas de una manera
+    analítica, por lo que se ha optado por la solución de dichas ecuaciones
+    mediante métodos de aproximaciones entre los cuales encontramos los métodos
+    de expansión y perturbación, método de diferencias finitas, método de
+    volúmenes finitos e incluso el método de elementos finitos. En general los
+    de mayor aplicación práctica son los tres últimos, pero para poder usarlos
+    es necesario discretizar el campo de análisis mediante el uso de una
+    malla.\cite{thompsonhandbook}
+
     \paragraph*{}
     La utilización del método de diferencias finitas es directa si el problema
     se puede expresar en un sistema de coordenadas cartesianas, aunque el
@@ -963,7 +1068,7 @@
     En la figura~\ref{fig:malla-c} se observa que en el dominio físico, el
     segmento $(ab)$ representa la sección del mallado donde se realiza el
     corte y que también se le llama $(a'b')$, y que en el dominio
-    computacional este segmento representa dos segmentos diferentes.
+    computacional esta sección representa dos segmentos diferentes.
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=155mm]{./img/malla-c}
@@ -980,8 +1085,8 @@
     algunos componentes de aeronaves, como puede ser el fuselaje o las
     góndolas, entre otros.\cite{vladimir-grid} También pueden llegar a
     utilizarse en el análisis de perfiles alares, pero presentan la
-    dificultad de ofrecer una baja calidad de mallado en el borde de
-    salida.~\cite{blazek}\cite{best-practices-grid-generation}
+    dificultad de ofrecer una baja calidad de mallado en la sección cercana al
+    borde de salida.~\cite{blazek}\cite{best-practices-grid-generation}
 
     \paragraph*{}
     En este caso, al igual que sucede con las mallas tipo C, el resultado en
@@ -1055,7 +1160,7 @@
     \section{Consideraciones preliminares para la generación de mallas}
     \paragraph*{}
     La densidad de la malla es el primer aspecto que se debe considerar, se
-    debe generar una malla solo sufcientemente densa para que la
+    debe generar una malla solo suficientemente densa para que la
     aproximación numérica sea precisa, sin embargo, se debe tener cuidado en
     no hacer la malla demasiado densa, tanto que resulte impractico llevar a
     cabo un análisis y llegar a una eventual solución.
@@ -1083,14 +1188,14 @@
 
     \paragraph*{}
     Podemos señalar principalmente dos tipos de técnicas para la generación
-    de mallado, de entre el amplio número de técnicas existentes al día de
-    hoy, las cuales son:
+    de mallas estructuradas, de entre el amplio número de técnicas existentes
+    al día de hoy, las cuales son:
     \begin{itemize}
         \item Métodos algebráicos: es de todos, el método más sencillo de
             implementar, una de sus ventajas es la rapidez con la que se
             genera la malla. Se utiliza un método de interpolación para
             determinar los nodos del mallado, partiendo de las coordenadas
-            de la frontera externa e interna. Y se realiza la transformación
+            de la frontera externa e interna. Se realiza la transformación
             del dominio físico al lógico mediante una ecuación algebráica.
         \item Metódos mediante  ecuaciones diferenciales parciales (EDP): se
             resuelve una EDP para obtener la distribución de los nodos,
@@ -1111,7 +1216,7 @@
      tienen la capacidad de suavizar las curvas, si no que tienden a mantener
      la forma de las fronteras, por lo que si se llegara a presentar algún
      tipo de discontinuidad en la frontera interna (superficie de análisis),
-     ésta seguiría presente en los nodos internos de la malla. Es por esto que
+     ésta seguirá presente en los nodos internos de la malla. Es por esto que
      estos métodos son utilizados de manera general, como una primera
      aproximación, la cual sirve como condición inicial en la generación de
      mallas mediante la solución de sistemas de ecuaciones diferenciales
@@ -1148,7 +1253,11 @@
     En este método se ocupa el polinomio de Lagrange como ecuación de
     interpolación para generar la malla.
     \begin{align}
-        L_{i}(x) = \frac{(x - x_{0})(x - x_{1}) \dotsb (x - x_{i-1}) (x - x_{i+1}) \dotsb (x - x_{n})}{(x_{i} - x_{0} )(x_{i} - x_{1}) \dotsb (x_{i} - x_{i-1}) (x_{i} - x_{i+1}) \dotsb (x_{i} - x_{n}) } && i = 0, 1, \dotsc , n
+        L_{i}(x) = \frac{(x - x_{0})(x - x_{1})
+                \dotsb (x - x_{i-1}) (x - x_{i+1})
+                \dotsb (x - x_{n})}{(x_{i} - x_{0} )(x_{i} - x_{1})
+                \dotsb (x_{i} - x_{i-1}) (x_{i} - x_{i+1})
+                \dotsb (x_{i} - x_{n}) } && i = 0, 1, \dotsc , n
     \end{align}
     \\El polinomio resultante será de grado $n$, donde el numerador omite el
     término $(x - x_{i})$
@@ -1160,11 +1269,14 @@
     los cuales pertenecen a la frontera interna y externa respectivamente.
     Para este caso, se tienen los siguientes términos:
     \begin{align*}
-        L_{0} = \frac{( x - x_{1} )}{(x_{0} - x_{1})} && L_{1} = \frac{( x - x_{0} )}{(x_{1} - x_{0} )}
+        L_{0} = \frac{( x - x_{1} )}{(x_{0} - x_{1})} &&
+        L_{1} = \frac{( x - x_{0} )}{(x_{1} - x_{0} )}
     \end{align*}
     dando como resultado la ecuación que describe a una recta
     \begin{equation}
-        y = y_{0} \frac{( x - x_{1} )}{( x_{0} - x_{1} )}  + y_{1} \frac{(x - x_{0})}{( x_{1} - x_{0} )} = y_{0} (1 - \xi) + y_{1}\xi
+        y = y_{0} \frac{( x - x_{1} )}{( x_{0} - x_{1} )}
+            + y_{1} \frac{(x - x_{0})}{( x_{1} - x_{0} )}
+          = y_{0} (1 - \xi) + y_{1}\xi
     \end{equation}
     de donde se sabe que
     \begin{equation}
@@ -1416,7 +1528,7 @@
     misma, es decir, que se tengan condiciones de frontera de Dirichlet.
     La solución se obtiene mediante diferentes métodos numéricos iterativos
     entre los que destacan el método de Jacobi, el método de Gauss-Seidel y
-    métodos de sobre relajación. Informacion sobre el procedimiento y
+    métodos de sobre relajación. Información sobre el procedimiento y
     desarrollo de estos métodos está disponible en el apéndice~\ref{appIter}.
 
     \paragraph*{}
@@ -1487,7 +1599,8 @@
                 + Q(\xi, \eta) x_{\eta}]
         \end{equation}
         \begin{equation}
-            \alpha y_{\xi \xi} + \beta y_{\xi \eta} + \gamma y_{\eta \eta} = -I^2 [P(\xi, \eta) y_{\xi} + Q(\xi, \eta) y_{\eta}]
+            \alpha y_{\xi \xi} + \beta y_{\xi \eta} + \gamma y_{\eta \eta}
+                = -I^2 [P(\xi, \eta) y_{\xi} + Q(\xi, \eta) y_{\eta}]
         \end{equation}
         \label{ec-poisson-invertida}
     \end{subequations}
@@ -1509,15 +1622,23 @@
     Las ecuaciones para $P$ y $Q$ que llevan a cabo este proceso son:
     \begin{align}
         \begin{aligned}
-            P(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m} \frac{\xi - \xi_{m}}{|\xi - \xi_{m}|} \exp(-c_{m}|\xi - \xi_{m}|) \\&
-            - \sum_{n=1}^{N} b_{n} \frac{\xi - \xi_{n}}{| \xi - \xi_{n} |} \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2 + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
+            P(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m}
+                \frac{\xi - \xi_{m}}{|\xi - \xi_{m}|}
+                \exp(-c_{m}|\xi - \xi_{m}|) \\&
+            - \sum_{n=1}^{N} b_{n} \frac{\xi - \xi_{n}}{| \xi - \xi_{n} |}
+                \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2
+                + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
         \end{aligned}
         \label{ec-P}
     \end{align}
     \begin{align}
         \begin{aligned}
-            Q(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m} \frac{\eta - \eta_{m}}{|\eta - \eta_{m}|} \exp(-c_{m}|\eta - \eta_{m}|) \\&
-            - \sum_{n=1}^{N} b_{n} \frac{\eta - \eta_{n}}{| \eta - \eta_{n} |} \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2 + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
+            Q(\xi, \eta) =& - \sum_{m = 1}^{M} a_{m}
+                \frac{\eta - \eta_{m}}{|\eta - \eta_{m}|}
+                \exp(-c_{m}|\eta - \eta_{m}|) \\&
+            - \sum_{n=1}^{N} b_{n} \frac{\eta - \eta_{n}}{| \eta - \eta_{n} |}
+                \exp\lbrace -d_{n} \left[ \left( \xi - \xi_{n} \right)^2
+                + \left( \eta - \eta_{n} \right)^2 \right]^\frac{1}{2} \rbrace
         \end{aligned}
         \label{ec-Q}
     \end{align}
@@ -1612,6 +1733,7 @@
             + Q \left( X_{i, j+1} - X_{i, j-1} \right)\right)
         \Biggr]
     \end{align}
+
     \begin{align}
         Y_{i, j} =& \frac{1}{2 \left(\alpha + \gamma\right)}
         \Biggl[
@@ -2051,22 +2173,37 @@
     en las ecuaciones gobernantes en el esquema parabólico, quedando de la
     siguiente manera:
     \begin{align*}
-        f_x = \frac{f_{i+1, j} - f_{i,j}}{\Delta R} && y && f_x = \frac{f_{i, j} - f_{i-1, j}}{\Delta L}\\
-        f_y = \frac{f_{i, j+1} - f_{i,j}}{\Delta U} && y && f_y = \frac{f_{i, j} - f_{i, j-1}}{\Delta D}
+        f_x = \frac{f_{i+1, j} - f_{i,j}}{\Delta R} && y &&
+                f_x = \frac{f_{i, j} - f_{i-1, j}}{\Delta L}\\
+        f_y = \frac{f_{i, j+1} - f_{i,j}}{\Delta U} && y &&
+                f_y = \frac{f_{i, j} - f_{i, j-1}}{\Delta D}
     \end{align*}
     \begin{align*}
-    f_{xx} = \frac{2}{\Delta R + \Delta L} \left( \frac{f_{i+1, j} - f_{i,j}}{\Delta R} - \frac{f_{i, j} - f_{i-1, j}}{\Delta L} \right)\\
-    f_{yy} = \frac{2}{\Delta D + \Delta U} \left( \frac{f_{i, j+1} - f_{i,j}}{\Delta U} - \frac{f_{i, j} - f_{i, j-1}}{\Delta D} \right)\\
-    f_{xy} = \frac{f_{i+1,j+1} - f_{i+1, j-1} - f_{i-1, j+1} + f_{i-1, j-1}}{\left( \Delta R + \Delta L \right) \left( \Delta D + \Delta U \right)}
+    f_{xx} = \frac{2}{\Delta R + \Delta L} \left( \frac{f_{i+1, j}
+            - f_{i,j}}{\Delta R} - \frac{f_{i, j}
+            - f_{i-1, j}}{\Delta L} \right)\\
+    f_{yy} = \frac{2}{\Delta D + \Delta U} \left( \frac{f_{i, j+1}
+            - f_{i,j}}{\Delta U} - \frac{f_{i, j}
+            - f_{i, j-1}}{\Delta D} \right)\\
+    f_{xy} = \frac{f_{i+1,j+1} - f_{i+1, j-1} - f_{i-1, j+1}
+            + f_{i-1, j-1}}{\left( \Delta R + \Delta L \right)
+            \left( \Delta D + \Delta U \right)}
     \end{align*}\\
     con esto, las ecuaciones gobernantes~\ref{parabolic0} se discretizan de
     la siguiente manera
     \begin{subequations}
         \begin{equation}
-        \frac{a \left( x_{i,j} - x_{i, j-1} \right)}{\Delta D} = \frac{2b}{\Delta L + \Delta R} \left[ \frac{x_{i+1, j} - x_{i, j}}{\Delta R}  - \frac{x_{i, j} - x_{i-1, j}}{\Delta L} \right] + c \frac{XB_{i, Jmax} - x_{i, j}}{\Delta O} + d
+        \frac{a \left( x_{i,j} - x_{i, j-1} \right)}{\Delta D} =
+            \frac{2b}{\Delta L + \Delta R} \left[ \frac{x_{i+1, j} - x_{i,
+            j}}{\Delta R}  - \frac{x_{i, j} - x_{i-1, j}}{\Delta L} \right] + c
+            \frac{XB_{i, J_{\max}} - x_{i, j}}{\Delta O} + d
         \end{equation}
         \begin{equation}
-        \frac{a \left( y_{i,j} - y_{i, j-1} \right)}{\Delta D} = \frac{2b}{\Delta L + \Delta R} \left[ \frac{y_{i+1, j} - y_{i, j}}{\Delta R}  - \frac{y_{i, j} - y_{i-1, j}}{\Delta L} \right] + c \frac{YB_{i, Jmax} - y_{i, j}}{\Delta O} + d
+        \frac{a \left( y_{i,j} - y_{i, j-1} \right)}{\Delta D}
+            = \frac{2b}{\Delta L + \Delta R} \left[ \frac{y_{i+1, j}
+            - y_{i, j}}{\Delta R}  - \frac{y_{i, j}
+            - y_{i-1, j}}{\Delta L} \right] + c \frac{YB_{i, J_{\max}}
+            - y_{i, j}}{\Delta O} + d
         \end{equation}
         \label{parabolic1}
     \end{subequations}
@@ -2087,7 +2224,8 @@
     dirección $\eta$.\\
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=110mm]{./img/eliptic_non_uniform.png}
+        \includegraphics[keepaspectratio, width=110mm]
+        {./img/eliptic_non_uniform.png}
         \caption[Generación de malla por ecuaciones elípticas]{Generación de
         malla estructurada no uniforme desarrollada mediante ecuaciones
         elípticas \cite{siladicParabolic}}
@@ -2101,7 +2239,14 @@
     dando como resultado
     \begin{align}
         &\begin{aligned}
-            &&\frac{2\alpha}{F_i + F_{i - 1}} \left[ \frac{s_{i-1, j} - s_{i, j}}{F_{i - 1}} + \frac{s_{i+1, j}  - s_{i, j}}{F_i} \right] + \beta \left[ \frac{ s_{i+1, j+1} - s_{i+1, j-1} - s_{i-1, j + 1} + s_{i-1, j-1} }{ (F_{i - 1} + F_i) (g_{j - 1} + g_j) } \right]\\&& + \frac{2\gamma}{g_j + g_{j - 1}} \left[ \frac{s_{i, j-1} - s_{i, j}}{g_{j - 1}}  + \frac{s_{i, j+1} - s_{i, j}}{g_j}\right] = 0
+            &\frac{2\alpha}{F_i + F_{i - 1}} \left[ \frac{s_{i-1, j}
+                - s_{i, j}}{F_{i - 1}} + \frac{s_{i+1, j}
+                - s_{i, j}}{F_i} \right] + \beta \left[ \frac{ s_{i+1, j+1}
+                - s_{i+1, j-1} - s_{i-1, j + 1} + s_{i-1, j-1} }{ (F_{i - 1}
+                + F_i) (g_{j - 1} + g_j) } \right]\\&
+                + \frac{2\gamma}{g_j + g_{j - 1}} \left[ \frac{s_{i, j-1}
+                - s_{i, j}}{g_{j - 1}}  + \frac{s_{i, j+1}
+                - s_{i, j}}{g_j}\right] = 0
         &\end{aligned}
         \label{eliptic_non_uniform}
     \end{align}
@@ -2119,21 +2264,29 @@
     \paragraph*{}
     En el caso más sencillo, aquel en el que no interesa forzar la
     ortogonalidad en las fronteras, a las variables $XO$ y $YO$ se les
-    asignan los valores $(XB_{i, Jmax} YB_{i, Jmax})$ en la frontera
+    asignan los valores $(XB_{i, J_{\max}} YB_{i, J_{\max}})$ en la frontera
     externa. Reordenando los términos, y donde $s$ representa cualquier
     coordenada $x$ o $y$\\
     \begin{align}
-        \begin{aligned}
-            \frac{2\alpha}{F_i + F_{i - 1}} \left[ \frac{s_{i-1, j} - s_{i, j}}{F_{i - 1}} + \frac{s_{i+1, j} - s_{i, j}}{F_i} \right] + \frac{2\gamma}{g_{j - 1} + G_j} \left[ \frac{-s_{i, j}}{g_{j - 1}} - \frac{s_{i, j}}{G_j} \right]\\
-            = -\beta \left[ \frac{ SO_{i+1, j+1} - SO_{i-1, j-1} - s_{i+1, j-1} + s_{i-1, j-1} }{ (F_{i - 1} + F_i) (g_{j - 1} + G_j) } \right] - \frac{2\gamma}{g_{j-1} + G_j} \left[ \frac{s_{i, j - 1}}{g_{j - 1}} + \frac{SO_{i, j + 1}}{G_j} \right]
-        \end{aligned}
+        &\begin{aligned}
+            &\frac{2\alpha}{F_i + F_{i - 1}} \left[ \frac{s_{i-1, j}
+                - s_{i, j}}{F_{i - 1}} + \frac{s_{i+1, j}
+                - s_{i, j}}{F_i} \right] + \frac{2\gamma}{g_{j - 1} + G_j}
+                \left[ \frac{-s_{i, j}}{g_{j - 1}}
+                - \frac{s_{i, j}}{G_j} \right]\\&
+            = -\beta \left[ \frac{ SO_{i+1, j+1} - SO_{i-1, j-1} - s_{i+1, j-1}
+                + s_{i-1, j-1} }{ (F_{i - 1} + F_i) (g_{j - 1} + G_j) } \right]
+                - \frac{2\gamma}{g_{j-1} + G_j}
+                \left[ \frac{s_{i, j - 1}}{g_{j - 1}}
+                + \frac{SO_{i, j + 1}}{G_j} \right]
+        &\end{aligned}
         \label{eliptic_non_uniform1}
     \end{align}\\
 
     donde
     \begin{align*}
         &\begin{aligned}
-        G_j = g_j + g_{j + 1} + ... + g_{Jmax - 1} = \eta_{max} - \eta_j
+            G_j = g_j + g_{j + 1} + ... + g_{J_{\max} - 1} = \eta_{\max} - \eta_j
         \end{aligned}\\
         &\begin{aligned}
         g_{j - 1} = \eta_j - \eta_{j - 1};&& F_i = \xi_{i + 1} - \xi_i; && F_{i - 1} = \xi_i - \xi_{i - 1}&&
@@ -2149,14 +2302,29 @@
     del otro todos los valores conocidos, es decir
     \begin{align}
         \begin{aligned}
-            -\left( \frac{b}{\Delta L} + \frac{b}{\Delta R} \right) \frac{2 s_{i, j}}{\Delta L + \Delta R} &- \left( \frac{a}{\Delta D} + \frac{c}{\Delta O}\right) s_{i, j} + \frac{b}{\Delta R} \frac{2 s_{i-1, j}}{\Delta R + \Delta L} + \frac{b}{\Delta R} \frac{2 s_{i+1, j}}{\Delta R + \Delta L}\\
-            &= - c \frac{SB_{i, Jmax}}{\Delta O} - a \frac{s_{i, j-1}}{\Delta D} - d
+            -\left( \frac{b}{\Delta L} + \frac{b}{\Delta R} \right)
+                \frac{2 s_{i, j}}{\Delta L + \Delta R} &
+                - \left( \frac{a}{\Delta D}
+                + \frac{c}{\Delta O}\right) s_{i, j} + \frac{b}{\Delta R}
+                \frac{2 s_{i-1, j}}{\Delta R + \Delta L}
+                + \frac{b}{\Delta R} \frac{2 s_{i+1, j}}{\Delta R + \Delta L}\\
+            &= - c \frac{SB_{i, J_{\max}}}{\Delta O}
+                - a \frac{s_{i, j-1}}{\Delta D} - d
         \end{aligned}
     \end{align}
     \begin{align}
         \begin{aligned}
-            -\left( \frac{\alpha}{F_{i - 1}} + \frac{\alpha}{F_i} \right) \frac{2s_{i, j}}{F_i + F_{i - 1}} - \left( \frac{\gamma}{g_{j - 1}} + \frac{\gamma}{G_j} \right) \frac{2s_{i, j}}{G_j + g_{j-1}} + \frac{\alpha}{F_{i - 1}} \frac{2 s_{i-1, j}}{F_i + F_{i - 1}} + \frac{\alpha}{F_i} \frac{2 s_{i, j}}{F_i + F_{i - 1}}\\
-            = - \frac{2\gamma}{g_{j - 1} + G_j} \left[ \frac{SO_{i, j+1}}{G_j} + \frac{s_{i, j-1}}{g_{j -1}} \right] - \beta \left[ \frac{SO_{i+1, j+1} - SO_{i-1, j+1} - s_{i+1, j-1} + s_{i-1, j-1} }{ \left( F_i + F_{i - 1} \right) \left( g_{j - 1} + G_j \right) } \right]
+            -\left( \frac{\alpha}{F_{i - 1}} + \frac{\alpha}{F_i} \right)
+                \frac{2s_{i, j}}{F_i + F_{i - 1}}
+                - \left( \frac{\gamma}{g_{j - 1}} + \frac{\gamma}{G_j} \right)
+                \frac{2s_{i, j}}{G_j + g_{j-1}} + \frac{\alpha}{F_{i - 1}}
+                \frac{2 s_{i-1, j}}{F_i + F_{i - 1}} + \frac{\alpha}{F_i}
+                \frac{2 s_{i, j}}{F_i + F_{i - 1}}\\
+            = - \frac{2\gamma}{g_{j - 1} + G_j} \left[ \frac{SO_{i, j+1}}{G_j}
+                + \frac{s_{i, j-1}}{g_{j -1}} \right]
+                - \beta \left[ \frac{SO_{i+1, j+1} - SO_{i-1, j+1}
+                - s_{i+1, j-1} + s_{i-1, j-1} }{ \left( F_i + F_{i - 1} \right)
+                \left( g_{j - 1} + G_j \right) } \right]
         \end{aligned}
     \end{align}\\
 
@@ -2171,7 +2339,8 @@
             a = c = \frac{2\gamma}{G_j + g_{j - 1}}
         \end{equation*}\\
         \begin{equation*}
-            d = \beta \left[ \frac{SO_{i+1, j+1} - SO_{i-1, j+1} - s_{i+1, j-1} + s_{i-1, j-1} }{ (F_i + F_{i-1}) (G_j + g_{j-1}) } \right]
+            d = \beta \left[ \frac{SO_{i+1, j+1} - SO_{i-1, j+1} - s_{i+1, j-1}
+                + s_{i-1, j-1} }{ (F_i + F_{i-1}) (G_j + g_{j-1}) } \right]
         \end{equation*}
     \end{subequations}\\
 
@@ -2181,16 +2350,28 @@
     matrices $2$x$2$ el cual se desarrolla del siguiente modo\\
     \begin{align*}
         &\begin{aligned}
-            &&&&&&&&&&&&&&&&&&A = \frac{2\alpha}{F_{i - 1} (F_i + F_{i - 1}) } &&& ; &&& C =& \frac{2\alpha}{F_i (F_i + F_{i - 1}) }
+            &&&&&&&&&&&&&&&&&&A = \frac{2\alpha}{F_{i - 1} (F_i + F_{i - 1}) }
+                &&& ; &&& C =& \frac{2\alpha}{F_i (F_i + F_{i - 1}) }
         \end{aligned}\\ \\
         &\begin{aligned}
-            &&&&&&&&&&&&&&&B = \frac{-2 \alpha}{F_i + F_{i - 1}} \left( \frac{1}{F_i} + \frac{1}{F_{i - 1}} \right) - \frac{2\gamma}{G_j + g_{j - 1}} \left( \frac{1}{G_j}  + \frac{1}{g_{j - 1}} \right)
+            &&&&&&&&&&&&&&&B = \frac{-2 \alpha}{F_i + F_{i - 1}}
+                \left( \frac{1}{F_i} + \frac{1}{F_{i - 1}} \right)
+                - \frac{2\gamma}{G_j + g_{j - 1}} \left( \frac{1}{G_j}
+                + \frac{1}{g_{j - 1}} \right)
         \end{aligned}\\ \\
         &\begin{aligned}
-            D_x = -\beta \frac{ XO_{i+1, j+1} - XO_{i-1, j+1} - x_{i+1, j-1} + x_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) } - \frac{2 \gamma}{G_j + g_{j - 1}} \left[ \frac{x_{i, j - 1}}{g_{j-1}} + \frac{XO_{i, j + 1}}{G_j} \right]
+            D_x = -\beta \frac{ XO_{i+1, j+1} - XO_{i-1, j+1} - x_{i+1, j-1}
+                + x_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) }
+                - \frac{2 \gamma}{G_j + g_{j - 1}}
+                \left[ \frac{x_{i, j - 1}}{g_{j-1}}
+                + \frac{XO_{i, j + 1}}{G_j} \right]
         \end{aligned} \\ \\
         &\begin{aligned}
-            D_y = -\beta \frac{ YO_{i+1, j+1} - YO_{i-1, j+1} - y_{i+1, j-1} + y_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) } - \frac{2 \gamma}{G_j + g_{j - 1}} \left[ \frac{y_{i, j - 1}}{g_{j-1}} + \frac{YO_{i, j + 1}}{G_j} \right]
+            D_y = -\beta \frac{ YO_{i+1, j+1} - YO_{i-1, j+1} - y_{i+1, j-1}
+                + y_{i-1, j-1} }{ (F_i + F_{i - 1}) (G_j + g_{j - 1}) }
+                - \frac{2 \gamma}{G_j + g_{j - 1}}
+                \left[ \frac{y_{i, j - 1}}{g_{j-1}}
+                + \frac{YO_{i, j + 1}}{G_j} \right]
         \end{aligned}
     \end{align*}\\
 
@@ -2211,7 +2392,7 @@
     todos los puntos de la malla para el mismo nivel $\eta$ (línea $j$)
     resolviendo el sistema tridiagonal para cada $x_{i, j}$ y $y_{i, j}$. La
     solución comienza en $j = 1$ (justo después de la frontera interna) y
-    finaliza en $j = Jmax - 2$ (un nivel antes de la frontera externa). Los
+    finaliza en $j = J_{\max} - 2$ (un nivel antes de la frontera externa). Los
     coeficientes $\alpha$, $\beta$ y $\gamma$ se calculan usando las
     coordenadas de puntos adyacentes que ya se han generado, dichos valores
     son sustituidos en las aproximaciones por diferencias finitas utilizadas
@@ -2280,7 +2461,8 @@
     de las mismas, ya que representa un indicativo de la confiabilidad y la
     usabilidad de la malla. Por lo tanto es necesario desarrollar métodos
     que permitan analizar dicha característica en las mallas generadas con
-    el fin de poder modificar las anomalías y errores que se presenten.
+    el fin de poder detectar y en su caso, modificar, las anomalías y errores
+    que se presenten.
 
     \paragraph*{}
     Esto conlleva a la necesidad de determinar las características correctas
