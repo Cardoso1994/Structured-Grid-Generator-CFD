@@ -2,7 +2,7 @@ TEX_FILE = tesis
 
 all: tesis.pdf
 
-other:
+other: $(TEX_FILE).tex ./img/*.png
 	pdflatex  -shell-escape $(TEX_FILE)
 	bibtex $(TEX_FILE)
 	pdflatex  -shell-escape $(TEX_FILE)
