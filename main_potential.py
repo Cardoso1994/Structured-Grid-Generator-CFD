@@ -7,6 +7,7 @@ Created on Wed Apr 18 00:33:47 2018
 """
 
 from os import mkdir
+from os.path import expanduser
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -17,9 +18,10 @@ import mesh_o
 import mesh_su2
 from potential import potential_flow_o, velocity, pressure, lift_n_drag,\
     streamlines, potential_flow_o_n
-# from potential_performance import potential_flow_o_n
-# import helpers
 import util
+
+# home directory
+home = expanduser('~')
 
 # tipo de malla (C, O)
 malla = 'O'
@@ -64,7 +66,7 @@ mallaNACA = mesh_o.mesh_O(R, N, perfil)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.5, aa=320, cc=8.9, linea_eta=0)
 # direc = '/four-/'
 mallaNACA = util.from_txt_mesh(
-        filename='./potential_2412_mayo/mallaNACA_8.txt_mesh')
+        filename=(home + '/garbage/mesh_o_m.txt_mesh'))
 
 mallaNACA.plot()
 
@@ -101,9 +103,7 @@ print('N = ' + str(mallaNACA.N))
 t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
-
 alfa = 5
-
 gamma = 1.4
 cp_ = 1007
 mu = 18.25e-6
@@ -135,7 +135,7 @@ if mach_inf > 0.8:
 
 alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
 alfas = ['-4', '-2', '0', '2', '4', '6']
-# alfas = ['8', '10']
+alfas = ['10']
 
 for alfa_ in alfas:
     alfa = int(alfa_)

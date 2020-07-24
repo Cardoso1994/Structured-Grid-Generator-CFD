@@ -8,6 +8,7 @@ Created on Wed Apr 18 00:33:47 2018
 
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import expanduser
 
 import airfoil
 import mesh
@@ -30,6 +31,7 @@ N = 249
 N1 = 199
 split = 10
 
+home = expanduser('~')
 
 # points = 11
 airfoil_points = 677
@@ -77,18 +79,18 @@ print(f"shape mesh: {np.shape(mallaNACA.X)[0]}")
 # print('M = ' + str(mallaNACA.M))
 # print('N = ' + str(mallaNACA.N))
 
-mallaNACA = util.from_txt_mesh(
-        filename='/home/desarrollo/tesis_su2_BADLY/mesh_o.txt_mesh')
+# mallaNACA = util.from_txt_mesh(
+#         filename=(home + '/tesis_su2_BADLY/mesh_o.txt_mesh'))
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
 #                         aa=58.5, cc=8.4, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
 #                         aa=108.5, cc=13.4, linea_eta=0)
-# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
-#                         aa=700.1, cc=8.5, linea_eta=0)
+mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
+                        aa=700.1, cc=8.5, linea_eta=0)
 
-mallaNACA.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_o.su2')
+# mallaNACA.to_su2(home + '/garbage/mesh_o.su2')
 
-mallaNACA.to_txt_mesh('/home/desarrollo/tesis_su2_BADLY/mesh_o.txt_mesh')
+mallaNACA.to_txt_mesh(home + '/garbage/mesh_o.txt_mesh')
 
 plt.figure('MALLA NACA')
 plt.title('MALLA NACA')
