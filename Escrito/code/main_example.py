@@ -154,7 +154,7 @@ mallaNACA.to_su2(malla_su2)
 t_inf = 293.15 # [K]
 p_inf = 101325  # [Pa]
 v_inf = 48 # [m / s]
-alfa = 5
+alpha = 5
 gamma = 1.4
 cp_ = 1007
 mu = 18.25e-6
@@ -183,12 +183,12 @@ if mach_inf > 0.8:
         (phi, C, theta, IMA) = potential_flow_o_n(d0, h0, gamma,
                                                   mach_inf, v_inf,
                                                  alpha, mallaNACA)
-        (u, v) = velocity(alfa, C, mach_inf, theta, mallaNACA,
+        (u, v) = velocity(alpha, C, mach_inf, theta, mallaNACA,
                           phi, v_inf)
         (cp, p) = pressure(u, v, v_inf, d_inf, gamma, p_inf, p0,
                            d0, h0)
         (psi, mach) = streamlines(u, v, gamma, h0, d0, p, mallaNACA)
-        (L, _) = lift_n_drag(mallaNACA, cp, alfa, c)
+        (L, _) = lift_n_drag(mallaNACA, cp, alpha, c)
 
         plt.figure('potential')
         plt.contour(mallaNACA.X, mallaNACA.Y, phi, 95, cmap='viridis')
