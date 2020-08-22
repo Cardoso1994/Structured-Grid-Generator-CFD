@@ -159,6 +159,7 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
                            * np.tan(theta[:, 0] - alfa))
     arcosen[:] = np.arcsin((1 - mach_inf ** 2) ** 0.5
                            * np.sin(theta[:, 0] - alfa))
+
     for i in range(M):
         if arcotan[i] > 0 and arcosen[i] < 0:
             arcotan[i] += np.pi
@@ -170,6 +171,7 @@ def potential_flow_o_n(d0, H0, gamma, mach_inf, v_inf, alfa, mesh):
 
     it_max = 600000
     error = 1e-6
+    err = 0
     print('Potential Flow - Performance')
     for it in range(it_max):
         print('it =  ' + str(it), end=' ')

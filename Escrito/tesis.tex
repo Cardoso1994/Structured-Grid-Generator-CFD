@@ -4,10 +4,11 @@
 % arara: pdflatex
 % arara: pdflatex
 
+
 \documentclass[letterpaper, openright, 12pt]{book}
 % \documentclass[b5paper, openright, 12pt]{book}
 \usepackage[spanish,es-tabla, es-nodecimaldot]{babel} %es-tabla para nombrar a
-% las tablas en vez de cuadros
+                                                % las tablas en vez de cuadros
 \usepackage[utf8]{inputenc}
 
 \usepackage{float}
@@ -22,6 +23,11 @@
 \usepackage{gensymb}
 \usepackage{siunitx}
 \usepackage{pgf}
+
+\usepackage{listings}
+\lstset{
+showstringspaces=false
+}
 
 \usepackage[spanish]{nomencl}
 \makenomenclature
@@ -453,7 +459,7 @@
                 enfoques, como pueden ser la generación por ecuaciones
                 algebráicas y por ecuaciones diferenciales parciales.}
             \item{Llevar a cabo diferentes análisis, ya sea en el software de
-                código libre SU2 o mediante el desarrollo de un módulo propio
+                código libre SU2 o mediante el desarrollo de un módulo
                 que realice el análisis correspondiente mediante flujo 
                 potencial. Este último punto con el proposito de probar la
                 aplicabilidad y confiabilidad de las mallas y darles una
@@ -2686,8 +2692,8 @@
 \chapter{Análisis de Flujo Potencial}\label{chap:potential}
     \nocite{potencial_esp}
     \paragraph*{}
-        El modelo de flujo potencial es la más simple consideración de flujo no viscoso en
-        tomar en cuenta los efectos de compresibilidad.
+        El modelo de flujo potencial es la más simple consideración de flujo no
+        viscoso en tomar en cuenta los efectos de compresibilidad.
 
     \paragraph*{}
         Para el caso de flujos externos, en este caso el flujo de una corriente
@@ -3882,7 +3888,8 @@
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=90mm]{./img/flujo_potencial_funcion}
+        \includegraphics[keepaspectratio, width=90mm]
+            {./img/flujo_potencial_funcion}
         \caption{Diagrama de flujo para generación de mallas mediante la
             ecuación de Poisson}
         \label{flujo_potencial_funcion}
@@ -3908,8 +3915,7 @@
     ``aspect ratio'' y el ``skewness'' de las celdas de la misma, con la
     intención de mostrar la calidad lograda, lo que dota de
     confiabilidad al proyecto para su uso en posteriores proyectos.
-    Por último se llevan a cabo simulaciones de flujo potencial utilizando
-    el código desarrollado como parte de este proyecto, y también se
+    Por último se llevan a cabo simulaciones de flujo potencial, también se
     realizan simulaciones a través del uso del software SU2, con el fin de
     confirmar la correcta generación de las mallas y de mostrar su
     aplicabilidad.
@@ -5076,7 +5082,6 @@
     programa de código abierto SU2.
 
 
-
     \subsection{Flujo Potencial}
     \paragraph*{}
     En el análisis de flujo potencial se analizó el flujo alrededor de un
@@ -5780,7 +5785,7 @@
 %
 \chapter{Conclusiones}
 \paragraph*{}
-    En lo general se cumplen con los objetivos planteados al inicio del
+    En lo general, se cumplen con los objetivos planteados al inicio del
     desarrollo del proyecto, es decir, se ha desarrollado un paquete de códigos
     en lenguaje Python 3 que generan mallas con la calidad requerida para su
     uso en análisis de dinámica de fluidos computacional. En lo particular, los
@@ -5794,12 +5799,6 @@
     ecuaciones diferenciales parciales. Por último se llevaron a cabo
     simulaciones tanto de flujo potencial, como de flujo turbulento y
     estacionario.
-
-\paragraph*{}
-    Se implementaron también algortimos para la generación de mallas tipo O a
-    través de la solución tanto de EDP hiperbólicas como parabólicas. Sin
-    embargo, dado el comportamiento matemático que presentan dichos sistemas,
-    no se obtuvieron resultados favorables en estos dos casos.
 
 \paragraph*{}
     Derivado de este proyecto se cuenta con toda una suite robusta de software
@@ -5854,8 +5853,9 @@
     rango de ángulos de ataque a los cuales el flujo incidente sobre el perfil
     puede considerarse no viscoso e irrotacional. Se observa como la
     comparación diverge conforme aumenta el ángulo de ataque y éste se acerca a
-    valores donde comienza a haber pérdida en la sustentación, dicho efecto no
-    puede ser representado bajo el modelo de flujo potencial.
+    valores donde comienza a haber separación del flujo sobre la superficie del
+    perfil, dicho efecto no puede ser representado bajo el modelo de flujo
+    potencial.
 
 \paragraph*{}
     Las simulaciones realizadas mediante SU2 fueron contrastadas con los
@@ -5920,6 +5920,7 @@
     Se propone la extensión hacia otras herramientas de análisis de CFD, es
     decir, crear métodos que exporten las mallas generadas a formatos
     reconocibles por otros paquetes, por ejemplo OpenFOAM\@.
+
 %
 %
 %
@@ -5933,7 +5934,35 @@
 %
 \appendix
 \chapter{Códigos}\label{appCode}
+\paragraph*{}
+    A continuación, se muestran únicamente los códigos de mayor relevancia para
+    este trabajo, debido a la extensión del mismo, sin embargo, el proyecto
+    completo se puede encontrar y descargar en el siguiente repositorio de
+    github \href{https://github.com/Cardoso1994/Grid-Generator---CFD}
+    {https://github.com/Cardoso1994/Grid-Generator---CFD}.
 
+\paragraph*{}
+    Los códigos que se muestran a continuación son los siguientes
+    \begin{itemize}
+            \item Malla C. Generación de malla mediante la ecuación de Poisson,
+                con el uso del módulo numba.
+            \item Malla O. Generación de malla mediante la ecuación de Poisson,
+                con el uso del módulo numba.
+            \item Conversión de mallas a formato SU2
+            \item Archivo main. Ejemplo para la ejecución del programa.
+    \end{itemize}
+
+\section{Generación de Malla C con uso de librería numba}
+\lstinputlisting[language=Python]{./code/mesh_C_poisson.py}
+
+\section{Generación de Malla O con uso de librería numba}
+\lstinputlisting[language=Python]{./code/mesh_O_poisson.py}
+
+\section{Conversión de mallas a formato SU2}
+\lstinputlisting[language=Python]{./code/mesh_su2.py}
+
+\section{Archivo main. Ejemplo de ejecución}
+\lstinputlisting[language=Python]{./code/main_example.py}
 %
 %
 %

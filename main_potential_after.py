@@ -8,6 +8,7 @@ Created on Wed Apr 18 00:33:47 2018
 
 import numpy as np
 import matplotlib.pyplot as plt
+from os.path import expanduser
 
 import airfoil
 import mesh
@@ -17,6 +18,8 @@ import mesh_su2
 from potential import potential_flow_o, velocity,\
                         pressure, streamlines, lift_n_drag
 import util
+
+home = expanduser('~')
 
 # datos de perfil NACA
 m = 0  # combadura
@@ -54,6 +57,7 @@ Re = v_inf * d_inf / mu
 
 path = './potential_2412_mayo/'
 path = './potential_0012_mayo/'
+path = home + '/garbage/potential_july/'
 alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
 # alfas = ['-4', '0', '4', '8']
 
@@ -76,19 +80,19 @@ plt.ylabel('cl')
 plt.legend(loc='upper left')
 ax.set_aspect(15)
 ax.grid(True)
-plt.savefig('/home/desarrollo/garbage/img_tst.png',
-            bbox_inches='tight', pad_inches=0.05)
+# plt.savefig('/home/desarrollo/garbage/img_tst.png',
+#             bbox_inches='tight', pad_inches=0.05)
 plt.show()
 
 mallaNACA = util.from_txt_mesh(filename=path
-                              + '/mallaNACA_' + '8' +'.txt_mesh')
+                              + '/mallaNACA_' + '10' +'.txt_mesh')
 
 map_ = 'inferno'
 # map_ = 'viridis'
 cps = np.zeros((np.shape(mallaNACA.X)[0], len(alfas)))
 j = 0
 
-# creating plots and computing all postprocessing properties
+alfas = ['10']
 for alfa in alfas:
     mallaNACA = util.from_txt_mesh(filename=path
                                   + '/mallaNACA_' + alfa +'.txt_mesh')
@@ -117,6 +121,7 @@ for alfa in alfas:
     plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
     mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 495, #185 #295 # 695
                         cmap=map_)
+    plt.title('cp')
     plt.axis('equal')
     plt.show()
     limits = [[-55.5, 55.5, -55.5, 55.5], [-1.25, 1.25, -0.8, 0.8]]
@@ -190,8 +195,8 @@ for j in cps_alfa:
 plt.legend(loc='lower right')
 plt.gca().invert_yaxis()
 # plt.axis('equal')
-plt.savefig('/home/desarrollo/garbage/img_tst.png',
-         bbox_inches='tight', pad_inches=0.05)
+# plt.savefig('/home/desarrollo/garbage/img_tst.png',
+#          bbox_inches='tight', pad_inches=0.05)
 plt.draw()
 plt.show()
 exit()
