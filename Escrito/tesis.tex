@@ -57,130 +57,129 @@ showstringspaces=false
 \pagestyle{plain} %sin cabeceras en las páginas, numero de pagina centrado abajo
 \begin{document}
     \begin{titlepage}
-		\begin{center}
-			\begin{figure}
-				\begin{center}
-					\includegraphics[keepaspectratio, width=3cm]{./img/ipn-logo}
-				\end{center}
-			\end{figure}
-		\rule{100mm}{0.3mm}\\
-		\vspace*{8mm}
-		\textbf{INSTITUTO POLITÉCNICO NACIONAL}\\
-		\vspace*{3mm}
-		ESCUELA SUPERIOR DE INGENIERÍA MECÁNICA Y ELÉCTRICA\\
-		UNIDAD PROFESIONAL TICOMÁN\\
-		\vspace{12mm}
-		\textbf{DESARROLLO DE CÓDIGOS PARA EL DISEÑO DE MALLAS PARA EL
+        \begin{center}
+            % \begin{figure}[htbp!]
+            %     \centering
+                \includegraphics[keepaspectratio, width=80mm]{./img/ipn_logo}
+            % \end{figure}
+        \vspace*{2mm}
+        \rule{\textwidth}{1.5pt}\\
+        \vspace*{2mm}
+        \textbf{INSTITUTO POLITÉCNICO NACIONAL}\\
+        \vspace*{3mm}
+        ESCUELA SUPERIOR DE INGENIERÍA MECÁNICA Y ELÉCTRICA\\
+        UNIDAD PROFESIONAL TICOMÁN\\
+        \vspace{12mm}
+        \textbf{DESARROLLO DE CÓDIGOS PARA EL DISEÑO DE MALLAS PARA EL
         ANÁLISIS DE PERFILES AERODINÁMICOS CON SUPERFICIES HIPERSUSTENTADORAS
     TIPO FLAP}\\
-		\vspace*{12mm}
-		TESIS\\
-		Que para obtener el grado de\\
-		\vspace{3mm}
-		INGENIERO EN AERONÁUTICA\\
-		\vspace{12mm}
-		PRESENTA\\
-		\vspace{3mm}
-		MARCO ANTONIO CARDOSO MORENO\\
-		\rule{100mm}{0.3mm}\\
-		\vspace{3mm}
-		DIRECTOR DE TESIS: M. {\scriptsize EN} C. RAFAEL MEDINA NOGUERÓN
-		\end{center}
-	\vspace{5cm}
-	\begin{flushleft}
-		Ciudad de México
-	\end{flushleft}
-	\end{titlepage}
-	%
-	%
-	%
-	%
-	%
+        \vspace*{12mm}
+        TESIS\\
+        Que para obtener el grado de\\
+        \vspace{3mm}
+        INGENIERO EN AERONÁUTICA\\
+        \vspace{12mm}
+        PRESENTA\\
+        \vspace{3mm}
+        MARCO ANTONIO CARDOSO MORENO\\
+        \vspace{2mm}
+        \rule{\textwidth}{1.5pt}\\
+        \vspace{3mm}
+        DIRECTOR DE TESIS: M. {\scriptsize EN} C. RAFAEL MEDINA NOGUERÓN
+        \end{center}
+    \vspace{25mm}
+    Ciudad de México \hfill Septiembre, 2020
+    \end{titlepage}
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	%
-	\newpage\
-	\thispagestyle{empty}
-	%se deja hoja en blanco
-	%
-	%
-	%
-	%
-	%
+    %
+    %
+    %
+    %
+    %
+    \newpage\
+    \thispagestyle{empty}
+    %se deja hoja en blanco
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	% Dedicatoria
-	\newpage
-	\pagenumbering{Roman}
-	\begin{flushright}
-		\textit{}
-	\end{flushright}
-	\ % final página dedicatorias
-	%
-	%
-	%
-	%
-	%
+    %
+    %
+    %
+    %
+    % Dedicatoria
+    \newpage
+    \pagenumbering{Roman}
+    \begin{flushright}
+        \textit{}
+    \end{flushright}
+    \ % final página dedicatorias
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	%
-	\chapter*{Agradecimientos}
-	%
-	%
-	%
-	%
-	%
+    %
+    %
+    %
+    %
+    %
+    \chapter*{Agradecimientos}
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	%
-	\chapter*{Resúmen}
-	%
-	%
-	%
-	%
-	%
+    %
+    %
+    %
+    %
+    %
+    \chapter*{Resúmen}
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	% indices
-	\tableofcontents
-	
-	\cleardoublepage
-	\phantomsection % corrige error de hipervinculos que manda a la seccion previa
-	\addcontentsline{toc}{chapter}{Indice de Figuras}
-	\listoffigures
+    %
+    %
+    %
+    %
+    % indices
+    \tableofcontents
+    
+    \cleardoublepage
+    \phantomsection % corrige error de hipervinculos que manda a la seccion previa
+    \addcontentsline{toc}{chapter}{Indice de Figuras}
+    \listoffigures
 
 
-	\cleardoublepage
-	\phantomsection % corrige error de hipervinculos que manda a la seccion previa
-	\addcontentsline{toc}{chapter}{Indice de Tablas}
-	\listoftables
-	%
-	%
-	%
-	%
-	%
+    \cleardoublepage
+    \phantomsection % corrige error de hipervinculos que manda a la seccion previa
+    \addcontentsline{toc}{chapter}{Indice de Tablas}
+    \listoftables
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	%
-	% \chapter*{Nomenclatura}
+    %
+    %
+    %
+    %
+    %
+    % \chapter*{Nomenclatura}
     \nomenclature[01]{DFC}{Dinámica de Fluidos Computacional}
     \nomenclature[02]{EDP}{Ecuaciones Diferenciales Parciales}
 
@@ -301,23 +300,23 @@ showstringspaces=false
     \nomenclature[67]{$\alpha$}{Ángulo de ataque del perfil}
     \nomenclature[68]{$\delta$}{Ángulo de deflexión del flap}
 
-	\cleardoublepage
-	\addcontentsline{toc}{chapter}{Nomenclatura} % para agregar al índice
+    \cleardoublepage
+    \addcontentsline{toc}{chapter}{Nomenclatura} % para agregar al índice
     \printnomenclature
-	%
-	%
-	%
-	%
-	%
+    %
+    %
+    %
+    %
+    %
 
-	%
-	%
-	%
-	%
-	%
-	\chapter*{Introducción}
-	\addcontentsline{toc}{chapter}{Introducción}
-	\paragraph*{}
+    %
+    %
+    %
+    %
+    %
+    \chapter*{Introducción}
+    \addcontentsline{toc}{chapter}{Introducción}
+    \paragraph*{}
     En general, para analizar y diseñar sistemas en los cuales interviene el
     flujo de fluidos se cuenta con dos herramientas: la experimentación y los
     métodos analíticos. La experimentación implica la construcción de modelos
