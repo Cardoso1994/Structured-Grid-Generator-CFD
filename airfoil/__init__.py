@@ -139,14 +139,17 @@ class airfoil(object):
         '''
         return np.size(self.x)
 
-    def plot(self):
+    def plot(self, title, save=None):
         """
         Grafica el perfil aerodinamico
         ...
 
         Parametros
         ----------
-        None
+        title : str
+            título de la gráfica
+        save : str
+            Nombre de archivo a guardar, default `None` y no guarda nada
 
         Return
         ------
@@ -155,7 +158,11 @@ class airfoil(object):
 
         plt.figure('perfil')
         plt.axis('equal')
+        plt.title(title)
         plt.plot(self.x, self.y, 'b')
+        if save:
+            plt.savefig(save, bbox_inches='tight', pad_inches=0.05)
+
         plt.show()
 
     def rotate(self, degrees):
@@ -376,7 +383,7 @@ class NACA4(airfoil):
         a2      = -0.3516
         a3      = 0.2843
         a4      = -0.1015
-        # a4 = -0.1036
+        a4      = -0.1036
 
         # Calculo de la distribucion de espesor
         yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
@@ -489,7 +496,7 @@ class NACA4(airfoil):
         a2      = -0.3516
         a3      = 0.2843
         a4      = -0.1015
-        a4 = -0.1036
+        a4      = -0.1036
 
         # Calculo de la distribución de espesor
         yt = 5 * t * (a0 * xc ** 0.5 + a1 * xc + a2 * xc ** 2 + a3 * xc ** 3
