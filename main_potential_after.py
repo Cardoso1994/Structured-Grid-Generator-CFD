@@ -56,8 +56,8 @@ mach_inf = v_inf / c_inf
 Re = v_inf * d_inf / mu
 
 path = './potential_2412_mayo/'
-path = './potential_0012_mayo/'
-path = home + '/garbage/potential_july/'
+# path = './potential_0012_mayo/'
+# path = home + '/garbage/potential_july/'
 alfas = ['-4', '-2', '0', '2', '4', '6', '8', '10']
 # alfas = ['-4', '0', '4', '8']
 
@@ -87,15 +87,34 @@ plt.show()
 mallaNACA = util.from_txt_mesh(filename=path
                               + '/mallaNACA_' + '10' +'.txt_mesh')
 
-map_ = 'inferno'
-# map_ = 'viridis'
+# save_name = '/home/cardoso/garbage/mesh_potencial.png'
+# fix, ax = plt.subplots(1)
+# ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
+# for i in range(mallaNACA.M):
+#     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
+# ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.8)
+# # mesh_ = ax.pcolormesh(mallaNACA.X, mallaNACA.Y, aspect, cmap='viridis',
+# #                       rasterized=True, vmin=1.5, vmax=4.5)
+# # mesh_ = ax.pcolormesh(mallaNACA.X, mallaNACA.Y, skew, cmap=color_own,
+# #                       rasterized=True, vmin=0, vmax=1)
+# # plt.colorbar(mesh_, extend='both')
+#
+# ax.set_title("Malla O - Skew")
+# ax.set_xlim([-0.3, 0.85])
+# ax.set_ylim([-0.2, 0.2])
+# ax.set_aspect('equal')
+# plt.savefig(save_name, bbox_inches='tight', pad_inches=0.05)
+# plt.show()
+
+# map_ = 'inferno'
+map_ = 'viridis'
 cps = np.zeros((np.shape(mallaNACA.X)[0], len(alfas)))
 j = 0
 
-alfas = ['10']
+alfas = ['0']
 for alfa in alfas:
-    mallaNACA = util.from_txt_mesh(filename=path
-                                  + '/mallaNACA_' + alfa +'.txt_mesh')
+    # mallaNACA = util.from_txt_mesh(filename=path
+    #                               + '/mallaNACA_' + alfa +'.txt_mesh')
     phi = np.genfromtxt(path + '/phi_' + alfa + '.csv', delimiter=',')
     C = np.genfromtxt(path + '/C_' + alfa + '.csv', delimiter=',')
     theta = np.genfromtxt(path + '/theta_' + alfa + '.csv',
@@ -110,41 +129,43 @@ for alfa in alfas:
     print('alfa = ' + alfa)
     print("L = " + str(L))
     print("D = " + str(D))
-    plt.figure('1')
-    plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
-    plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
-    mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, (u**2 + v **2) ** 0.5, 495, #185 #295 # 695
-                        cmap=map_)
-    plt.axis('equal')
-    plt.figure('')
-    plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
-    plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
-    mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 495, #185 #295 # 695
-                        cmap=map_)
-    plt.title('cp')
-    plt.axis('equal')
-    plt.show()
+    # plt.figure('1')
+    # plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
+    # plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
+    # mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, (u**2 + v **2) ** 0.5, 495, #185 #295 # 695
+    #                     cmap=map_)
+    # plt.axis('equal')
+    # plt.figure('')
+    # plt.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
+    # plt.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
+    # mesh_ = plt.contourf(mallaNACA.X, mallaNACA.Y, cp, 495, #185 #295 # 695
+    #                     cmap=map_)
+    # plt.title('cp')
+    # plt.axis('equal')
+    # plt.show()
     limits = [[-55.5, 55.5, -55.5, 55.5], [-1.25, 1.25, -0.8, 0.8]]
-    # for limit in limits:
-    #     fig = plt.figure('malla_aspect')
-    #     ax = fig.add_subplot(1, 1, 1)
-    #     ax.set_xlim([limit[0], limit[1]])
-    #     ax.set_ylim([limit[2], limit[3]])
-    #     ax.set_aspect('equal')
-    #     ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
-    #     ax.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
+    limits = [[-1.25, 1.25, -0.8, 0.8]]
+    for limit in limits:
+        fig = plt.figure('malla_aspect')
+        ax = fig.add_subplot(1, 1, 1)
+        ax.set_xlim([limit[0], limit[1]])
+        ax.set_ylim([limit[2], limit[3]])
+        ax.set_aspect('equal')
+        ax.set_title(f"alpha = {alfa}°")
+        ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.9)
+        ax.plot(mallaNACA.X[:, -1], mallaNACA.Y[:, -1], 'k', linewidth=1.9)
 
-    #     # ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
-    #     # for i in range(np.shape(mallaNACA.X)[0]):
-    #     #     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
-    #     mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, psi, 695, #185 #295 # 695
-    #                         cmap=map_)
+        # ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
+        # for i in range(np.shape(mallaNACA.X)[0]):
+        #     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
+        mesh_ = plt.contour(mallaNACA.X, mallaNACA.Y, phi, 655, #185 #295 # 695
+                            cmap=map_)
         # plt.colorbar(mesh_)
-    #     # ax.axes.get_xaxis().set_ticks([])
-    #     # ax.axes.get_yaxis().set_ticks([])
-    #     plt.savefig('/home/desarrollo/garbage/img_tst.png',
-    #                 bbox_inches='tight', pad_inches=0.05)
-    #     plt.show()
+        # ax.axes.get_xaxis().set_ticks([])
+        # ax.axes.get_yaxis().set_ticks([])
+        plt.savefig(f"/home/cardoso/garbage/phi_2412_{alfa}.png",
+                    bbox_inches='tight', pad_inches=0.05)
+        plt.show()
 
 
 
