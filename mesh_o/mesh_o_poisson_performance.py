@@ -79,14 +79,14 @@ def gen_Poisson_v_(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     I           = np.zeros((m, n))
 
     # numero de division y asignacion de limites para secciones
-    div_eta     = 3
+    div_eta     = 25
     lim_        = n // div_eta
     lim         = [1]
     for i in range(1, div_eta):
         lim.append(lim_ * i)
     lim.append(n-1)
 
-    div_xi      = 2
+    div_xi      = 5
     lim_        = m // div_xi
     lim_xi      = [1]
     for i in range(1, div_xi):

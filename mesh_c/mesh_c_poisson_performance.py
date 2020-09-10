@@ -447,8 +447,8 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
     m = M
     n = N
 
-    begin_perfil = 118
-    end_perfil = begin_perfil + 1083
+    begin_perfil = 24
+    end_perfil = begin_perfil + 99
     limit = 0
     for j in range(n-2, 0, -1):
         Y[0 : begin_perfil - limit, j] = Y[begin_perfil - limit, j]
@@ -519,7 +519,6 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         #         + gamma / d_eta**2 * (Y[i, j+1] + Y[i, j-1])
         #         + I**2 * (P_[i-1] * y_xi + Q_[j-1] * y_eta))
 
-    """
     # seccion de union entre perfiles
     i_ = 0
     while airfoil_boundary[i_] != 0:
@@ -554,7 +553,6 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
         Y[-i -1, 0] = Y[i, 0]
         i += 1
         i_ += 1
-    """
 
     return (X, Y)
 

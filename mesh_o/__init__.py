@@ -243,12 +243,12 @@ class mesh_O(mesh):
                     gamma = x_xi ** 2 + y_xi ** 2
                     I = x_xi * y_eta - x_eta * y_xi
 
-                    X[i, 0]    = (d_xi * d_eta) ** 2 \
-                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
-                        * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
-                            + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
-                            - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
-                                    - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+                    # X[i, 0]    = (d_xi * d_eta) ** 2 \
+                    #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
+                    #     * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+                    #         + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+                    #         - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+                    #                 - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
                     Y[i, 0]    = (d_xi * d_eta) ** 2\
                         / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
                         * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
@@ -437,12 +437,12 @@ class mesh_O(mesh):
                     gamma = x_xi ** 2 + y_xi ** 2
                     I = x_xi * y_eta - x_eta * y_xi
 
-                    X[i, 0]    = (d_xi * d_eta) ** 2 \
-                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
-                        * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
-                            + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
-                            - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
-                                    - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+                    # X[i, 0]    = (d_xi * d_eta) ** 2 \
+                    #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
+                    #     * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+                    #         + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+                    #         - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+                    #                 - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
                     Y[i, 0]    = (d_xi * d_eta) ** 2\
                         / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2))\
                         * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])

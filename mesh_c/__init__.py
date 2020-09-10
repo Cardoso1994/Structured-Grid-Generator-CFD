@@ -60,19 +60,21 @@ class mesh_C(mesh):
         Convierte la malla a formato de SU2
     """
 
-    def __init__(self, R, N, airfoil, from_file=False, weight=1.055):
+    def __init__(self, R, N, airfoil, from_file=False, weight=1.355):
 
         m_ = np.shape(airfoil.x)[0] * 3 // 2
         if not airfoil.alone:
             #m_ -= 72
-            m_ -= 304
+            # m_ -= 304
             pass
         if m_ % 3 == 1:
             # m_ -= 48
             # m_ -= 18
-            M = m_
+            # M = m_
+            M = m_ - 1
         else:
             M = m_ - 1
+            # M = m_
         mesh.__init__(self, R, M, N, airfoil)
 
         self.tipo = 'C'
@@ -238,8 +240,8 @@ class mesh_C(mesh):
                 save = input("Save current Mesh: [Y/n]")
                 if save == 'Y' or save == 'y':
                     name = input('name of mesh: ')
-                    mallaNACA.to_su2(f"/home/desarrollo/garbage/{name}.su2")
-                    mallaNACA.to_txt_mesh(
+                    self.to_su2(f"/home/desarrollo/garbage/{name}.su2")
+                    self.to_txt_mesh(
                         f"/home/desarrollo/garbage/{name}.txt_mesh")
 
             # printing info
@@ -470,8 +472,14 @@ class mesh_C(mesh):
                 X = Xn
                 Y = Yn
 
+            begin_perfil = 24
+            end_perfil = begin_perfil + 99
+            limit = 0
             for j in range(n-2, 0, -1):
-                for i in range(1, m-1):
+                Y[0 : begin_perfil - limit, j] = Y[begin_perfil - limit, j]
+                Y[end_perfil + limit :, j] = Y[end_perfil + limit - 1, j]
+                for i in range(begin_perfil - limit, end_perfil + limit):
+                # for i in range(1, m-1):
                     x_eta = np.longdouble((X[i, j+1] - X[i, j-1]) / 2 / d_eta)
                     y_eta = np.longdouble((Y[i, j+1] - Y[i, j-1]) / 2 / d_eta)
                     x_xi = np.longdouble((X[i+1, j] - X[i-1, j]) / 2 / d_xi)
@@ -559,12 +567,12 @@ class mesh_C(mesh):
                     gamma = x_xi ** 2 + y_xi ** 2
                     I = x_xi * y_eta - x_eta * y_xi
 
-                    X[i, 0] = (d_xi * d_eta) ** 2 \
-                        / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
-                        * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
-                           + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
-                           - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
-                                    - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
+                    # X[i, 0] = (d_xi * d_eta) ** 2 \
+                    #     / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
+                    #     * (alpha / (d_xi ** 2) * (X[i+1, 0] + X[i-1, 0])
+                    #        + gamma / (d_eta ** 2) * (X[i, 1] + X[-i -1, 1])
+                    #        - beta / (2 * d_xi * d_eta) * (X[i+1, 1]
+                    #                 - X[-i -2, 1] + X[-i, 1] - X[i-1, 1]))
                     Y[i, 0] = (d_xi * d_eta) ** 2 \
                         / (2 * (alpha * d_eta ** 2 + gamma * d_xi ** 2)) \
                         * (alpha / (d_xi ** 2) * (Y[i+1, 0] + Y[i-1, 0])
