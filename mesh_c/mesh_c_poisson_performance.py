@@ -315,6 +315,7 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     it = 0
     mesh.it_max = 750000
     mesh.err_max = 1e-6
+    mesh.err_max = 2e-5
 
     # inicio del metodo iterativo, separar el metodo para perfl con y sin flap
     print(f"Generando malla tipo C. \nDimensiones M: {self.M} N: {self.N}")
@@ -364,7 +365,8 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
 
         # while it < mesh.it_max:
         for it in range(mesh.it_max):
-            if (it % 150e3 == 0):
+            # if (it % 150e3 == 0):
+            if (it % 1.50e3 == 0):
                 self.X = np.copy(Xn)
                 self.Y = np.copy(Yn)
                 self.plot()
@@ -447,9 +449,9 @@ def _gen_Poisson_n_flap(X, Y, M, N,  P_, Q_, airfoil_boundary, union_start):
     m = M
     n = N
 
-    begin_perfil = 24
-    end_perfil = begin_perfil + 99
-    limit = 0
+    begin_perfil = 270
+    end_perfil = begin_perfil + 1083
+    limit = 4
     for j in range(n-2, 0, -1):
         Y[0 : begin_perfil - limit, j] = Y[begin_perfil - limit, j]
         Y[end_perfil + limit :, j] = Y[end_perfil + limit - 1, j]
@@ -593,7 +595,7 @@ def _gen_Poisson_n(X, Y, M, N,  P_, Q_):
     m = M
     n = N
 
-    begin_perfil = 118
+    begin_perfil = 270
     end_perfil = begin_perfil + 1083
     limit = 0
     for j in range(n-2, 0, -1):

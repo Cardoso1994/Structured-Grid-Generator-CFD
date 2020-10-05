@@ -35,6 +35,7 @@ max_color = 1.0
 color_own = truncate_colormap(plt.get_cmap("inferno"), min_color, max_color)
 
 file_name='/home/cardoso/Tesis/su2/jul_20/malla_C_multi_better/mesh_c_m.txt_mesh'
+file_name='/home/cardoso/Tesis/su2/malla_C_flap_multi/mesh_c_flap_m_big.txt_mesh'
 save_name='/home/cardoso/garbage/mesh_c_flap_su2.png'
 
 mallaNACA = util.from_txt_mesh(filename=file_name)
@@ -57,9 +58,9 @@ ax.plot(mallaNACA.X[-1, :], mallaNACA.Y[-1, :], 'k', linewidth=1.8)
 #                       rasterized=True, vmin=0, vmax=1)
 # plt.colorbar(mesh_, extend='both')
 
-ax.set_title("Malla C - Análisis SU2")
-# ax.set_xlim([-0.4, 1.1])
-# ax.set_ylim([-0.6, 0.6])
+ax.set_title("Malla C - Acercamiento")
+# ax.set_xlim([-0.3, 1.1])
+# ax.set_ylim([-0.2, 0.4])
 ax.set_aspect('equal')
 plt.savefig(save_name, bbox_inches='tight', pad_inches=0.05)
 plt.show()

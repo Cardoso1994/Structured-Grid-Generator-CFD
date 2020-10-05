@@ -87,24 +87,24 @@ plt.show()
 mallaNACA = util.from_txt_mesh(filename=path
                               + '/mallaNACA_' + '10' +'.txt_mesh')
 
-# save_name = '/home/cardoso/garbage/mesh_potencial.png'
-# fix, ax = plt.subplots(1)
-# ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
-# for i in range(mallaNACA.M):
-#     ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
-# ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.8)
-# # mesh_ = ax.pcolormesh(mallaNACA.X, mallaNACA.Y, aspect, cmap='viridis',
-# #                       rasterized=True, vmin=1.5, vmax=4.5)
-# # mesh_ = ax.pcolormesh(mallaNACA.X, mallaNACA.Y, skew, cmap=color_own,
-# #                       rasterized=True, vmin=0, vmax=1)
-# # plt.colorbar(mesh_, extend='both')
-#
-# ax.set_title("Malla O - Skew")
-# ax.set_xlim([-0.3, 0.85])
-# ax.set_ylim([-0.2, 0.2])
-# ax.set_aspect('equal')
-# plt.savefig(save_name, bbox_inches='tight', pad_inches=0.05)
-# plt.show()
+save_name = '/home/cardoso/garbage/mesh_potencial.png'
+fix, ax = plt.subplots(1)
+ax.plot(mallaNACA.X, mallaNACA.Y, 'k', linewidth=0.4)
+for i in range(mallaNACA.M):
+    ax.plot(mallaNACA.X[i, :], mallaNACA.Y[i, :], 'b', linewidth=0.4)
+ax.plot(mallaNACA.X[:, 0], mallaNACA.Y[:, 0], 'k', linewidth=1.8)
+# mesh_ = ax.pcolormesh(mallaNACA.X, mallaNACA.Y, aspect, cmap='viridis',
+#                       rasterized=True, vmin=1.5, vmax=4.5)
+# mesh_ = ax.pcolormesh(mallaNACA.X, mallaNACA.Y, skew, cmap=color_own,
+#                       rasterized=True, vmin=0, vmax=1)
+# plt.colorbar(mesh_, extend='both')
+
+ax.set_title("Malla O - Flujo Potencial")
+ax.set_xlim([-0.3, 0.85])
+ax.set_ylim([-0.2, 0.2])
+ax.set_aspect('equal')
+plt.savefig(save_name, bbox_inches='tight', pad_inches=0.05)
+plt.show()
 
 # map_ = 'inferno'
 map_ = 'viridis'

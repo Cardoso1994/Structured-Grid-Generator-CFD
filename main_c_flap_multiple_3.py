@@ -93,9 +93,8 @@ print(f"shape mesh: {np.shape(mallaNACA.X)[0]}")
 mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
                         aa=700.1, cc=8.7, linea_eta=0)
 
-mallaNACA.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_c_flap.su2')
-
-mallaNACA.to_txt_mesh('/home/desarrollo/tesis_su2_BADLY/mesh_c_flap.txt_mesh')
+# mallaNACA.to_su2('/home/cardoso/garbage/mesh_c_flap.su2')
+mallaNACA.to_txt_mesh('/home/cardoso/garbage/mesh_c_flap.txt_mesh')
 
 plt.figure('MALLA NACA')
 plt.title('MALLA NACA')
@@ -143,5 +142,5 @@ plt.figure('MALLA NACA 2')
 plt.title('MALLA NACA 2')
 mallaNACA_2.plot()
 
-mallaNACA_2.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_c_flap_m.su2')
-mallaNACA_2.to_txt_mesh('/home/desarrollo/tesis_su2_BADLY/mesh_c_flap_m.txt_mesh')
+# mallaNACA_2.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_c_flap_m.su2')
+mallaNACA_2.to_txt_mesh('/home/cardoso/garbage/mesh_c_flap_m.txt_mesh')

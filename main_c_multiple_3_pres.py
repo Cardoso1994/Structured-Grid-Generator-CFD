@@ -35,7 +35,7 @@ home = expanduser('~')
 
 # points = 11
 airfoil_points = 617
-airfoil_points = 517
+airfoil_points = 511
 
 
 weight = 1.15
@@ -46,6 +46,8 @@ c = 0
 linea_xi = 0.5
 linea_xi = 0
 
+print("here")
+exit()
 
 if malla == 'C':
     points = airfoil_points
@@ -86,17 +88,16 @@ print(f"shape mesh: {np.shape(mallaNACA.X)[0]}")
 #                         aa=58.5, cc=8.4, linea_eta=0)
 # mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
 #                         aa=108.5, cc=13.4, linea_eta=0)
-mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
-                        aa=700.1, cc=9.1, linea_eta=0)
+# mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, a=a, c=c, linea_xi=linea_xi,
+#                         aa=700.1, cc=9.1, linea_eta=0)
+# mallaNACA.to_txt_mesh('/home/cardoso/garbage/mesh_c.txt_mesh')
 
-mallaNACA.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_c.su2')
-
-mallaNACA.to_txt_mesh('/home/desarrollo/tesis_su2_BADLY/mesh_c.txt_mesh')
-
+mallaNACA = util.from_txt_mesh('/home/cardoso/garbage/mesh_c.txt_mesh')
 plt.figure('MALLA NACA')
 plt.title('MALLA NACA')
 mallaNACA.plot()
 
+plt.show()
 # malla de 50 a 70 m
 mallaNACA_1.X[:, 0] = mallaNACA.X[:, -1]
 mallaNACA_1.Y[:, 0] = mallaNACA.Y[:, -1]
@@ -138,5 +139,4 @@ plt.figure('MALLA NACA 2')
 plt.title('MALLA NACA 2')
 mallaNACA_2.plot()
 
-mallaNACA_2.to_su2('/home/desarrollo/tesis_su2_BADLY/mesh_c_m.su2')
-mallaNACA_2.to_txt_mesh('/home/desarrollo/tesis_su2_BADLY/mesh_c_m.txt_mesh')
+mallaNACA_2.to_txt_mesh('/home/cardoso/garbage/mesh_c_m.txt_mesh')
