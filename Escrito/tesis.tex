@@ -900,6 +900,7 @@ showstringspaces=false
             \caption{Aproximación central}
             \label{fig:grafica_central}
         \end{subfigure}
+        \captionsetup{margin=2cm}
         \caption{Aproximaciones mediante diferencias finitas}
         \label{fig:grafica_aproximaciones}
     \end{figure}
@@ -1056,7 +1057,8 @@ showstringspaces=false
     continuo para el cual se desea una solución numérica.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=170mm]{./img/dominios}
+        % \includegraphics[keepaspectratio, width=170mm]{./img/dominios}
+        \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/dominios}
         \caption[Dominios lógico y físico]{Dominios lógico (izquierda) y
         físico (derecha). \cite{numerical-grid}}
         \label{fig:dominios}
@@ -1115,8 +1117,7 @@ showstringspaces=false
 
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=170mm]{./img/tipos-de-malla}
-        \captionsetup{justification=centering, margin=2cm}
+        \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/tipos-de-malla}
         \caption[Tipología de mallas]{Tipología de malla y sus respectivos espacios computacionales. H(izquierda), O(centro), C(derecha).\cite{vladimir-grid}}
         \label{fig:tipos-de-malla}
     \end{figure}
@@ -1146,8 +1147,8 @@ showstringspaces=false
     computacional esta sección representa dos segmentos diferentes.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=155mm]{./img/malla-c}
-        \captionsetup{justification=centering, margin=2cm}
+        \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/malla-c}
+        \captionsetup{margin=2cm}
         \caption[Malla tipo C]{Malla tipo C y su transformación del espacio
             físico (izquierda) al espacio lógico (derecha).~\cite{blazek}}
         \label{fig:malla-c}
@@ -1172,8 +1173,8 @@ showstringspaces=false
     alcanzar la forma cuadrada esperada.
     \begin{figure}[htbp!]
         \centering
-            \includegraphics[keepaspectratio, width=170mm]{./img/malla-o}
-            \captionsetup{justification=centering, margin=2cm}
+            \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/malla-o}
+            \captionsetup{margin=2cm}
             \caption[Malla tipo O]{Malla tipo O y su transformación del
             espacio físico (izquierda) al espacio lógico
             (derecha).~\cite{blazek}}
@@ -1203,9 +1204,9 @@ showstringspaces=false
     alguno en el dominio lógico.
         \begin{figure}[htbp!]
             \centering
-            \includegraphics[keepaspectratio, width=170mm]{./img/malla-h}
-            \captionsetup{justification=centering, margin=2cm}
-            \caption[Malla tipo O]{Malla tipo H y su transformación del
+            \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/malla-h}
+            \captionsetup{margin=2cm}
+            \caption[Malla tipo H]{Malla tipo H y su transformación del
                 espacio físico (izquierda) al espacio lógico (derecha).
                 \cite{blazek}}
         \label{fig:malla-h}
@@ -1384,25 +1385,28 @@ showstringspaces=false
     eliminados.
 
     \paragraph*{}
-    Las figuras~\ref{fig:malla-inter} y~\ref{fig:malla-inter-cerca}
+    Las figuras~\ref{fig:malla-inter-completa} y~\ref{fig:malla-inter-cerca}
     presentan una malla y su vista de detalle generada mediante este método
     alrededor de un perfil aerodinámico.
+
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=120mm]{./img/M-inter_pol}
-        \captionsetup{justification=centering, margin=2cm}
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/M-inter_pol}
+            \caption{Vista Completa}
+            \label{fig:malla-inter-completa}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio, 
+                width=0.99\textwidth]{./img/M-inter_pol_cerca}
+            \caption{Vista de acercamiento}
+            \label{fig:malla-inter-cerca}
+        \end{subfigure}
         \caption[Malla Interpolación Polinomial]{Malla tipo O generada
-        mediante el método de interpolación polinomial alrededor de un
-        perfil NACA 2412. Densidad de malla $49\times15$}
-        \label{fig:malla-inter}
-    \end{figure}
-    \begin{figure}[htbp!]
-        \centering
-        \includegraphics[width=120mm]{./img/M-inter_pol_cerca}
-        \captionsetup{justification=centering, margin=2cm}
-        \caption[Malla Interpolación Polinomial Acercamiento]{Vista de
-        acercamiento a la malla generada de la figura\ref{fig:malla-inter}}
-        \label{fig:malla-inter-cerca}
+            mediante el método de interpolación polinomial alrededor de un
+            perfil NACA 2412. Densidad de malla $49\times15$}
     \end{figure}
 
     \subsubsection{Interpolación mediante polinomios de Hermite}
@@ -1502,8 +1506,8 @@ showstringspaces=false
     reemplazan las fronteras en $\xi$ por líneas rectas.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=120mm]{./img/mapeo_eta}
-        \caption[Transformación de malla por $P_{\eta}$]{Transormación de
+        \includegraphics[keepaspectratio, width=0.8\textwidth]{./img/mapeo_eta}
+        \caption[Transformación de malla por $P_{\eta}$]{Transformación de
         una malla a través del proyector $P_{\eta}$ \cite{farrashkhalvat}}
         \label{fig:mapeo_eta}
     \end{figure}
@@ -1536,8 +1540,9 @@ showstringspaces=false
     en la figura\ref{fig:mapeo_xieta}.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=120mm]{./img/mapeo_xieta}
-        \caption[Transformación de malla por $P_{\xi}P_{\eta}$]{Transormación
+        \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/mapeo_xieta}
+        \captionsetup{margin=2cm}
+        \caption[Transformación de malla por $P_{\xi}P_{\eta}$]{Transformación
         de una malla a través del proyector compuesto
         $P_{\xi}P_{\eta}$\cite{farrashkhalvat}}
         \label{fig:mapeo_xieta}
@@ -2231,7 +2236,7 @@ showstringspaces=false
     un enfoque válido.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=100mm]{./img/parabolic_non_uniform.png}
+        \includegraphics[keepaspectratio, width=0.8\textwidth]{./img/parabolic_non_uniform.png}
         \caption[Generación de malla cuasi uniforme por ecuaciones
         parabólicas]{Generación de malla estructurada cuasi uniforme
         desarrollada mediante ecuaciones parabólicas \cite{siladicParabolic}}
@@ -2511,7 +2516,7 @@ showstringspaces=false
     \ref{fig:parabolic_modified}.
     \begin{figure}[htbp!]
         \centering
-        \includegraphics[keepaspectratio, width=110mm]{./img/parabolic_modified_boundary.png}
+        \includegraphics[keepaspectratio, width=0.8\textwidth]{./img/parabolic_modified_boundary.png}
         \caption[Control de ortogonalidad]{Control de ortogonalidad en la
         generación de mallas por ecuaciones parabólicas \cite{siladicParabolic}}
         \label{fig:parabolic_modified}
@@ -5995,16 +6000,16 @@ showstringspaces=false
     \end{itemize}
 
 \section{Generación de Malla C con uso de librería numba}
-\lstinputlisting[language=Python]{./code/mesh_C_poisson.py}
+\lstinputlisting[language=Python, breaklines=true]{./code/mesh_C_poisson.py}
 
 \section{Generación de Malla O con uso de librería numba}
-\lstinputlisting[language=Python]{./code/mesh_O_poisson.py}
+\lstinputlisting[language=Python, breaklines=true]{./code/mesh_O_poisson.py}
 
 \section{Conversión de mallas a formato SU2}
-\lstinputlisting[language=Python]{./code/mesh_su2.py}
+\lstinputlisting[language=Python, breaklines=true]{./code/mesh_su2.py}
 
 \section{Archivo main. Ejemplo de ejecución}
-\lstinputlisting[language=Python]{./code/main_example.py}
+\lstinputlisting[language=Python, breaklines=true]{./code/main_example.py}
 %
 %
 %

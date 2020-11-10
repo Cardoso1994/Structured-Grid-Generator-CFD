@@ -70,9 +70,9 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
     P_ = np.arange(1, m)
     Q_ = np.arange(1, n)
     P_ = -a * (P_ / (m-1) - linea_xi)\
-                            / np.abs(P_ / (m-1) - linea_xi)\
-                            * np.exp(-c * np.abs(P_ /
-                                                    (m-1) - linea_xi))
+                    / np.abs(P_ / (m-1) - linea_xi)\
+                    * np.exp(-c * np.abs(P_ /
+                                        (m-1) - linea_xi))
     Q_ = -aa * (Q_ / (n-1) - linea_eta)\
                             / np.abs(Q_ / (n-1) - linea_eta)\
                             * np.exp(-cc
@@ -172,9 +172,10 @@ def gen_Poisson_n(self, metodo='SOR', omega=1, a=0, c=0, linea_xi=0,
                 X = Xn
                 Y = Yn
 
-            (Xn, Yn) = _gen_Poisson_n_flap(X, Y, self.M, self.N, P_,
-                                           Q_, self.airfoil_boundary,
-                                           union_start)
+            (Xn, Yn) = _gen_Poisson_n_flap(
+                            X, Y, self.M, self.N, P_,
+                            Q_, self.airfoil_boundary,
+                            union_start)
 
             # se aplica sobre-relajacion si el metodo es SOR
             if metodo == 'SOR':
