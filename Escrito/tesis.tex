@@ -145,7 +145,7 @@ showstringspaces=false
     generation of structured meshes with typologies O and C, for the
     computational analysis of wing sections, also known as airfoils, with high
     lift devices such as external airfoil flaps, this is achieved by solving a
-    system of elliptical partial differencial equations. Computational
+    system of elliptical partial differential equations. Computational
     simulations are carried on for both potential flow and incompressible and
     steady flow, in order to prove the reliability of the generated meshes.
 
@@ -367,8 +367,8 @@ showstringspaces=false
     métodos númericos, a esta última técnica se le da el nombre de dinamica de
     fluidos computacional (CFD, por sus siglas en inglés). El uso de la DFC
     (dinámica de fluidos computacional) se ha popularizado gracias al
-    desarrollo de las capacidades computaciones, ya que las simulaciones
-    presentan ciertas ventajas frente al enfoque exprimental en términos de
+    desarrollo de las capacidades computacionales, ya que las simulaciones
+    presentan ciertas ventajas frente al enfoque experimental en términos de
     velocidad, seguridad y en la mayoría de casos, de costo. Gracias a esto la
     DFC es ampliamente usada en la actualidad en sectores de la industria como
     el aeroespacial, petrolero, energético, automotriz, entre otros. En el
@@ -400,7 +400,7 @@ showstringspaces=false
     un espacio físico determinado, proceso necesario para poder realizar
     mallas que representen computacionalmente el espacio a analizar. Los
     métodos de discretización son aplicables también a las ecuaciones que
-    escriben el comportamiento de los flujos, dicha discretización se hace
+    describen el comportamiento de los flujos, dicha discretización se hace
     tomando en cuenta la malla generada para el análisis. Se hace particular
     énfasis en el desarrollo del método de diferencias finitas, y se muestran
     las ecuaciones obtenidas mediante este método, las cuales sirven de
@@ -478,8 +478,9 @@ showstringspaces=false
     \paragraph*{}
     Una vez generado el mallado del dominio, se creará un archivo que
     contenga toda la información del mismo, el cual podrá ser importado a
-    algún SU2, software \textit{``solver''}, para poder llevar a cabo el
-    análisis de flujo deseado.
+    algún software \textit{``solver''}, para poder llevar a cabo el
+    análisis de flujo deseado, en este caso se exportará al formato del
+    programa SU2.
 
     \paragraph*{}
     Los objetivos particulares son:
@@ -487,11 +488,10 @@ showstringspaces=false
             \item{Realizar un módulo que genere la nube de puntos de perfiles
                 NACA de la serie de 4 dígitos. Así mismo, proporcionar la
                 funcionalidad adecuada para que el usuario pueda importar la
-                nube de puntos que describa cualquier otro perfil deaseado.}
+                nube de puntos que describa cualquier otro perfil deseado.}
             \item{Realizar un módulo que modifique la nube de puntos
                 característica del perfil, agregándole la información
-                correspondiente al flap utilizado. Se consideran
-                diferentes tipos de flaps.}
+                correspondiente al flap utilizado.}
             \item{Desarrollar módulos para generar las mallas alrededor de la
                 nube de puntos proporcionada. Se contemplan variadas tipologías,
                 como lo son las mallas tipo “O” y las mallas tipo “C”,
@@ -501,7 +501,7 @@ showstringspaces=false
                 algebráicas y por ecuaciones diferenciales parciales.}
             \item{Llevar a cabo diferentes análisis, ya sea en el software de
                 código libre SU2 o mediante el desarrollo de un módulo
-                que realice el análisis correspondiente mediante flujo 
+                que realice el análisis correspondiente mediante flujo
                 potencial. Este último punto con el proposito de probar la
                 aplicabilidad y confiabilidad de las mallas y darles una
                 aplicación de interés real.}
@@ -629,7 +629,7 @@ showstringspaces=false
     Uno de los ámbitos en los que la DFC ha tenido mayor impacto es en el
     diseño de aeronaves, gracias al rápido decremento en los costos de
     computación, ocasionado por una mejora en las capacidades de cálculo y
-    tecnológicas de los ordenadores, así como de el fácil acceso a los mismos,
+    tecnológicas de los ordenadores, así como el fácil acceso a los mismos,
     aunado a un incremento en el costo de experimentos en túneles de viento.
     Esto ha dado como resultado que el cálculo de las características
     aerodinámicas de una aeronave resulte más barato mediante DFC que mediante
@@ -746,9 +746,9 @@ showstringspaces=false
     mayoría de sistemas Linux y Windows. Además del sistema base para los
     análisis, presenta diversas herramientas enfocadas en facilitar el
     despliegue del software. Proporciona una interfaz gráfica, a diferencia de
-    OpenFOAM y SU2 con los cuales la interacción se interacciona con el
-    programa mediante la línea de comandos. También proporciona servicios en la
-    nube. A pesar de ser software de código abierto, es de paga.\cite{helyx}
+    OpenFOAM y SU2 con los cuales la interacción con el programa mediante la
+    línea de comandos. También proporciona servicios en la nube. A pesar de ser
+    software de código abierto, es de paga.\cite{helyx}
 
 %
 %
@@ -769,7 +769,7 @@ showstringspaces=false
     del dominio llamados nodos, éstos, unidos mediante líneas, conforman la
     malla del dominio en el que se está trabajando el problema. Para el caso de
     un análisis en dos dimensiones, la malla se forma por triangulos o
-    cuadriláteros, mientras que en un caso de tridimensional la malla es
+    cuadriláteros, mientras que en un caso tridimensional la malla es
     conformada por tetraedros o hexaedros.
 
     \paragraph*{}
@@ -785,17 +785,36 @@ showstringspaces=false
       son identificados mediante ínidices $i, j, k$. Una malla estructurada
       bidimiensional está formada por cuadriláteros, mientras que una malla
       tridimensional se forma por hexahédros.
-            Figura~\ref{fig:malla_estructurada}.
+            Figura~\ref{fig:malla_estructurada__}.
     \item No estructuradas: los nodos no tienen un orden particular, esto
       implica que no se puedan identificar mediante índices, por lo que se debe
       llevar a cabo una forma diferente de identificación.
-            Figura~\ref{fig:malla_no_estructurada}
+            Figura~\ref{fig:malla_no_estructurada__}
     \end{itemize}
 
+    \begin{figure}[htbp!]
+        \centering
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/malla-estructurada}
+            \caption{Malla estructurada}
+            \label{fig:malla_estructurada__}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[c]{0.45\textwidth}
+            \includegraphics[keepaspectratio,
+                width=0.99\textwidth]{./img/malla-no-estructurada}
+            \caption{Malla no estructurada}
+            \label{fig:malla_no_estructurada__}
+        \end{subfigure}
+        \caption[Mallas estructuradas y no estructuradas]{Mallas estructuradas
+        y no estructuradas.\cite{cengel}}
+        % \label{fig:malla_estructurada_noestructurada}
+    \end{figure}
 
     \section{Método de Diferencias Finitas}
     \paragraph*{}
-    El método de diferencias finitas fue de los primero métodos numéricos
+    El método de diferencias finitas fue de los primeros métodos numéricos
     que se emplearon para la resolución de ecuaciones diferenciales
     parciales, y ha sido hasta la fecha, uno de los más utilizados en
     aplicaciones de DFC\@. Este método está basado en las series de expansión
