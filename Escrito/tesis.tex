@@ -51,9 +51,9 @@ showstringspaces=false
 \usepackage{pdfpages}
 
 % Cambiar el titulo por default de los indices
-\addto{\captionsspanish}{\renewcommand*{\listfigurename}{Indice de Figuras}} %cambia el nombre del indice de figuras
-\addto{\captionsspanish}{\renewcommand*{\contentsname}{Indice}}
-\addto{\captionsspanish}{\renewcommand*{\listtablename}{Indice de Tablas}}
+\addto{\captionsspanish}{\renewcommand*{\listfigurename}{Índice de Figuras}} %cambia el nombre del indice de figuras
+\addto{\captionsspanish}{\renewcommand*{\contentsname}{Índice}}
+\addto{\captionsspanish}{\renewcommand*{\listtablename}{Índice de Tablas}}
 
 
 \pagestyle{plain} %sin cabeceras en las páginas, numero de pagina centrado abajo
@@ -61,175 +61,189 @@ showstringspaces=false
 \begin{document}
 
 
+% By default bibliography chapter is called Bibliografía, with this it changes
+\renewcommand\bibname{Referencias}
 
 \begin{titlepage}
     \begin{center}
         % \begin{figure}[htbp!]
         %     \centering
-            \includegraphics[keepaspectratio, width=76mm]{./img/ipn_logo}
+            \includegraphics[keepaspectratio, width=77mm]{./img/ipn_logo}
         % \end{figure}
-    \vspace*{2mm}
-    \rule{\textwidth}{1.5pt}\\
-    \vspace*{2mm}
-    \textbf{INSTITUTO POLITÉCNICO NACIONAL}\\
-    \vspace*{3mm}
-    ESCUELA SUPERIOR DE INGENIERÍA MECÁNICA Y ELÉCTRICA\\
-    UNIDAD PROFESIONAL TICOMÁN\\
-    \vspace{15mm}
-    \textbf{DESARROLLO DE CÓDIGOS PARA EL DISEÑO DE MALLAS PARA EL
-    ANÁLISIS DE PERFILES AERODINÁMICOS CON SUPERFICIES HIPERSUSTENTADORAS
-TIPO FLAP}\\
-    \vspace*{12mm}
-    TESIS\\
-    \vspace{2mm}
-    Que para obtener el grado de\\
-    \vspace{3mm}
-    INGENIERO EN AERONÁUTICA\\
-    \vspace{12mm}
-    PRESENTA\\
-    \vspace{3mm}
-    MARCO ANTONIO CARDOSO MORENO\\
-    \vspace{2mm}
-    \vspace{3mm}
-    ASESOR: M. {\scriptsize EN} C. RAFAEL MEDINA NOGUERÓN
-    \rule{\textwidth}{1.5pt}\\
+        \vspace*{2mm}
+        \rule{\textwidth}{1.5pt}\\
+        \vspace*{2mm}
+        \textbf{INSTITUTO POLITÉCNICO NACIONAL}\\
+        \vspace*{3mm}
+        ESCUELA SUPERIOR DE INGENIERÍA MECÁNICA Y ELÉCTRICA\\
+        UNIDAD PROFESIONAL TICOMÁN\\
+        \vspace{15mm}
+        \textbf{DESARROLLO DE CÓDIGOS PARA EL DISEÑO DE MALLAS PARA EL
+        ANÁLISIS DE PERFILES AERODINÁMICOS CON SUPERFICIES HIPERSUSTENTADORAS
+        TIPO FLAPS}\\
+        \vspace*{12mm}
+        TESIS\\
+        \vspace{2mm}
+        Que para obtener el grado de\\
+        \vspace{3mm}
+        INGENIERO EN AERONÁUTICA\\
+        \vspace{12mm}
+        PRESENTA\\
+        \vspace{3mm}
+        MARCO ANTONIO CARDOSO MORENO\\
+        \vspace{2mm}
+        \vspace{3mm}
+        ASESOR: M. {\scriptsize EN} C. RAFAEL MEDINA NOGUERÓN
+        \rule{\textwidth}{1.5pt}\\
     \end{center}
-\vspace{20mm}
-Ciudad de México \hfill 2020
+    \vspace{20mm}
+    Ciudad de México \hfill 2020
 \end{titlepage}
-    %
-    %
-    %
-    %
-    %
+%
+%
+%
+%
+%
 
-    %
-    %
-    %
-    %
-    %
-    \includepdf[pages={1}, openright]{caratula_crop.pdf}
-    %
-    %
-    %
-    %
-    %
+%
+%
+%
+%
+%
+\includepdf[pages={1}, openright]{caratula_crop.pdf}
+%
+%
+%
+%
+%
 
-    %
-    %
-    %
-    %
-    %
-    \includepdf[pages={3}, openright]{derechos_tesis.pdf}
-    %
-    %
-    %
-    %
-    %
+%
+%
+%
+%
+%
+\includepdf[pages={3}, openright]{derechos_tesis.pdf}
+%
+%
+%
+%
+%
 
-    %
-    %
-    %
-    %
-    %
-    \newpage\
-    \thispagestyle{empty}
-    %se deja hoja en blanco
-    %
-    %
-    %
-    %
-    %
+%
+%
+%
+%
+%
+\newpage\
+\thispagestyle{empty}
+%se deja hoja en blanco
+%
+%
+%
+%
+%
 
-    %
-    %
-    %
-    %
-    \newpage
-    \pagenumbering{Roman}
-    \ % final página dedicatorias
-    %
-    %
-    %
-    %
-    %
+%
+%
+%
+%
+\newpage
+\pagenumbering{Roman}
+\ % final página dedicatorias
+%
+%
+%
+%
+%
 
-    \chapter*{Resúmen}
-    \paragraph*{}
-    El presente trabajo contiene el desarrollo de códigos para la generación de
-    mallas estructuradas con tipologías O y C, para el análisis computacional
-    de perfiles aerodinámicos con superficies hipersustendoras de tipo flap de
-    perfil externo, mediante la solución de un sistema de ecuaciones
-    diferenciales parciales elípticas. Se realizan simulaciones tanto de flujo
-    potencial como de flujo viscoso, incompresible y estacionario con el fin de
-    comprobar la confiablidad de las mallas generadas.
+\chapter*{Resúmen}
+\paragraph*{}
+El presente trabajo contiene el desarrollo de códigos para la generación de
+mallas estructuradas con tipologías O y C, para el análisis computacional
+de perfiles aerodinámicos con superficies hipersustendoras de tipo flap de
+perfil externo, mediante la solución de un sistema de ecuaciones
+diferenciales parciales elípticas. Se realizan simulaciones tanto de flujo
+potencial como de flujo viscoso, incompresible y estacionario con el fin de
+comprobar la confiablidad de las mallas generadas.
 
-    \paragraph*{}
-    \emph{Palabras Clave:} malla estructurada, perfil aerodinámico, flap, DFC,
-    Python, código libre.
-
-
-
-    \chapter*{Abstract}
-    The following work presents the development of source code for the
-    generation of structured meshes with typologies O and C, for the
-    computational analysis of wing sections, also known as airfoils, with high
-    lift devices such as external airfoil flaps, this is achieved by solving a
-    system of elliptical partial differential equations. Computational
-    simulations are carried on for both potential flow and incompressible and
-    steady flow, in order to prove the reliability of the generated meshes.
-
-    \paragraph*{}
-    \emph{Keywords:} structured mesh, airfoil, flap, CFD, Python, open source.
-    %
-    %
-    %
-    %
-    %
-    \chapter*{Dedicatoria}
-    \paragraph*{}
-    A la ciencia, al conocimiento.
-
-    \paragraph*{}
-    \begin{flushright}
-        \emph{``Ninguna máquina voladora volará jamás de Nueva York a París.''}
-
-        - Orville Wright
-    \end{flushright}
+\paragraph*{}
+\emph{Palabras Clave:} malla estructurada, perfil aerodinámico, flap, DFC,
+Python, código libre.
 
 
-    \chapter*{Agradecimientos}
-    \paragraph*{}
-    A mis padres, Gloria y Marco, de quienes he recibido apoyo incondicional,
-    así como firmeza y constante guía. Mi progreso y logros no son, ni serán,
-    más que el producto de lo que ustedes son, de los valores inculcados y de
-    la sabiduría transmitida.
 
-    \paragraph*{}
-    A mis hermanas, Ericka y Daniela, por su compañía y apoyo.
+\chapter*{Abstract}
+The following work presents the source code development for the generation of
+structured meshes with typologies O and C, for the computational analysis of
+wing sections, also known as airfoils, with high lift devices such as external
+airfoil flaps, this is achieved by solving a system of elliptical partial
+differential equations. Computational simulations are carried on for both
+potential flow and incompressible and steady flow, in order to prove the
+reliability of the generated meshes.
 
-    \paragraph*{}
-    A Fiorella, por el amor, la confidencia y el apoyo a lo largo de estos
-    años.
+\paragraph*{}
+\emph{Keywords:} structured mesh, airfoil, flap, CFD, Python, open source.
+%
+%
+%
+%
+%
+\chapter*{Dedicatoria}
+\paragraph*{}
+A la ciencia, al conocimiento.
 
-    \paragraph*{}
-    Al M en C Rafael Medina Noguerón, tutor de esta tesis, por el apoyo y
-    amistad a lo largo de la carrera, por la guía y enseñanzas para el
-    desarrollo de este trabajo. Por las amenas pláticas de temas diversos en
-    intereses comunes.
-    %
-    %
-    %
-    %
-    %
+\paragraph*{}
+\begin{flushright}
+    \emph{``Ninguna máquina voladora volará jamás de Nueva York a París.''}
 
-    %
-    %
-    %
-    %
-    % indices
+    - Orville Wright
+\end{flushright}
+
+
+\chapter*{Agradecimientos}
+\paragraph*{}
+A mis padres, Gloria y Marco, de quienes he recibido apoyo incondicional,
+así como firmeza y constante guía. Mi progreso y logros no son, ni serán,
+más que el producto de lo que ustedes son, de los valores inculcados y de
+la sabiduría transmitida.
+
+\paragraph*{}
+A mis hermanas, Ericka y Daniela, por su compañía y apoyo, por sus cuidados y
+el ejemplo de superación y tenacidad que han sido durante toda mi vida.
+
+\paragraph*{}
+A Fiorella, por el amor, la confidencia y el apoyo a lo largo de estos
+años. Gracias también por la paciencia y las enseñanzas que me han hecho abrir
+mi mente y mi percepción del mundo y de la vida.
+
+\paragraph*{}
+A mis sobrinos, Leonardo, Emilio, Ivanna y Diego, por ser un constante
+recordatorio de lo simple y alegre que puede ser la vida, por la
+curiosidad y el entusiasmo que emanan.
+
+\paragraph*{}
+Al M en C Rafael Medina Noguerón, tutor de esta tesis, por el apoyo y
+amistad a lo largo de la carrera, por la guía y enseñanzas para el
+desarrollo de este trabajo. Por las amenas pláticas de temas diversos en
+intereses comunes.
+
+\paragraph*{}
+Al Instituto Politécnico Nacional, así como a la ESIME Ticomán, por los
+recursos y la preparación que proporcionan al cuerpo estudiantil para nuestro
+desarrollo académico y profesional.
+%
+%
+%
+%
+%
+
+%
+%
+%
+%
+% indices
     \tableofcontents
-    
+
     \cleardoublepage
     \phantomsection % corrige error de hipervinculos que manda a la seccion previa
     \addcontentsline{toc}{chapter}{Indice de Figuras}
@@ -709,8 +723,7 @@ Ciudad de México \hfill 2020
     \paragraph*{}
     OpenFOAM se distribuye bajo la licencia GPL (General Public License), la
     cual garantiza a los usuarios finales la libertad de usar, estudiar,
-    compartir y modificar el código fuente del software, lo cual es
-    basicamente, la filosofía del software libre.
+    compartir y modificar el código fuente del software.
 
     \paragraph*{XFoil}
     \paragraph*{}
@@ -753,6 +766,8 @@ Ciudad de México \hfill 2020
     flujos multifase complejos, acústica aérea, geometrías en movimiento e
     interacciones fluido-estructura. Destaca por sus capacidades de
     renderizado.\cite{xflow}
+    \\
+    \\
 
     \paragraph*{ANSYS Fluent}
     \paragraph*{}
@@ -771,14 +786,14 @@ Ciudad de México \hfill 2020
 
     \paragraph*{Helyx}
     \paragraph*{}
-    Paquete ``open source'' para análisis de dinámica de fluidos
+    Paquete \textit{``open source''} para análisis de dinámica de fluidos
     computacional, desarrollado a partir de OpenFOAM\@. Es compatible con la
     mayoría de sistemas Linux y Windows. Además del sistema base para los
     análisis, presenta diversas herramientas enfocadas en facilitar el
     despliegue del software. Proporciona una interfaz gráfica, a diferencia de
-    OpenFOAM y SU2 con los cuales la interacción con el programa mediante la
-    línea de comandos. También proporciona servicios en la nube. A pesar de ser
-    software de código abierto, es de paga.\cite{helyx}
+    OpenFOAM y SU2 con los cuales la interacción con el programa se da mediante
+    la línea de comandos. También proporciona servicios en la nube. A pesar de
+    ser software de código abierto, es de paga.\cite{helyx}
 
 %
 %
@@ -1058,8 +1073,8 @@ Ciudad de México \hfill 2020
     \paragraph*{}
     Es este último punto, la piedra angular en la importancia del desarrollo de
     métodos de generación de mallas, ya que se busca trabajar con mallas para
-    las cuales, en sus sistemas de coordenadas computacional, pueda ser aplicado
-    el método de diferencias finitas para la solución de problemas.
+    las cuales, en sus sistemas de coordenadas computacionales, pueda ser
+    aplicado el método de diferencias finitas para la solución de problemas.
     %
     %
     %
@@ -1102,7 +1117,7 @@ Ciudad de México \hfill 2020
     espaciamiento uniforme entre los nodos en la dirección de los ejes del
     sistema. La mayoría de casos prácticos de interés en la DFC, tratan con
     geometrías complejas, lo que hace que sea muy difícil, si no imposible,
-    generar una malla en alguno de los sistemas de cordenadas antes
+    generar una malla en alguno de los sistemas de coordenadas antes
     mencionados, que ajuste en su frontera interna de manera exacta a la
     forma de la geometría a analizar. Esto presenta una limitante que se debe
     atender, se debe llevar a cabo una transofrmación de sistemas de
@@ -1131,7 +1146,7 @@ Ciudad de México \hfill 2020
     no estructuradas no tienen relación alguna con las direcciones
     coordenadas del sistema, éstas consisten generalmente de triángulos y
     tetahédros en dos y tres dimendiones respectivamente, aunque en realidad
-    se puede hacer uso de calquier forma geométrica. Para este trabajo se
+    se puede hacer uso de cualquier forma geométrica. Para este trabajo se
     considerará el desarrollo  de  mallas estructuradas principalmente, que
     en principio tendrán una forma curvilinea ajustada a la forma del perfil
     alar con el que se esté trabajando como frontera interna del dominio.
@@ -1311,7 +1326,7 @@ Ciudad de México \hfill 2020
     procedimiento estricto, por lo tanto, cualquier desarrollo se puede
     considerar apto para este propósito siempre y cuando dé como resultado
     un mallado adecuado para el análisis que se pretende realizar. Sin
-    embargo, si hay ciertas consideraciones a tomar en cuenta, tales como la
+    embargo, sí hay ciertas consideraciones a tomar en cuenta, tales como la
     capacidad de manejar problemas con múltiples variables, las cuales
     podrían variar en varios órdenes de magnitud. Del mismo modo, se debe
     considerar la posibilidad de presentar factores de compresión en ciertas
@@ -1419,7 +1434,7 @@ Ciudad de México \hfill 2020
     \paragraph*{}
     Despejando $x$ de la ecuación\ref{xi} se obtiene:
     \begin{equation}
-        x = (x_{1} - x_{0})\xi - x_{0} = x_{0}(1 - \xi) + x_{1}\xi
+        x = (x_{1} - x_{0})\xi + x_{0} = x_{0}(1 - \xi) + x_{1}\xi
     \end{equation}
     por lo que la ecuación constitutiva de éste método, para una
     interpolación en dirección del eje $\xi$ del espacio computacional puede
@@ -1511,7 +1526,7 @@ Ciudad de México \hfill 2020
     La interpolación multidireccional consiste en la obtención de una
     ecuación algebráica que permita la interpolación simultánea en 2 o más
     direcciones. Para este caso (2D), se generan ecuaciones que permitan la
-    interpolación simultánea, en el espacio computaciones, en ambas
+    interpolación simultánea, en el espacio computacional, en ambas
     direcciones $\xi$ y $\eta$.
 
     \subsubsection{Interpolación Transfinita - TFI}
@@ -1532,7 +1547,7 @@ Ciudad de México \hfill 2020
     computacionales, formando así los productos tensores de las
     interpolaciones, y finalmente, se lleva a cabo una suma ``booleana''.
     Las interpolaciones unidireccionales son una combinación lineal de datos
-    proporcionados por el usuarios del dominio físico para valores dados de
+    del dominio físico, proprocionados por el usuario, para valores dados de
     las coordenadas del dominio lógico.
 
     \paragraph*{}
@@ -1540,7 +1555,7 @@ Ciudad de México \hfill 2020
     ($x = x(\xi, \eta)$, $y = y(\xi, \eta)$) la cual hace un mapeo de un
     cuadrado de dimensiones $0 < \xi < 1$, $0 < \eta < 1$ en el dominio
     computacional, con la región del dominio físico, delimitada por una
-    frontera externa y una interna, que se pretende analizar.
+    frontera externa y una frontera interna, que se pretende analizar.
     De igual modo, se puede escribir otra transformación $P_{\xi}$,
     la cual recibe el nombre de proyector, y que relaciona puntos en el
     espacio lógico con puntos en el espacio físico, definida como:
@@ -1592,7 +1607,7 @@ Ciudad de México \hfill 2020
     fronteras son reemplazadas por líneas rectas. Es decir, las líneas
     $\xi = constante$ y $\eta = constante$ en el dominio computacional son
     transformadas como líneas rectas en el dominio físico, como se muestra
-    en la figura\ref{fig:mapeo_xieta}.
+    en la figura~\ref{fig:mapeo_xieta}.
     \begin{figure}[htbp!]
         \centering
         \includegraphics[keepaspectratio, width=0.9\textwidth]{./img/mapeo_xieta}
@@ -1725,16 +1740,16 @@ Ciudad de México \hfill 2020
         \end{equation}
         \label{ec-poisson}
     \end{subequations}\\
-    si de nuevo, esta ecuación es transformada, volviendo las variable $x$ y
+    si de nuevo, esta ecuación es transformada, volviendo las variables $x$ y
     $y$ las variables dependientes, queda expresada como
     \begin{subequations}
         \begin{equation}
-            \alpha x_{\xi \xi} + \beta x_{\xi \eta}
+            \alpha x_{\xi \xi} - 2 \beta x_{\xi \eta}
                 + \gamma x_{\eta \eta} = -I^2 [P(\xi, \eta) x_{\xi}
                 + Q(\xi, \eta) x_{\eta}]
         \end{equation}
         \begin{equation}
-            \alpha y_{\xi \xi} + \beta y_{\xi \eta} + \gamma y_{\eta \eta}
+            \alpha y_{\xi \xi} - 2 \beta y_{\xi \eta} + \gamma y_{\eta \eta}
                 = -I^2 [P(\xi, \eta) y_{\xi} + Q(\xi, \eta) y_{\eta}]
         \end{equation}
         \label{ec-poisson-invertida}
@@ -2155,7 +2170,7 @@ Ciudad de México \hfill 2020
 
     \paragraph*{}
     Un algoritmo para la solución de sistemas de ecuaciones de bloque
-    tridiagonal es proporcionado en el apéndice~\ref{appTridiagonal}
+    tridiagonal es proporcionado en el apéndice~\ref{appTridiagonal}.
 
     \subsubsection{Generación de mallas mediante EDP parabólicas}
     \paragraph*{}
@@ -2176,7 +2191,7 @@ Ciudad de México \hfill 2020
     son la propagación de discontinuidades que puedan presentarse en la
     frontera interna conforme la solución marcha de dentro hacia afuera,
     otro punto importante de desventaja es que a menudo se necesita
-    introducir términos que representen una ``viscosidad artificial'' en la
+    introducir términos que representen una viscosidad artificial en la
     solución ya que las soluciones de este tipo de ecuaciones tienden a ser
     inestables dadas sus caracterísitcas matemáticas. Por último, no es
     posible definir una frontera externa.
@@ -2201,13 +2216,13 @@ Ciudad de México \hfill 2020
 
     \paragraph*{}
     En resúmen, lo explicado arriba, es decir, el desarrollo de un algoritmo
-    de generación de mallas mediante ecuaciones parabólicas tiene dos puntos
+    de generación de mallas mediante ecuaciones parabólicas, tiene dos puntos
     de vital importancia, el primero de ellos es el bajo tiempo de ejecución
     computacional que es requerido para lograr la solución del problema, que
     representa una pequeña fracción del tiempo demandado por el esquema
     elíptico. El segundo es la baja demanda de memoria para llevar a cabo
-    los cálculos requerido, y que además también es sustancialmente menor
-    que el requerido por un esquema elíptico.
+    los cálculos requeridos, y que además también es sustancialmente menor
+    que la requerida por un esquema elíptico.
 
     \paragraph*{}
     Se propone el siguiente conjunto de ecuaciones
@@ -2394,7 +2409,7 @@ Ciudad de México \hfill 2020
     entre los valores de la frontera interna (perfil aerodinámico) y la
     frontera externa (tipología de la malla). La distancia $g_j$ puede
     cambiarse gradualmente a lo largo de la malla para una mayor
-    versatilidad en la generación de la ésta.
+    versatilidad en la generación de la misma.
 
     \paragraph*{}
     En el caso más sencillo, aquel en el que no interesa forzar la
@@ -2580,7 +2595,7 @@ Ciudad de México \hfill 2020
     \paragraph*{}
     Si nos ubicamos en un punto $(i, j)$ con sus correspondientes
     coordenadas $(XO_{i, j + 1}, YO_{i, j+1})$, se observa de la figura
-    \ref{fig:parabolic_modified} una recta $AA$ que es perperndicular a la
+    \ref{fig:parabolic_modified} una recta $AA$ que es perpendicular a la
     superficie de la frontera interna la cual nace del punto $(i, 0)$, punto
     que corresponde a la misma línea $\xi = cte$ del punto en el que nos
     ubicamos. También podemos observar en la figura un arco de
@@ -2624,7 +2639,7 @@ Ciudad de México \hfill 2020
     se determinan mediante los elemetos del tensor de la métrica de la
     transformación y las derivadas de éste. \cite{vladimir-grid}
 
-    \subsection*{Aspect Ratio}
+    \subsection{Aspect Ratio}
     El aspect ratio es un valor característico de cada celda, mide que tan
     alejada está la forma de la celda de una figura que sirve de base para
     la comparación. Para mallas bidimiensionales, las celdas pueden ser
@@ -2684,7 +2699,7 @@ Ciudad de México \hfill 2020
     \end{subequations}
     la figura~\ref{aspect_verdict} muestra graficamente los elementos de una
     celda formada por un cuadrilatero, con los cuales se calculan las métricas
-    propuestas por esta librería.
+    propuestas en esta librería.
 
         \begin{figure}[htbp!]
             \centering
@@ -2973,10 +2988,10 @@ Ciudad de México \hfill 2020
     \paragraph*{}
         Para que una simulación se lleve a cabo es necesario establecer un
         dominio computacional, el cual contará con una o más fronteras
-        $\Gamma$, sobre dichas fronteras se deben especificar las
-        correspondientes condiciones de frontera que dotarán de sentido físico
-        a la simulación, es decir, para este caso se deben especificar
-        condiciones de frontera que coincidan con la teoría de flujo potencial.
+        $\Gamma$, sobre éstas se deben especificar las correspondientes
+        condiciones de frontera que dotarán de sentido físico a la simulación,
+        es decir, para este caso se deben especificar condiciones de frontera
+        que coincidan con la teoría de flujo potencial.
 
     \subsection{Condiciones en las lejanías}
     \paragraph*{}
@@ -3033,7 +3048,7 @@ Ciudad de México \hfill 2020
         en un flujo real por mucho tiempo. En realidad conforme el flujo
         termina de desarrollarse hasta llegar a un estado estacionario, dicho
         punto de estancamiento va recorriendose hacia la parte posterior hasta
-        llegar al borde de salida, a partir de que se logra esta condición se
+        llegar al borde de salida, a partir de que se logra este fenómeno se
         cumple la condición de Kutta, es decir el fluido deja el borde de
         salida de manera suave.
 
@@ -3115,8 +3130,9 @@ Ciudad de México \hfill 2020
             \centering
             \includegraphics[keepaspectratio, 
                 width=115mm]{./img/circulacion_tiempo}
-            \caption[Flujo alrededor de perfil momentos después]{Flujo
-            alrededor de perfil momentos después\cite{anderson_fundamentals}}
+            \caption[Flujo alrededor de perfil momentos después de iniciado el
+            flujo]{Flujo alrededor de perfil momentos después de inciado el
+            flujo~\cite{anderson_fundamentals}}
             \label{circulacion_tiempo}
         \end{figure}
 
@@ -3141,13 +3157,13 @@ Ciudad de México \hfill 2020
         facilidad de utilizar diferencias finitas como método de discretización
         del problema, sin embargo es importante recalcar que este no es el
         único método válido y que también es posible llevar a cabo la
-        discretización mediante los métodos de volumenes y elementos finitos.
+        discretización mediante los métodos de volúmenes y elementos finitos.
 
     \paragraph*{}
         Ya que los flujos subsónicos presentan generalmente un comportamiento
         suave es posible realizar las simulaciones con mallas que tengan una
-        baja densidad de celdas, a excepción ciertas zonas donde se generan
-        grandes gradientes como lo son esquinas, y bordes de ataque y de salida
+        baja densidad de celdas, a excepción de ciertas zonas donde se generan
+        grandes gradientes como lo son esquinas, bordes de ataque y de salida
         de perfiles alares, entre otros.
 
     \paragraph*{}
@@ -3181,7 +3197,7 @@ Ciudad de México \hfill 2020
         la imagen es delimitar una partícula.
 
     \paragraph*{}
-        Si a la ecuación~\ref{eq_potencial_0} se le eliminan los términos
+        Si en la ecuación~\ref{eq_potencial_0} se eliminan los términos
         relacionados con el cambio respecto al tiempo, dado que se está
         calculando flujo estacionario, y además utilizamos una diferencia de
         tipo central para los términos de la densidad y las velocidades se 
@@ -3507,12 +3523,14 @@ Ciudad de México \hfill 2020
 
     \paragraph*{}
     El presente trabajo requiere tener instaladas las siguientes dependencias
-    (módulos y programas)
+    (programas y módulos)
     \begin{itemize}
         \item Python 3
+        \begin{itemize}
         \item Matplotlib
         \item Numpy
         \item Numba
+        \end{itemize}
     \end{itemize}
     el primero es el interprete del lenguaje de programación, éste es el
     encargado de ejecutar el código fuente, matplotlib es un modulo dedicado
@@ -3732,7 +3750,7 @@ Ciudad de México \hfill 2020
             generada.\\ \hline
 
         \textbf{to\textunderscore txt\textunderscore mesh(filename)} & Exporta
-        la malla a un archivo de texto de extensión \.txt\textunderscore mesh.
+        la malla a un archivo de texto de extensión txt\textunderscore~mesh.
         Este formato es de desarrollo propio y se implementó con la intención de
         importar al software mallas previamente generadas para su análisis.
         \\ \hline
@@ -3941,8 +3959,7 @@ Ciudad de México \hfill 2020
         El postproceso se ve ilustrado en la figura~\ref{flujo_potencial_after},
         la cual representa el algoritmo para la obtención de diferentes
         parámetros de interés en los análisis aerodinámicos, entre ellos los
-        coeficientes de presión ($c_p$), de sustentación ($c_l$) y de
-        resistencia al avance ($c_d$).
+        coeficientes de presión ($c_p$) y de sustentación ($c_l$).
 
     \begin{figure}[htbp!]
         \centering
@@ -3992,8 +4009,7 @@ Ciudad de México \hfill 2020
         \centering
         \includegraphics[keepaspectratio, width=90mm]
             {./img/flujo_potencial_funcion}
-        \caption{Diagrama de flujo para generación de mallas mediante la
-            ecuación de Poisson}
+        \caption{Diagrama de flujo para el análisis de flujo potencial}
         \label{flujo_potencial_funcion}
     \end{figure}
 %
@@ -4012,8 +4028,8 @@ Ciudad de México \hfill 2020
     Los resultados de este trabajo se dividen en tres secciones diferentes,
     la primera de ellas lidia con el alcance de las mallas generadas
     mediante este programa, analizando para diferentes configuraciones la
-    distribución de los nodos. En segundo lugar para diferentes
-    configuraciones se evalua la calidad de la malla mediante el
+    distribución de los nodos. En segundo lugar, para diferentes
+    configuraciones, se evalua la calidad de la malla mediante el
     ``aspect ratio'' y el ``skewness'' de las celdas de la misma, con la
     intención de mostrar la calidad lograda, lo que dota de
     confiabilidad al proyecto para su uso en posteriores proyectos.
@@ -4243,7 +4259,7 @@ Ciudad de México \hfill 2020
         \end{subfigure}
         \caption[Malla tipo O con perfil y flap NACA 4415]{Malla tipo O con
             perfil y flap NACA 4415, ambos con ángulo de ataque
-            $\alpha = 0\si{\degree}$}\label{fig:naca4415_flap}
+            $\alpha = 0\si{\degree}$}
         \label{fig:naca4415_flap}
     \end{figure}
 
@@ -4458,10 +4474,16 @@ Ciudad de México \hfill 2020
         Perfil & NACA 4415
         \\ \hline
 
+        Flap & NACA 4415
+        \\ \hline
+
         M & 163
         \\ \hline
 
         N & 45
+        \\ \hline
+
+        Union entre perfil y flap & 6
         \\ \hline
 
         Ecuación & Poisson
@@ -4577,7 +4599,7 @@ Ciudad de México \hfill 2020
     cuidado durante la generación de mallas tipo C es la posibilidad del cruce
     entre las líneas que la definen. En contraste con las mallas de tipología
     O, las mallas tipo C no presentan esta problematica en la zona de los
-    bordes de salida debido a que las líneas continúa con su recorrido de
+    bordes de salida debido a que las líneas continúan con su recorrido de
     manera horizontal, sin embargo dicho problema se encuentra presente en la
     sección de unión entre perfil y flap, esto debido a la la distribución de
     puntos en la frontera externa en la zona que conecta con el perfil.
@@ -5262,7 +5284,7 @@ Ciudad de México \hfill 2020
             \includegraphics[keepaspectratio, width=0.99\textwidth]
                 {./img/potential_flow_potential_close}
             \caption{Acercamiento a perfil}
-            \label{fig:potential_flow_potential}
+            \label{fig:potential_flow_potential__}
         \end{subfigure}
         \caption{Líneas equipotenciales para $\alpha = 0\si{\degree}$
             del análisis de flujo potencial de perfil NACA 0012}
@@ -5343,7 +5365,7 @@ Ciudad de México \hfill 2020
             \includegraphics[keepaspectratio, width=0.99\textwidth]
                 {./img/potential_flow_stream_-4}
             \caption{$\alpha = -4\si{\degree}$}
-            \label{fig:potential_flow_cp-4}
+            \label{fig:potential_flow_stream_-4}
         \end{subfigure}
         \hfill
         \begin{subfigure}[c]{0.48\textwidth}
@@ -5473,7 +5495,7 @@ Ciudad de México \hfill 2020
             \includegraphics[keepaspectratio, width=0.99\textwidth]
                 {./img/potential_flow_2412_potential_close}
             \caption{Acercamiento a perfil}
-            \label{fig:potential_flow_2412_potential}
+            \label{fig:potential_flow_2412_potential__}
         \end{subfigure}
         \caption{Líneas equipotenciales para $\alpha = 0\si{\degree}$
             del análisis de flujo potencial de perfil NACA 2412}
@@ -5550,7 +5572,7 @@ Ciudad de México \hfill 2020
             \includegraphics[keepaspectratio, width=0.99\textwidth]
                 {./img/potential_flow_2412_stream_-4}
             \caption{$\alpha = -4\si{\degree}$}
-            \label{fig:potential_flow_2412_cp-4}
+            \label{fig:potential_flow_2412_stream_-4}
         \end{subfigure}
         \hfill
         \begin{subfigure}[c]{0.48\textwidth}
@@ -5661,8 +5683,8 @@ Ciudad de México \hfill 2020
     el cual el software desarrollado en este proyecto exporta las mallas,
     además del ya mencionado formato, SU2 también es capaz de interpretar
     archivos que sigan el formato CGNS (CFD General Notation System), el cual
-    es un esfuerzo de la comunidad para estandarizar la representacion de la
-    informacion para la solucion de simulaciones para \@DFC.
+    es un esfuerzo de la comunidad para estandarizar la representación de la
+    información para la solucion de simulaciones para \@DFC.
 
     \paragraph*{}
     En este trabajo, cuyo desarrollo gira alrededor de la generación de mallas,
@@ -5675,7 +5697,8 @@ Ciudad de México \hfill 2020
     \paragraph*{}
     El caso de análisis seleccionado implica flujo bidimensional, turbulento y
     estacionario, los parámetros del flujo se muestran en la
-    tabla~\ref{SU2_simulation}
+    tabla~\ref{SU2_simulation}.
+
     \begin{table}[htbp!]
     \begin{center}
         \begin{tabular}{| c | c |}
@@ -5894,9 +5917,9 @@ Ciudad de México \hfill 2020
     objetivos plantedos también fueron alcanzados, se proporciona entonces, un
     módulo que permite generar cualquier perfil NACA de la seria de 4 dígitos
     con cualquier densidad de puntos deseada, además de poder importar una nube
-    de puntos que describa el perfil deseado, a través de un arvhivo de valores
+    de puntos que describa el perfil deseado, a través de un archivo de valores
     separados por comas. Además de esto se desarrollaron los módulos necesarios
-    para la generación de mallas, tanto tipo O como tipo C, mediante diversos
+    para la generación de mallas, tanto tipo C como tipo O, mediante diversos
     algoritmos, ya sea mediante la solución de ecuaciones algebráicas o
     ecuaciones diferenciales parciales. Por último se llevaron a cabo
     simulaciones tanto de flujo potencial, como de flujo turbulento y
@@ -5947,7 +5970,7 @@ Ciudad de México \hfill 2020
     resolver la ecuación de flujo potencial para mallas tipo O con una única
     frontera interna. Una vez obtenidad la solución del potencial del velocidad
     se puede calcular los coeficientes de presión y de sustentación, así como
-    la función del corriente.
+    la función de corriente.
 
 \paragraph*{}
     Los resultados obtenidos a partir del análisis de flujo potencial muestran
@@ -5979,12 +6002,12 @@ Ciudad de México \hfill 2020
 \chapter{Recomendaciones y trabajos futuros}
 \paragraph*{}
     En general se debe buscar herramientas que su integración resulte en
-    mejoras sustanciales en el performance de la aplicación, entre ellas se
+    mejoras sustanciales en el desempeño de la aplicación, entre ellas se
     pueden destacar
     \begin{itemize}
             \item Cython. Extensión del lenguaje Python 3 que permite la
                 ejecución de código escrito en C o C++.
-            \item Numba. Módulo de python enfocado en la computacion
+            \item Numba. Módulo de Python enfocado en la computacion
                 científica de alto performance. Convierte el código de Python
                 a código optimizado en lenguaje máquina.  \item C / C++.
             \item Técnicas de paralelización. Multihilos, vectorización,
@@ -5994,7 +6017,7 @@ Ciudad de México \hfill 2020
 \paragraph*{}
     También debe prestarse especial atención a las técnicas de programación
     aplicadas sin importar las herramientas sobre las cuales se esté
-    desarrollando. La DFC es una herramienta cuyas características implican una
+    desarrollando. La DFC es un campo cuyas características implican una
     gran demanda de recursos computacionales, lo que la mantiene siempre a la
     vanguardia tecnológica, sin embargo el estado actual del arte es tal que
     aún representa procesos largos e iterativos, por lo que una mala
@@ -6008,12 +6031,12 @@ Ciudad de México \hfill 2020
     Geijn, profesor del departamento de Ciencias de la Computación en la
     Universidad de Texas. Dichos trabajos y publicaciones están enfocados al
     desarrollo de algoritmos y técnicas para la computación cientifica de alto
-    performance.
+    desempeño.
 
 \paragraph*{}
     Volviendo a la generación de mallas, se recomienda revisar a fondo las
     técnicas de generación mediante EDPs hiperbólicas y parabólicas, poniendo
-    particular interés en la estabilidad numérica de los métodos. Tambien se
+    particular atención en la estabilidad numérica de los métodos. Tambien se
     debe extender la generación de mallas a otras técnicas como son mallas
     adaptativas, no estructuradas, e incluso mediante algoritmos de aprendizaje
     automatizado.
@@ -6090,7 +6113,7 @@ Ciudad de México \hfill 2020
         desventajas que presentan son el uso de memoria y cierta dificultad para
         ser programados. Los métodos iterativos son simples y fáciles de
         programar, por lo que se presentan como una mejor herramienta para
-        llevar a cabo la solcuión del sistema. La idea de estos métodos, tal y
+        llevar a cabo la solución del sistema. La idea de estos métodos, tal y
         como su nombre lo indica, es obtener la solución mediante un proceso
         iterativo, por lo general se asume una primera solución y con dichos
         valores propuestos se calculan nuevos valores de las incógnitas, con
@@ -6222,9 +6245,10 @@ Ciudad de México \hfill 2020
 
 \chapter{Solución de Sistemas de Bloque Tridiagonal}\label{appTridiagonal}
     \paragraph*{}
-        En el presente proyecto se lleva a cabo la solución del sistema obtenido
-        en la sección anterior mediante el método propuesto por
-        Hoffman\cite{hoffmann2000computational}.
+        En el presente apéndice se lleva a cabo la solución de un sistema de
+        bloque tridiagonal, como los obtenidos en los métodos de generación de
+        mallas estructuradas tanto por EDPs hiperbólicas, como parabólicas, el
+        método es desarrollado por Hoffman\cite{hoffmann2000computational}.
     \paragraph*{}
         Un sistema de ecuaciones diferenciales parciales es aproximado mediante
         un sistema de bloque tridiagonal cuando en dicho sistema se involucran
@@ -6234,7 +6258,7 @@ Ciudad de México \hfill 2020
             S \Delta Q = R
             \label{hyper-sol-1}
         \end{equation}\\
-        donde $\Delta Q$ y $R$ con vectores con $m$ componentes, y a su vez, $S$
+        donde $\Delta Q$ y $R$ son vectores con $m$ componentes, y a su vez, $S$
         representa el bloque tridiagonal
         \begin{equation*}
             S = \begin{bmatrix}
