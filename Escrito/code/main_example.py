@@ -25,7 +25,7 @@ import util
 
 
 ########################
-# PERFIL AERODINaMICO
+# PERFIL AERODINAMICO
 ########################
 # importar desde archivo
 airfoil_points = 549
@@ -96,9 +96,9 @@ mallaNACA.gen_Laplace_n(metodo='SOR')
 mallaNACA.gen_Poisson_n(metodo='SOR', omega=0.15, aa=1500, cc=12,
                         linea_eta=0)
 # mallaNACA.gen_Poisson_v(metodo='SOR', omega=0.15, aa=1500, cc=12,
-    # linea_eta=0)
+#   linea_eta=0)
 # mallaNACA.gen_Poisson(metodo='SOR', omega=0.15, aa=1500, cc=12,
-    # linea_eta=0)
+#   linea_eta=0)
 
 # importar malla
 malla_importada = 'nombre_archivo_malla.txt_mesh'

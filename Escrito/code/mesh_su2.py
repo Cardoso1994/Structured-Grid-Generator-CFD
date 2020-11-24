@@ -240,7 +240,7 @@ def to_su2_mesh_o_airfoil_n_flap(mesh, filename):
 def to_su2_mesh_c_airfoil(mesh, filename):
     '''
     Convierte malla de formato propio a formato de SU2
-    Para mallas tipo O
+    Para mallas tipo C
     Con solo un perfil (o cualquier geometria)
     '''
 
