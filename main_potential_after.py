@@ -80,9 +80,10 @@ plt.ylabel('cl')
 plt.legend(loc='upper left')
 ax.set_aspect(15)
 ax.grid(True)
-# plt.savefig('/home/desarrollo/garbage/img_tst.png',
-#             bbox_inches='tight', pad_inches=0.05)
+plt.savefig('/home/cardoso/garbage/img_tst.png',
+            bbox_inches='tight', pad_inches=0.05)
 plt.show()
+exit()
 
 mallaNACA = util.from_txt_mesh(filename=path
                               + '/mallaNACA_' + '10' +'.txt_mesh')
