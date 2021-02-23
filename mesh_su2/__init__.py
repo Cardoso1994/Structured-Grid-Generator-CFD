@@ -178,7 +178,7 @@ def to_su2_mesh_o_airfoil_n_flap(mesh, filename):
     for i in range(begin, M_SU2):
         #if i % (mesh.M - 1) != mesh.M - 2:
         if i % (M_SU2) != M_SU2 - 1:
-            su2_mesh.write('9 ' + str(i - diff) + ' ' + str(i - diff + 1) + ' '
+            Su2_mesh.write('9 ' + str(i - diff) + ' ' + str(i - diff + 1) + ' '
                            + str(i + size_airfoils + 1) + ' '
                            + str(i + size_airfoils) + '\n')
         else:
